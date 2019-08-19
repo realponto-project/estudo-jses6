@@ -3,6 +3,8 @@ import './index.css'
 import { Select, InputNumber, Button, message } from 'antd'
 import { getItens } from '../../../../services/produto';
 
+import { NewKit } from '../../../../services/kit'
+
 
 const { Option } = Select;
 
@@ -60,6 +62,60 @@ class AddKit extends Component{
     })
   }
 
+  saveTargetNewKit = async () => {
+    const value = {
+      kitParts: this.state.carrinho.map((valor) => {
+        const resp = {
+          productId: valor.productId,
+          amount: valor.amount.toString(),
+          stockBase: valor.stockBase,
+        }
+        return resp
+      })
+    }
+
+    const resposta = await NewKit(value)
+
+
+    console.log(resposta)
+
+    if (resposta.status === 422) {
+
+      this.setState({
+        messageError: true,
+        fieldFalha: resposta.data.fields[0].field,
+        message: resposta.data.fields[0].message,
+      })
+      await this.error()
+      this.setState({
+        loading:false,
+        messageError: false,
+      })
+    } if (resposta.status === 200) {
+
+      this.setState({
+        carrinho: [],
+        item: 'Não selecionado',
+        quant: '1',
+        estoque: 'REALPONTO',
+        messageSuccess: true,
+      })
+      await this.success()
+      this.setState({
+        loading:false,
+        messageSuccess: false
+      })
+    }
+  }
+
+  success = () => {
+    message.success('O cadastro foi efetuado');
+  };
+
+  error = () => {
+    message.error('O cadastro não foi efetuado');
+  };
+
   
   addCarrinho = async () => {
     if(this.state.item !== 'Não selecionado'){
@@ -73,12 +129,17 @@ class AddKit extends Component{
       })
       return
     }
+
+    const product = this.state.itemArray.filter((value) => {
+      if (value.name === this.state.item) return value.id
+    })
+
     await this.setState({
       carrinho:[{
         itemCarrinho: this.state.item,
-        // produtoIdCarrinho: 
-        quantCarrinho: this.state.quant,
-        estoqueCarrrinho: this.state.estoque,
+        productId: product[0].id,
+        amount: this.state.quant,
+        stockBase: this.state.estoque,
       },...this.state.carrinho],
       item: 'Não selecionado',
       quant: '1',
@@ -142,10 +203,25 @@ class AddKit extends Component{
 
         <div className='div-linhaSeparete-Os'></div>        
 
-        {this.state.carrinho.length === 0 ? null : <div className='div-maior-Os'><div className='div-linhaSelecionados-Os'><h2 className='h2-Os'>Produtos selecionados</h2></div><div className='div-linha1-Os'><label className='label-produto-Os'>Produto</label><label className='label-quant-Os'>Quantidade</label></div><div className='div-linhaSepareteProdutos-Os'></div>{this.state.carrinho.map((valor) => <div className='div-linha-Os'><label className='label-produto-Os'>{valor.itemCarrinho}</label><label className='label-quant-Os'>{valor.quantCarrinho} UN</label><Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button></div>)}</div>}
+        {this.state.carrinho.length === 0 ? null :
+          <div className='div-maior-Os'>
+            <div className='div-linhaSelecionados-Os'>
+              <h2 className='h2-Os'>Produtos selecionados</h2>
+            </div>
+          <div className='div-linha1-Os'>
+            <label className='label-produto-Os'>Produto</label>
+            <label className='label-quant-Os'>Quantidade</label>
+          </div>
+            <div className='div-linhaSepareteProdutos-Os'></div>{this.state.carrinho.map((valor) =>
+              <div className='div-linha-Os'>
+                <label className='label-produto-Os'>{valor.itemCarrinho}</label>
+                <label className='label-quant-Os'>{valor.amount} UN</label>
+                <Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button>
+              </div>)}
+          </div>}
 
         <div className='div-buttonSalvar-Os'>
-          <Button type='primary' className='button' onClick={this.saveTargetNewReservaOs}>Salvar</Button>
+          <Button type='primary' className='button' onClick={this.saveTargetNewKit}>Salvar</Button>
         </div>
 
       </div>

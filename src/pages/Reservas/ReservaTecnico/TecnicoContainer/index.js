@@ -23,7 +23,7 @@ class ReservaTecnico extends Component{
     await getTecnico().then(
       resposta => this.setState({
         tecnicoArray: resposta.data,
-      }, console.log(resposta))
+      })
     )
   }
 
@@ -87,16 +87,7 @@ class ReservaTecnico extends Component{
           <Select defaultValue='Não selecionado' style={{ width: '100%' }} onChange={this.onChangeSelect}>
             {this.state.tecnicoArray.map((valor) => 
             <Option value={valor.name}>{valor.name}</Option>)}</Select>}
-          
-          {/* <Button className='buttonadd-marca-tecnico' type="primary" icon="plus" onClick={this.openModal} /> */}
 
-
-        {/* <Select value={this.state.tecnico} style={{ width: '50%' }} onChange={this.onChangeTecnico}>
-          <Option value="TESTE">TESTE</Option>
-          <Option value="TESTE1">TESTE1</Option>
-          <Option value="TESTE2">TESTE2</Option>
-          <Option value="TESTE3">TESTE3</Option>
-        </Select> */}
         </div>
         </div>
 

@@ -204,9 +204,10 @@ class NovaEntrada extends Component {
     })
   }
 
-  onChangeItem = (value) => {
+  onChangeItem = (value, product) => {
     this.setState({
-      nomeProduto: value
+      nomeProduto: value,
+      serial: product.props.product.serial,
     })
   }
 
@@ -311,7 +312,7 @@ class NovaEntrada extends Component {
                   option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
               >
-              {this.state.itemArray.map((value)=> <Option value={value.name}>{value.name}</Option>)}
+              {this.state.itemArray.map((value)=> <Option product={value} value={value.name}>{value.name}</Option>)}
               </Select> : <Select
                 value='Nenhum produto cadastrado'
               >

@@ -3,14 +3,30 @@ import './index.css'
 import { Pagination, Button, Select } from 'antd'
 import { Redirect } from 'react-router-dom'
 
+import { getTecnico } from '../../../../services/tecnico'
+
 
 const { Option } = Select;
 
 class ReservaKit extends Component {
 
   state = {
+    tecnicoArray:[],
     tecnico: 'TESTE',
     redirect: false,
+  }
+
+  getAllTecnico = async () => {
+
+    await getTecnico().then(
+      resposta => this.setState({
+        tecnicoArray: resposta.data,
+      })
+    )
+  }
+
+  componentDidMount = async () => {
+    await this.getAllTecnico()
   }
 
   setRedirect = () => {
@@ -41,12 +57,11 @@ class ReservaKit extends Component {
         <div className='div-linha-kit'>
           <div className='div-tecnico-kit'>
             <div className='div-text-kit'>Técnico:</div>
-            <Select value={this.state.tecnico} style={{ width: '50%' }} onChange={this.onChangeTecnico}>
-              <Option value="TESTE">TESTE</Option>
-              <Option value="TESTE1">TESTE1</Option>
-              <Option value="TESTE2">TESTE2</Option>
-              <Option value="TESTE3">TESTE3</Option>
-            </Select>
+            {this.state.tecnicoArray.length === 0 ?
+            <Select value='Nenhum tecnicos cadastrado' style={{ width: '100%' }}></Select> :
+            <Select defaultValue='Não selecionado' style={{ width: '100%' }} onChange={this.onChangeSelect}>
+              {this.state.tecnicoArray.map((valor) => 
+              <Option value={valor.name}>{valor.name}</Option>)}</Select>}
           </div>
             {this.renderRedirect()}
             <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button>
