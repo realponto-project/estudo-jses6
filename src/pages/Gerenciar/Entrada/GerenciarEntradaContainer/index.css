@@ -28,8 +28,9 @@
 }
 .cel-produto-cabecalho-Gentrada{
   align-items: center;
+  cursor: pointer;
   display: flex;
-  width: 40%;
+  width: 42%;
   height:30px;
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
@@ -37,7 +38,7 @@
 .cel-usuario-cabecalho-Gentrada{
   align-items: center;
   display: flex;
-  width: 25%;
+  width: 27%;
   height:30px;
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
@@ -82,4 +83,42 @@
   width: 90%;
   display: flex;
   justify-content: flex-end
+}
+.div-table-label-cel-Gentrada{
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+.spin{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+}
+.div-lines-Gentrada{
+  width: 100%;
+  display: flex;
+  height: 50px;
+  align-items: center
+}
+.div-separate-Gentrada{
+  width: 90%;
+  background-color: rgb(221, 219, 219);
+  height: 1px;
+}
+.div-separate1-Gentrada{
+  width: 100%;
+  background-color: rgb(221, 219, 219);
+  height: 1px;
+}
+.div-100-Gentrada{
+  width: 90%;
+  display: flex;
+  flex-direction: column
 }
