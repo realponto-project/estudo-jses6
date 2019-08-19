@@ -25,7 +25,6 @@ class ReservaTecnico extends Component{
         tecnicoArray: resposta.data,
       }, console.log(resposta))
     )
-
   }
 
   componentDidMount = async () => {

@@ -1,9 +1,28 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Pagination } from 'antd'
+import { stock } from '../../../../services/estoque'
 
 class Estoque extends Component{
+
+  state={
+    estoque:[],
+  }
+
+  getStock = async () => {
+    await stock().then(
+      resposta => this.setState({
+        estoque: resposta.data,
+      })
+    )
+  }
+
+  componentDidMount = async () => {
+    await this.getStock()
+  }
+
   render(){
+    // console.log(this.state.estoque)
     return(
       <div className='div-card-estoque'>
         <div className='linhaTexto-estoque'>
