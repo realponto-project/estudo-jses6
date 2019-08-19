@@ -1,20 +1,32 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination } from 'antd'
+import { Pagination, Spin } from 'antd'
 import { stock } from '../../../../services/estoque'
 
 class Estoque extends Component{
 
   state={
-    estoque:[],
+    loading: false,
+    estoque:{
+      rows: []
+    },
   }
 
   getStock = async () => {
+
+    this.setState({
+      loading: true
+    })
+
     await stock().then(
       resposta => this.setState({
         estoque: resposta.data,
       })
     )
+
+    this.setState({
+      loading: false
+    })
   }
 
   componentDidMount = async () => {
@@ -22,7 +34,7 @@ class Estoque extends Component{
   }
 
   render(){
-    // console.log(this.state.estoque)
+    console.log(this.state.estoque)
     return(
       <div className='div-card-estoque'>
         <div className='linhaTexto-estoque'>
@@ -42,32 +54,41 @@ class Estoque extends Component{
           <div className='cel-estoque-cabecalho-estoque'>
             Estoque
           </div>
-          <div className='cel-data-cabecalho-estoque'>
-            Data lançamento
-          </div>
         </div>
 
         
-        <div className=' div-separate-estoque'></div>
-        <div className='div-lines-estoque'>
+        <div className=' div-separate-estoque'/>
+            {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : 
+          this.state.estoque.rows.map((line) =>
+          <div className='div-100-estoque'>
+          <div className='div-lines-estoque'
+          //  onClick={() => this.openModalDetalhesCompany(line)}
+           >
           <div className='cel-produto-cabecalho-estoque'>
-            TESTEEEEEEEEEEEEEEEEEE
+          <label className='div-table-label-cel-estoque'>
+            {line.name}
+          </label>
           </div>
           <div className='cel-fabricante-cabecalho-estoque'>
-            TESTE
+          <label className='div-table-label-cel-estoque'>
+            {line.manufacturer}
+          </label>
           </div>
           <div className='cel-quant-cabecalho-estoque'>
-            12
+          <label className='div-table-label-cel-estoque'>
+            {line.amount}
+          </label>
           </div>
           <div className='cel-estoque-cabecalho-estoque'>
-            NOVA REALPONTO
-          </div>
-          <div className='cel-data-cabecalho-estoque'>
-            22/11/2001 14:30
+          <label className='div-table-label-cel-estoque'>
+            {line.stockBase}
+          </label>
           </div>
         </div>
+          <div className=' div-separate1-estoque'/>
+        </div>
+        )}
 
-        <div className=' div-separate-estoque'></div>
           <div className='footer-estoque'>
             <Pagination defaultCurrent={1} total={50} />
           </div>

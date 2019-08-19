@@ -420,7 +420,8 @@ class NovoProduto extends Component {
             <div className='div-text-produtos'>Marca:</div>
             {this.state.marcaArray.length !== 0 ? <Select value={this.state.marca} style={{ width: '100%'}} onChange={this.handleChangeMarca}> 
             {this.state.marcaArray.map((valor) =>
-            <Option value={valor.mark}>{valor.mark}</Option>)}</Select> : 
+            <Option value={valor.mark}>{valor.mark}</Option>)}
+            </Select> : 
             <Select value='Nenhuma marca cadastrada' style={{ width: '100%'}}></Select>}
             <Button className='buttonadd-marca-produtos' type="primary" icon="plus" name='modalMarca' onClick={this.openModais} />
           </div>
@@ -432,7 +433,8 @@ class NovoProduto extends Component {
             <div className='div-text-produtos'>Tipo:</div>
             {this.state.tipoArray.length !== 0 ? <Select value={this.state.tipo} style={{ width: '100%'}} onChange={this.handleChangeTipo}> 
             {this.state.tipoArray.map((valor) =>
-            <Option value={valor.type}>{valor.type}</Option>)}</Select> : 
+            <Option value={valor.type}>{valor.type}</Option>)}
+            </Select> : 
             <Select value='Nenhum tipo cadastrado' style={{ width: '100%'}}></Select>}
             <Button className='buttonadd-marca-produtos' type="primary" name='modalTipo' icon="plus" onClick={this.openModais} />
             <this.modalTipo />

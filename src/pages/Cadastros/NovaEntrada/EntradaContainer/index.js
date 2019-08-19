@@ -16,7 +16,7 @@ class NovaEntrada extends Component {
   state = {
     fornecedorArray: [],
     itemArray:[],
-    serial: true,
+    serial: false,
     numeroSerieTest: [],
     messageError: false,
     messageSucesso: false,
