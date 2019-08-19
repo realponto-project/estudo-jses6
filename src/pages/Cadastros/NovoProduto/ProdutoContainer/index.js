@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Input, Select, Button, Modal, Switch, message } from 'antd'
 import './index.css'
-import { newMarca, newTipo, newFabricante, newProduto, getTipo, getMarca } from '../../../../services/produto'
+import { newMarca, newTipo, newFabricante, newProduto, getTipo, getMarca, getFabricante } from '../../../../services/produto'
 
 
 const { Option } = Select;
@@ -40,10 +40,12 @@ class NovoProduto extends Component {
     })
   }
 
-  handleChangeMarca = (value) => {
-    this.setState({
+  handleChangeMarca = async (value) => {
+    await this.setState({
       marca: value,
     })
+
+    await this.getAllFabricante()
   }
 
   success = () => {
@@ -75,6 +77,16 @@ class NovoProduto extends Component {
     await getMarca( peca ).then(
       resposta => this.setState({
         marcaArray: resposta.data,
+      })
+    )
+  }
+
+  getAllFabricante = async () => {
+
+    const peca =  this.state.marca
+    await getFabricante( peca ).then(
+      resposta => this.setState({
+        fabricante: resposta.data,
       })
     )
   }
@@ -272,8 +284,12 @@ class NovoProduto extends Component {
 
   handleChange = (value) => {
     this.setState({
-      categoria: value
+      categoria: value,
+      fabricante: '',
+      tipo: 'Não selecionado'
     })
+
+    this.getAllFabricante()
   }
 
   onChange = (e) => {
@@ -372,7 +388,6 @@ class NovoProduto extends Component {
   )
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-produtos'>
         <div className='linhaTexto-produtos'>
@@ -426,12 +441,11 @@ class NovoProduto extends Component {
           <div className='div-modelo-produtos'>
             <div className='div-text-produtos'>Fabricante:</div>
             <Input
+              readOnly
+              placeholder='Selecione a marca'
               className='input-100'
-              placeholder="Digite o fabricante"
               name='fabricante'
               value={this.state.fabricante}
-              onChange={this.onChange}
-              allowClear
             />
             <Button className='buttonadd-marca-produtos' type="primary" name='modalFabricante' icon="plus" onClick={this.openModais}/>
             <this.modalFabricante />
