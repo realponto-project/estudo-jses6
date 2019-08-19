@@ -4,6 +4,7 @@ import { Input, Button, InputNumber, Select, message } from 'antd'
 import { getAddressByZipCode } from '../../../../services/fornecedores'
 import * as R from 'ramda'
 import { NewReservaML } from '../../../../services/mercadoLivre';
+import { getItens } from '../../../../services/produto';
 
 
 const { Option } = Select;
@@ -11,9 +12,10 @@ const { Option } = Select;
 class ReservaML extends Component{
 
   state={
+    itemArray: [],
     messageError: false,
     messageSuccess: false,
-    nomeProduto: '',
+    nomeProduto: 'Não selecionado',
     quant: '1',
     carrinho: [],
     estoque: 'REALPONTO',
@@ -56,6 +58,24 @@ class ReservaML extends Component{
       complemento: '',
       pontoReferencia: '',
     }
+  }
+
+  onChangeItem = (value) => {
+    this.setState({
+      nomeProduto: value
+    })
+  }
+
+  componentDidMount = async () => {
+    await this.getAllItens()
+  }
+
+  getAllItens = async () => {
+    await getItens().then(
+      resposta => this.setState({
+        itemArray: resposta.data,
+      })
+    )
   }
 
   success = () => {
@@ -188,14 +208,14 @@ class ReservaML extends Component{
   }
 
   addCarrinho = () => {
-    if(this.state.nomeProduto !== ''){
+    if(this.state.nomeProduto !== 'Não selecionado' || ''){
     this.setState({
       carrinho:[{
         nomeProdutoCarrinho: this.state.nomeProduto,
         quantCarrinho: this.state.quant,
         estoqueCarrrinho: this.state.estoque,
       },...this.state.carrinho],
-      nomeProduto: '',
+      nomeProduto: 'Não selecionado',
       quant: '1',
       estoque: 'REALPONTO'
     })
@@ -446,16 +466,19 @@ class ReservaML extends Component{
         <div className='div-linha-ML'>
         <div className='div-nome-ML'>
           <div className='div-textNomeProduto-ML'>Nome do produto:</div>
-            <Input
-              className='input-100'
+            <Select
+              showSearch
               style={{ width: '100%' }}
-              name='nomeProduto'
+              placeholder="Selecione o produto"
+              optionFilterProp="children"
               value={this.state.nomeProduto}
-              placeholder="Digite o nome do produto"
-              onChange={this.onChange}
-              onBlur={this.onBlurValidator}
-              allowClear
-            />
+              onChange={this.onChangeItem}
+              filterOption={(input, option) =>
+                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {this.state.itemArray.map((value)=> <Option value={value.name}>{value.name}</Option>)}
+            </Select>
           </div>  
 
           <div className='div-quant-ML'>
@@ -479,7 +502,7 @@ class ReservaML extends Component{
 
         <div className='div-linhaSeparete-ML'></div>        
 
-        {this.state.carrinho.length === 0 ? null : <div className='div-maior-ML'><div className='div-linhaSelecionados-ML'><h2 className='h2-ML'>Produtos selecionados</h2></div><div className='div-linha1-ML'><label className='label-produto-ML'>Produto</label><label className='label-quant-ML'>Quantidade</label></div><div className='div-linhaSepareteProdutos-ML'></div>{this.state.carrinho.map((valor) => <div className='div-linha-ML'><label className='label-produto-ML'>{valor.nomeProdutoCarrinho}</label><label className='label-quant-ML'>{valor.quantCarrinho}</label><Button type='primary' className='button-remove-ML' onClick={() => this.remove(valor)}>Remover</Button></div>)}</div>}
+        {this.state.carrinho.length === 0 ? null : <div className='div-maior-ML'><div className='div-linhaSelecionados-ML'><h2 className='h2-ML'>Produtos selecionados</h2></div><div className='div-linha1-ML'><label className='label-produto-ML'>Produto</label><label className='label-quant-ML'>Quantidade</label></div><div className='div-linhaSepareteProdutos-ML'></div>{this.state.carrinho.map((valor) => <div className='div-linha-ML'><label className='label-produto-ML'>{valor.nomeProdutoCarrinho}</label><label className='label-quant-ML'>{valor.quantCarrinho} UN</label><Button type='primary' className='button-remove-ML' onClick={() => this.remove(valor)}>Remover</Button></div>)}</div>}
 
         <div className='div-buttonSalvar-ML'>
           <Button type='primary' className='button' onClick={this.saveTargetNewReservaML}>Salvar</Button>
