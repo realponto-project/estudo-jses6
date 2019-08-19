@@ -25,6 +25,30 @@ export const getCarro = async () => {
     }
   })
   return response
+}
+
+export const getTecnico = async () => {
+  const storeObject = store.getState()
+
+  const headers = {
+    token: storeObject.auth.token,
+    username: storeObject.auth.username,
+  }
+
+  let response = {}
+
+  await axios.get(`${BACKEND_URL}/api/technician`, { headers: headers }).then(
+    resp => {
+      response = resp
+    }
+  ).catch((error) => {
+    if (error.response) {
+      response = error.response
+    } else {
+      console.log('Error', error.message);
+    }
+  })
+  return response
 } 
 
 export const newTecnico = async (values) => {

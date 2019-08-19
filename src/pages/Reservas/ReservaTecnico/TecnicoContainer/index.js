@@ -2,17 +2,40 @@ import React, { Component } from 'react'
 import './index.css'
 import { Pagination, Button, Icon, Modal, Tooltip, Select } from 'antd'
 
+import { getTecnico } from '../../../../services/tecnico'
+
 
 const { Option } = Select;
 
 class ReservaTecnico extends Component{
 
   state={
+    tecnicoArray:[],
     modalDetalhes: false,
     lineSelected: {
       
     },
     tecnico: 'TESTE'
+  }
+
+  getAllTecnico = async () => {
+
+    await getTecnico().then(
+      resposta => this.setState({
+        tecnicoArray: resposta.data,
+      }, console.log(resposta))
+    )
+
+  }
+
+  componentDidMount = async () => {
+    await this.getAllTecnico()
+  }
+
+  onChangeSelect = async (value) => {
+    await this.setState({
+      tecnico: value
+    })
   }
 
   onChangeTecnico = (value) => {
@@ -59,12 +82,22 @@ class ReservaTecnico extends Component{
         <div className='div-linha-Rtecnico'>
           <div className='div-tecnico-Rtecnico'>
           <div className='div-text-Rtecnico'>Técnico:</div>
-        <Select value={this.state.tecnico} style={{ width: '50%' }} onChange={this.onChangeTecnico}>
+
+          {this.state.tecnicoArray.length === 0 ?
+          <Select value='Nenhum tecnicos cadastrado' style={{ width: '100%' }}></Select> :
+          <Select defaultValue='Não selecionado' style={{ width: '100%' }} onChange={this.onChangeSelect}>
+            {this.state.tecnicoArray.map((valor) => 
+            <Option value={valor.name}>{valor.name}</Option>)}</Select>}
+          
+          {/* <Button className='buttonadd-marca-tecnico' type="primary" icon="plus" onClick={this.openModal} /> */}
+
+
+        {/* <Select value={this.state.tecnico} style={{ width: '50%' }} onChange={this.onChangeTecnico}>
           <Option value="TESTE">TESTE</Option>
           <Option value="TESTE1">TESTE1</Option>
           <Option value="TESTE2">TESTE2</Option>
           <Option value="TESTE3">TESTE3</Option>
-        </Select>
+        </Select> */}
         </div>
         </div>
 
