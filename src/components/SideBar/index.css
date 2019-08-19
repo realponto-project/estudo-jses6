@@ -1,0 +1,45 @@
+.menu{
+  height: calc(100vh - 50px);
+  width: 190px !important;
+  position: fixed !important;
+  top: 40px; 
+  overflow-y: auto;
+}
+
+.menuIcon{
+  background-color: #000C17;
+  border-bottom: 1px solid rgb(90, 91, 92);
+  color: white;
+  width: 190px !important;
+  position: fixed;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuIcon-icon {
+  margin: 10px;
+  padding: 3px !important;
+  cursor: pointer;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #000C17; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #003063; 
+}

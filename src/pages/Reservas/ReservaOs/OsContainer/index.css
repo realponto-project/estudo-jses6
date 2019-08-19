@@ -1,0 +1,170 @@
+.div-card-Os{
+  width: 96%;
+  height: 95%;
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  top: 20px
+}
+.linhaTexto-Os{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+.h1-Os{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-weight: 500;
+  font-size: 2.2em
+}
+.div-textNome-Os{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 175px
+}
+.div-text-Os{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px
+}
+.div-textOs-Os{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 80px;
+}
+.div-textRs-Os{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 115px;
+}
+.div-textData-Os{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 165px;
+}
+.div-textNome-Os{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 175px
+}
+.div-linha-Os{
+  margin-top: 30px;
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+}
+.div-linha1-Os{
+  margin-top: 30px;
+  width: 85%;
+  display: flex;
+}
+.div-nOs-Os{
+  width: 20%;
+  display: flex;
+  align-items: center
+}
+.div-tecnico-Os{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+.div-rs-Os{
+  width: 75%;
+  display: flex;
+  align-items: center
+}
+.div-cnpj-Os{
+  width: 25%;
+  display: flex;
+  align-items: center;
+  margin-right: 30px;
+}
+.div-data-Os{
+  width: 40%;
+  display: flex;
+  align-items: center
+}
+.div-nome-Os{
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+.div-quant-Os{
+  width: 17%;
+  display: flex;
+  align-items: center
+}
+.div-estoque-Os{
+  width: 30%;
+  display: flex;
+  align-items: center
+}
+.linhaTextoPecas-Os{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.div-linhaSelecionados-Os{
+  width: 85%;
+  margin-top: 30px;
+}
+.div-linhaSeparete-Os{
+  width: 90%;
+  height: 1px;
+  background-color: rgb(180, 180, 180);
+  margin-top: 40px;
+}
+.h2-Os{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 20px;
+  color: black;
+}
+.label-produto-Os{
+  width: 50%;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 18px;
+  font-weight: bold
+}
+.label-quant-Os{
+  width: 40%;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 18px;
+  font-weight: bold
+}
+.button-remove-Os{
+  background-color: red !important;
+  border-color: red !important;
+}
+.div-maior-Os{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+.div-linhaSepareteProdutos-Os{
+  width: 85%;
+  height: 1px;
+  background-color: rgb(196, 196, 196);
+}
+.div-buttonSalvar-Os{
+  width: 85%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px
+}

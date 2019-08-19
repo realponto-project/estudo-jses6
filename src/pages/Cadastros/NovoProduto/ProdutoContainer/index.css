@@ -1,0 +1,161 @@
+.div-card-produtos{
+  width: 96%;
+  height: 95%;
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+.linhaTexto-produtos{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+.h1-produtos{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-weight: 500;
+  font-size: 2.2em
+}
+.linha1-produtos{
+  margin-top: 30px;
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+}
+.div-item-produtos{
+  width: 38%;
+  display: flex;
+  align-items: center
+}
+.div-text-produtos{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px
+}
+.div-categoria-produtos{
+  width: 25%;
+  display: flex;
+  align-items: center
+}
+.buttonadd-marca-produtos{
+  margin-left: 5px;
+  height: 30px !important;
+  width: 35px !important;
+  background-color: #001529 !important;
+  border-color: #001529 !important;
+}
+.buttonadd-marca-produtos:hover{
+  background-color: #1890ff !important;
+  border-color: #1890ff !important;
+}
+.button{
+  background-color: #001529 !important;
+  border-color: #001529 !important;
+}
+.button:hover{
+  background-color: #1890ff !important;
+  border-color: #1890ff !important;
+}
+.div-marca-produtos{
+  width: 32%;
+  display: flex;
+  align-items: center
+}
+.div-descricao-produtos{
+  width: 100%;
+  display: flex;
+  align-items: center
+}
+.div-codigo-produtos{
+  margin-right: 10px;
+  width: 20%;
+  display: flex;
+  align-items: center
+}
+.div-quantMin-produtos{
+  width: 25%;
+  display: flex;
+  align-items: center
+}
+.div-textQuant-produtos{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 150px
+}
+.div-textSerial-produtos{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 130px
+}
+.div-tipo-produtos{
+  width: 45%;
+  display: flex;
+  align-items: center
+}
+.div-modelo-produtos{
+  width: 50%;
+  display: flex;
+  align-items: center
+}
+.div-serial-produtos{
+  width: 25%;
+  display: flex;
+  align-items: center;
+  margin-left: 20px
+}
+.linha-button-produtos{
+  width: 85%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px
+}
+.linhaModal-produtos{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.div-marcaModal-produtos{
+  width: 100%;
+  display: flex;
+  align-items: center
+}
+.div-fabricanteModal-produtos{
+  margin-top: 15px;
+  width: 100%;
+  display: flex;
+  align-items: center
+}
+.div-tipoModal-produtos{
+  width: 100%;
+  display: flex;
+  align-items: center
+}
+.div-tipoModeloModal-produtos{
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  align-items: center
+}
+.div-modeloModal-produtos{
+  width: 100%;
+  display: flex;
+  align-items: center
+}
+.div-descricaoModal-produtos{
+  width: 100%;
+  margin-top: 15px;
+  display: flex;
+  align-items: center
+}
+.linhaSemEspaco-produtos{
+  margin-top:30px;
+  width: 85%;
+  display: flex;
+}

@@ -1,0 +1,211 @@
+.div-card-ML{
+  width: 96%;
+  height: 95%;
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+.linhaTexto-ML{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+.h1-ML{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-weight: 500;
+  font-size: 2.2em
+}
+.div-textCodigo-ML{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 255px
+}
+.div-textNome-ML{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 225px
+}
+.div-textNomeProduto-ML{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 165px
+}
+.div-linha-ML{
+  margin-top: 30px;
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+}
+.div-codigo-ML{
+  width: 35%;
+  display: flex;
+  align-items: center
+}
+.div-cnpj-ML{
+  width: 30%;
+  display: flex;
+  align-items: center
+}
+.div-text-ML{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px
+}
+.div-rs-ML{
+  width: 63%;
+  display: flex;
+  align-items: center
+}
+.div-textRs-ML{
+  width: 120px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px
+}
+.div-cep-ML{
+  width: 20%;
+  display: flex;
+  align-items: center
+}
+.div-uf-ML{
+  width: 12%;
+  display: flex;
+  align-items: center
+}
+.div-cidade-ML{
+  width: 61%;
+  display: flex;
+  align-items: center
+}
+.div-bairro-ML{
+  width: 40%;
+  display: flex;
+  align-items: center
+}
+.div-rua-ML{
+  width: 40%;
+  display: flex;
+  align-items: center
+}
+.div-n-ML{
+  width: 15%;
+  display: flex;
+  align-items: center
+}
+.div-comp-ML{
+  width: 40%;
+  display: flex;
+  align-items: center
+}
+.div-ref-ML{
+  width: 58%;
+  display: flex;
+  align-items: center
+}
+.div-textRef-ML{
+  width: 130px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+}
+.div-cpf-ML{
+  width: 32%;
+  display: flex;
+  align-items: center
+}
+.div-linhaSepareted-ML{
+  width: 90%;
+  height: 1px;
+  background-color: rgb(197, 197, 197);
+  margin: 30px 0 30px 0
+}
+.div-linha1-ML{
+  margin-top: 30px;
+  width: 85%;
+  display: flex;
+}
+.h1-ML{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-weight: 500;
+  font-size: 2.2em
+}
+.div-nome-ML{
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+.div-quant-ML{
+  width: 17%;
+  display: flex;
+  align-items: center
+}
+.div-estoque-ML{
+  width: 30%;
+  display: flex;
+  align-items: center
+}
+.linhaTextoPecas-ML{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.div-linhaSelecionadML-ML{
+  width: 85%;
+  margin-top: 30px;
+}
+.div-linhaSeparete-ML{
+  width: 90%;
+  height: 1px;
+  background-color: rgb(180, 180, 180);
+  margin-top: 40px;
+}
+.h2-ML{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 20px;
+  color: black;
+}
+.label-produto-ML{
+  width: 50%;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 18px;
+  font-weight: bold
+}
+.label-quant-ML{
+  width: 40%;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 18px;
+  font-weight: bold
+}
+.button-remove-ML{
+  background-color: red !important;
+  border-color: red !important;
+}
+.div-maior-ML{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+.div-linhaSepareteProdutML-ML{
+  width: 85%;
+  height: 1px;
+  background-color: rgb(196, 196, 196);
+}
+.div-buttonSalvar-ML{
+  width: 85%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px
+}

@@ -1,0 +1,108 @@
+.div-card-tecnico{
+  width: 96%;
+  height: 95%;
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+.linhaTexto-tecnico{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+.h1-tecnico{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-weight: 500;
+  font-size: 2.2em
+}
+.linha1-tecnico{
+  margin-top: 30px;
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+}
+.div-text-tecnico{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px
+}
+.div-nome-tecnico{
+  width: 65%;
+  display: flex;
+  align-items: center
+}
+.div-cnh-tecnico{
+  width: 30%;
+  display: flex;
+  align-items: center
+}
+.div-carro-tecnico{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  margin-right: 50px
+}
+.div-rodizio-tecnico{
+  width: 24%;
+  display: flex;
+  align-items: center
+}
+.div-textCNH-tecnico{
+  width: 200px;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px
+}
+.linhaModal-tecnico{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.div-modeloModal-tecnico{
+  width: 100%;
+  display: flex;
+  align-items: center
+}
+.div-anoModal-tecnico{
+  margin-top: 15px;
+  width: 30%;
+  display: flex;
+  align-items: center
+}
+.div-placaModal-tecnico{
+  margin-top: 15px;
+  width: 35%;
+  display: flex;
+  align-items: center;
+}
+.button{
+  background-color: #001529 !important;
+  border-color: #001529 !important;
+}
+.button:hover{
+  background-color: #1890ff !important;
+  border-color: #1890ff !important;
+}
+.buttonadd-marca-tecnico{
+  margin-left: 5px;
+  height: 30px !important;
+  width: 35px !important;
+  background-color: #001529 !important;
+  border-color: #001529 !important;
+}
+.linha-button-tecnico{
+  width: 85%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px
+}
+.linhaSemEspaco-tecnico{
+  margin-top:30px;
+  width: 85%;
+  display: flex;
+}
