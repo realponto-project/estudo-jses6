@@ -21,8 +21,8 @@ class NovaEntrada extends Component {
     messageError: false,
     messageSucesso: false,
     estoque: 'REALPONTO',
-    nomeProduto: '',
-    fornecedor: '',
+    nomeProduto: 'Não selecionado',
+    fornecedor: 'Não selecionado',
     quant: '1',
     modalConfirm: false,
     arrayProdutos: [],
@@ -43,35 +43,19 @@ class NovaEntrada extends Component {
   }
 
   getAllFornecedor = async () => {
-    this.setState({
-      loading: true,
-    })
-
     await getFornecedor().then(
       resposta => this.setState({
         fornecedorArray: resposta.data,
       })
     )
-
-    this.setState({
-      loading: false,
-    })
   }
 
   getAllItens = async () => {
-    this.setState({
-      loading: true,
-    })
-
     await getItens().then(
       resposta => this.setState({
         itemArray: resposta.data,
       })
     )
-
-    this.setState({
-      loading: false,
-    })
   }
 
   handleOk = () => {
@@ -168,8 +152,8 @@ class NovaEntrada extends Component {
 
       this.setState({
         estoque: 'REALPONTO',
-        nomeProduto: '',
-        fornecedor: '',
+        nomeProduto: 'Não selecionado',
+        fornecedor: 'Não selecionado',
         quant: '1',
         numeroSerieTest: [],
         messageSuccess: true,
@@ -217,6 +201,18 @@ class NovaEntrada extends Component {
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+    })
+  }
+
+  onChangeItem = (value) => {
+    this.setState({
+      nomeProduto: value
+    })
+  }
+
+  onChangeForn = (value) => {
+    this.setState({
+      fornecedor: value
     })
   }
 
@@ -272,7 +268,7 @@ class NovaEntrada extends Component {
       <div className='linhaModal-entrada'>
         <div className='div-fornecedorModal-entrada'>
           <div className='div-text-entrada'>Quant:</div>
-          <label className='label-entrada'>{this.state.quant}</label>
+          <label className='label-entrada'>{this.state.quant} UN</label>
         </div>
       </div>
 
@@ -303,18 +299,23 @@ class NovaEntrada extends Component {
           <div className='div-nome-entrada'>
             <div className='div-textNome-entrada'>Nome do produto:</div>
             <div className='div-inputs'>
-              <Input
-                className={
-                  this.state.fieldFalha.nomeProduto ?
-                    'div-inputError' :
-                    'input-100'}
+            {this.state.itemArray.length !== 0 ?
+              <Select
+                showSearch
                 style={{ width: '100%' }}
-                name='nomeProduto'
+                placeholder="Selecione o produto"
+                optionFilterProp="children"
                 value={this.state.nomeProduto}
-                placeholder="Digite o nome do produto"
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-              />
+                onChange={this.onChangeItem}
+                filterOption={(input, option) =>
+                  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+              >
+              {this.state.itemArray.map((value)=> <Option value={value.name}>{value.name}</Option>)}
+              </Select> : <Select
+                value='Nenhum produto cadastrado'
+              >
+              </Select>}
               {this.state.fieldFalha.nomeProduto ?
                 <p className='div-feedbackError'>
                   {this.state.message.nomeProduto}
@@ -336,18 +337,22 @@ class NovaEntrada extends Component {
           <div className='div-fornecedor-entrada'>
             <div className='div-text-entrada'>Fornecedor:</div>
             <div className='div-inputs'>
-              <Input
-                className={
-                  this.state.fieldFalha.fornecedor ?
-                    'div-inputError' :
-                    'input-100'}
+            {this.state.fornecedorArray.length !== 0 ? <Select
+                showSearch
                 style={{ width: '100%' }}
-                name='fornecedor'
+                optionFilterProp="children"
                 value={this.state.fornecedor}
-                placeholder="Digite o fornecedor"
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-              />
+                onChange={this.onChangeForn}
+                filterOption={(input, option) =>
+                  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+              >
+              {this.state.fornecedorArray.map((value)=> <Option value={value.razaoSocial}>{value.razaoSocial}</Option>)}
+              </Select> : <Select
+                value='Nenhum fornecedor cadastrado'
+              >
+              </Select>}
+            
               {this.state.fieldFalha.fornecedor ?
                 <p className='div-feedbackError'>
                   {this.state.message.fornecedor}

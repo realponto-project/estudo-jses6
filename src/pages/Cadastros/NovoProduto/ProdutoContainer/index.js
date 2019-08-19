@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Input, Select, Button, Modal, Switch, message } from 'antd'
 import './index.css'
-import { newMarca, newTipo, newFabricante, newProduto, getTipo } from '../../../../services/produto'
+import { newMarca, newTipo, newFabricante, newProduto, getTipo, getMarca } from '../../../../services/produto'
 
 
 const { Option } = Select;
@@ -17,8 +17,8 @@ class NovoProduto extends Component {
     itemArray:[],
     item: '',
     categoria: 'Equipamento',
-    marca: '',
-    tipo: '',
+    marca: "Não selecionado",
+    tipo: "Não selecionado",
     fabricante: '',
     descricao: '',
     codigo: '',
@@ -40,6 +40,12 @@ class NovoProduto extends Component {
     })
   }
 
+  handleChangeMarca = (value) => {
+    this.setState({
+      marca: value,
+    })
+  }
+
   success = () => {
     message.success('O cadastro foi efetuado');
   };
@@ -49,23 +55,28 @@ class NovoProduto extends Component {
   };
 
   componentDidMount = async () => {
+    await this.getAllMarca()
+    
     await this.getAllTipo()
   }
 
   getAllTipo = async () => {
-    this.setState({
-      loading: true,
-    })
-
     await getTipo().then(
       resposta => this.setState({
         tipoArray: resposta.data,
-      }, console.log(resposta))
+      })
     )
+  }
 
-    this.setState({
-      loading: false,
-    })
+  getAllMarca = async () => {
+
+    const peca =  this.state.categoria.toLocaleLowerCase()
+
+    await getMarca( peca ).then(
+      resposta => this.setState({
+        marcaArray: resposta.data,
+      })
+    )
   }
 
   saveTargetNewProduto = async () => {
@@ -107,8 +118,8 @@ class NovoProduto extends Component {
       this.setState({
         item: '',
         categoria: 'Equipamento',
-        marca: '',
-        tipo: '',
+        marca: "Não selecionado",
+        tipo: "Não selecionado",
         fabricante: '',
         descricao: '',
         codigo: '',
@@ -361,6 +372,7 @@ class NovoProduto extends Component {
   )
 
   render() {
+    console.log(this.state)
     return (
       <div className='div-card-produtos'>
         <div className='linhaTexto-produtos'>
@@ -391,14 +403,10 @@ class NovoProduto extends Component {
 
           <div className='div-marca-produtos'>
             <div className='div-text-produtos'>Marca:</div>
-            <Input
-              className='input-100'
-              placeholder="Digite a marca"
-              name='marca'
-              value={this.state.marca}
-              onChange={this.onChange}
-              allowClear
-            />
+            {this.state.marcaArray.length !== 0 ? <Select value={this.state.marca} style={{ width: '100%'}} onChange={this.handleChangeMarca}> 
+            {this.state.marcaArray.map((valor) =>
+            <Option value={valor.mark}>{valor.mark}</Option>)}</Select> : 
+            <Select value='Nenhuma marca cadastrada' style={{ width: '100%'}}></Select>}
             <Button className='buttonadd-marca-produtos' type="primary" icon="plus" name='modalMarca' onClick={this.openModais} />
           </div>
           <this.modalMarca />
@@ -407,10 +415,10 @@ class NovoProduto extends Component {
         {this.state.categoria === 'Equipamento' ? <div className='linha1-produtos'>
           <div className='div-tipo-produtos'>
             <div className='div-text-produtos'>Tipo:</div>
-            {this.state.tipoArray !== [] ? <Select defaultValue="Não selecionado" style={{ width: '100%'}} onChange={this.handleChangeTipo}> 
+            {this.state.tipoArray.length !== 0 ? <Select value={this.state.tipo} style={{ width: '100%'}} onChange={this.handleChangeTipo}> 
             {this.state.tipoArray.map((valor) =>
             <Option value={valor.type}>{valor.type}</Option>)}</Select> : 
-            <Select defaultValue="Nenhum tipo cadastrado" style={{ width: '100%' }}> </Select>}
+            <Select value='Nenhum tipo cadastrado' style={{ width: '100%'}}></Select>}
             <Button className='buttonadd-marca-produtos' type="primary" name='modalTipo' icon="plus" onClick={this.openModais} />
             <this.modalTipo />
           </div>

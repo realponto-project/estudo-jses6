@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './index.css'
 import { Input, DatePicker, InputNumber, Button, message, Select } from 'antd'
 import { newReservaOs } from '../../../../services/reservaOs';
+import { getItens } from '../../../../services/produto';
 
 
 const { Option } = Select;
@@ -9,6 +10,7 @@ const { Option } = Select;
 class ReservaOs extends Component{
 
   state={
+    itemArray: [],
     messageError: false,
     messageSuccess: false,
     Os: '',
@@ -16,11 +18,29 @@ class ReservaOs extends Component{
     cnpj: '',
     data: '',
     tecnico: 'TESTE',
-    nomeProduto: '',
+    nomeProduto: 'Não selecionado',
     tecnicoId: '',
     quant: '1',
     carrinho: [],
     estoque: 'REALPONTO'
+  }
+
+  componentDidMount = async () => {
+    await this.getAllItens()
+  }
+
+  getAllItens = async () => {
+    await getItens().then(
+      resposta => this.setState({
+        itemArray: resposta.data,
+      })
+    )
+  }
+
+  onChangeItem = async (value) => {
+   await this.setState({
+      nomeProduto: value
+    })
   }
 
   success = () => {
@@ -32,7 +52,7 @@ class ReservaOs extends Component{
   };
 
   errorProduto = () => {
-    message.error('O nome do produto é obrigatório para essa ação ser realizada');
+    message.error('O produto é obrigatório para essa ação ser realizada');
   };
 
   onChangeData = (date, dateString) => {
@@ -118,7 +138,7 @@ class ReservaOs extends Component{
   }
 
   addCarrinho = () => {
-    if(this.state.nomeProduto !== ''){
+    if(this.state.nomeProduto !== 'Não selecionado' || ''){
     this.setState({
       carrinho:[{
         nomeProdutoCarrinho: this.state.nomeProduto,
@@ -126,7 +146,7 @@ class ReservaOs extends Component{
         quantCarrinho: this.state.quant,
         estoqueCarrrinho: this.state.estoque,
       },...this.state.carrinho],
-      nomeProduto: '',
+      nomeProduto: 'Não selecionado',
       quant: '1',
       estoque: 'REALPONTO'
     })
@@ -145,6 +165,7 @@ class ReservaOs extends Component{
 
 
   render(){
+    console.log(this.state.nomeProduto)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-Os'>
@@ -219,16 +240,23 @@ class ReservaOs extends Component{
         <div className='div-linha-Os'>
         <div className='div-nome-Os'>
           <div className='div-textNome-Os'>Nome do produto:</div>
-            <Input
-              className='input-100'
+            {this.state.itemArray.length !== 0 ? <Select
+              showSearch
               style={{ width: '100%' }}
-              name='nomeProduto'
+              placeholder="Selecione o produto"
+              optionFilterProp="children"
               value={this.state.nomeProduto}
-              placeholder="Digite o nome do produto"
-              onChange={this.onChange}
-              onBlur={this.onBlurValidator}
-              allowClear
-            />
+              onChange={this.onChangeItem}
+              filterOption={(input, option) =>
+                option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+              >
+              {this.state.itemArray.map((value)=> <Option value={value.name}>{value.name}</Option>)}
+              </Select> : <Select
+                style={{width: '100%'}}
+                value='Nenhum produto cadastrado'
+              >
+              </Select>}
           </div>  
 
           <div className='div-quant-Os'>
@@ -252,7 +280,7 @@ class ReservaOs extends Component{
 
         <div className='div-linhaSeparete-Os'></div>        
 
-        {this.state.carrinho.length === 0 ? null : <div className='div-maior-Os'><div className='div-linhaSelecionados-Os'><h2 className='h2-Os'>Produtos selecionados</h2></div><div className='div-linha1-Os'><label className='label-produto-Os'>Produto</label><label className='label-quant-Os'>Quantidade</label></div><div className='div-linhaSepareteProdutos-Os'></div>{this.state.carrinho.map((valor) => <div className='div-linha-Os'><label className='label-produto-Os'>{valor.nomeProdutoCarrinho}</label><label className='label-quant-Os'>{valor.quantCarrinho}</label><Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button></div>)}</div>}
+        {this.state.carrinho.length === 0 ? null : <div className='div-maior-Os'><div className='div-linhaSelecionados-Os'><h2 className='h2-Os'>Produtos selecionados</h2></div><div className='div-linha1-Os'><label className='label-produto-Os'>Produto</label><label className='label-quant-Os'>Quantidade</label></div><div className='div-linhaSepareteProdutos-Os'></div>{this.state.carrinho.map((valor) => <div className='div-linha-Os'><label className='label-produto-Os'>{valor.nomeProdutoCarrinho}</label><label className='label-quant-Os'>{valor.quantCarrinho} UN</label><Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button></div>)}</div>}
 
         <div className='div-buttonSalvar-Os'>
           <Button type='primary' className='button' onClick={this.saveTargetNewReservaOs}>Salvar</Button>

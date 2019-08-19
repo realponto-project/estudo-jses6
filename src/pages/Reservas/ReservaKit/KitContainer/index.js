@@ -48,11 +48,8 @@ class ReservaKit extends Component {
               <Option value="TESTE3">TESTE3</Option>
             </Select>
           </div>
-          <div className='div-button-kit'>
             {this.renderRedirect()}
-            <Button className='button' type='primary'>Adicionar</Button>
             <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button>
-          </div>
         </div>
         <div className='div-cabecalho-kit'>
           <div className='cel-produto-cabecalho-kit'>

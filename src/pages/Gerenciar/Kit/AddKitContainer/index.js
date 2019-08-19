@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Input, Select, InputNumber, Button, message } from 'antd'
+import { Select, InputNumber, Button, message } from 'antd'
+import { getItens } from '../../../../services/produto';
 
 
 const { Option } = Select;
@@ -8,10 +9,23 @@ const { Option } = Select;
 class AddKit extends Component{
 
   state={
+    itemArray: [],
     carrinho: [],
-    item: '',
+    item: 'Não selecionado',
     quant: '1',
     estoque: 'REALPONTO',
+  }
+
+  componentDidMount = async () => {
+    await this.getAllItens()
+  }
+
+  getAllItens = async () => {
+    await getItens().then(
+      resposta => this.setState({
+        itemArray: resposta.data,
+      }, console.log(resposta))
+    )
   }
 
   onChange = (e) => {
@@ -33,16 +47,22 @@ class AddKit extends Component{
   }
 
   errorProduto = () => {
-    message.error('O nome do produto é obrigatório para essa ação ser realizada');
+    message.error('O produto é obrigatório para essa ação ser realizada');
   };
 
   errorSelecionado = () => {
     message.error('Este item já foi selecionado');
   };
 
+  onChangeItem = (value) => {
+    this.setState({
+      item: value
+    })
+  }
+
   
   addCarrinho = async () => {
-    if(this.state.item !== ''){
+    if(this.state.item !== 'Não selecionado'){
 
     const array = this.state.carrinho.map(value => value.itemCarrinho)
 
@@ -60,7 +80,7 @@ class AddKit extends Component{
         quantCarrinho: this.state.quant,
         estoqueCarrrinho: this.state.estoque,
       },...this.state.carrinho],
-      item: '',
+      item: 'Não selecionado',
       quant: '1',
       estoque: 'REALPONTO'
     })
@@ -87,16 +107,18 @@ class AddKit extends Component{
         <div className='div-linha-Os'>
         <div className='div-nome-Os'>
           <div className='div-textNome-Os'>Nome do produto:</div>
-            <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='item'
-              value={this.state.item}
-              placeholder="Digite o nome do produto"
-              onChange={this.onChange}
-              onBlur={this.onBlurValidator}
-              allowClear
-            />
+            <Select
+                showSearch
+                style={{ width: '100%' }}
+                optionFilterProp="children"
+                value={this.state.item}
+                onChange={this.onChangeItem}
+                filterOption={(input, option) =>
+                  option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+              >
+              {this.state.itemArray.map((value)=> <Option value={value.name}>{value.name}</Option>)}
+              </Select>
           </div>  
 
           <div className='div-quant-Os'>
@@ -120,7 +142,7 @@ class AddKit extends Component{
 
         <div className='div-linhaSeparete-Os'></div>        
 
-        {this.state.carrinho.length === 0 ? null : <div className='div-maior-Os'><div className='div-linhaSelecionados-Os'><h2 className='h2-Os'>Produtos selecionados</h2></div><div className='div-linha1-Os'><label className='label-produto-Os'>Produto</label><label className='label-quant-Os'>Quantidade</label></div><div className='div-linhaSepareteProdutos-Os'></div>{this.state.carrinho.map((valor) => <div className='div-linha-Os'><label className='label-produto-Os'>{valor.itemCarrinho}</label><label className='label-quant-Os'>{valor.quantCarrinho}</label><Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button></div>)}</div>}
+        {this.state.carrinho.length === 0 ? null : <div className='div-maior-Os'><div className='div-linhaSelecionados-Os'><h2 className='h2-Os'>Produtos selecionados</h2></div><div className='div-linha1-Os'><label className='label-produto-Os'>Produto</label><label className='label-quant-Os'>Quantidade</label></div><div className='div-linhaSepareteProdutos-Os'></div>{this.state.carrinho.map((valor) => <div className='div-linha-Os'><label className='label-produto-Os'>{valor.itemCarrinho}</label><label className='label-quant-Os'>{valor.quantCarrinho} UN</label><Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button></div>)}</div>}
 
         <div className='div-buttonSalvar-Os'>
           <Button type='primary' className='button' onClick={this.saveTargetNewReservaOs}>Salvar</Button>

@@ -25,19 +25,11 @@ class NovoTecnico extends Component{
   }
 
   getAllCarro = async () => {
-    this.setState({
-      loading: true,
-    })
-
-    await getCarro().then(
+      await getCarro().then(
       resposta => this.setState({
         carroArray: resposta.data,
       })
     )
-
-    this.setState({
-      loading: false,
-    })
   }
 
   success = () => {
@@ -317,10 +309,10 @@ class NovoTecnico extends Component{
         <div className='linhaSemEspaco-tecnico'>
           <div className='div-carro-tecnico'>
             <div className='div-text-tecnico'>Carro:</div>
-            {this.state.carroArray !== [] ? <Select defaultValue='Não selecionado' style={{ width: '100%' }} onChange={this.onChangeSelect}>
+            {this.state.carroArray.length !== 0 ? <Select value='Não selecionado' style={{ width: '100%' }} onChange={this.onChangeSelect}>
             {this.state.carroArray.map((valor) => 
             <Option value={valor.plate}>{`${valor.model} ${valor.plate}`}</Option>)}</Select> :
-            <Select value='Nenhum carro cadastrado' style={{ width: '100%' }}> </Select> }
+            <Select value='Nenhum carro cadastrado'></Select>}
           
           <Button className='buttonadd-marca-tecnico' type="primary" icon="plus" onClick={this.openModal} />
           </div>
