@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, Button, Icon, Modal, Tooltip, Select } from 'antd'
+import { Pagination, Button, Icon, Modal, Tooltip, Input } from 'antd'
 
 import { getTecnico } from '../../../../services/tecnico'
-
-
-const { Option } = Select;
 
 class ReservaTecnico extends Component{
 
   state={
+    avancado: false,
     loading: false,
     tecnicoArray:[],
     modalDetalhes: false,
-    lineSelected: {
-      
-    },
+    Os: '',
+    razaoSocial: '',
+    cnpj: '',
+    data: '',
+    lineSelected: {},
     tecnico: 'Não selecionado'
   }
 
@@ -26,6 +26,18 @@ class ReservaTecnico extends Component{
         tecnicoArray: resposta.data,
       })
     )
+  }
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  avancado = () => {
+    this.setState({
+      avancado: !this.state.avancado
+    })
   }
 
   componentDidMount = async () => {
@@ -79,17 +91,67 @@ class ReservaTecnico extends Component{
           <h1 className='h1-Rtecnico'>Reservas técnico</h1>
         </div>
 
-        <div className='div-linha-Rtecnico'>
-          <div className='div-tecnico-Rtecnico'>
-          <div className='div-text-Rtecnico'>Técnico:</div>
-
-          {this.state.tecnicoArray.length !== 0 ?
-          <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeSelect}>
-            {this.state.tecnicoArray.map((valor) => 
-            <Option value={valor.name}>{valor.name}</Option>)}</Select> : <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select>}
-
+        {this.state.avancado ? 
+        <div className='div-linha-avancado-Rtecnico'>
+        <div className='div-ocultar-Rtecnico'>
+          <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
         </div>
-        </div>
+        <div className='div-linha1-avancado-Rtecnico'>
+          <div className='div-Os-Rtecnico'>
+          <div className='div-text-Os'>Os:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='Os'
+              value={this.state.Os}
+              placeholder="12"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div> 
+
+          <div className='div-rs-Rtecnico'>
+          <div className='div-textRs-Rtecnico'>Razão social:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='razaoSocial'
+              value={this.state.razaoSocial}
+              placeholder="Digite a razão social"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div>
+
+          <div className='div-cnpj-Rtecnico'>
+          <div className='div-text-Rtecnico'>Cnpj:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='cnpj'
+              value={this.state.cnpj}
+              placeholder="Digite o cnpj"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div>
+
+          <div className='div-data-Rtecnico'>
+          <div className='div-text-Rtecnico'>Data:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='data'
+              value={this.state.data}
+              placeholder="Digite a data"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div>
+        </div></div> : 
+        <div className='div-avancado-Rtecnico'>
+          <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+        </div> }
 
         <div className='div-cabecalho-Rtecnico'>
           <div className='cel-os-cabecalho-Rtecnico'>

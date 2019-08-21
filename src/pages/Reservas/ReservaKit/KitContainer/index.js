@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, Button, Select } from 'antd'
+import { Pagination, Button, Select, Input } from 'antd'
 import { Redirect } from 'react-router-dom'
 
 import { getTecnico } from '../../../../services/tecnico'
@@ -11,9 +11,24 @@ const { Option } = Select;
 class ReservaKit extends Component {
 
   state = {
-    tecnicoArray:[],
+    avancado: false,
+    produto: '',
+    data: '',
+    tecnicoArray: [],
     tecnico: 'Não selecionado',
     redirect: false,
+  }
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  avancado = () => {
+    this.setState({
+      avancado: !this.state.avancado
+    })
   }
 
   getAllTecnico = async () => {
@@ -54,18 +69,54 @@ class ReservaKit extends Component {
           <h1 className='h1-kit'>Kit do técnico</h1>
         </div>
 
-        <div className='div-linha-kit'>
-          <div className='div-tecnico-kit'>
-            <div className='div-text-kit'>Técnico:</div>
-            {this.state.tecnicoArray.length === 0 ?
-            <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select> :
-            <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}>
-              {this.state.tecnicoArray.map((valor) => 
-              <Option value={valor.name}>{valor.name}</Option>)}</Select>}
+          {this.state.avancado ?
+            <div className='div-avancado-buttons-kit'>
+              <div className='div-button-avancado-kit'>
+              {this.renderRedirect()}
+              <Button className='button' type='primary' onClick={this.avancado}>Ocultar</Button>
+              <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button>
+               </div> 
+               <div className='div-linha1-avancado-Rtecnico'>
+          <div className='div-produto-Rtecnico'>
+          <div className='div-text-Os'>Produto:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='produto'
+              value={this.state.produto}
+              placeholder="Digite o nome do produto"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div> 
+
+          <div className='div-data-kit'>
+          <div className='div-text-Rtecnico'>Data:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='data'
+              value={this.state.data}
+              placeholder="Digite a data"
+              onChange={this.onChange}
+              allowClear
+            />
           </div>
+
+          <div className='div-fabricante-Rtecnico'>
+          <div className='div-text-Rtecnico'>Técnico:</div>
+          {this.state.tecnicoArray.length === 0 ? 
+            <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select> : 
+            <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}>{this.state.tecnicoArray.map((valor) => <Option value={valor.name}>{valor.name}</Option>)}</Select>}
+          </div>
+        </div></div> :
+            <div className='div-avancado-buttons-kit'>
+            <div className='div-button-avancado-kit'>
             {this.renderRedirect()}
-            <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button>
-        </div>
+              <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+              <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button>
+            </div>
+            </div>}
         <div className='div-cabecalho-kit'>
           <div className='cel-produto-cabecalho-kit'>
             Produto

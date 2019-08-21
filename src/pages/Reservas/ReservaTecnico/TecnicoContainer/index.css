@@ -25,6 +25,11 @@
   display: flex;
   align-items: center
 }
+.div-linha-avancado-Rtecnico{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
 .cel-os-cabecalho-Rtecnico{
   align-items: center;
   display: flex;
@@ -82,12 +87,21 @@
   display: flex;
   justify-content: flex-end
 }
-
+.div-ocultar-Rtecnico{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end
+}
 .div-text-Rtecnico{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
   font-size: 16px;
   color: rgb(90, 90, 90);
   margin-right: 5px;
+}
+.div-avancado-Rtecnico{
+  width: 90%;
+  display: flex;
+  justify-content: flex-end
 }
 .div-tecnico-Rtecnico{
   width: 45%;

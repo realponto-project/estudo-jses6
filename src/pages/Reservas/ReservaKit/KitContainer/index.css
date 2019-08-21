@@ -103,7 +103,23 @@
   justify-content: space-between
 }
 .div-button-kit{
-  width: 22%;
+  width: 100%;
   display: flex;
   justify-content: space-between
+}
+.div-avancado-buttons-kit{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.div-button-avancado-kit{
+  width: 100%;
+  display: flex;
+  justify-content: space-between
+}
+.div-data-kit{
+  width: 22%;
+  display: flex;
+  align-items: center
 }
