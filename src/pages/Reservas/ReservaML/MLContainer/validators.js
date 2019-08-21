@@ -84,66 +84,35 @@ export const validators = (nome, valor, state) => {
   
   if (nome === 'cpfOuCnpj') {
     if (!cnpjLib.isValid(valor) && !cpfLib.isValid(valor)) {
-      if (valor.length === 14) message.cnpj = 'Cpf inválido.'
-      else if (valor.length === 18) message.cnpj = 'Cnpj inválido.'
-      else message.cnpj = 'Número incompleto.'
-      fieldFalha.cnpj = true
+      if (valor.length === 14) message.cpfOuCnpj = 'Cpf inválido.'
+      else if (valor.length === 18) message.cpfOuCnpj = 'Cnpj inválido.'
+      else message.cpfOuCnpj = 'Número incompleto.'
+      fieldFalha.cpfOuCnpj = true
   
     } else {
-      fieldFalha.cnpj = false
-      message.cnpj = ''
+      fieldFalha.cpfOuCnpj = false
+      message.cpfOuCnpj = ''
     }
   
     return {
       fieldFalha,
       message
     }
-  }else if (nome === 'razaoSocial') {
+  }else if (nome === 'codigo') {
+    if (valor === '') {
+      message.codigo = 'É obrigatório.'
+      fieldFalha.codigo = true
+    } else fieldFalha.codigo = false
+
+    return {
+      fieldFalha,
+      message
+    }
+  } else if (nome === 'razaoSocial') {
     if (valor === '') {
       message.razaoSocial = 'É obrigatório.'
       fieldFalha.razaoSocial = true
     } else fieldFalha.razaoSocial = false
-
-    return {
-      fieldFalha,
-      message
-    }
-  } else if (nome === 'cep') {
-    if (valor === '') {
-      message.cep = 'É obrigatório.'
-      fieldFalha.cep = true
-    } else fieldFalha.cep = false
-
-    return {
-      fieldFalha,
-      message
-    }
-  } 
-  else if (nome === 'nomeContato'){
-    if (valor === '') {
-      message.nomeContato = 'É obrigatório.'
-      fieldFalha.nomeContato = true
-    } else fieldFalha.nomeContato = false
-
-    return {
-      fieldFalha,
-      message
-    }
-  } else if (nome === 'email') {
-    if (valor === '') {
-      message.email = 'É obrigatório.'
-      fieldFalha.email = true
-    } else fieldFalha.email = false
-
-    return {
-      fieldFalha,
-      message
-    }
-  } else if (nome === 'telefone') {
-    if (valor === '') {
-      message.telefone = 'É obrigatório.'
-      fieldFalha.telefone = true
-    } else fieldFalha.telefone = false
 
     return {
       fieldFalha,
@@ -195,6 +164,11 @@ export const validators = (nome, valor, state) => {
       fieldFalha.numero = true
     } else fieldFalha.numero = false
 
+    return {
+      fieldFalha,
+      message
+    }
+  } else {
     return {
       fieldFalha,
       message

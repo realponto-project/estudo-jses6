@@ -12,47 +12,47 @@ class NovoFornecedor extends Component {
     messageSuccess: false,
     cnpj: '',
     razaoSocial: '',
-    cep: '',
-    estado: '',
-    cidade: '',
-    bairro: '',
-    rua: '',
-    numero: '',
+    zipCode: '',
+    state: '',
+    city: '',
+    neighborhood: '',
+    street: '',
+    number: '',
     complemento: '',
     pontoReferencia: '',
-    nomeContato: '',
+    nameContact: '',
     email: '',
-    telefone: '',
+    telphone: '',
     loading: false,
     fieldFalha: {
       cnpj: false,
       razaoSocial: false,
-      cep: false,
-      estado: false,
-      cidade: false,
-      bairro: false,
-      rua: false,
-      numero: false,
+      zipCode: false,
+      state: false,
+      city: false,
+      neighborhood: false,
+      street: false,
+      number: false,
       complemento: false,
       pontoReferencia: false,
-      nomeContato: false,
+      nameContact: false,
       email: false,
-      telefone: false,
+      telphone: false,
     },
     message: {
       cnpj: '',
       razaoSocial: '',
-      cep: '',
-      estado: '',
-      cidade: '',
-      bairro: '',
-      rua: '',
-      numero: '',
+      zipCode: '',
+      state: '',
+      city: '',
+      neighborhood: '',
+      street: '',
+      number: '',
       complemento: '',
       pontoReferencia: '',
-      nomeContato: '',
+      nameContact: '',
       email: '',
-      telefone: '',
+      telphone: '',
     }
   }
 
@@ -73,16 +73,16 @@ class NovoFornecedor extends Component {
     const values = {
       razaoSocial: this.state.razaoSocial,
       cnpj: this.state.cnpj,
-      street: this.state.rua,
-      number: this.state.numero,
-      city: this.state.cidade,
-      state: this.state.estado,
-      neighborhood: this.state.bairro,
+      street: this.state.street,
+      number: this.state.number,
+      city: this.state.city,
+      state: this.state.state,
+      neighborhood: this.state.neighborhood,
       referencePoint: this.state.pontoReferencia,
-      zipCode: this.state.cep,
-      telphone: this.state.telefone,
+      zipCode: this.state.zipCode,
+      telphone: this.state.telphone,
       email: this.state.email,
-      nameContact: this.state.nomeContato,
+      nameContact: this.state.nameContact,
       complement: this.state.complemento,
       responsibleUser: 'modrp',
       relation: 'fornecedor'
@@ -109,17 +109,17 @@ class NovoFornecedor extends Component {
       this.setState({
         cnpj: '',
         razaoSocial: '',
-        cep: '',
-        estado: '',
-        cidade: '',
-        bairro: '',
-        rua: '',
-        numero: '',
+        zipCode: '',
+        state: '',
+        city: '',
+        neighborhood: '',
+        street: '',
+        number: '',
         complemento: '',
         pontoReferencia: '',
-        nomeContato: '',
+        nameContact: '',
         email: '',
-        telefone: '',
+        telphone: '',
         messageSuccess: true,
       })
       await this.success()
@@ -139,20 +139,33 @@ class NovoFornecedor extends Component {
 
     if (nome === 'cnpj') fieldFalha.cnpj = false
     if (nome === 'razaoSocial') fieldFalha.razaoSocial = false
-    if (nome === 'nomeContato') fieldFalha.nomeContato = false
+    if (nome === 'nameContact') fieldFalha.nameContact = false
     if (nome === 'email') fieldFalha.email = false
-    if (nome === 'telefone') fieldFalha.telefone = false
-    if (nome === 'cep') fieldFalha.cep = false
-    if (nome === 'estado') fieldFalha.estado = false
-    if (nome === 'cidade') fieldFalha.cidade = false
-    if (nome === 'bairro') fieldFalha.bairro = false
-    if (nome === 'rua') fieldFalha.rua = false
-    if (nome === 'numero') fieldFalha.numero = false
+    if (nome === 'telphone') fieldFalha.telphone = false
+    if (nome === 'zipCode') fieldFalha.zipCode = false
+    if (nome === 'state') fieldFalha.state = false
+    if (nome === 'city') fieldFalha.city = false
+    if (nome === 'neighborhood') fieldFalha.neighborhood = false
+    if (nome === 'street') fieldFalha.street = false
+    if (nome === 'number') fieldFalha.number = false
     if (nome === 'pontoReferencia') fieldFalha.pontoReferencia = false
 
     this.setState({
       [nome]: valor,
       fieldFalha,
+    })
+  }
+
+  onFocus = (e) => {
+    this.setState({
+      fieldFalha: {
+        ... this.state.fieldFalha,
+        [e.target.name]: false,
+      },
+      message: {
+        ... this.state.message,
+        [e.target.name]: false,
+      },
     })
   }
 
@@ -172,21 +185,21 @@ class NovoFornecedor extends Component {
   }
 
   getAddress = async (e) => {
-    const cep = e.target.value
+    const zipCode = e.target.value
     try {
       const { fieldFalha, message } = this.state
 
-      fieldFalha.estado = false
-      fieldFalha.cidade = false
-      fieldFalha.bairro = false
-      fieldFalha.rua = false
-      const address = await getAddressByZipCode(cep)
+      fieldFalha.state = false
+      fieldFalha.city = false
+      fieldFalha.neighborhood = false
+      fieldFalha.street = false
+      const address = await getAddressByZipCode(zipCode)
 
       // console.log(address)
 
       if (R.has('erro', address.data)) {
-        fieldFalha.cep = true
-        message.cep = 'Cep não encontrado.'
+        fieldFalha.zipCode = true
+        message.zipCode = 'Cep não encontrado.'
 
         this.setState({
           fieldFalha,
@@ -194,18 +207,18 @@ class NovoFornecedor extends Component {
         })
       } else {
         this.setState({
-          rua: address.data.logradouro,
-          cidade: address.data.localidade,
-          bairro: address.data.bairro,
-          estado: address.data.uf,
+          street: address.data.logradouro,
+          city: address.data.localidade,
+          neighborhood: address.data.bairro,
+          state: address.data.uf,
         })
       }
 
     } catch (error) {
       const { fieldFalha, message } = this.state
 
-      fieldFalha.cep = true
-      message.cep = 'Cep inválido.'
+      fieldFalha.zipCode = true
+      message.zipCode = 'Cep inválido.'
 
       this.setState({
         fieldFalha,
@@ -215,6 +228,7 @@ class NovoFornecedor extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <div className='div-card-fornecedor'>
         <div className='linhaTexto-fornecedor'>
@@ -236,6 +250,7 @@ class NovoFornecedor extends Component {
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
               {this.state.fieldFalha.cnpj ?
                 <p className='div-feedbackError'>
@@ -258,6 +273,7 @@ class NovoFornecedor extends Component {
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
               {this.state.fieldFalha.razaoSocial ?
                 <p className='div-feedbackError'>
@@ -273,19 +289,20 @@ class NovoFornecedor extends Component {
             <div className='div-inputs'>
               <Input
                 className={
-                  this.state.fieldFalha.cep ?
+                  this.state.fieldFalha.zipCode?
                     'div-inputError' :
                     'input-100'}
                 placeholder="Digite o cep"
-                name='cep'
-                value={this.state.cep}
+                name='zipCode'
+                value={this.state.zipCode}
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.getAddress}
+                onFocus={this.onFocus}
               />
-              {this.state.fieldFalha.cep ?
+              {this.state.fieldFalha.zipCode ?
                 <p className='div-feedbackError'>
-                  {this.state.message.cep}
+                  {this.state.message.zipCode}
                 </p> : null}
             </div>
           </div>
@@ -295,19 +312,20 @@ class NovoFornecedor extends Component {
             <div className='div-inputs'>
               <Input
                 className={
-                  this.state.fieldFalha.estado ?
+                  this.state.fieldFalha.state ?
                     'div-inputError' :
                     'input-100'}
                 placeholder="EX"
-                name='estado'
-                value={this.state.estado}
+                name='state'
+                value={this.state.state}
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
-              {this.state.fieldFalha.estado ?
+              {this.state.fieldFalha.state ?
                 <p className='div-feedbackError'>
-                  {this.state.message.estado}
+                  {this.state.message.state}
                 </p> : null}
             </div>
           </div>
@@ -317,19 +335,20 @@ class NovoFornecedor extends Component {
             <div className='div-inputs'>
               <Input
                 className={
-                this.state.fieldFalha.cidade ?
+                this.state.fieldFalha.city ?
                   'div-inputError' :
                   'input-100'}
                 placeholder="Digite a cidade"
-                name='cidade'
-                value={this.state.cidade}
+                name='city'
+                value={this.state.city}
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
-              {this.state.fieldFalha.cidade ?
+              {this.state.fieldFalha.city ?
                 <p className='div-feedbackError'>
-                  {this.state.message.cidade}
+                  {this.state.message.city}
                 </p> : null}
             </div>
           </div>
@@ -342,19 +361,20 @@ class NovoFornecedor extends Component {
             <div className='div-inputs'>
               <Input
                 className={
-                  this.state.fieldFalha.bairro ?
+                  this.state.fieldFalha.neighborhood ?
                     'div-inputError' :
                     'input-100'}
                 placeholder="Digite o bairro"
-                name='bairro'
-                value={this.state.bairro}
+                name='neighborhood'
+                value={this.state.neighborhood}
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
-              {this.state.fieldFalha.bairro ?
+              {this.state.fieldFalha.neighborhood ?
                 <p className='div-feedbackError'>
-                  {this.state.message.bairro}
+                  {this.state.message.neighborhood}
                 </p> : null}
             </div>
           </div>
@@ -364,19 +384,20 @@ class NovoFornecedor extends Component {
             <div className='div-inputs'>
               <Input
                 className={
-                  this.state.fieldFalha.rua ?
+                  this.state.fieldFalha.street ?
                     'div-inputError' :
                     'input-100'}
                 placeholder="Digite a rua"
-                name='rua'
-                value={this.state.rua}
+                name='street'
+                value={this.state.street}
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
-              {this.state.fieldFalha.rua ?
+              {this.state.fieldFalha.street ?
                 <p className='div-feedbackError'>
-                  {this.state.message.rua}
+                  {this.state.message.street}
                 </p> : null}
             </div>
           </div>
@@ -386,19 +407,20 @@ class NovoFornecedor extends Component {
             <div className='div-inputs'>
               <Input
                 className={
-                  this.state.fieldFalha.numero ?
+                  this.state.fieldFalha.number ?
                     'div-inputError' :
                     'input-100'}
                 placeholder="123456"
-                name='numero'
-                value={this.state.numero}
+                name='number'
+                value={this.state.number}
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
-              {this.state.fieldFalha.numero ?
+              {this.state.fieldFalha.number ?
                 <p className='div-feedbackError'>
-                  {this.state.message.numero}
+                  {this.state.message.number}
                 </p> : null}
             </div>
           </div>
@@ -440,19 +462,20 @@ class NovoFornecedor extends Component {
             <div className='div-inputs'>
               <Input
                 className={
-                  this.state.fieldFalha.nomeContato ?
+                  this.state.fieldFalha.nameContact ?
                     'div-inputError' :
                     'input-100'}
                 placeholder="Digite o nome"
-                name='nomeContato'
-                value={this.state.nomeContato}
+                name='nameContact'
+                value={this.state.nameContact}
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
-              {this.state.fieldFalha.nomeContato ?
+              {this.state.fieldFalha.nameContact ?
                 <p className='div-feedbackError'>
-                  {this.state.message.nomeContato}
+                  {this.state.message.nameContact}
                 </p> : null}
             </div>
           </div>
@@ -471,6 +494,7 @@ class NovoFornecedor extends Component {
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
               {this.state.fieldFalha.email ?
                 <p className='div-feedbackError'>
@@ -484,19 +508,20 @@ class NovoFornecedor extends Component {
             <div className='div-inputs'>
               <Input
                 className={
-                  this.state.fieldFalha.telefone ?
+                  this.state.fieldFalha.telphone ?
                     'div-inputError' :
                     'input-100'}
                 placeholder="(11) 95771-2340"
-                name='telefone'
-                value={this.state.telefone}
+                name='telphone'
+                value={this.state.telphone}
                 onChange={this.onChange}
                 allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
               />
-              {this.state.fieldFalha.telefone ?
+              {this.state.fieldFalha.telphone ?
                 <p className='div-feedbackError'>
-                  {this.state.message.telefone}
+                  {this.state.message.telphone}
                 </p> : null}
             </div>
           </div>

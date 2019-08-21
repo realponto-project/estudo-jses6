@@ -84,7 +84,19 @@ class ReservaTecnico extends Component{
 
           {this.state.tecnicoArray.length === 0 ?
           <Select value='Nenhum tecnicos cadastrado' style={{ width: '100%' }}></Select> :
-          <Select defaultValue='Não selecionado' style={{ width: '100%' }} onChange={this.onChangeSelect}>
+          <Select
+            defaultValue='Não selecionado'
+            style={{ width: '100%' }}
+            onChange={this.onChangeSelect}
+            showSearch
+            placeholder='Nenhum tecnicos cadastrado'
+            optionFilterProp="children"
+            value={this.state.nomeProduto}
+            filterOption={(input, option) =>
+              option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+            >
+            
             {this.state.tecnicoArray.map((valor) => 
             <Option value={valor.name}>{valor.name}</Option>)}</Select>}
 
