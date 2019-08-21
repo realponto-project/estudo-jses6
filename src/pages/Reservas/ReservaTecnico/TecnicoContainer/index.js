@@ -10,12 +10,13 @@ const { Option } = Select;
 class ReservaTecnico extends Component{
 
   state={
+    loading: false,
     tecnicoArray:[],
     modalDetalhes: false,
     lineSelected: {
       
     },
-    tecnico: 'TESTE'
+    tecnico: 'Não selecionado'
   }
 
   getAllTecnico = async () => {
@@ -82,23 +83,10 @@ class ReservaTecnico extends Component{
           <div className='div-tecnico-Rtecnico'>
           <div className='div-text-Rtecnico'>Técnico:</div>
 
-          {this.state.tecnicoArray.length === 0 ?
-          <Select value='Nenhum tecnicos cadastrado' style={{ width: '100%' }}></Select> :
-          <Select
-            defaultValue='Não selecionado'
-            style={{ width: '100%' }}
-            onChange={this.onChangeSelect}
-            showSearch
-            placeholder='Nenhum tecnicos cadastrado'
-            optionFilterProp="children"
-            value={this.state.nomeProduto}
-            filterOption={(input, option) =>
-              option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-            >
-            
+          {this.state.tecnicoArray.length !== 0 ?
+          <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeSelect}>
             {this.state.tecnicoArray.map((valor) => 
-            <Option value={valor.name}>{valor.name}</Option>)}</Select>}
+            <Option value={valor.name}>{valor.name}</Option>)}</Select> : <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select>}
 
         </div>
         </div>

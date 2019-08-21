@@ -5,11 +5,14 @@ import { newReservaOs } from '../../../../services/reservaOs';
 import { getItens } from '../../../../services/produto';
 
 
+const { TextArea } = Input;
 const { Option } = Select;
 
 class ReservaOs extends Component{
 
   state={
+    serial: false,
+    numeroSerieTest: '',
     itemArray: [],
     messageError: false,
     messageSuccess: false,
@@ -24,6 +27,43 @@ class ReservaOs extends Component{
     carrinho: [],
     estoque: 'REALPONTO'
   }
+
+  errorNumeroSerie = () => {
+    message.error('Este equipamento ja foi registrado');
+  };
+
+  filter = async (e) => {
+
+    await this.setState({
+      numeroSerieTest: e.target.value
+    })
+
+    const teste = this.state.numeroSerieTest.split(/\n/, 10)
+
+    if (/\n/.test(this.state.numeroSerieTest[this.state.numeroSerieTest.length - 1])) {
+
+      let count = 0
+
+      // eslint-disable-next-line array-callback-return
+      teste.map((valor) => {
+        if (valor === teste[teste.length - 2]) count++
+      })
+
+      if (count > 1) {
+
+        this.errorNumeroSerie()
+
+        teste.splice(teste.length - 2, 1)
+
+        const testeArray = teste.toString()
+
+        this.setState({
+          numeroSerieTest: testeArray.replace(/,/ig, '\n')
+        })
+      }
+    }
+  }
+
 
   componentDidMount = async () => {
     await this.getAllItens()
@@ -274,6 +314,20 @@ class ReservaOs extends Component{
             <Option value="PONTOREAL">PONTOREAL</Option>
           </Select>
           </div>  
+
+          {this.state.serial ? 
+          <div className='div-serial-AddKit'>
+            <div className='div-textSerial-AddKit'>Número de série:</div>
+            <TextArea
+              className='input-100'
+              placeholder="Digite o número de série"
+              autosize={{ minRows: 2, maxRows: 3 }}
+              rows={3}
+              name='numeroSerie'
+              value={this.state.numeroSerieTest}
+              onChange={this.filter}
+            />
+          </div> : null}
 
           <Button className='button' type='primary' onClick={this.addCarrinho}>Adicionar</Button>
         </div>

@@ -12,7 +12,7 @@ class ReservaKit extends Component {
 
   state = {
     tecnicoArray:[],
-    tecnico: 'TESTE',
+    tecnico: 'Não selecionado',
     redirect: false,
   }
 
@@ -58,8 +58,8 @@ class ReservaKit extends Component {
           <div className='div-tecnico-kit'>
             <div className='div-text-kit'>Técnico:</div>
             {this.state.tecnicoArray.length === 0 ?
-            <Select value='Nenhum tecnicos cadastrado' style={{ width: '100%' }}></Select> :
-            <Select defaultValue='Não selecionado' style={{ width: '100%' }} onChange={this.onChangeSelect}>
+            <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select> :
+            <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}>
               {this.state.tecnicoArray.map((valor) => 
               <Option value={valor.name}>{valor.name}</Option>)}</Select>}
           </div>
