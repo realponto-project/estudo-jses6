@@ -16,6 +16,7 @@ class NovoTecnico extends Component{
     nome: '',
     cnh: '',
     carro: '',
+    placa: 'Selecione o carro',
     rodizio: '',
     loading: false,
     modalCarro: false,
@@ -309,7 +310,7 @@ class NovoTecnico extends Component{
         <div className='linhaSemEspaco-tecnico'>
           <div className='div-carro-tecnico'>
             <div className='div-text-tecnico'>Carro:</div>
-            {this.state.carroArray.length !== 0 ? <Select value='Não selecionado' style={{ width: '100%' }} onChange={this.onChangeSelect}>
+            {this.state.carroArray.length !== 0 ? <Select value={this.state.placa} style={{ width: '100%' }} onChange={this.onChangeSelect}>
             {this.state.carroArray.map((valor) => 
             <Option value={valor.plate}>{`${valor.model} ${valor.plate}`}</Option>)}</Select> :
             <Select value='Nenhum carro cadastrado'></Select>}

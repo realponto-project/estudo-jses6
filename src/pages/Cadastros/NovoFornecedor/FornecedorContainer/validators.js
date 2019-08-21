@@ -19,7 +19,7 @@ export const masks = (nome, valor) => {
       nome,
       valor: value,
     }
-  } else if (nome === 'telefone') {
+  } else if (nome === 'telphone') {
       let value = valor
       value = value.replace(/\D/ig, '')
       value = value.slice(0, 11)
@@ -39,7 +39,7 @@ export const masks = (nome, valor) => {
         nome,
         valor: value,
       }
-    }else if (nome === 'cep'){
+    }else if (nome === 'zipCode'){
       let value = valor
       value = value.replace(/\D/ig, '')
       value = value.slice(0, 8)
@@ -53,7 +53,7 @@ export const masks = (nome, valor) => {
         nome,
         valor: value,
       }
-    } else if (nome === 'estado') {
+    } else if (nome === 'state') {
         let value = valor
         value = value.replace(/\W|\d/g, '')
         value = value.slice(0, 2)
@@ -63,7 +63,7 @@ export const masks = (nome, valor) => {
           nome,
           valor: value,
         }
-      } else if (nome === 'numero') {
+      } else if (nome === 'number') {
       let value = valor
       value = value.replace(/\D/ig, '')
 
@@ -108,22 +108,22 @@ export const validators = (nome, valor, state) => {
       fieldFalha,
       message
     }
-  } else if (nome === 'cep') {
+  } else if (nome === 'zipCode') {
     if (valor === '') {
-      message.cep = 'É obrigatório.'
-      fieldFalha.cep = true
-    } else fieldFalha.cep = false
+      message.zipCode = 'É obrigatório.'
+      fieldFalha.zipCode = true
+    } else fieldFalha.zipCode = false
 
     return {
       fieldFalha,
       message
     }
   } 
-  else if (nome === 'nomeContato'){
+  else if (nome === 'nameContact'){
     if (valor === '') {
-      message.nomeContato = 'É obrigatório.'
-      fieldFalha.nomeContato = true
-    } else fieldFalha.nomeContato = false
+      message.nameContact = 'É obrigatório.'
+      fieldFalha.nameContact = true
+    } else fieldFalha.nameContact = false
 
     return {
       fieldFalha,
@@ -139,61 +139,61 @@ export const validators = (nome, valor, state) => {
       fieldFalha,
       message
     }
-  } else if (nome === 'telefone') {
+  } else if (nome === 'telphone') {
     if (valor === '') {
-      message.telefone = 'É obrigatório.'
-      fieldFalha.telefone = true
-    } else fieldFalha.telefone = false
+      message.telphone = 'É obrigatório.'
+      fieldFalha.telphone = true
+    } else fieldFalha.telphone = false
 
     return {
       fieldFalha,
       message
     }
-  } else if (nome === 'estado') {
+  } else if (nome === 'state') {
     if (valor === '') {
-      message.estado = 'É obrigatório.'
-      fieldFalha.estado = true
-    } else fieldFalha.estado = false
+      message.state = 'É obrigatório.'
+      fieldFalha.state = true
+    } else fieldFalha.state = false
 
     return {
       fieldFalha,
       message
     }
-  } else if (nome === 'cidade') {
+  } else if (nome === 'city') {
     if (valor === '') {
-      message.cidade = 'É obrigatório.'
-      fieldFalha.cidade = true
-    } else fieldFalha.cidade = false
+      message.city = 'É obrigatório.'
+      fieldFalha.city = true
+    } else fieldFalha.city = false
 
     return {
       fieldFalha,
       message
     }
-  } else if (nome === 'bairro') {
+  } else if (nome === 'neighborhood') {
     if (valor === '') {
-      message.bairro = 'É obrigatório.'
-      fieldFalha.bairro = true
-    } else fieldFalha.bairro = false
+      message.neighborhood = 'É obrigatório.'
+      fieldFalha.neighborhood = true
+    } else fieldFalha.neighborhood = false
 
     return {
       fieldFalha,
       message
     }
-  } else if (nome === 'rua') {
+  } else if (nome === 'street') {
     if (valor === '') {
-      message.rua = 'É obrigatório.'
-      fieldFalha.rua = true
-    } else fieldFalha.rua = false
+      message.street = 'É obrigatório.'
+      fieldFalha.street = true
+    } else fieldFalha.street = false
 
     return {
       fieldFalha,
       message
     }
-  } else if (nome === 'numero') {
+  } else if (nome === 'number') {
     if (valor === '') {
-      message.numero = 'É obrigatório.'
-      fieldFalha.numero = true
-    } else fieldFalha.numero = false
+      message.number = 'É obrigatório.'
+      fieldFalha.number = true
+    } else fieldFalha.number = false
 
     return {
       fieldFalha,

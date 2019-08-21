@@ -98,7 +98,7 @@ class NovoProduto extends Component {
     })
 
     const values = {
-      category: this.state.categoria,
+      category: this.state.categoria.toLocaleLowerCase(),
       SKU: this.state.codigo,
       description: this.state.descricao,
       minimumStock: this.state.quantMin,

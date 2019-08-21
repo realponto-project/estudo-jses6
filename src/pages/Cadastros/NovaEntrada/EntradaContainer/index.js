@@ -34,6 +34,8 @@ class NovaEntrada extends Component {
       nomeProduto: '',
       fornecedor: '',
     },
+    productId: '',
+    companyId: '',
   }
 
   componentDidMount = async () => {
@@ -124,13 +126,15 @@ class NovaEntrada extends Component {
     })
 
     const values = {
-      amountAdded: this.state.quant,
+      amountAdded: this.state.quant.toString(),
       stockBase: this.state.estoque,
-      // productId: this.state.produtoId,
-      // companyId: this.state.fornecedor,
-      // serial: this.state.numeroSerieTest,
+      productId: this.state.productId,
+      companyId: this.state.companyId,
+      serial: this.state.numeroSerieTest,
       responsibleUser: 'modrp',
     }
+
+    console.log(values)
 
     const resposta = await newEntrada(values)
 
@@ -147,6 +151,7 @@ class NovaEntrada extends Component {
       this.setState({
         loading:false,
         messageError: false,
+        modalConfirm: false,
       })
     } if (resposta.status === 200) {
 
@@ -161,7 +166,8 @@ class NovaEntrada extends Component {
       await this.success()
       this.setState({
         loading:false,
-        messageSuccess: false
+        messageSuccess: false,
+        modalConfirm: false,
       })
     }
   }
@@ -208,12 +214,14 @@ class NovaEntrada extends Component {
     this.setState({
       nomeProduto: value,
       serial: product.props.product.serial,
+      productId: product.props.product.id,
     })
   }
 
-  onChangeForn = (value) => {
+  onChangeForn = (value, company) => {
     this.setState({
-      fornecedor: value
+      fornecedor: value,
+      companyId: company.props.company.id
     })
   }
 
@@ -348,7 +356,7 @@ class NovaEntrada extends Component {
                   option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
               >
-              {this.state.fornecedorArray.map((value)=> <Option value={value.razaoSocial}>{value.razaoSocial}</Option>)}
+              {this.state.fornecedorArray.map((value)=> <Option company={value} value={value.razaoSocial}>{value.razaoSocial}</Option>)}
               </Select> : <Select
                 value='Nenhum fornecedor cadastrado'
               >

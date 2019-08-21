@@ -3,6 +3,8 @@ import './index.css'
 import { Input, Button, InputNumber, Select, message } from 'antd'
 import { getAddressByZipCode } from '../../../../services/fornecedores'
 import * as R from 'ramda'
+
+import { validators, masks } from './validators'
 import { NewReservaML } from '../../../../services/mercadoLivre';
 import { getItens } from '../../../../services/produto';
 
@@ -20,7 +22,7 @@ class ReservaML extends Component{
     carrinho: [],
     estoque: 'REALPONTO',
     codigo: '',
-    nomeOuRs: '',
+    razaoSocial: '',
     cpfOuCnpj: '',
     cep: '',
     estado: '',
@@ -60,9 +62,10 @@ class ReservaML extends Component{
     }
   }
 
-  onChangeItem = (value) => {
+  onChangeItem = (value, product) => {
     this.setState({
-      nomeProduto: value
+      nomeProduto: value,
+      productId: product.props.product.id
     })
   }
 
@@ -129,15 +132,55 @@ class ReservaML extends Component{
     }
   }
 
+  onBlurValidator = (e) => {
+    const {
+      nome,
+      valor,
+      fieldFalha,
+      message
+    } = validators(e.target.name, e.target.value, this.state)
+
+    this.setState({
+      [nome]: valor,
+      fieldFalha,
+      message
+    })
+  }
+
+  onFocus = (e) => {
+    this.setState({
+      fieldFalha: {
+        ...this.state.fieldFalha,
+        [e.target.name]: false,
+      },
+      message: {
+        ...this.state.message,
+        [e.target.name]: false,
+      },
+    })
+  }
+
+  errorCarrinho = () => {
+    message.error('Selecione ao menos um produto');
+  };
+
   saveTargetNewReservaML = async () => {
 
     this.setState({
       loading: true
     })
 
+    if(this.state.carrinho.length === 0) {
+      this.setState({
+        loading: false
+      })
+      this.errorCarrinho()
+      return
+    }
+
     const values = {
       trackingCode: this.state.codigo,
-      name: this.state.nomeOuRs,
+      name: this.state.razaoSocial,
       zipCode: this.state.cep,
       state: this.state.estado,
       city: this.state.cidade,
@@ -145,7 +188,7 @@ class ReservaML extends Component{
       street: this.state.rua,
       number: this.state.numero,
       cnpjOrCpf: this.state.cpfOuCnpj,
-      freeMarkerParts: this.state.carrinho,
+      freeMarketParts: this.state.carrinho,
       complement: this.state.complemento,
       referencePoint: this.state.pontoReferencia,
     }
@@ -211,9 +254,10 @@ class ReservaML extends Component{
     if(this.state.nomeProduto !== 'Não selecionado' || ''){
     this.setState({
       carrinho:[{
+        productId: this.state.productId,
         nomeProdutoCarrinho: this.state.nomeProduto,
-        quantCarrinho: this.state.quant,
-        estoqueCarrrinho: this.state.estoque,
+        amount: this.state.quant,
+        stockBase: this.state.estoque,
       },...this.state.carrinho],
       nomeProduto: 'Não selecionado',
       quant: '1',
@@ -233,12 +277,17 @@ class ReservaML extends Component{
   }
 
   onChange = (e) => {
+    const { nome,
+      valor,
+    } = masks(e.target.name, e.target.value)
+
     this.setState({
-      [e.target.name]: e.target.value
+      [nome]: valor,
     })
   }
 
   render(){
+    console.log(this.state)
     return(
       <div className='div-card-ML'>
         <div className='linhaTexto-ML'>
@@ -248,31 +297,51 @@ class ReservaML extends Component{
         <div className='div-linha-ML'>
         <div className='div-codigo-ML'>
           <div className='div-textCodigo-ML'>Código de rastreio:</div>
-            <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='Os'
-              value={this.state.codigo}
-              placeholder="Código de rastreio"
-              onChange={this.onChange}
-              // onBlur={this.onBlurValidator}
-              allowClear
-            />
+            <div className='div-inputs'>
+              <Input
+              className={
+                this.state.fieldFalha.codigo ?
+                  'div-inputError-ML' :
+                  'input-100'}
+                style={{ width: '100%' }}
+                name='codigo'
+                value={this.state.codigo}
+                placeholder="Código de rastreio"
+                onChange={this.onChange}
+                onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
+                // allowClear
+              />
+              {this.state.fieldFalha.codigo ?
+                <p className='div-feedbackError'>
+                  {this.state.message.codigo}
+                </p> : null}
+            </div> 
           </div>
 
           <div className='div-rs-ML'>
           <div className='div-textNome-ML'>Nome ou razão social:</div>
-            <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='Os'
-              value={this.state.nomeOuRs}
-              placeholder="Digite o nome ou a razão social"
-              onChange={this.onChange}
-              // onBlur={this.onBlurValidator}
-              allowClear
-            />
-          </div>         
+            <div className='div-inputs'>
+              <Input
+                className={
+                  this.state.fieldFalha.razaoSocial ?
+                    'div-inputError-ML' :
+                    'input-100'}
+                style={{ width: '100%' }}
+                name='razaoSocial'
+                value={this.state.razaoSocial}
+                placeholder="Digite o nome ou a razão social"
+                onChange={this.onChange}
+                onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
+                // allowClear
+              />
+              {this.state.fieldFalha.razaoSocial ?
+                <p className='div-feedbackError'>
+                  {this.state.message.razaoSocial}
+                </p> : null}
+            </div>
+          </div>
         </div>
 
         <div className='div-linha-ML'>
@@ -282,14 +351,15 @@ class ReservaML extends Component{
               <Input
                 className={
                   this.state.fieldFalha.cep ?
-                    'div-inputError' :
+                    'div-inputError-ML' :
                     'input-100'}
                 placeholder="Digite o cep"
                 name='cep'
-                // value={this.state.cep}
+                value={this.state.cep}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.getAddress}
+                onFocus={this.onFocus}
+                // allowClear
               />
               {this.state.fieldFalha.cep ?
                 <p className='div-feedbackError'>
@@ -304,14 +374,15 @@ class ReservaML extends Component{
               <Input
                 className={
                   this.state.fieldFalha.estado ?
-                    'div-inputError' :
+                    'div-inputError-ML' :
                     'input-100'}
                 placeholder="EX"
                 name='estado'
                 value={this.state.estado}
                 onChange={this.onChange}
-                allowClear
-                // onBlur={this.onBlurValidator}
+                onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}                
+                // allowClear
               />
               {this.state.fieldFalha.estado ?
                 <p className='div-feedbackError'>
@@ -326,19 +397,20 @@ class ReservaML extends Component{
               <Input
                 className={
                 this.state.fieldFalha.cidade ?
-                  'div-inputError' :
+                  'div-inputError-ML' :
                   'input-100'}
                 placeholder="Digite a cidade"
                 name='cidade'
                 value={this.state.cidade}
                 onChange={this.onChange}
-                allowClear
-                // onBlur={this.onBlurValidator}
+                onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}     
+                // allowClear
               />
-               {this.state.fieldFalha.cidade ?
+              {this.state.fieldFalha.cidade ?
                 <p className='div-feedbackError'>
                   {this.state.message.cidade}
-                </p> : null} 
+                </p> : null}
              </div> 
           </div>
         </div>
@@ -350,14 +422,15 @@ class ReservaML extends Component{
               <Input
                 className={
                   this.state.fieldFalha.bairro ?
-                    'div-inputError' :
+                    'div-inputError-ML' :
                     'input-100'}
                 placeholder="Digite o bairro"
                 name='bairro'
                 value={this.state.bairro}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}   
+                // allowClear
               />
               {this.state.fieldFalha.bairro ?
                 <p className='div-feedbackError'>
@@ -372,14 +445,15 @@ class ReservaML extends Component{
               <Input
                 className={
                   this.state.fieldFalha.rua ?
-                    'div-inputError' :
+                    'div-inputError-ML' :
                     'input-100'}
                 placeholder="Digite a rua"
                 name='rua'
                 value={this.state.rua}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}   
+                // allowClear
               />
               {this.state.fieldFalha.rua ?
                 <p className='div-feedbackError'>
@@ -394,14 +468,15 @@ class ReservaML extends Component{
               <Input
                 className={
                   this.state.fieldFalha.numero ?
-                    'div-inputError' :
+                    'div-inputError-ML' :
                     'input-100'}
                 placeholder="123456"
                 name='numero'
                 value={this.state.numero}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}   
+                // allowClear
               />
               {this.state.fieldFalha.numero ?
                 <p className='div-feedbackError'>
@@ -421,7 +496,9 @@ class ReservaML extends Component{
                 name='complemento'
                 value={this.state.complemento}
                 onChange={this.onChange}
-                allowClear
+                onBlur={this.onBlurValidator}
+                onFocus={this.onFocus}
+                // allowClear
               />
             </div>
           </div> 
@@ -446,13 +523,22 @@ class ReservaML extends Component{
           <div className='div-textRef-ML'>Cpf ou Cnpj:</div>
           <div className='div-inputs'>
             <Input
-              className='input-100'
+              className={
+                this.state.fieldFalha.cpfOuCnpj ?
+                  'div-inputError-ML' :
+                  'input-100'}
               placeholder="Digite a referência"
-              name='pontoReferencia'
-              value={this.state.pontoReferencia}
+              name='cpfOuCnpj'
+              value={this.state.cpfOuCnpj}
               onChange={this.onChange}
-              allowClear
+              onBlur={this.onBlurValidator}
+              onFocus={this.onFocus}
+              // allowClear
             />
+            {this.state.fieldFalha.cpfOuCnpj ?
+              <p className='div-feedbackError'>
+                {this.state.message.cpfOuCnpj}
+              </p> : null}
             </div>
           </div> 
         </div>
@@ -477,7 +563,7 @@ class ReservaML extends Component{
                 option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
             >
-              {this.state.itemArray.map((value)=> <Option value={value.name}>{value.name}</Option>)}
+              {this.state.itemArray.map((value)=> <Option product={value} value={value.name}>{value.name}</Option>)}
             </Select>
           </div>  
 
@@ -502,7 +588,24 @@ class ReservaML extends Component{
 
         <div className='div-linhaSeparete-ML'></div>        
 
-        {this.state.carrinho.length === 0 ? null : <div className='div-maior-ML'><div className='div-linhaSelecionados-ML'><h2 className='h2-ML'>Produtos selecionados</h2></div><div className='div-linha1-ML'><label className='label-produto-ML'>Produto</label><label className='label-quant-ML'>Quantidade</label></div><div className='div-linhaSepareteProdutos-ML'></div>{this.state.carrinho.map((valor) => <div className='div-linha-ML'><label className='label-produto-ML'>{valor.nomeProdutoCarrinho}</label><label className='label-quant-ML'>{valor.quantCarrinho} UN</label><Button type='primary' className='button-remove-ML' onClick={() => this.remove(valor)}>Remover</Button></div>)}</div>}
+        {this.state.carrinho.length === 0 ?
+          null :
+          <div className='div-maior-ML'>
+            <div className='div-linhaSelecionados-ML'>
+              <h2 className='h2-ML'>Produtos selecionados</h2>
+            </div>
+            <div className='div-linha1-ML'>
+              <label className='label-produto-ML'>Produto</label>
+              <label className='label-quant-ML'>Quantidade</label>
+            </div>
+            <div className='div-linhaSepareteProdutos-ML'></div>
+            {this.state.carrinho.map((valor) => 
+              <div className='div-linha-ML'>
+                <label className='label-produto-ML'>{valor.nomeProdutoCarrinho}</label>
+                <label className='label-quant-ML'>{valor.amount} UN</label>
+                <Button type='primary' className='button-remove-ML' onClick={() => this.remove(valor)}>Remover</Button>
+              </div>)}
+          </div>}
 
         <div className='div-buttonSalvar-ML'>
           <Button type='primary' className='button' onClick={this.saveTargetNewReservaML}>Salvar</Button>
