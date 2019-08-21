@@ -342,14 +342,14 @@ class ReservaML extends Component{
                 this.state.fieldFalha.codigo ?
                   'div-inputError-ML' :
                   'input-100'}
-                style={{ width: '100%' }}
-                name='codigo'
-                value={this.state.codigo}
-                placeholder="Código de rastreio"
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
-                // allowClear
+              style={{ width: '100%' }}
+              name='codigo'
+              value={this.state.codigo}
+              placeholder="Código de rastreio"
+              onChange={this.onChange}
+              onBlur={this.onBlurValidator}
+              onFocus={this.onFocus}
+              // allowClear
               />
               {this.state.fieldFalha.codigo ?
                 <p className='div-feedbackError'>
@@ -604,10 +604,10 @@ class ReservaML extends Component{
             >
               {this.state.itemArray.map((value)=> <Option product={value} value={value.name}>{value.name}</Option>)}
             </Select>
-          </div>  
+        </div>  
 
-          <div className='div-quant-ML'>
-            <div className='div-text-ML'>Quant:</div>
+        <div className='div-quant-ML'>
+          <div className='div-text-ML'>Quant:</div>
             <InputNumber min={1} defaultValue={this.state.quant} value={this.state.quant} onChange={this.onChangeQuant} />
           </div>
         </div>
