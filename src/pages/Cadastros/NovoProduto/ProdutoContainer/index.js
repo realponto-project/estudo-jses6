@@ -105,7 +105,7 @@ class NovoProduto extends Component {
       mark: this.state.marca,
       name: this.state.item,
       type: this.state.tipo,
-      // serial: this.state.serial,
+      serial: this.state.serial,
       responsibleUser: 'modrp',
     }
 

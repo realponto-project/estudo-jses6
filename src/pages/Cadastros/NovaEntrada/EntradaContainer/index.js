@@ -130,7 +130,7 @@ class NovaEntrada extends Component {
       stockBase: this.state.estoque,
       productId: this.state.productId,
       companyId: this.state.companyId,
-      serial: this.state.numeroSerieTest,
+      serialNumbers: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
       responsibleUser: 'modrp',
     }
 
@@ -178,7 +178,7 @@ class NovaEntrada extends Component {
       numeroSerieTest: e.target.value
     })
 
-    const teste = this.state.numeroSerieTest.split(/\n/, 10)
+    const teste = this.state.numeroSerieTest.split(/\n/)
 
     if (/\n/.test(this.state.numeroSerieTest[this.state.numeroSerieTest.length - 1])) {
 
@@ -298,6 +298,7 @@ class NovaEntrada extends Component {
   )
 
   render() {
+    // console.log(this.state)
     return (
       <div className='div-card-entrada'>
         <div className='linhaTexto-entrada'>

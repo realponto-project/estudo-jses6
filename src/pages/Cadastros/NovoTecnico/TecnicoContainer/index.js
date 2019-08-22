@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Input, Button, Select, Modal, message } from 'antd'
-import { masks } from './validators'
+import { validators, masks } from './validators'
 import { newTecnico, newCarro, getCarro } from '../../../../services/tecnico'
 
 
@@ -23,6 +23,14 @@ class NovoTecnico extends Component{
     newModelo: '',
     newPlaca: '',
     newAno: '',
+    fieldFalha:{
+      nome: false,
+      cnh: false,
+    },
+    message:{
+      nome: '',
+      cnh: '',
+    },
   }
 
   getAllCarro = async () => {
@@ -221,6 +229,34 @@ class NovoTecnico extends Component{
     })
   }
 
+  onBlurValidator = (e) => {
+    const {
+      nome,
+      valor,
+      fieldFalha,
+      message
+    } = validators(e.target.name, e.target.value, this.state)
+
+    this.setState({
+      [nome]: valor,
+      fieldFalha,
+      message
+    })
+  }
+
+  onFocus = (e) => {
+    this.setState({
+      fieldFalha: {
+        ...this.state.fieldFalha,
+        [e.target.name]: false,
+      },
+      message: {
+        ...this.state.message,
+        [e.target.name]: false,
+      },
+    })
+  }
+
   modalCarro = () => (
     <Modal
       title="Adicionar carro"
@@ -284,26 +320,48 @@ class NovoTecnico extends Component{
         <div className='linha1-tecnico'>
           <div className='div-nome-tecnico'>
             <div className='div-text-tecnico'>Nome:</div>
-            <Input
-              className='input-100'
-              placeholder="Digite o nome"
-              name='nome'
-              value={this.state.nome}
-              onChange={this.onChangeNormal}
-              allowClear
-            />
+              <div className='div-inputs'>
+                <Input
+                  className={
+                    this.state.fieldFalha.nome ?
+                      'div-inputError-tecnico' :
+                      'input-100'}
+                  placeholder="Digite o nome"
+                  name='nome'
+                  value={this.state.nome}
+                  onChange={this.onChangeNormal}
+                  onBlur={this.onBlurValidator}
+                  onFocus={this.onFocus} 
+                  // allowClear
+                />
+                {this.state.fieldFalha.nome ?
+                  <p className='div-feedbackError'>
+                    {this.state.message.nome}
+                  </p> : null}
+              </div>
           </div>
 
           <div className='div-cnh-tecnico'>
             <div className='div-textCNH-tecnico'>Validade CNH:</div>
-            <Input
-              className='input-100'
-              placeholder="DD/MM/AAAA"
-              name='cnh'
-              value={this.state.cnh}
-              onChange={this.onChange}
-              allowClear
-            />
+            <div className='div-inputs'>
+              <Input
+                className={
+                  this.state.fieldFalha.cnh ?
+                    'div-inputError-tecnico' :
+                    'input-100'}
+                placeholder="DD/MM/AAAA"
+                name='cnh'
+                value={this.state.cnh}
+                onChange={this.onChange}
+                onBlur={this.onBlurValidator}
+                onFocus={this.onFocus} 
+                allowClear
+              />
+              {this.state.fieldFalha.cnh ?
+                  <p className='div-feedbackError'>
+                    {this.state.message.cnh}
+                  </p> : null}
+            </div>
           </div>
         </div>
 
