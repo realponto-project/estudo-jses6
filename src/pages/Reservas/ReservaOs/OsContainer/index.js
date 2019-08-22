@@ -102,6 +102,7 @@ class ReservaOs extends Component{
    await this.setState({
       nomeProduto: value,
       productId: props.props.props.id,
+      serial: props.props.props.serial,
     })
   }
 
@@ -252,6 +253,7 @@ class ReservaOs extends Component{
         productId: this.state.productId,
         amount: this.state.quant,
         stockBase: this.state.estoque,
+        serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
       },...this.state.carrinho],
       nomeProduto: 'Não selecionado',
       quant: '1',

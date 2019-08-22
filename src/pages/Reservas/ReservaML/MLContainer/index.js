@@ -75,7 +75,7 @@ class ReservaML extends Component{
       numeroSerieTest: e.target.value
     })
 
-    const teste = this.state.numeroSerieTest.split(/\n/, 10)
+    const teste = this.state.numeroSerieTest.split(/\n/)
 
     if (/\n/.test(this.state.numeroSerieTest[this.state.numeroSerieTest.length - 1])) {
 
@@ -104,7 +104,8 @@ class ReservaML extends Component{
   onChangeItem = (value, product) => {
     this.setState({
       nomeProduto: value,
-      productId: product.props.product.id
+      productId: product.props.product.id,
+      serial: product.props.product.serial,
     })
   }
 
@@ -297,6 +298,7 @@ class ReservaML extends Component{
         nomeProdutoCarrinho: this.state.nomeProduto,
         amount: this.state.quant,
         stockBase: this.state.estoque,
+        serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
       },...this.state.carrinho],
       nomeProduto: 'Não selecionado',
       quant: '1',
@@ -326,7 +328,7 @@ class ReservaML extends Component{
   }
 
   render(){
-    console.log(this.state)
+    // console.log(this.state)
     return(
       <div className='div-card-ML'>
         <div className='linhaTexto-ML'>
