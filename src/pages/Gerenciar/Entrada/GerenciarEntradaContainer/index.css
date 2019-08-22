@@ -19,12 +19,27 @@
   font-size: 2.2em
 }
 .div-cabecalho-Gentrada{
-  margin-top: 40px;
+  margin-top: 10px;
   width: 90%;
   background-color: #FAFAFA;
   height: 60px;
   display: flex;
   align-items: center
+}
+.div-produto-Gentrada{
+  width: 42%;
+  display: flex;
+  align-items: center;
+}
+.div-usuario-Gentrada{
+  width: 33%;
+  display: flex;
+  align-items: center;
+}
+.div-data-Gentrada{
+  width: 22%;
+  display: flex;
+  align-items: center;
 }
 .cel-produto-cabecalho-Gentrada{
   align-items: center;
@@ -78,11 +93,18 @@
   background-color: rgb(221, 219, 219);
   height: 1px;
 }
-.footer-Gentrada{
+.footer-Gentrada-button{
   margin-top: 10px;
   width: 90%;
   display: flex;
   justify-content: flex-end
+}
+.div-teste{
+  color: rgba(36, 35, 35, 0.6) !important;
+  width: 37.8px;
+  display: flex;
+  align-items: center;
+  justify-content: center
 }
 .div-table-label-cel-Gentrada{
   display: flex;

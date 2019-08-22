@@ -1,15 +1,44 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, Spin } from 'antd'
+import { Spin, Button, Input } from 'antd'
 import { getEntrada } from '../../../../services/entrada';
 
 class GerenciarEntrada extends Component{
 
   state={
+    avancado: false,
     loading: false,
+    usuario: '',
+    produto: '',
+    data: '',
     entrada:{
       rows: []
     },
+    page: 1,
+    total: 10,
+    count: 0,
+    show: 0,
+  }
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  avancado = () => {
+    this.setState({
+      avancado: !this.state.avancado
+    })
+  }
+
+  changePages = (pages) => {
+    this.setState({
+      page: pages
+    }, () => {
+      this.getAllEntrada()
+    }
+    )
   }
 
   getAllEntrada = async () => {
@@ -18,9 +47,17 @@ class GerenciarEntrada extends Component{
       loading: true
     })
 
-    await getEntrada().then(
+    const query = {
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await getEntrada(query).then(
       resposta => this.setState({
         entrada: resposta.data,
+        page: resposta.data.page,
+        count: resposta.data.count,
+        show: resposta.data.show,
       })
     )
 
@@ -33,14 +70,77 @@ class GerenciarEntrada extends Component{
     await this.getAllEntrada()
   }
 
+  Pages = () => (
+    
+    <div className='footer-Gentrada-button'>
+      {Math.ceil(this.state.count / this.state.total) >= 5 && Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 4)}>{this.state.page - 4}</Button> : null}
+      {Math.ceil(this.state.count / this.state.total) >= 4 && Math.ceil(this.state.count / this.state.total) - this.state.page < 2 && this.state.page > 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 3)}>{this.state.page - 3}</Button> : null}
+      {this.state.page >= 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 2)}>{this.state.page - 2}</Button> : null}
+      {this.state.page >= 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 1)}>{this.state.page - 1}</Button> : null}
+      <div className='div-teste'>{this.state.page}</div>
+      {this.state.page < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 1)}>{this.state.page + 1}</Button> : null}
+      {this.state.page + 1 < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 2)}>{this.state.page + 2}</Button> : null}
+      {this.state.page + 2 < (this.state.count / this.state.total) && this.state.page < 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 3)}>{this.state.page + 3}</Button> : null}
+      {this.state.page + 3 < (this.state.count / this.state.total) && this.state.page < 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 4)}>{this.state.page + 4}</Button> : null}
+    </div>
+  ) 
+
 
   render(){
-    console.log(this.state.entrada)
     return(
       <div className='div-card-Gentrada'>
         <div className='linhaTexto-Gentrada'>
           <h1 className='h1-Gentrada'>Gerenciar entrada</h1>
         </div>
+
+        {this.state.avancado ? 
+        <div className='div-linha-avancado-Rtecnico'>
+        <div className='div-ocultar-Rtecnico'>
+          <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
+        </div>
+        <div className='div-linha1-avancado-Rtecnico'>
+          <div className='div-produto-Gentrada'>
+          <div className='div-text-Os'>Produto:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='produto'
+              value={this.state.produto}
+              placeholder="Digite o nome do produto"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div> 
+
+          <div className='div-usuario-Gentrada'>
+          <div className='div-text-Rtecnico'>Usuário:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='usuario'
+              value={this.state.usuario}
+              placeholder="Digite o usuário"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div>
+
+          <div className='div-data-Gentrada'>
+          <div className='div-text-Rtecnico'>Data:</div>
+          <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='data'
+              value={this.state.data}
+              placeholder="Digite a data"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div>
+        </div></div> : 
+        <div className='div-avancado-Rtecnico'>
+          <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+        </div> }
 
         <div className='div-cabecalho-Gentrada'>
           <div className='cel-produto-cabecalho-Gentrada'>
@@ -90,9 +190,7 @@ class GerenciarEntrada extends Component{
         </div>
         )}
 
-          <div className='footer-Gentrada'>
-            <Pagination defaultCurrent={1} total={50} />
-          </div>
+            <this.Pages/>
       </div>
     )
   }

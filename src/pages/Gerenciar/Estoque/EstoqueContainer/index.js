@@ -1,16 +1,55 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, Spin } from 'antd'
+import { Spin, Button, Input, Select } from 'antd'
 import { stock } from '../../../../services/estoque'
+
+
+
+const { Option } = Select;
 
 class Estoque extends Component{
 
   state={
+    produto:'',
+    fabricante: '',
+    estoqueBase: 'REALPONTO',
+    avancado: false,
     loading: false,
     estoque:{
       rows: []
     },
+    page: 1,
+    total: 10,
+    count: 0,
+    show: 0,
   }
+
+  changePages = (pages) => {
+    this.setState({
+      page: pages
+    }, () => {
+      this.getStock()
+    }
+    )
+  }
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  onChangeSelect = (value) => {
+    this.setState({
+      estoqueBase: value
+    })
+  }
+
+  avancado = () => {
+    this.setState({
+      avancado: !this.state.avancado
+    })
+  } 
 
   getStock = async () => {
 
@@ -18,9 +57,17 @@ class Estoque extends Component{
       loading: true
     })
 
-    await stock().then(
+    const query = {
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await stock(query).then(
       resposta => this.setState({
         estoque: resposta.data,
+        page: resposta.data.page,
+        count: resposta.data.count,
+        show: resposta.data.show,
       })
     )
 
@@ -33,14 +80,72 @@ class Estoque extends Component{
     await this.getStock()
   }
 
+  Pages = () => (
+    
+    <div className='footer-Gentrada-button'>
+      {Math.ceil(this.state.count / this.state.total) >= 5 && Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 4)}>{this.state.page - 4}</Button> : null}
+      {Math.ceil(this.state.count / this.state.total) >= 4 && Math.ceil(this.state.count / this.state.total) - this.state.page < 2 && this.state.page > 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 3)}>{this.state.page - 3}</Button> : null}
+      {this.state.page >= 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 2)}>{this.state.page - 2}</Button> : null}
+      {this.state.page >= 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 1)}>{this.state.page - 1}</Button> : null}
+      <div className='div-teste'>{this.state.page}</div>
+      {this.state.page < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 1)}>{this.state.page + 1}</Button> : null}
+      {this.state.page + 1 < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 2)}>{this.state.page + 2}</Button> : null}
+      {this.state.page + 2 < (this.state.count / this.state.total) && this.state.page < 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 3)}>{this.state.page + 3}</Button> : null}
+      {this.state.page + 3 < (this.state.count / this.state.total) && this.state.page < 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 4)}>{this.state.page + 4}</Button> : null}
+    </div>
+  ) 
+
   render(){
-    console.log(this.state.estoque)
     return(
       <div className='div-card-estoque'>
         <div className='linhaTexto-estoque'>
           <h1 className='h1-estoque'>Gerenciar estoque</h1>
         </div>
+        
+        {this.state.avancado ? 
+        <div className='div-linha-avancado-Rtecnico'>
+        <div className='div-ocultar-Rtecnico'>
+          <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
+        </div>
+        <div className='div-linha1-avancado-Rtecnico'>
+          <div className='div-produto-Rtecnico'>
+          <div className='div-text-Os'>Produto:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='produto'
+              value={this.state.produto}
+              placeholder="Digite o nome do produto"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div> 
 
+          <div className='div-fabricante-Rtecnico'>
+          <div className='div-text-Rtecnico'>Fabricante:</div>
+            <Input
+              className='input-100'
+              style={{ width: '100%' }}
+              name='razaoSocial'
+              value={this.state.razaoSocial}
+              placeholder="Digite a razão social"
+              onChange={this.onChange}
+              allowClear
+            />
+          </div>
+
+          <div className='div-estoque-Rtecnico'>
+          <div className='div-text-Rtecnico'>Estoque:</div>
+          <Select value={this.state.estoqueBase} style={{ width: '100%' }} onChange={this.onChangeSelect} >
+            <Option value='REALPONTO'>REALPONTO</Option>
+            <Option value='NOVA REALPONTO'>NOVA REALPONTO</Option>
+            <Option value='PONTOREAL'>PONTOREAL</Option>
+          </Select>
+          </div>
+        </div></div> : 
+        <div className='div-avancado-Rtecnico'>
+          <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+        </div> }
         <div className='div-cabecalho-estoque'>
           <div className='cel-produto-cabecalho-estoque'>
             Produto
@@ -89,9 +194,7 @@ class Estoque extends Component{
         </div>
         )}
 
-          <div className='footer-estoque'>
-            <Pagination defaultCurrent={1} total={50} />
-          </div>
+          <this.Pages/>
       </div>
     )
   }

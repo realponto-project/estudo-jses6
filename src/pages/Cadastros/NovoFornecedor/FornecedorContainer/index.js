@@ -159,11 +159,11 @@ class NovoFornecedor extends Component {
   onFocus = (e) => {
     this.setState({
       fieldFalha: {
-        ... this.state.fieldFalha,
+        ...this.state.fieldFalha,
         [e.target.name]: false,
       },
       message: {
-        ... this.state.message,
+        ...this.state.message,
         [e.target.name]: false,
       },
     })
