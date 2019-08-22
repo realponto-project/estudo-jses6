@@ -2,7 +2,7 @@ import axios from 'axios'
 import { BACKEND_URL } from './var'
 import { store } from '../App'
 
-export const stock = async () => {
+export const stock = async (query) => {
     const storeObject = store.getState()
   
     const headers = {
@@ -12,7 +12,7 @@ export const stock = async () => {
   
     let response = {}
   
-    await axios.get(`${BACKEND_URL}/api/stock`, { headers: headers, params: { query: null} }).then(
+    await axios.get(`${BACKEND_URL}/api/stock`, { headers: headers, params: { query } }).then(
       resp => {
         response = resp
       }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, Spin, Button, Input } from 'antd'
+import { Spin, Button, Input } from 'antd'
 import { getEntrada } from '../../../../services/entrada';
 
 class GerenciarEntrada extends Component{
@@ -14,6 +14,10 @@ class GerenciarEntrada extends Component{
     entrada:{
       rows: []
     },
+    page: 1,
+    total: 10,
+    count: 0,
+    show: 0,
   }
 
   onChange = (e) => {
@@ -28,15 +32,32 @@ class GerenciarEntrada extends Component{
     })
   }
 
+  changePages = (pages) => {
+    this.setState({
+      page: pages
+    }, () => {
+      this.getAllEntrada()
+    }
+    )
+  }
+
   getAllEntrada = async () => {
 
     this.setState({
       loading: true
     })
 
-    await getEntrada().then(
+    const query = {
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await getEntrada(query).then(
       resposta => this.setState({
         entrada: resposta.data,
+        page: resposta.data.page,
+        count: resposta.data.count,
+        show: resposta.data.show,
       })
     )
 
@@ -48,6 +69,21 @@ class GerenciarEntrada extends Component{
   componentDidMount = async () => {
     await this.getAllEntrada()
   }
+
+  Pages = () => (
+    
+    <div className='footer-Gentrada-button'>
+      {Math.ceil(this.state.count / this.state.total) >= 5 && Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 4)}>{this.state.page - 4}</Button> : null}
+      {Math.ceil(this.state.count / this.state.total) >= 4 && Math.ceil(this.state.count / this.state.total) - this.state.page < 2 && this.state.page > 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 3)}>{this.state.page - 3}</Button> : null}
+      {this.state.page >= 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 2)}>{this.state.page - 2}</Button> : null}
+      {this.state.page >= 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 1)}>{this.state.page - 1}</Button> : null}
+      <div className='div-teste'>{this.state.page}</div>
+      {this.state.page < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 1)}>{this.state.page + 1}</Button> : null}
+      {this.state.page + 1 < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 2)}>{this.state.page + 2}</Button> : null}
+      {this.state.page + 2 < (this.state.count / this.state.total) && this.state.page < 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 3)}>{this.state.page + 3}</Button> : null}
+      {this.state.page + 3 < (this.state.count / this.state.total) && this.state.page < 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 4)}>{this.state.page + 4}</Button> : null}
+    </div>
+  ) 
 
 
   render(){
@@ -154,9 +190,7 @@ class GerenciarEntrada extends Component{
         </div>
         )}
 
-          <div className='footer-Gentrada'>
-            <Pagination defaultCurrent={1} total={50} />
-          </div>
+            <this.Pages/>
       </div>
     )
   }

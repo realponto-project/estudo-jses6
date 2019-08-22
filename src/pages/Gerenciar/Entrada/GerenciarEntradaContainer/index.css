@@ -93,11 +93,18 @@
   background-color: rgb(221, 219, 219);
   height: 1px;
 }
-.footer-Gentrada{
+.footer-Gentrada-button{
   margin-top: 10px;
   width: 90%;
   display: flex;
   justify-content: flex-end
+}
+.div-teste{
+  color: rgba(36, 35, 35, 0.6) !important;
+  width: 37.8px;
+  display: flex;
+  align-items: center;
+  justify-content: center
 }
 .div-table-label-cel-Gentrada{
   display: flex;
