@@ -48,8 +48,24 @@ class GerenciarEntrada extends Component{
     })
 
     const query = {
+      // filters: {
+      //   part: {
+      //     specific: {
+      //       name: this.state.produto,
+      //     },
+      //   },
+        // equipModel: {
+        //   specific: {
+        //     name: this.state.produto,
+        //   },
+        // },
+      // },
       page: this.state.page,
       total: this.state.total,
+      // order: {
+      //   field: 'createdAt',
+      //   acendent: true,
+      // },
     }
 
     await getEntrada(query).then(

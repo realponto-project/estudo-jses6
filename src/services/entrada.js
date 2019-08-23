@@ -27,7 +27,7 @@ export const newEntrada = async (values) => {
   return response
 }
 
-export const getEntrada = async () => {
+export const getEntrada = async (query) => {
   const storeObject = store.getState()
 
   const headers = {
@@ -37,7 +37,7 @@ export const getEntrada = async () => {
 
   let response = {}
 
-  await axios.get(`${BACKEND_URL}/api/entrance`, { headers: headers, params: { } }).then(
+  await axios.get(`${BACKEND_URL}/api/entrance`, { headers: headers, params: { query } }).then(
     resp => {
       response = resp
     }

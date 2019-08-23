@@ -394,11 +394,19 @@ class NovaEntrada extends Component {
               onChange={this.filter}
             />
           </div>
-          <Button className='button' type="primary" onClick={this.messagesError} loading={this.state.loading}>Salvar</Button>
-          <this.modalConfirm /> </div>: <div className='div-button-entrada1'><Button className='button' type="primary" onClick={this.messagesError} loading={this.state.loading}>Salvar</Button>
-          <this.modalConfirm /></div>}
+          {this.state.nomeProduto !== 'Não selecionado' && this.state.fornecedor !== 'Não selecionado' ?
+            <Button className='button' type="primary" onClick={this.messagesError} loading={this.state.loading}>Salvar</Button> :
+          null}
+          <this.modalConfirm />
+        </div>:
+        <div className='div-button-entrada1'>
+          {this.state.nomeProduto !== 'Não selecionado' && this.state.fornecedor !== 'Não selecionado' ?
+            <Button className='button' type="primary" onClick={this.messagesError} loading={this.state.loading}>Salvar</Button> :
+          null}
+          <this.modalConfirm />
+        </div>}
           
-        </div>
+      </div>
     )
   }
 }
