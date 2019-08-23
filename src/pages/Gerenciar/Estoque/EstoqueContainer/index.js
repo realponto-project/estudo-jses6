@@ -10,6 +10,7 @@ const { Option } = Select;
 class Estoque extends Component{
 
   state={
+    lineSelect: {},
     produto:'',
     fabricante: '',
     estoqueBase: 'REALPONTO',
