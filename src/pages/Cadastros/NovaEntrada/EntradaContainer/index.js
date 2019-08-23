@@ -130,7 +130,7 @@ class NovaEntrada extends Component {
       stockBase: this.state.estoque,
       productId: this.state.productId,
       companyId: this.state.companyId,
-      serialNumbers: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
+      serialNumbers: this.state.numeroSerieTest.length > 0 ? this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ) : null,
       responsibleUser: 'modrp',
     }
 
@@ -372,7 +372,12 @@ class NovaEntrada extends Component {
 
           <div className='div-quant-entrada'>
             <div className='div-text-entrada'>Quant:</div>
-            <InputNumber min={1} defaultValue={this.state.quant} style={{width: '100%'}} value={this.state.quant} onChange={this.onChangeQuant} />
+            <InputNumber
+              min={1}
+              defaultValue={this.state.quant}
+              style={{width: '100%'}}
+              value={this.state.quant}
+              onChange={this.onChangeQuant} />
           </div>
         </div>
         

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Input, Select, Button, Modal, Switch, message } from 'antd'
+import { Input, InputNumber, Select, Button, Modal, Switch, message } from 'antd'
 import './index.css'
+import { validators, masks } from './validators'
 import { newMarca, newTipo, newFabricante, newProduto, getTipo, getMarca, getFabricante } from '../../../../services/produto'
 
 
@@ -22,7 +23,7 @@ class NovoProduto extends Component {
     fabricante: '',
     descricao: '',
     codigo: '',
-    quantMin: '',
+    quantMin: 1,
     modalMarca: false,
     modalTipo: false,
     modalFabricante: false,
@@ -32,6 +33,16 @@ class NovoProduto extends Component {
     newDescricao: '',
     loading: false,
     serial: false,
+    fieldFalha: {
+      item: false,
+      codigo: false,
+      quantMin: false,
+    },
+    message: {
+      item: '',
+      codigo: '',
+      quantMin: '',
+    },
   }
 
   handleChangeTipo = (value) => {
@@ -41,6 +52,20 @@ class NovoProduto extends Component {
   }
 
   handleChangeMarca = async (value) => {
+
+    // const {
+    //   nome,
+    //   valor,
+    //   fieldFalha,
+    //   message
+    // } = validators('mark', value, this.state)
+
+    // this.setState({
+    //   [nome]: valor,
+    //   fieldFalha,
+    //   message
+    // })
+
     await this.setState({
       marca: value,
     })
@@ -74,6 +99,8 @@ class NovoProduto extends Component {
 
     const peca =  this.state.categoria.toLocaleLowerCase()
 
+    console.log(peca)
+
     await getMarca( peca ).then(
       resposta => this.setState({
         marcaArray: resposta.data,
@@ -101,7 +128,7 @@ class NovoProduto extends Component {
       category: this.state.categoria.toLocaleLowerCase(),
       SKU: this.state.codigo,
       description: this.state.descricao,
-      minimumStock: this.state.quantMin,
+      minimumStock: this.state.quantMin.toString(),
       mark: this.state.marca,
       name: this.state.item,
       type: this.state.tipo,
@@ -289,7 +316,7 @@ class NovoProduto extends Component {
       tipo: 'Não selecionado'
     })
 
-    this.getAllFabricante()
+    if (this.state.marca !== 'Não selecionado') this.getAllFabricante()
   }
 
   onChange = (e) => {
@@ -297,6 +324,67 @@ class NovoProduto extends Component {
       [e.target.name]: e.target.value
     })
   }
+
+  onChangeQuantMin = (value) => {
+    this.setState({
+      quantMin: value
+    })
+  }
+
+  onBlurValidator = async (e) => {
+    const {
+      nome,
+      valor,
+      fieldFalha,
+      message
+    } = validators(e.target.name, e.target.value, this.state)
+
+    await this.setState({
+      [nome]: valor,
+      fieldFalha,
+      message
+    })
+  }
+
+  onFocus = async (e) => {
+    await this.setState({
+      fieldFalha: {
+        ...this.state.fieldFalha,
+        [e.target.name]: false,
+      },
+      message: {
+        ...this.state.message,
+        [e.target.name]: false,
+      },
+    })
+  }
+
+  onFocusMark = () => {
+    this.setState({
+      fieldFalha: {
+        ...this.state.fieldFalha,
+        mark: false,
+      },
+      message: {
+        ...this.state.message,
+        mark: false,
+      },
+    })
+  }
+
+  onFocusType = () => {
+    this.setState({
+      fieldFalha: {
+        ...this.state.fieldFalha,
+        type: false,
+      },
+      message: {
+        ...this.state.message,
+        type: false,
+      },
+    })
+  }
+
 
   modalMarca = () => (
     <Modal
@@ -397,14 +485,25 @@ class NovoProduto extends Component {
         <div className='linha1-produtos'>
           <div className='div-item-produtos'>
             <div className='div-text-produtos'>Item:</div>
-            <Input
-              className='input-100'
-              placeholder="Digite o item"
-              name='item'
-              value={this.state.item}
-              onChange={this.onChange}
-              allowClear
-            />
+              <div className='div-inputs'>
+                <Input
+                  allowClear={!this.state.fieldFalha.item}
+                  className={
+                    this.state.fieldFalha.item ?
+                      'div-inputError-produtos' :
+                      'input-100'}
+                  placeholder="Digite o item"
+                  name='item'
+                  value={this.state.item}
+                  onChange={this.onChange}
+                  onBlur={this.onBlurValidator}
+                  onFocus={this.onFocus}
+                />
+                {this.state.fieldFalha.item ?
+                  <p className='div-feedbackError'>
+                    {this.state.message.item}
+                  </p> : null}
+            </div>
           </div>
 
           <div className='div-categoria-produtos'>
@@ -418,11 +517,25 @@ class NovoProduto extends Component {
 
           <div className='div-marca-produtos'>
             <div className='div-text-produtos'>Marca:</div>
-            {this.state.marcaArray.length !== 0 ? <Select value={this.state.marca} style={{ width: '100%'}} onChange={this.handleChangeMarca}> 
-            {this.state.marcaArray.map((valor) =>
-            <Option value={valor.mark}>{valor.mark}</Option>)}
-            </Select> : 
-            <Select value='Nenhuma marca cadastrada' style={{ width: '100%'}}></Select>}
+              <div className='div-inputs'>
+              {this.state.marcaArray.length !== 0 ?
+                <Select
+                  name='mark'
+                  value={this.state.marca}
+                  style={{ width: '100%'}}
+                  onChange={this.handleChangeMarca}
+                  onFocus={this.onFocusMark}
+                  className={this.state.fieldFalha.mark ? 'div-inputError-produtos' : 'input-100'}> 
+                {this.state.marcaArray.map((valor) =>
+                  <Option value={valor.mark}>{valor.mark}</Option>)}
+                </Select> : 
+                <Select value='Nenhuma marca cadastrada' style={{ width: '100%'}}></Select>}
+
+              {this.state.fieldFalha.mark ?
+                  <p className='div-feedbackError'>
+                    {this.state.message.mark}
+                  </p> : null}
+              </div>
             <Button className='buttonadd-marca-produtos' type="primary" icon="plus" name='modalMarca' onClick={this.openModais} />
           </div>
           <this.modalMarca />
@@ -431,11 +544,24 @@ class NovoProduto extends Component {
         {this.state.categoria === 'Equipamento' ? <div className='linha1-produtos'>
           <div className='div-tipo-produtos'>
             <div className='div-text-produtos'>Tipo:</div>
-            {this.state.tipoArray.length !== 0 ? <Select value={this.state.tipo} style={{ width: '100%'}} onChange={this.handleChangeTipo}> 
-            {this.state.tipoArray.map((valor) =>
-            <Option value={valor.type}>{valor.type}</Option>)}
-            </Select> : 
-            <Select value='Nenhum tipo cadastrado' style={{ width: '100%'}}></Select>}
+            <div className='div-inputs'>
+              {this.state.tipoArray.length !== 0 ?
+                <Select
+                  value={this.state.tipo}
+                  style={{ width: '100%'}}
+                  name='type'
+                  onFocus={this.onFocusType}
+                  className={this.state.fieldFalha.type ? 'div-inputError-produtos' : 'input-100'}
+                  onChange={this.handleChangeTipo}> 
+              {this.state.tipoArray.map((valor) =>
+              <Option value={valor.type}>{valor.type}</Option>)}
+              </Select> : 
+              <Select value='Nenhum tipo cadastrado' style={{ width: '100%'}}></Select>}
+              {this.state.fieldFalha.type ?
+                  <p className='div-feedbackError'>
+                    {this.state.message.type}
+                  </p> : null}
+            </div>
             <Button className='buttonadd-marca-produtos' type="primary" name='modalTipo' icon="plus" onClick={this.openModais} />
             <this.modalTipo />
           </div>
@@ -473,26 +599,49 @@ class NovoProduto extends Component {
         <div className='linhaSemEspaco-produtos'>
           <div className='div-codigo-produtos'>
             <div className='div-text-produtos'>Código:</div>
-            <Input
-              className='input-100'
-              placeholder="12345"
-              name='codigo'
-              value={this.state.codigo}
-              onChange={this.onChange}
-              allowClear
-            />
+              <div className='div-inputs'>
+                <Input
+                  allowClear={!this.state.fieldFalha.codigo}
+                  className={
+                    this.state.fieldFalha.codigo ?
+                      'div-inputError-produtos' :
+                      'input-100'}
+                  placeholder="12345"
+                  name='codigo'
+                  value={this.state.codigo}
+                  onChange={this.onChange}
+                  onBlur={this.onBlurValidator}
+                  onFocus={this.onFocus}
+                />
+                {this.state.fieldFalha.codigo ?
+                  <p className='div-feedbackError'>
+                    {this.state.message.codigo}
+                  </p> : null}
+              </div>
           </div>
 
           <div className='div-quantMin-produtos'>
             <div className='div-textQuant-produtos'>Quant. min:</div>
-            <Input
-              className='input-100'
-              placeholder="12345"
-              name='quantMin'
-              value={this.state.quantMin}
-              onChange={this.onChange}
-              allowClear
-            />
+              <div className='div-inputs'>
+                <InputNumber
+                  min={1}
+                  // allowClear={!this.state.fieldFalha.quantMin}
+                  className={
+                    this.state.fieldFalha.quantMin ?
+                      'div-inputError-produtos' :
+                      'input-100'}
+                  placeholder="12345"
+                  name='quantMin'
+                  value={this.state.quantMin}
+                  onChange={this.onChangeQuantMin}
+                  // onBlur={this.onBlurValidator}
+                  // onFocus={this.onFocus}
+                />
+                {this.state.fieldFalha.quantMin ?
+                  <p className='div-feedbackError'>
+                    {this.state.message.quantMin}
+                  </p> : null}
+            </div>
           </div>
 
           <div className='div-serial-produtos'>
