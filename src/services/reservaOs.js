@@ -26,3 +26,27 @@ export const newReservaOs = async (values) => {
   })
   return response
 }
+
+export const getOsByOs = async (value) => {
+  const storeObject = store.getState()
+
+  const headers = {
+    token: storeObject.auth.token,
+    username: storeObject.auth.username,
+  }
+
+  let response = {}
+
+  await axios.get(`${BACKEND_URL}/api/reserve/getOsByOs`, { headers, params: { os: value } }).then(
+    resp => {
+      response = resp
+    }
+  ).catch((error) => {
+    if (error.response) {
+      response = error.response
+    } else {
+      console.log('Error', error.message);
+    }
+  })
+  return response
+}

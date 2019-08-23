@@ -257,6 +257,19 @@ class NovoTecnico extends Component{
     })
   }
 
+  onFocusCar = () => {
+    this.setState({
+      fieldFalha: {
+        ...this.state.fieldFalha,
+        car: false,
+      },
+      message: {
+        ...this.state.message,
+        car: false,
+      },
+    })
+  }
+
   modalCarro = () => (
     <Modal
       title="Adicionar carro"
@@ -322,6 +335,7 @@ class NovoTecnico extends Component{
             <div className='div-text-tecnico'>Nome:</div>
               <div className='div-inputs'>
                 <Input
+                  allowClear={!this.state.fieldFalha.nome}
                   className={
                     this.state.fieldFalha.nome ?
                       'div-inputError-tecnico' :
@@ -332,7 +346,6 @@ class NovoTecnico extends Component{
                   onChange={this.onChangeNormal}
                   onBlur={this.onBlurValidator}
                   onFocus={this.onFocus} 
-                  // allowClear
                 />
                 {this.state.fieldFalha.nome ?
                   <p className='div-feedbackError'>
@@ -345,6 +358,7 @@ class NovoTecnico extends Component{
             <div className='div-textCNH-tecnico'>Validade CNH:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.cnh}
                 className={
                   this.state.fieldFalha.cnh ?
                     'div-inputError-tecnico' :
@@ -354,8 +368,7 @@ class NovoTecnico extends Component{
                 value={this.state.cnh}
                 onChange={this.onChange}
                 onBlur={this.onBlurValidator}
-                onFocus={this.onFocus} 
-                allowClear
+                onFocus={this.onFocus}
               />
               {this.state.fieldFalha.cnh ?
                   <p className='div-feedbackError'>
@@ -368,11 +381,23 @@ class NovoTecnico extends Component{
         <div className='linhaSemEspaco-tecnico'>
           <div className='div-carro-tecnico'>
             <div className='div-text-tecnico'>Carro:</div>
-            {this.state.carroArray.length !== 0 ? <Select value={this.state.placa} style={{ width: '100%' }} onChange={this.onChangeSelect}>
+            <div className='div-inputs'>
+            {this.state.carroArray.length !== 0 ?
+              <Select
+                value={this.state.placa}
+                style={{ width: '100%' }}
+                name='car'
+                onFocus={this.onFocusCar}
+                className={this.state.fieldFalha.car ? 'div-inputError-produtos' : 'input-100'}
+                onChange={this.onChangeSelect}>
             {this.state.carroArray.map((valor) => 
             <Option value={valor.plate}>{`${valor.model} ${valor.plate}`}</Option>)}</Select> :
             <Select value='Nenhum carro cadastrado'></Select>}
-          
+            {this.state.fieldFalha.car ?
+              <p className='div-feedbackError'>
+                {this.state.message.car}
+              </p> : null}
+            </div>           
           <Button className='buttonadd-marca-tecnico' type="primary" icon="plus" onClick={this.openModal} />
           </div>
 

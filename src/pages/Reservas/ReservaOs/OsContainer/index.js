@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import moment from 'moment'
 import './index.css'
 import { Input, DatePicker, InputNumber, Button, message, Select } from 'antd'
 
 import { validators, masks } from './validators'
-import { newReservaOs } from '../../../../services/reservaOs';
+import { newReservaOs, getOsByOs } from '../../../../services/reservaOs';
 import { getItens } from '../../../../services/produto';
 import { getTecnico } from '../../../../services/tecnico'
 
@@ -14,6 +15,7 @@ const { Option } = Select;
 class ReservaOs extends Component{
 
   state={
+    readOnly: false,
     serial: false,
     numeroSerieTest: '',
     tecnicoArray:[],
@@ -32,10 +34,18 @@ class ReservaOs extends Component{
     carrinho: [],
     estoque: 'REALPONTO',
     fieldFalha: {
-      Os: false
+      Os: false,
+      razaoSocial: false,
+      cnpj: false,
+      data: false,
+      technician: false,
     },
     message: {
-      Os: ''
+      Os: '',
+      razaoSocial: '',
+      cnpj: '',
+      data: '',
+      technician: '',
     },
   }
 
@@ -118,10 +128,49 @@ class ReservaOs extends Component{
     message.error('O produto é obrigatório para essa ação ser realizada');
   };
 
-  onChangeData = (date, dateString) => {
+  onChangeData = (date) => {
     this.setState({
       data: date,
     })
+  }
+
+  getOs = async () => {
+    const os  = await getOsByOs(this.state.Os)
+
+    console.log(os)
+
+    if (os.status === 200) {
+      if (os.data.razaoSocial) {
+        await this.setState({
+          razaoSocial: os.data.razaoSocial,
+          cnpj: os.data.cnpj,
+          data: moment(os.data.data),
+          tecnico: os.data.technician,
+          carrinho: os.data.reserve,
+          readOnly: true,
+          fieldFalha: {
+            Os: false,
+            razaoSocial: false,
+            cnpj: false,
+            data: false,
+            technician: false,
+          },
+          message: {
+            Os: '',
+            razaoSocial: '',
+            cnpj: '',
+            data: '',
+            technician: '',
+          },
+        })
+      } else {
+        this.setState({
+          readOnly: false,
+        })
+      }
+    }
+
+    console.log(moment('2015-01-01', 'YYYY-MM-DD'))
   }
 
   onBlurValidator = (e) => {
@@ -180,6 +229,8 @@ class ReservaOs extends Component{
       osParts: this.state.carrinho,
       responsibleUser: 'modrp',
     }
+
+    console.log(values)
 
     const resposta = await newReservaOs(values)
 
@@ -251,7 +302,7 @@ class ReservaOs extends Component{
       carrinho:[{
         nomeProdutoCarrinho: this.state.nomeProduto,
         productId: this.state.productId,
-        amount: this.state.quant,
+        amount: this.state.quant.toString(),
         stockBase: this.state.estoque,
         serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
       },...this.state.carrinho],
@@ -286,6 +337,7 @@ class ReservaOs extends Component{
           <div className='div-textOs-Os'>Nº Os:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.Os}
                 className={
                   this.state.fieldFalha.Os ?
                     'div-inputError-OS' :
@@ -295,9 +347,8 @@ class ReservaOs extends Component{
                 value={this.state.Os}
                 placeholder="3203"
                 onChange={this.onChange}
-                onBlur={this.onBlurValidator}
+                onBlur={this.getOs}
                 onFocus={this.onFocus}
-                // allowClear
               />
               {this.state.fieldFalha.Os ?
                   <p className='div-feedbackError'>
@@ -310,6 +361,8 @@ class ReservaOs extends Component{
           <div className='div-textRs-Os'>Razão social:</div>
             <div className='div-inputs'>
               <Input
+                readOnly={this.state.readOnly}
+                allowClear={!this.state.fieldFalha.razaoSocial && !this.state.readOnly}
                 className={
                   this.state.fieldFalha.razaoSocial ?
                     'div-inputError-OS' :
@@ -321,7 +374,6 @@ class ReservaOs extends Component{
                 onChange={this.onChange}
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
-                // allowClear
               />
               {this.state.fieldFalha.razaoSocial ?
                 <p className='div-feedbackError'>
@@ -336,6 +388,8 @@ class ReservaOs extends Component{
           <div className='div-text-Os'>Cnpj:</div>
             <div className='div-inputs'>
               <Input
+                readOnly={this.state.readOnly}
+                allowClear={!this.state.fieldFalha.cnpj && !this.state.readOnly}
                 className={
                   this.state.fieldFalha.cnpj ?
                     'div-inputError-OS' :
@@ -347,7 +401,6 @@ class ReservaOs extends Component{
                 onChange={this.onChange}
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
-                // allowClear
               />
               {this.state.fieldFalha.cnpj ?
                 <p className='div-feedbackError'>
@@ -368,6 +421,7 @@ class ReservaOs extends Component{
                 name='data'
                 onFocus={this.onFocus}
                 format='DD/MM/YYYY'
+                value={this.state.data}
                 placeholder='Selecione uma data'/>
                 {this.state.fieldFalha.data ?
                   <p className='div-feedbackError'>
@@ -481,7 +535,24 @@ class ReservaOs extends Component{
 
         <div className='div-linhaSeparete-Os'></div>        
 
-        {this.state.carrinho.length === 0 ? null : <div className='div-maior-Os'><div className='div-linhaSelecionados-Os'><h2 className='h2-Os'>Produtos selecionados</h2></div><div className='div-linha1-Os'><label className='label-produto-Os'>Produto</label><label className='label-quant-Os'>Quantidade</label></div><div className='div-linhaSepareteProdutos-Os'></div>{this.state.carrinho.map((valor) => <div className='div-linha-Os'><label className='label-produto-Os'>{valor.nomeProdutoCarrinho}</label><label className='label-quant-Os'>{valor.quantCarrinho} UN</label><Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button></div>)}</div>}
+        {this.state.carrinho.length === 0 ? null :
+        <div className='div-maior-Os'>
+          <div className='div-linhaSelecionados-Os'>
+            <h2 className='h2-Os'>Produtos selecionados</h2>
+          </div>
+          <div className='div-linha1-Os'>
+            <label className='label-produto-Os'>Produto</label>
+            <label className='label-quant-Os'>Quantidade</label>
+          </div>
+          <div className='div-linhaSepareteProdutos-Os'></div>
+          {this.state.carrinho.map((valor) =>
+            <div className='div-linha-Os'>
+              <label className='label-produto-Os'>{valor.nomeProdutoCarrinho}</label>
+              <label className='label-quant-Os'>{valor.amount} UN</label>
+              <Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button>
+            </div>)
+          }
+        </div>}
 
         <div className='div-buttonSalvar-Os'>
           <Button type='primary' className='button' onClick={this.saveTargetNewReservaOs}>Salvar</Button>

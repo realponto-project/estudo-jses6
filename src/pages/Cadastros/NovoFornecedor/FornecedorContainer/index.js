@@ -240,7 +240,8 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>Cnpj:</div>
             <div className='div-inputs'>
               <Input
-              className={
+                allowClear={!this.state.fieldFalha.cnpj}
+                className={
                 this.state.fieldFalha.cnpj ?
                   'div-inputError' :
                   'input-100'}
@@ -248,7 +249,6 @@ class NovoFornecedor extends Component {
                 name='cnpj'
                 value={this.state.cnpj}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />
@@ -263,6 +263,7 @@ class NovoFornecedor extends Component {
             <div className='div-textRs-fornecedor'>Razão Social:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.razaoSocial}
                 className={
                   this.state.fieldFalha.razaoSocial ?
                     'div-inputError' :
@@ -271,7 +272,6 @@ class NovoFornecedor extends Component {
                 name='razaoSocial'
                 value={this.state.razaoSocial}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />
@@ -288,6 +288,7 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>Cep:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.zipCode}
                 className={
                   this.state.fieldFalha.zipCode?
                     'div-inputError' :
@@ -296,7 +297,6 @@ class NovoFornecedor extends Component {
                 name='zipCode'
                 value={this.state.zipCode}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.getAddress}
                 onFocus={this.onFocus}
               />
@@ -311,6 +311,7 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>UF:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.state}
                 className={
                   this.state.fieldFalha.state ?
                     'div-inputError' :
@@ -319,7 +320,6 @@ class NovoFornecedor extends Component {
                 name='state'
                 value={this.state.state}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />
@@ -334,6 +334,7 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>Cidade:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.city}
                 className={
                 this.state.fieldFalha.city ?
                   'div-inputError' :
@@ -342,7 +343,6 @@ class NovoFornecedor extends Component {
                 name='city'
                 value={this.state.city}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />
@@ -360,6 +360,7 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>Bairro:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.neighborhood}
                 className={
                   this.state.fieldFalha.neighborhood ?
                     'div-inputError' :
@@ -368,7 +369,6 @@ class NovoFornecedor extends Component {
                 name='neighborhood'
                 value={this.state.neighborhood}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />
@@ -383,6 +383,7 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>Rua:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.street}
                 className={
                   this.state.fieldFalha.street ?
                     'div-inputError' :
@@ -391,7 +392,6 @@ class NovoFornecedor extends Component {
                 name='street'
                 value={this.state.street}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />
@@ -406,6 +406,7 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>Nº:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.number}
                 className={
                   this.state.fieldFalha.number ?
                     'div-inputError' :
@@ -414,7 +415,6 @@ class NovoFornecedor extends Component {
                 name='number'
                 value={this.state.number}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />
@@ -461,6 +461,7 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>Nome:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.nameContact}
                 className={
                   this.state.fieldFalha.nameContact ?
                     'div-inputError' :
@@ -469,7 +470,6 @@ class NovoFornecedor extends Component {
                 name='nameContact'
                 value={this.state.nameContact}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />
@@ -484,6 +484,7 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>Email:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.email}
                 className={
                   this.state.fieldFalha.email ?
                     'div-inputError' :
@@ -492,7 +493,6 @@ class NovoFornecedor extends Component {
                 name='email'
                 value={this.state.email}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />
@@ -507,6 +507,7 @@ class NovoFornecedor extends Component {
             <div className='div-text-fornecedor'>Telefone:</div>
             <div className='div-inputs'>
               <Input
+                allowClear={!this.state.fieldFalha.telphone}
                 className={
                   this.state.fieldFalha.telphone ?
                     'div-inputError' :
@@ -515,7 +516,6 @@ class NovoFornecedor extends Component {
                 name='telphone'
                 value={this.state.telphone}
                 onChange={this.onChange}
-                allowClear
                 onBlur={this.onBlurValidator}
                 onFocus={this.onFocus}
               />

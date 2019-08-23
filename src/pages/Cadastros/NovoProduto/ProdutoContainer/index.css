@@ -159,3 +159,16 @@
   width: 85%;
   display: flex;
 }
+.div-inputError-produtos{
+  border-radius: 4px;
+  margin: 5px 0 2px 0;
+  padding: 0 0 1px 5px;
+  border: 1px solid #ff0000 !important;
+  background-color: #ff6c6c3b !important;
+}
+.testeaqui{
+  background: #ff0000;
+}
+/* .ant-select-selection.ant-select-selection--single{
+  background: #ff0000;
+} */
