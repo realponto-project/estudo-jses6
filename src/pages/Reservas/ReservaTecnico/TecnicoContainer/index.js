@@ -1,22 +1,45 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, Button, Icon, Modal, Tooltip, Input } from 'antd'
+import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber } from 'antd'
 
 import { getTecnico } from '../../../../services/tecnico'
+import { getAllOs } from '../../../../services/reservaOs';
 
-class ReservaTecnico extends Component{
+class ReservaTecnico extends Component {
 
-  state={
+  state = {
     avancado: false,
     loading: false,
-    tecnicoArray:[],
+    OsArray: {
+      rows:[]
+    },
+    mais: {},
+    quantModal: 3,
+    teste: 3,
+    tecnicoArray: [],
     modalDetalhes: false,
+    modalRemove: false,
     Os: '',
     razaoSocial: '',
     cnpj: '',
     data: '',
-    lineSelected: {},
-    tecnico: 'Não selecionado'
+    lineSelected: {
+      rows:[]
+    },
+    tecnico: 'Não selecionado',
+    page: 1,
+    total: 10,
+    count: 0,
+    show: 0,
+  }
+
+  changePages = (pages) => {
+    this.setState({
+      page: pages
+    }, () => {
+      this.getAllOs()
+    }
+    )
   }
 
   getAllTecnico = async () => {
@@ -26,6 +49,67 @@ class ReservaTecnico extends Component{
         tecnicoArray: resposta.data,
       })
     )
+  }
+
+  removerLinha = () => {
+    this.setState({
+      modalRemove: true
+    })
+  }
+
+  getAllOs = async () => {
+
+    this.setState({
+      loading: true
+    })
+
+    const query = {
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await getAllOs(query).then(
+      resposta => this.setState({
+        OsArray: resposta.data,
+        page: resposta.data.page,
+        count: resposta.data.count,
+        show: resposta.data.show,
+      })
+    )
+
+    this.setState({
+      loading: false
+    })
+  }
+
+  onChangeModal = (value) => {
+    this.setState({
+      teste: value
+    })
+  }
+
+  retornar = () => {
+    const menos = this.state.quantModal - this.state.teste
+
+    this.setState({
+      quantModal: menos
+    })
+  }
+
+  perda = () => {
+    const menos = this.state.quantModal - this.state.teste
+
+    this.setState({
+      quantModal: menos
+    })
+  }
+
+  liberar = () => {
+    const menos = this.state.quantModal - this.state.teste
+
+    this.setState({
+      quantModal: menos
+    })
   }
 
   onChange = (e) => {
@@ -41,6 +125,8 @@ class ReservaTecnico extends Component{
   }
 
   componentDidMount = async () => {
+    await this.getAllOs()
+
     await this.getAllTecnico()
   }
 
@@ -55,7 +141,7 @@ class ReservaTecnico extends Component{
       tecnico: value
     })
   }
-  
+
   openModalDetalhes = async (line) => {
     await this.setState({
       modalDetalhes: true,
@@ -63,9 +149,21 @@ class ReservaTecnico extends Component{
     })
   }
 
+  mais = async (line) => {
+    await this.setState({
+      mais: {
+        [line.id]: !this.state.mais[line.id],
+      },
+      lineSelected: {
+        rows: [line],
+      },
+    })
+  }
+
   handleOk = () => {
     this.setState({
       modalDetalhes: false,
+      modalRemove: false,
     })
   }
 
@@ -79,81 +177,136 @@ class ReservaTecnico extends Component{
       okText='Salvar'
       cancelText='Cancelar'
     >
-      <div className='div-textProdutos-Rtecnico'>Produtos atrelados</div>
+      <div className='div-textProdutos-Rtecnico'>Produtos reservados</div>
+      <div className='div-body-modal'>
+        <div className='div-text-modal'>
+          <div className='div-produtos-modal'>Produtos</div>
+          <div className='div-quant-modal'>Quant.</div>
+          <div className='div-acoes-modal'>Ações</div>
+        </div>
+        <div className='div-separate-modal' />
+        <div className='div-text-modal'>
+          <div className='div-produtos-modal'>TESTE</div>
+          <div className='div-quant-modal'><InputNumber min={1} max={this.state.quantModal} defaultValue={this.state.quantModal} style={{width: '90%'}} value={this.state.teste} onChange={this.onChangeModal} /></div>
+          <div className='div-acoes-modal'>
+          <Tooltip placement="top" title='Retornar' > 
+            <Button type='primary' className='button' onClick={this.retornar} ><Icon type="arrow-left" /></Button>
+          </Tooltip>
+          <Tooltip placement="top" title='Liberar' > 
+            <Button type='primary' className='button-liberar' onClick={this.liberar}><Icon type="arrow-right" /></Button>
+          </Tooltip>
+          <Tooltip placement="top" title='Perda' > 
+            <Button type='primary' className='button-remove-entrada' onClick={this.perda}><Icon type="alert" /></Button>
+          </Tooltip>
+          </div>
+        </div>
+      </div>
     </Modal>
   )
 
 
-  render(){
-    return(
+  modalRemover = () => (
+    <Modal
+      title="Confirmação"
+      visible={this.state.modalRemove}
+      onOk={this.handleOk}
+      onCancel={this.handleOk}
+      okText='Continuar'
+      cancelText='Cancelar'
+    >
+      <div className='div-textProdutos-Rtecnico'>Todos as reservas voltarão para o estoque, deseja continuar?</div>
+    </Modal>
+  )
+
+  Pages = () => (
+
+    <div className='footer-Gentrada-button'>
+      {Math.ceil(this.state.count / this.state.total) >= 5 && Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 4)}>{this.state.page - 4}</Button> : null}
+      {Math.ceil(this.state.count / this.state.total) >= 4 && Math.ceil(this.state.count / this.state.total) - this.state.page < 2 && this.state.page > 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 3)}>{this.state.page - 3}</Button> : null}
+      {this.state.page >= 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 2)}>{this.state.page - 2}</Button> : null}
+      {this.state.page >= 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 1)}>{this.state.page - 1}</Button> : null}
+      <div className='div-teste'>{this.state.page}</div>
+      {this.state.page < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 1)}>{this.state.page + 1}</Button> : null}
+      {this.state.page + 1 < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 2)}>{this.state.page + 2}</Button> : null}
+      {this.state.page + 2 < (this.state.count / this.state.total) && this.state.page < 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 3)}>{this.state.page + 3}</Button> : null}
+      {this.state.page + 3 < (this.state.count / this.state.total) && this.state.page < 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 4)}>{this.state.page + 4}</Button> : null}
+    </div>
+  )
+
+
+  render() {
+    console.log(this.state.lineSelected)
+    return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>
           <h1 className='h1-Rtecnico'>Reservas técnico</h1>
         </div>
 
-        {this.state.avancado ? 
-        <div className='div-linha-avancado-Rtecnico'>
-        <div className='div-ocultar-Rtecnico'>
-          <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
-        </div>
-        <div className='div-linha1-avancado-Rtecnico'>
-          <div className='div-Os-Rtecnico'>
-          <div className='div-text-Os'>Os:</div>
-            <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='Os'
-              value={this.state.Os}
-              placeholder="12"
-              onChange={this.onChange}
-              allowClear
-            />
-          </div> 
+        {this.state.avancado ?
+          <div className='div-linha-avancado-Rtecnico'>
+            <div className='div-ocultar-Rtecnico'>
+              <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
+            </div>
+            <div className='div-linha1-avancado-Rtecnico'>
+              <div className='div-Os-Rtecnico'>
+                <div className='div-text-Os'>Os:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='Os'
+                  value={this.state.Os}
+                  placeholder="12"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
 
-          <div className='div-rs-Rtecnico'>
-          <div className='div-textRs-Rtecnico'>Razão social:</div>
-            <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='razaoSocial'
-              value={this.state.razaoSocial}
-              placeholder="Digite a razão social"
-              onChange={this.onChange}
-              allowClear
-            />
-          </div>
+              <div className='div-rs-Rtecnico'>
+                <div className='div-textRs-Rtecnico'>Razão social:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='razaoSocial'
+                  value={this.state.razaoSocial}
+                  placeholder="Digite a razão social"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
 
-          <div className='div-cnpj-Rtecnico'>
-          <div className='div-text-Rtecnico'>Cnpj:</div>
-            <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='cnpj'
-              value={this.state.cnpj}
-              placeholder="Digite o cnpj"
-              onChange={this.onChange}
-              allowClear
-            />
-          </div>
+              <div className='div-cnpj-Rtecnico'>
+                <div className='div-text-Rtecnico'>Cnpj:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='cnpj'
+                  value={this.state.cnpj}
+                  placeholder="Digite o cnpj"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
 
-          <div className='div-data-Rtecnico'>
-          <div className='div-text-Rtecnico'>Data:</div>
-            <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='data'
-              value={this.state.data}
-              placeholder="Digite a data"
-              onChange={this.onChange}
-              allowClear
-            />
-          </div>
-        </div></div> : 
-        <div className='div-avancado-Rtecnico'>
-          <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
-        </div> }
+              <div className='div-data-Rtecnico'>
+                <div className='div-text-Rtecnico'>Data:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='data'
+                  value={this.state.data}
+                  placeholder="Digite a data"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+            </div></div> :
+          <div className='div-avancado-Rtecnico'>
+            <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+          </div>}
 
         <div className='div-cabecalho-Rtecnico'>
+          <div className='cel-mais-cabecalho-Rtecnico'>
+          </div>
           <div className='cel-os-cabecalho-Rtecnico'>
             Nº Os
           </div>
@@ -171,39 +324,59 @@ class ReservaTecnico extends Component{
           </div>
         </div>
 
-        
-        <div className=' div-separate-Rtecnico'></div>
-        <div className='div-lines-Rtecnico' >
-          <div className='cel-os-cabecalho-Rtecnico'>
-            3232
-          </div>
-          <div className='cel-rs-cabecalho-Rtecnico'>
-            TESTE
-          </div>
-          <div className='cel-cnpj-cabecalho-Rtecnico'>
-          07.308.959/0001-38
-          </div>
-          <div className='cel-data-cabecalho-Rtecnico'>
-            20/11/2001
-          </div>
-          <div className='cel-acoes-cabecalho-Rtecnico'>
-          <Tooltip placement="topLeft" title='Detalhes'>
-            <Button type="primary" className='button-icon' onClick={this.openModalDetalhes}><Icon type="info-circle" /></Button>
-          </Tooltip>
-          <Tooltip placement="topLeft" title='Remover'>
-            <Button type="primary" className='button-icon-remove'><Icon type="delete" /></Button>
-          </Tooltip>
-            <this.modalDetalhesLinha/>
-          </div>
-        </div>
 
-        <div className=' div-separate-Rtecnico'></div>
-          <div className='footer-Rtecnico'>
-            <Pagination defaultCurrent={1} total={50} />
-          </div>
+        <div className=' div-separate-Rtecnico' />
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
+          this.state.OsArray.rows.map((line) =>
+            <div className='div-100-Gentrada'>
+              <div className='div-lines-Rtecnico' >
+                <div className='cel-mais-cabecalho-Rtecnico'>
+                  <div className='button-mais' onClick={() => this.mais(line)}>+</div>
+                </div>
+                <div className='cel-os-cabecalho-Rtecnico'>
+                  {line.os}
+                </div>
+                <div className='cel-rs-cabecalho-Rtecnico'>
+                  {line.razaoSocial}
+                </div>
+                <div className='cel-cnpj-cabecalho-Rtecnico'>
+                  {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
+                </div>
+                <div className='cel-data-cabecalho-Rtecnico'>
+                  {line.createdAt}
+                </div>
+                <div className='cel-acoes-cabecalho-Rtecnico'>
+                  {/* <Tooltip placement="topLeft" title='Detalhes'>
+                    <Button type="primary" className='button-icon' onClick={this.openModalDetalhes}><Icon type="info-circle" /></Button>
+                  </Tooltip> */}
+                  <Tooltip placement="topLeft" title='Remover'>
+                    <Button type="primary" className='button-icon-remove' onClick={this.removerLinha}><Icon type="delete" /></Button>
+                  </Tooltip>
+                  <this.modalDetalhesLinha />
+                  <this.modalRemover />
+                </div>
+              </div>
+              {this.state.mais[line.id] ? <div className='div-100-Rtecnico'>
+                <div className='div-mais-Rtecnico'>
+                <div className='div-normal-mais' >
+                <div className='div-produtos-mais'>Produtos</div>
+                <div className='div-quant-mais'>Quantidade</div>
+                </div>
+                </div>
+                {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
+                  this.state.lineSelected.rows.map((line) =>
+                <div className='div-branco-mais' >
+                <div className='div-produtos-mais'>{line.products.name}</div>
+                {console.log(line.products)}
+                <div className='div-quant-mais'>{line.products.amount}</div>
+                </div>)}
+              </div> : null}
+            <div className=' div-separate1-Gentrada'/>
+          </div>)}
+            <this.Pages />
       </div>
-    )
+      )
+    }
   }
-}
-
+  
 export default ReservaTecnico

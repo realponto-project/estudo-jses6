@@ -63,7 +63,7 @@ class Login extends Component {
           <div className='div-ButtonLogin'>
             <Button
               onClick={this.onSubmit}
-              className='ButtonPaswordLogin'
+              className='button'
               type="primary">
               Login
           </Button>
