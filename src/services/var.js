@@ -1,4 +1,4 @@
-export const BACKEND_URL = 'http://192.168.0.104:5301'
+export const BACKEND_URL = 'http://192.168.0.104:5302'
 
 // export const BACKEND_URL = 'http://192.168.0.198:5301'
 
