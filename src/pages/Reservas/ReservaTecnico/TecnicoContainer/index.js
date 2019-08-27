@@ -4,7 +4,7 @@ import './index.css'
 import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber } from 'antd'
 
 import { getTecnico } from '../../../../services/tecnico'
-import { getTodasOs, baixaReservaOs } from '../../../../services/reservaOs';
+import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs';
 
 class ReservaTecnico extends Component {
 
@@ -84,6 +84,17 @@ class ReservaTecnico extends Component {
     this.setState({
       loading: false
     })
+  }
+
+  removeOs = async (line) => {
+
+    const query = {
+      osId: line
+    }
+
+    await removeReservaOs(query)
+
+    await this.getAllOsSemLoading()
   }
 
   getAllOsSemLoading = async () => {
@@ -517,7 +528,7 @@ class ReservaTecnico extends Component {
                     <Button type="primary" className='button-icon' onClick={this.openModalDetalhes}><Icon type="info-circle" /></Button>
                   </Tooltip> */}
                   <Tooltip placement="topLeft" title='Remover'>
-                    <Button type="primary" className='button-icon-remove' onClick={this.removerLinha}><Icon type="delete" /></Button>
+                    <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button>
                   </Tooltip>
                   <this.modalDetalhesLinha />
                   <this.modalRemover />

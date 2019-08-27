@@ -157,6 +157,9 @@ class Estoque extends Component{
           <div className='cel-quant-cabecalho-estoque'>
             Qnt.
           </div>
+          <div className='cel-quant-cabecalho-estoque'>
+            Disp.
+          </div>
           <div className='cel-estoque-cabecalho-estoque'>
             Estoque
           </div>
@@ -183,6 +186,11 @@ class Estoque extends Component{
           <div className='cel-quant-cabecalho-estoque'>
           <label className='div-table-label-cel-estoque'>
             {line.amount}
+          </label>
+          </div>
+          <div className='cel-quant-cabecalho-estoque'>
+          <label className='div-table-label-cel-estoque'>
+            1
           </label>
           </div>
           <div className='cel-estoque-cabecalho-estoque'>

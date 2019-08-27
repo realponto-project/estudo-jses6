@@ -27,7 +27,7 @@ export const NewKit = async (values) => {
   return response
 }
 
-export const getKit = async (value) => {
+export const getKit = async (query) => {
   const storeObject = store.getState()
 
   const headers = {
@@ -37,7 +37,7 @@ export const getKit = async (value) => {
 
   let response = {}
 
-  await axios.get(`${BACKEND_URL}/api/reserve/kit`, { headers: headers, params: { query: value } }).then(
+  await axios.get(`${BACKEND_URL}/api/reserve/kit`, { headers: headers, params: { query } }).then(
     resp => {
       response = resp
     }
