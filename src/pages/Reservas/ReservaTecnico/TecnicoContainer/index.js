@@ -1,9 +1,10 @@
+import * as R from 'ramda'
 import React, { Component } from 'react'
 import './index.css'
 import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber } from 'antd'
 
 import { getTecnico } from '../../../../services/tecnico'
-import { getAllOs } from '../../../../services/reservaOs';
+import { getTodasOs, baixaReservaOs } from '../../../../services/reservaOs';
 
 class ReservaTecnico extends Component {
 
@@ -13,9 +14,12 @@ class ReservaTecnico extends Component {
     OsArray: {
       rows:[]
     },
+    produtoSelecionado: {
+      products:{}
+    },
     mais: {},
-    quantModal: 3,
-    teste: 3,
+    quantModal: NaN,
+    teste: NaN,
     tecnicoArray: [],
     modalDetalhes: false,
     modalRemove: false,
@@ -68,7 +72,7 @@ class ReservaTecnico extends Component {
       total: this.state.total,
     }
 
-    await getAllOs(query).then(
+    await getTodasOs(query).then(
       resposta => this.setState({
         OsArray: resposta.data,
         page: resposta.data.page,
@@ -82,33 +86,167 @@ class ReservaTecnico extends Component {
     })
   }
 
+  getAllOsSemLoading = async () => {
+
+    const query = {
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await getTodasOs(query).then(
+      resposta => this.setState({
+        OsArray: resposta.data,
+        page: resposta.data.page,
+        count: resposta.data.count,
+        show: resposta.data.show,
+      })
+    )
+  }
+
   onChangeModal = (value) => {
     this.setState({
       teste: value
     })
   }
 
-  retornar = () => {
-    const menos = this.state.quantModal - this.state.teste
+  retornar = async () => {
+    const menos = this.state.produtoSelecionado.products.quantMax - this.state.teste
 
     this.setState({
-      quantModal: menos
+      produtoSelecionado:{
+        products:{
+          ...this.state.produtoSelecionado.products,
+          quantMax: menos,
+          return: parseInt(this.state.produtoSelecionado.products.return, 10) + this.state.teste
+        }
+      },
+    })
+
+    const value = {
+      osPartsId: this.state.produtoSelecionado.products.osPartsId,
+      add:{
+        return: this.state.teste
+      }
+    }
+
+    const resposta = await baixaReservaOs(value)
+
+    console.log(resposta)
+
+    if (resposta.status === 200) {
+
+      this.setState({
+        teste: menos,
+      })
+    }
+
+    await this.getAllOsSemLoading()
+
+    // eslint-disable-next-line array-callback-return
+    const x = this.state.OsArray.rows.filter((item) => {
+      if (item.id === R.keys(this.state.mais)[0]) {
+        return item
+      }
+    })
+
+    await this.setState({
+      lineSelected: {
+        rows: x
+      },
     })
   }
 
-  perda = () => {
-    const menos = this.state.quantModal - this.state.teste
+  perda = async () => {
+    const menos = this.state.produtoSelecionado.products.quantMax - this.state.teste
 
     this.setState({
-      quantModal: menos
+      produtoSelecionado:{
+        products:{
+          ...this.state.produtoSelecionado.products,
+          quantMax: menos,
+          missOut: parseInt(this.state.produtoSelecionado.products.missOut, 10) + this.state.teste
+        }
+      },
+    })
+
+    const value = {
+      osPartsId: this.state.produtoSelecionado.products.osPartsId,
+      add:{
+        missOut: this.state.teste
+      }
+    }
+
+    const resposta = await baixaReservaOs(value)
+
+    console.log(resposta)
+
+    if (resposta.status === 200) {
+
+      this.setState({
+        teste: menos,
+      })
+    }
+
+    await this.getAllOsSemLoading()
+
+    // eslint-disable-next-line array-callback-return
+    const x = this.state.OsArray.rows.filter((item) => {
+      if (item.id === R.keys(this.state.mais)[0]) {
+        return item
+      }
+    })
+
+    await this.setState({
+      lineSelected: {
+        rows: x
+      },
     })
   }
 
-  liberar = () => {
-    const menos = this.state.quantModal - this.state.teste
+  liberar = async () => {
+    const menos = this.state.produtoSelecionado.products.quantMax - this.state.teste
 
     this.setState({
-      quantModal: menos
+      produtoSelecionado:{
+        products:{
+          ...this.state.produtoSelecionado.products,
+          quantMax: menos,
+          output: parseInt(this.state.produtoSelecionado.products.output, 10) + this.state.teste
+        }
+      },
+    })
+
+    const value = {
+      osPartsId: this.state.produtoSelecionado.products.osPartsId,
+      add:{
+        output: this.state.teste
+      }
+    }
+
+    const resposta = await baixaReservaOs(value)
+
+    console.log(resposta)
+
+    if (resposta.status === 200) {
+
+      this.setState({
+        teste: menos,
+      })
+    }
+
+    await this.getAllOsSemLoading()
+
+    // eslint-disable-next-line array-callback-return
+    const x = this.state.OsArray.rows.filter((item) => {
+      if (item.id === R.keys(this.state.mais)[0]) {
+        return item
+      }
+    })
+
+    await this.setState({
+      lineSelected: {
+        rows: x
+      },
     })
   }
 
@@ -142,10 +280,27 @@ class ReservaTecnico extends Component {
     })
   }
 
-  openModalDetalhes = async (line) => {
+  handleOkModalPeca = async () => {
+    await this.setState({
+      modalDetalhes: false,
+      produtoSelecionado: {
+        products: {}
+      },
+      teste: NaN,
+    })
+  }
+
+  openModalDetalhes = async (valor) => {
     await this.setState({
       modalDetalhes: true,
-      lineSelected: line
+      produtoSelecionado: {
+        products: valor
+      },
+      total: this.state.produtoSelecionado.products.quantMax,
+    })
+
+    await this.setState({
+      teste: this.state.produtoSelecionado.products.quantMax
     })
   }
 
@@ -156,7 +311,7 @@ class ReservaTecnico extends Component {
       },
       lineSelected: {
         rows: [line],
-      },
+      },    
     })
   }
 
@@ -172,10 +327,10 @@ class ReservaTecnico extends Component {
     <Modal
       title="Detalhes do atendimento"
       visible={this.state.modalDetalhes}
-      onOk={this.handleOk}
-      onCancel={this.handleOk}
-      okText='Salvar'
-      cancelText='Cancelar'
+      onOk={this.handleOkModalPeca}
+      onCancel={this.handleOkModalPeca}
+      okText='OK'
+      cancelText='Fechar'
     >
       <div className='div-textProdutos-Rtecnico'>Produtos reservados</div>
       <div className='div-body-modal'>
@@ -186,8 +341,8 @@ class ReservaTecnico extends Component {
         </div>
         <div className='div-separate-modal' />
         <div className='div-text-modal'>
-          <div className='div-produtos-modal'>TESTE</div>
-          <div className='div-quant-modal'><InputNumber min={1} max={this.state.quantModal} defaultValue={this.state.quantModal} style={{width: '90%'}} value={this.state.teste} onChange={this.onChangeModal} /></div>
+          <div className='div-produtos-modal'>{this.state.produtoSelecionado.products.name}</div>
+          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.quantMax} defaultValue={this.state.teste} style={{width: '90%'}} value={this.state.teste} onChange={this.onChangeModal} /></div>
           <div className='div-acoes-modal'>
           <Tooltip placement="top" title='Retornar' > 
             <Button type='primary' className='button' onClick={this.retornar} ><Icon type="arrow-left" /></Button>
@@ -199,6 +354,18 @@ class ReservaTecnico extends Component {
             <Button type='primary' className='button-remove-entrada' onClick={this.perda}><Icon type="alert" /></Button>
           </Tooltip>
           </div>
+        </div>
+        <div className='div-total-modal'>
+          <div className='div-baixo'>Total:</div>
+          <div className='div-baixo'>Retornados:</div>
+          <div className='div-baixo'>Liberados:</div>
+          <div className='div-baixo'>Perdas:</div>
+        </div>
+        <div className='div-total-modal2'>
+          <div className='div-baixo2'>{this.state.produtoSelecionado.products.amount}</div>
+          <div className='div-baixo2'>{this.state.produtoSelecionado.products.return}</div>
+          <div className='div-baixo2'>{this.state.produtoSelecionado.products.output}</div>
+          <div className='div-baixo2'>{this.state.produtoSelecionado.products.missOut}</div>
         </div>
       </div>
     </Modal>
@@ -235,7 +402,7 @@ class ReservaTecnico extends Component {
 
 
   render() {
-    console.log(this.state.lineSelected)
+    console.log(this.state)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>
@@ -366,9 +533,8 @@ class ReservaTecnico extends Component {
                 {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
                   this.state.lineSelected.rows.map((line) =>
                 <div className='div-branco-mais' >
-                <div className='div-produtos-mais'>{line.products.name}</div>
-                {console.log(line.products)}
-                <div className='div-quant-mais'>{line.products.amount}</div>
+                <div className='div-produtos-mais'>{line.products.map((valor => <div  className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.name}</div>))}</div>
+                <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.quantMax}</div>))}</div>
                 </div>)}
               </div> : null}
             <div className=' div-separate1-Gentrada'/>

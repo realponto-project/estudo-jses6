@@ -204,7 +204,7 @@ class SideBar extends Component {
             <Menu.Item key="relatorioOs_dash"><Icon type="file-search" />Os</Menu.Item>
             <Menu.Item key="relatorioTecnico_dash"><Icon type="user" />Técnico</Menu.Item>
             <Menu.Item key="relatorioData_dash"><Icon type="calendar" />Data</Menu.Item>
-            <Menu.Item key="relatorioPerda_dash"><Icon type="minus" />Perda</Menu.Item>
+            <Menu.Item key="relatorioPerda_dash"><Icon type="alert" />Perda</Menu.Item>
             <Menu.Item key="relatorioML_dash"><Icon type="ie" />Mercado Livre</Menu.Item>
           </SubMenu>
         </Menu>
