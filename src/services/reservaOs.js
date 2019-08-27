@@ -51,7 +51,7 @@ export const getOsByOs = async (value) => {
   return response
 }
 
-export const getAllOs = async (query) => {
+export const getTodasOs = async (query) => {
   const storeObject = store.getState()
 
   const headers = {
@@ -62,6 +62,30 @@ export const getAllOs = async (query) => {
   let response = {}
 
   await axios.get(`${BACKEND_URL}/api/reserve/Os`, { headers: headers, params: { query } }).then(
+    resp => {
+      response = resp
+    }
+  ).catch((error) => {
+    if (error.response) {
+      response = error.response
+    } else {
+      console.log('Error', error.message);
+    }
+  })
+  return response
+}
+
+export const baixaReservaOs = async (values) => {
+  const storeObject = store.getState()
+
+  const headers = {
+    token: storeObject.auth.token,
+    username: storeObject.auth.username,
+  }
+
+  let response = {}
+
+  await axios.put(`${BACKEND_URL}/api/reserve/output`, values, { headers: headers }).then(
     resp => {
       response = resp
     }

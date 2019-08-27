@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Input, InputNumber, Select, Button, Modal, Switch, message } from 'antd'
 import './index.css'
-import { validators, masks } from './validators'
+import { validators } from './validators'
 import { newMarca, newTipo, newFabricante, newProduto, getTipo, getMarca, getFabricante } from '../../../../services/produto'
 
 
