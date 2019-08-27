@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Spin, Button, Input } from 'antd'
+import { Spin, DatePicker, Button, Input } from 'antd'
 import { getEntrada } from '../../../../services/entrada';
 
 class GerenciarEntrada extends Component{
@@ -18,12 +18,15 @@ class GerenciarEntrada extends Component{
     total: 10,
     count: 0,
     show: 0,
+    valueDate: {start: '2019/01/01'}
   }
 
-  onChange = (e) => {
-    this.setState({
+  onChange = async (e) => {
+    await this.setState({
       [e.target.name]: e.target.value
     })
+
+    await this.getAllEntrada()
   }
 
   avancado = () => {
@@ -43,23 +46,30 @@ class GerenciarEntrada extends Component{
 
   getAllEntrada = async () => {
 
-    this.setState({
-      loading: true
-    })
+    // this.setState({
+    //   loading: true
+    // })
 
     const query = {
-      // filters: {
-      //   part: {
-      //     specific: {
-      //       name: this.state.produto,
-      //     },
-      //   },
-        // equipModel: {
-        //   specific: {
-        //     name: this.state.produto,
-        //   },
-        // },
-      // },
+      filters: {
+        name: this.state.produto,
+        entrance: {
+          specific: {
+            responsibleUser: this.state.usuario,
+            createdAt: this.state.valueDate,
+          },
+        },
+        part: {
+          specific: {
+            name: this.state.produto,
+          },
+        },
+        equipModel: {
+          specific: {
+            name: this.state.produto,
+          },
+        },
+      },
       page: this.state.page,
       total: this.state.total,
       // order: {
@@ -77,12 +87,20 @@ class GerenciarEntrada extends Component{
       })
     )
 
-    this.setState({
-      loading: false
-    })
+    // this.setState({
+    //   loading: false
+    // })
   }
 
   componentDidMount = async () => {
+    await this.getAllEntrada()
+  }
+
+  searchDate = async(e) => {
+    if( !e[0] || !e[1] ) return
+    await this.setState({
+      valueDate: {start: e[0]._d, end: e[1]._d},
+    })
     await this.getAllEntrada()
   }
 
@@ -143,14 +161,19 @@ class GerenciarEntrada extends Component{
 
           <div className='div-data-Gentrada'>
           <div className='div-text-Rtecnico'>Data:</div>
-          <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='data'
-              value={this.state.data}
-              placeholder="Digite a data"
-              onChange={this.onChange}
-              allowClear
+          <DatePicker.RangePicker
+          placeholder='Digite a data'
+          format='DD/MM/YYYY'
+          dropdownClassName='poucas'
+          onChange={this.searchDate}
+          onOk={this.searchDate}
+              // className='input-100'
+              // style={{ width: '100%' }}
+              // name='data'
+              // value={this.state.data}
+              // placeholder="Digite a data"
+              // onChange={this.onChange}
+              // allowClear
             />
           </div>
         </div></div> : 
@@ -175,7 +198,7 @@ class GerenciarEntrada extends Component{
 
         
         <div className=' div-separate-Gentrada'/>
-            {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : 
+            {this.state.loading || this.state.entrada.rows.length === 0 ? <div className='spin'><Spin spinning={this.state.loading} /></div> : 
           this.state.entrada.rows.map((line) =>
           <div className='div-100-Gentrada'>
           <div className='div-lines-Gentrada'
