@@ -137,8 +137,6 @@ class ReservaOs extends Component{
   getOs = async () => {
     const os  = await getOsByOs(this.state.Os)
 
-    console.log(os)
-
     if (os.status === 200) {
       if (os.data.razaoSocial) {
         await this.setState({
@@ -169,8 +167,6 @@ class ReservaOs extends Component{
         })
       }
     }
-
-    console.log(moment('2015-01-01', 'YYYY-MM-DD'))
   }
 
   onBlurValidator = (e) => {

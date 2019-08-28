@@ -84,10 +84,6 @@ class Estoque extends Component{
       },
       page: this.state.page,
       total: this.state.total,
-      // order: {
-      //   field: 'createdAt',
-      //   acendent: true,
-      // },
     }
 
     await stock(query).then(
@@ -165,8 +161,8 @@ class Estoque extends Component{
           <div className='div-estoque-Rtecnico'>
           <div className='div-text-Rtecnico'>Estoque:</div>
           <Select value={this.state.estoqueBase} style={{ width: '100%' }} onChange={this.onChangeSelect} >
-            <Option value='REALPONTO'>REALPONTO</Option>
             <Option value='TODOS'>TODOS</Option>
+            <Option value='REALPONTO'>REALPONTO</Option>
             <Option value='NOVAREAL'>NOVA REALPONTO</Option>
             <Option value='PONTOREAL'>PONTOREAL</Option>
           </Select>
@@ -192,9 +188,7 @@ class Estoque extends Component{
             Estoque
           </div>
         </div>
-
         
-        <div className='div-test-estoque'/>
           {this.state.loading ? 
             <div className='spin'><Spin spinning={this.state.loading} /></div>
           : 
@@ -233,10 +227,10 @@ class Estoque extends Component{
               <div className=' div-separate1-estoque'/>
               </div>
             ) : null }
+        <this.Pages/>
             </div>
         }
 
-          <this.Pages/>
       </div>
     )
   }
