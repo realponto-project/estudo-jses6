@@ -18,6 +18,7 @@ class ReservaKit extends Component {
     produtoSelecionado: {
       products: {}
     },
+    os: '',
     avancado: false,
     produto: '',
     data: '',
@@ -86,6 +87,7 @@ class ReservaKit extends Component {
   closeModal = () => {
     this.setState({
       modalBaixa: false,
+      os: '',
       incluidos: 0,
       liberados: 0,
       perdas: 0,
@@ -343,8 +345,18 @@ class ReservaKit extends Component {
         <Button type='primary' onClick={this.closeModal} >Cancelar</Button>
         <Button type='primary' onClick={this.closeModal} >Finalizar</Button>
       </div>}
-    >
+    > 
+    <div className='div-space-modal'>
       <div className='div-textProdutos-Rtecnico'>Produtos reservados</div>
+      <div className='div-os-modal'>
+      <Input
+        onChange={this.onChange}
+        value={this.state.os}
+        name='os'
+        placeholder='Nº Os'
+      />
+      </div>
+    </div>
       <div className='div-body-modal'>
         <div className='div-text-modal'>
           <div className='div-produtos-modal'>Produtos</div>
