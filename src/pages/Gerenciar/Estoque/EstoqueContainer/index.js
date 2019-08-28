@@ -13,7 +13,7 @@ class Estoque extends Component{
     lineSelect: {},
     produto:'',
     fabricante: '',
-    estoqueBase: 'REALPONTO',
+    estoqueBase: 'TODOS',
     avancado: false,
     loading: false,
     estoque:{
@@ -34,16 +34,20 @@ class Estoque extends Component{
     )
   }
 
-  onChange = (e) => {
-    this.setState({
+  onChange = async (e) => {
+    await this.setState({
       [e.target.name]: e.target.value
     })
+
+    this.getStock()
   }
 
-  onChangeSelect = (value) => {
-    this.setState({
+  onChangeSelect = async (value) => {
+    await this.setState({
       estoqueBase: value
     })
+
+    this.getStock()
   }
 
   avancado = () => {
@@ -58,9 +62,32 @@ class Estoque extends Component{
       loading: true
     })
 
+    const estoqueBase = this.state.estoqueBase === 'TODOS' ? '' : this.state.estoqueBase
+
     const query = {
+      filters: {
+        manufacturer: {
+          specific: {
+            manufacturer: this.state.fabricante,
+          },
+        },
+        product: {
+          specific: {
+            name: this.state.produto,
+          },
+        },
+        stockBase: {
+          specific: {
+            stockBase: estoqueBase,
+          },
+        },
+      },
       page: this.state.page,
       total: this.state.total,
+      // order: {
+      //   field: 'createdAt',
+      //   acendent: true,
+      // },
     }
 
     await stock(query).then(
@@ -127,9 +154,9 @@ class Estoque extends Component{
             <Input
               className='input-100'
               style={{ width: '100%' }}
-              name='razaoSocial'
-              value={this.state.razaoSocial}
-              placeholder="Digite a razão social"
+              name='manufacturer'
+              value={this.state.manufacturer}
+              placeholder="Digite o fabricante"
               onChange={this.onChange}
               allowClear
             />
@@ -139,7 +166,8 @@ class Estoque extends Component{
           <div className='div-text-Rtecnico'>Estoque:</div>
           <Select value={this.state.estoqueBase} style={{ width: '100%' }} onChange={this.onChangeSelect} >
             <Option value='REALPONTO'>REALPONTO</Option>
-            <Option value='NOVA REALPONTO'>NOVA REALPONTO</Option>
+            <Option value='TODOS'>TODOS</Option>
+            <Option value='NOVAREAL'>NOVA REALPONTO</Option>
             <Option value='PONTOREAL'>PONTOREAL</Option>
           </Select>
           </div>
@@ -166,42 +194,47 @@ class Estoque extends Component{
         </div>
 
         
-        <div className=' div-separate-estoque'/>
-            {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : 
-          this.state.estoque.rows.map((line) =>
-          <div className='div-100-estoque'>
-          <div className='div-lines-estoque'
-          //  onClick={() => this.openModalDetalhesCompany(line)}
-           >
-          <div className='cel-produto-cabecalho-estoque'>
-          <label className='div-table-label-cel-estoque'>
-            {line.name}
-          </label>
-          </div>
-          <div className='cel-fabricante-cabecalho-estoque'>
-          <label className='div-table-label-cel-estoque'>
-            {line.manufacturer}
-          </label>
-          </div>
-          <div className='cel-quant-cabecalho-estoque'>
-          <label className='div-table-label-cel-estoque'>
-            {line.amount}
-          </label>
-          </div>
-          <div className='cel-quant-cabecalho-estoque'>
-          <label className='div-table-label-cel-estoque'>
-            1
-          </label>
-          </div>
-          <div className='cel-estoque-cabecalho-estoque'>
-          <label className='div-table-label-cel-estoque'>
-            {line.stockBase}
-          </label>
-          </div>
-        </div>
-          <div className=' div-separate1-estoque'/>
-        </div>
-        )}
+        <div className='div-test-estoque'/>
+          {this.state.loading ? 
+            <div className='spin'><Spin spinning={this.state.loading} /></div>
+          : 
+            <div className='div-separate-estoque' >
+            {this.state.estoque.rows.length !== 0 ? this.state.estoque.rows.map((line) =>
+              <div className='div-100-estoque'>
+                <div className='div-lines-estoque'
+                //  onClick={() => this.openModalDetalhesCompany(line)}
+                >
+                  <div className='cel-produto-cabecalho-estoque'>
+                  <label className='div-table-label-cel-estoque'>
+                    {line.name}
+                  </label>
+                  </div>
+                  <div className='cel-fabricante-cabecalho-estoque'>
+                  <label className='div-table-label-cel-estoque'>
+                    {line.manufacturer}
+                  </label>
+                  </div>
+                  <div className='cel-quant-cabecalho-estoque'>
+                  <label className='div-table-label-cel-estoque'>
+                    {line.amount}
+                  </label>
+                  </div>
+                  <div className='cel-quant-cabecalho-estoque'>
+                  <label className='div-table-label-cel-estoque'>
+                    1
+                  </label>
+                  </div>
+                  <div className='cel-estoque-cabecalho-estoque'>
+                  <label className='div-table-label-cel-estoque'>
+                    {line.stockBase}
+                  </label>
+                  </div>
+                </div>
+              <div className=' div-separate1-estoque'/>
+              </div>
+            ) : null }
+            </div>
+        }
 
           <this.Pages/>
       </div>

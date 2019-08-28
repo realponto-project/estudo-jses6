@@ -27,7 +27,7 @@ export const getItens = async () => {
   return response
 } 
 
-export const getMarca = async (peca) => {
+export const getMarca = async () => {
   const storeObject = store.getState()
 
   const headers = {
@@ -37,7 +37,7 @@ export const getMarca = async (peca) => {
 
   let response = {}
 
-  await axios.get(`${BACKEND_URL}/api/mark`, { headers: headers, params: { query: peca} }).then(
+  await axios.get(`${BACKEND_URL}/api/mark`, { headers: headers } ).then(
     resp => {
       response = resp
     }

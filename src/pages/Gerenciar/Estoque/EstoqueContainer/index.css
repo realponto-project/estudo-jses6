@@ -108,6 +108,11 @@
   background-color: rgb(221, 219, 219);
   height: 1px;
 }
+.div-test-estoque{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
 .div-separate1-estoque{
   width: 100%;
   background-color: rgb(221, 219, 219);

@@ -59,12 +59,7 @@ class GerenciarEntrada extends Component{
             createdAt: this.state.valueDate,
           },
         },
-        part: {
-          specific: {
-            name: this.state.produto,
-          },
-        },
-        equipModel: {
+        product: {
           specific: {
             name: this.state.produto,
           },
