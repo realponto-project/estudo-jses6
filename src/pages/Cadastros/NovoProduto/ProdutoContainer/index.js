@@ -96,12 +96,7 @@ class NovoProduto extends Component {
   }
 
   getAllMarca = async () => {
-
-    const peca =  this.state.categoria.toLocaleLowerCase()
-
-    console.log(peca)
-
-    await getMarca( peca ).then(
+    await getMarca().then(
       resposta => this.setState({
         marcaArray: resposta.data,
       })
@@ -315,6 +310,8 @@ class NovoProduto extends Component {
       fabricante: '',
       tipo: 'Não selecionado'
     })
+
+    this.getAllMarca()
 
     if (this.state.marca !== 'Não selecionado') this.getAllFabricante()
   }
