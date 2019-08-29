@@ -6,7 +6,8 @@ import { Redirect } from 'react-router-dom'
 
 import { getTecnico } from '../../../../services/tecnico'
 // import { baixaReservaOs } from '../../../../services/reservaOs';
-import { getKit } from '../../../../services/kit'
+import { getKit, baixasKit } from '../../../../services/kit'
+import { getOsByOs } from '../../../../services/reservaOs';
 
 
 const { Option } = Select;
@@ -37,6 +38,12 @@ class ReservaKit extends Component {
     total: 10,
     count: 0,
     show: 0,
+    message:{
+      Os: ''
+    },
+    fieldFalha:{
+      Os: false,
+    },
   }
 
   aviso = () => {
@@ -51,6 +58,11 @@ class ReservaKit extends Component {
     }
     )
   }
+
+  messageError = () => {
+    message.error('Essa ordem de serviço não consta no nosso sistema');
+  };
+  
 
   getAllKit = async () => {
 
@@ -320,6 +332,81 @@ class ReservaKit extends Component {
     // })
   }
 
+  saveTargetNewProduto = async () => {
+
+    this.setState({
+      loading: true
+    })
+
+    const values = {
+      reposicao: this.state.incluidos,
+      expedicao:this.state.liberados,
+      perda: this.state.perdas,
+      os:this.state.os,
+      kitPartId: this.state.produtoSelecionado.products.id,
+    }
+
+    const resposta = await baixasKit(values)
+
+    console.log(resposta)
+
+    if (resposta.status === 422) {
+
+      this.setState({
+        messageError: true,
+        fieldFalha: resposta.data.fields[0].field,
+        message: resposta.data.fields[0].message,
+      })
+      await this.error()
+      this.setState({
+        loading:false,
+        messageError: false,
+      })
+    } if (resposta.status === 200) {
+
+      this.setState({
+        item: '',
+        categoria: 'Equipamento',
+        marca: "Não selecionado",
+        tipo: "Não selecionado",
+        fabricante: '',
+        descricao: '',
+        codigo: '',
+        quantMin: '',
+        // serial: false,
+        messageSuccess: true,
+      })
+      await this.success()
+      this.setState({
+        loading:false,
+        messageSuccess: false
+      })
+    }
+  }
+
+  getOs = async () => {
+    const os  = await getOsByOs(this.state.os)
+
+    if (os.status === 200) {
+      if (os.data.razaoSocial) {
+        await this.setState({
+          fieldFalha: {
+            Os: false,
+          },
+          message: {
+            Os: '',
+          },
+        })
+      } else{
+        this.setState({
+          fieldFalha: {
+            Os: true
+          },
+        }, this.messageError())
+      }
+    }
+  }
+
   Pages = () => (
     
     <div className='footer-Gentrada-button'>
@@ -354,6 +441,7 @@ class ReservaKit extends Component {
         value={this.state.os}
         name='os'
         placeholder='Nº Os'
+        onBlur={this.getOs}
       />
       </div>
     </div>
@@ -436,7 +524,7 @@ class ReservaKit extends Component {
                 />
               </div>
 
-              <div className='div-fabricante-Rtecnico'>
+              <div className='div-tecnico1-kit'>
                 <div className='div-text-Rtecnico'>Técnico:</div>
                 {this.state.tecnicoArray.length === 0 ?
                   <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select> :
@@ -467,7 +555,7 @@ class ReservaKit extends Component {
 
 
         <div className=' div-separate-kit'></div>
-        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : 
           this.state.kitArray.rows.map((line) =>
             <div className='div-100-Gentrada'>
               <div className='div-lines1-kit'>

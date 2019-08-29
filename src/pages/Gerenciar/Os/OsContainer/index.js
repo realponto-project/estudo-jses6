@@ -1,12 +1,12 @@
 import * as R from 'ramda'
 import React, { Component } from 'react'
 import './index.css'
-import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber } from 'antd'
+import { Button, Icon, Modal, Tooltip, Input, Spin } from 'antd'
 
 import { getTecnico } from '../../../../services/tecnico'
 import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs';
 
-class ReservaTecnico extends Component {
+class OsDash extends Component {
 
   state = {
     avancado: false,
@@ -335,56 +335,6 @@ class ReservaTecnico extends Component {
     })
   }
 
-
-  modalDetalhesLinha = () => (
-    <Modal
-      title="Detalhes do atendimento"
-      visible={this.state.modalDetalhes}
-      onOk={this.handleOkModalPeca}
-      onCancel={this.handleOkModalPeca}
-      okText='OK'
-      cancelText='Fechar'
-    >
-      <div className='div-textProdutos-Rtecnico'>Produtos reservados</div>
-      <div className='div-body-modal'>
-        <div className='div-text-modal'>
-          <div className='div-produtos-modal'>Produtos</div>
-          <div className='div-quant-modal'>Quant.</div>
-          <div className='div-acoes-modal'>Ações</div>
-        </div>
-        <div className='div-separate-modal' />
-        <div className='div-text-modal'>
-          <div className='div-produtos-modal'>{this.state.produtoSelecionado.products.name}</div>
-          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.quantMax} defaultValue={this.state.teste} style={{width: '90%'}} value={this.state.teste} onChange={this.onChangeModal} /></div>
-          <div className='div-acoes-modal'>
-          <Tooltip placement="top" title='Retornar' > 
-            <Button type='primary' className='button' onClick={this.retornar} ><Icon type="arrow-left" /></Button>
-          </Tooltip>
-          <Tooltip placement="top" title='Liberar' > 
-            <Button type='primary' className='button-liberar' onClick={this.liberar}><Icon type="arrow-right" /></Button>
-          </Tooltip>
-          <Tooltip placement="top" title='Perda' > 
-            <Button type='primary' className='button-remove-entrada' onClick={this.perda}><Icon type="alert" /></Button>
-          </Tooltip>
-          </div>
-        </div>
-        <div className='div-total-modal'>
-          <div className='div-baixo'>Total:</div>
-          <div className='div-baixo'>Retornados:</div>
-          <div className='div-baixo'>Liberados:</div>
-          <div className='div-baixo'>Perdas:</div>
-        </div>
-        <div className='div-total-modal2'>
-          <div className='div-baixo2'>{this.state.produtoSelecionado.products.amount}</div>
-          <div className='div-baixo2'>{this.state.produtoSelecionado.products.return}</div>
-          <div className='div-baixo2'>{this.state.produtoSelecionado.products.output}</div>
-          <div className='div-baixo2'>{this.state.produtoSelecionado.products.missOut}</div>
-        </div>
-      </div>
-    </Modal>
-  )
-
-
   modalRemover = () => (
     <Modal
       title="Confirmação"
@@ -415,11 +365,10 @@ class ReservaTecnico extends Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>
-          <h1 className='h1-Rtecnico'>Reservas técnico</h1>
+          <h1 className='h1-Rtecnico'>Gerenciar Os</h1>
         </div>
 
         {this.state.avancado ?
@@ -532,7 +481,6 @@ class ReservaTecnico extends Component {
                   <Tooltip placement="topLeft" title='Remover'>
                     <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button>
                   </Tooltip>
-                  <this.modalDetalhesLinha />
                   <this.modalRemover />
                 </div>
               </div>
@@ -558,4 +506,4 @@ class ReservaTecnico extends Component {
     }
   }
   
-export default ReservaTecnico
+export default OsDash

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Input, Button, Select, Modal, message } from 'antd'
+import { Input, Button, Select, Modal, message, Switch } from 'antd'
 import { validators, masks } from './validators'
 import { newTecnico, newCarro, getCarro } from '../../../../services/tecnico'
 
@@ -10,6 +10,7 @@ const { Option } = Select;
 class NovoTecnico extends Component{
 
   state={
+    externo: false,
     carroArray:[],
     messageError: false,
     messageSuccess: false,
@@ -31,6 +32,12 @@ class NovoTecnico extends Component{
       nome: '',
       cnh: '',
     },
+  }
+
+  onChangeExterno = () => {
+    this.setState({
+      externo: !this.state.externo
+    })
   }
 
   getAllCarro = async () => {
@@ -112,6 +119,7 @@ class NovoTecnico extends Component{
       name: this.state.nome,
       CNH: this.state.cnh,
       plate: this.state.placa,
+      external: this.state.externo
     }
 
     const resposta = await newTecnico(values)
@@ -135,7 +143,8 @@ class NovoTecnico extends Component{
       this.setState({
         nome: '',
         cnh: '',
-        placa: '',
+        placa: 'Selecione o carro',
+        externo: false,
         messageSuccess: true,
       })
       await this.success()
@@ -324,6 +333,7 @@ class NovoTecnico extends Component{
   )
 
   render(){
+    console.log(this.state.externo)
     return(
       <div className='div-card-tecnico'>
         <div className='linhaTexto-tecnico'>
@@ -378,7 +388,7 @@ class NovoTecnico extends Component{
           </div>
         </div>
 
-        <div className='linhaSemEspaco-tecnico'>
+        <div className='linha1-tecnico'>
           <div className='div-carro-tecnico'>
             <div className='div-text-tecnico'>Carro:</div>
             <div className='div-inputs'>
@@ -412,6 +422,12 @@ class NovoTecnico extends Component{
             />
             <this.modalCarro/>
           </div>
+
+          <div className='div-rodizio-tecnico'>
+            <div className='div-text-tecnico'>Técnico externo:</div>
+            <Switch checked={this.state.externo} onChange={this.onChangeExterno} />
+          </div>
+          
         </div>
 
         <div className='linha-button-tecnico'>

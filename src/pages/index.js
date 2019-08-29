@@ -19,11 +19,11 @@ import ReservaTecnicoRoute from './Reservas/ReservaTecnico';
 import ReservaOsRoute from './Reservas/ReservaOs';
 import ReservaMLRoute from './Reservas/ReservaML';
 import RelatorioOsRoute from './Relatorios/RelatorioOs';
-import RelatorioTecnicoRoute from './Relatorios/RelatorioTecnico';
-import RelatorioDataRoute from './Relatorios/RelatorioData';
 import RelatorioPerdaRoute from './Relatorios/RelatorioPerda';
 import RelatorioMLRoute from './Relatorios/RelatorioML';
 import AddKitRoute from './Gerenciar/Kit';
+import SearchOsRoute from './Gerenciar/SearchOs';
+import OsDashRoute from './Gerenciar/Os';
 
 class PagesRoute extends Component {
 
@@ -76,10 +76,10 @@ class PagesRoute extends Component {
           <Route path='/logged/reservaKitAdd' component={AddKitRoute} />
           <Route path='/logged/reservaML' component={ReservaMLRoute} />
           <Route path='/logged/relatorioOs' component={RelatorioOsRoute} />
-          <Route path='/logged/relatorioTecnico' component={RelatorioTecnicoRoute} />
-          <Route path='/logged/relatorioData' component={RelatorioDataRoute} />
           <Route path='/logged/relatorioPerda' component={RelatorioPerdaRoute} />
           <Route path='/logged/relatorioML' component={RelatorioMLRoute} />
+          <Route path='/logged/searchOs' component={SearchOsRoute} />
+          <Route path='/logged/Os' component={OsDashRoute} />
         </Switch>
       )
     } else {

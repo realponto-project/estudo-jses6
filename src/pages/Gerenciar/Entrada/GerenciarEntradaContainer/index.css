@@ -95,6 +95,12 @@
 }
 .footer-Gentrada-button{
   margin-top: 10px;
+  width: 90%;
+  display: flex;
+  justify-content: flex-end
+}
+.footer-Gentrada100-button{
+  margin-top: 10px;
   width: 100%;
   display: flex;
   justify-content: flex-end

@@ -89,14 +89,14 @@ class SideBar extends Component {
           return <Redirect to='/logged/reservaTecnico/dash' />
         case 'reservaOs_dash':
           return <Redirect to='/logged/reservaOs/dash' />
+        case 'Os_dash':
+          return <Redirect to='/logged/Os/dash' />
+        case 'searchOs_dash':
+          return <Redirect to='/logged/searchOs/dash' />
         case 'reservaML_dash':
           return <Redirect to='/logged/reservaML/dash' />
         case 'relatorioOs_dash':
           return <Redirect to='/logged/relatorioOs/dash' />
-        case 'relatorioTecnico_dash':
-          return <Redirect to='/logged/relatorioTecnico/dash' />
-        case 'relatorioData_dash':
-          return <Redirect to='/logged/relatorioData/dash' />
         case 'relatorioPerda_dash':
           return <Redirect to='/logged/relatorioPerda/dash' />
         case 'relatorioML_dash':
@@ -188,8 +188,9 @@ class SideBar extends Component {
           >
             <Menu.Item key="reservaKit_dash"><Icon type="shopping" />Kit</Menu.Item>
             <Menu.Item key="reservaTecnico_dash"><Icon type="user" />Técnico</Menu.Item>
-            <Menu.Item key="reservaOs_dash"><Icon type="file-add" />Os</Menu.Item>
+            <Menu.Item key="reservaOs_dash"><Icon type="file-add" />Nova Os</Menu.Item>
             <Menu.Item key="reservaML_dash"><Icon type="ie" />Mercado Livre</Menu.Item>
+            <Menu.Item key="Os_dash"><Icon type="unordered-list" />Gerenciar Os</Menu.Item>
           </SubMenu>
 
           <SubMenu
@@ -202,8 +203,6 @@ class SideBar extends Component {
             }
           >
             <Menu.Item key="relatorioOs_dash"><Icon type="file-search" />Os</Menu.Item>
-            <Menu.Item key="relatorioTecnico_dash"><Icon type="user" />Técnico</Menu.Item>
-            <Menu.Item key="relatorioData_dash"><Icon type="calendar" />Data</Menu.Item>
             <Menu.Item key="relatorioPerda_dash"><Icon type="alert" />Perda</Menu.Item>
             <Menu.Item key="relatorioML_dash"><Icon type="ie" />Mercado Livre</Menu.Item>
           </SubMenu>

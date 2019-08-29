@@ -1,4 +1,4 @@
-.div-card-Rtecnico{
+.div-card-GOs{
   width: 96%;
   height: 95%;
   background-color: white;
@@ -7,18 +7,18 @@
   flex-direction: column;
   align-items: center
 }
-.linhaTexto-Rtecnico{
+.linhaTexto-GOs{
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 25px;
 }
-.h1-Rtecnico{
+.h1-GOs{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
   font-weight: 500;
   font-size: 2.2em
 }
-.div-cabecalho-Rtecnico{
+.div-cabecalho-GOs{
   width: 90%;
   background-color: #FAFAFA;
   height: 60px;
@@ -26,12 +26,12 @@
   align-items: center;
   margin-top: 10px
 }
-.div-linha-avancado-Rtecnico{
+.div-linha-avancado-GOs{
   width: 90%;
   display: flex;
   flex-direction: column;
 }
-.cel-mais-cabecalho-Rtecnico{
+.cel-mais-cabecalho-GOs{
   /* justify-content: center */
   align-items: center;
   display: flex;
@@ -40,7 +40,7 @@
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
-.cel-os-cabecalho-Rtecnico{
+.cel-os-cabecalho-GOs{
   align-items: center;
   display: flex;
   width: 12%;
@@ -48,7 +48,7 @@
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
-.cel-rs-cabecalho-Rtecnico{
+.cel-rs-cabecalho-GOs{
   align-items: center;
   display: flex;
   width: 42%;
@@ -56,7 +56,7 @@
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
-.cel-cnpj-cabecalho-Rtecnico{
+.cel-cnpj-cabecalho-GOs{
   align-items: center;
   display: flex;
   width: 23%;
@@ -65,7 +65,7 @@
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
 
-.cel-acoes-cabecalho-Rtecnico{
+.cel-acoes-cabecalho-GOs{
   align-items: center;
   display: flex;
   width: 7%;
@@ -73,7 +73,7 @@
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
-.cel-data-cabecalho-Rtecnico{
+.cel-data-cabecalho-GOs{
   align-items: center;
   display: flex;
   width: 20%;
@@ -81,71 +81,71 @@
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
-.div-lines-Rtecnico{
+.div-lines-GOs{
   width: 100%;
   display: flex;
   height: 50px;
   align-items: center
 }
-.div-separate-Rtecnico{
+.div-separate-GOs{
   width: 90%;
   background-color: rgb(221, 219, 219);
   height: 1px;
 }
-.footer-Rtecnico{
+.footer-GOs{
   margin-top: 10px;
   width: 90%;
   display: flex;
   justify-content: flex-end
 }
-.div-ocultar-Rtecnico{
+.div-ocultar-GOs{
   width: 100%;
   display: flex;
   justify-content: flex-end
 }
-.div-text-Rtecnico{
+.div-text-GOs{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
   font-size: 16px;
   color: rgb(90, 90, 90);
   margin-right: 5px;
 }
-.div-textRs-Rtecnico{
+.div-textRs-GOs{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
   font-size: 16px;
   color: rgb(90, 90, 90);
   margin-right: 5px;
   width: 38%
 }
-.div-avancado-Rtecnico{
+.div-avancado-GOs{
   width: 90%;
   display: flex;
   justify-content: flex-end
 }
-.div-Os-Rtecnico{
+.div-Os-GOs{
   width: 13%;
   display: flex;
   align-items: center;
 }
-.div-rs-Rtecnico{
+.div-rs-GOs{
   width: 40%;
   display: flex;
   align-items: center;
 }
-.div-cnpj-Rtecnico{
+.div-cnpj-GOs{
   width: 22%;
   display: flex;
   align-items: center;
 }
-.div-data-Rtecnico{
+.div-data-GOs{
   width: 20%;
   display: flex;
   align-items: center;
 }
-.div-linha-Rtecnico{
+.div-linha-GOs{
   width: 90%;
   margin: 50px 0 10px 0;
 }
-.div-textProdutos-Rtecnico{
+.div-textProdutos-GOs{
   width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 20px;
@@ -224,14 +224,14 @@
 }
 
 
-.div-100-Rtecnico{
+.div-100-GOs{
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #FAFAFA
 }
-.div-mais-Rtecnico{
+.div-mais-GOs{
   width: 100%;
   background-color: #FAFAFA;
   height: 60px;
@@ -258,7 +258,7 @@
   display: flex;
   align-items: center
 }
-.div-lines-mais-Rtecnico{
+.div-lines-mais-GOs{
   width: 100%;
   display: flex;
   height: 50px;
