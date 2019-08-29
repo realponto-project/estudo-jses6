@@ -1,14 +1,16 @@
 import * as R from 'ramda'
 import React, { Component } from 'react'
 import './index.css'
-import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber } from 'antd'
+import { Button, Icon, Modal, Tooltip, Input, Spin } from 'antd'
+import { Redirect } from 'react-router-dom'
 
 import { getTecnico } from '../../../../services/tecnico'
 import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs';
 
-class ReservaTecnico extends Component {
+class OsDash extends Component {
 
   state = {
+    redirect: false,
     avancado: false,
     loading: false,
     OsArray: {
@@ -35,6 +37,18 @@ class ReservaTecnico extends Component {
     total: 10,
     count: 0,
     show: 0,
+  }
+
+  redirectSearchOs = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/logged/searchOs/dash' />
+    }
   }
 
   changePages = (pages) => {
@@ -303,20 +317,6 @@ class ReservaTecnico extends Component {
     })
   }
 
-  openModalDetalhes = async (valor) => {
-    await this.setState({
-      modalDetalhes: true,
-      produtoSelecionado: {
-        products: valor
-      },
-      total: this.state.produtoSelecionado.products.quantMax,
-    })
-
-    await this.setState({
-      teste: this.state.produtoSelecionado.products.quantMax
-    })
-  }
-
   mais = async (line) => {
     await this.setState({
       mais: {
@@ -335,56 +335,6 @@ class ReservaTecnico extends Component {
     })
   }
 
-
-  modalDetalhesLinha = () => (
-    <Modal
-      title="Detalhes do atendimento"
-      visible={this.state.modalDetalhes}
-      onOk={this.handleOkModalPeca}
-      onCancel={this.handleOkModalPeca}
-      okText='OK'
-      cancelText='Fechar'
-    >
-      <div className='div-textProdutos-Rtecnico'>Produtos reservados</div>
-      <div className='div-body-modal'>
-        <div className='div-text-modal'>
-          <div className='div-produtos-modal'>Produtos</div>
-          <div className='div-quant-modal'>Quant.</div>
-          <div className='div-acoes-modal'>Ações</div>
-        </div>
-        <div className='div-separate-modal' />
-        <div className='div-text-modal'>
-          <div className='div-produtos-modal'>{this.state.produtoSelecionado.products.name}</div>
-          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.quantMax} defaultValue={this.state.teste} style={{width: '90%'}} value={this.state.teste} onChange={this.onChangeModal} /></div>
-          <div className='div-acoes-modal'>
-          <Tooltip placement="top" title='Retornar' > 
-            <Button type='primary' className='button' onClick={this.retornar} ><Icon type="arrow-left" /></Button>
-          </Tooltip>
-          <Tooltip placement="top" title='Liberar' > 
-            <Button type='primary' className='button-liberar' onClick={this.liberar}><Icon type="arrow-right" /></Button>
-          </Tooltip>
-          <Tooltip placement="top" title='Perda' > 
-            <Button type='primary' className='button-remove-entrada' onClick={this.perda}><Icon type="alert" /></Button>
-          </Tooltip>
-          </div>
-        </div>
-        <div className='div-total-modal'>
-          <div className='div-baixo'>Total:</div>
-          <div className='div-baixo'>Retornados:</div>
-          <div className='div-baixo'>Liberados:</div>
-          <div className='div-baixo'>Perdas:</div>
-        </div>
-        <div className='div-total-modal2'>
-          <div className='div-baixo2'>{this.state.produtoSelecionado.products.amount}</div>
-          <div className='div-baixo2'>{this.state.produtoSelecionado.products.return}</div>
-          <div className='div-baixo2'>{this.state.produtoSelecionado.products.output}</div>
-          <div className='div-baixo2'>{this.state.produtoSelecionado.products.missOut}</div>
-        </div>
-      </div>
-    </Modal>
-  )
-
-
   modalRemover = () => (
     <Modal
       title="Confirmação"
@@ -394,7 +344,7 @@ class ReservaTecnico extends Component {
       okText='Continuar'
       cancelText='Cancelar'
     >
-      <div className='div-textProdutos-Rtecnico'>Todos as reservas voltarão para o estoque, deseja continuar?</div>
+      <div className='div-textProdutos-GOs'>Todos as reservas voltarão para o estoque, deseja continuar?</div>
     </Modal>
   )
 
@@ -415,20 +365,20 @@ class ReservaTecnico extends Component {
 
 
   render() {
-    console.log(this.state)
+    console.log(this.state.OsArray.rows)
     return (
-      <div className='div-card-Rtecnico'>
-        <div className='linhaTexto-Rtecnico'>
-          <h1 className='h1-Rtecnico'>Reservas técnico</h1>
+      <div className='div-card-GOs'>
+        <div className='linhaTexto-GOs'>
+          <h1 className='h1-GOs'>Gerenciar Os</h1>
         </div>
 
         {this.state.avancado ?
-          <div className='div-linha-avancado-Rtecnico'>
-            <div className='div-ocultar-Rtecnico'>
+          <div className='div-linha-avancado-GOs'>
+            <div className='div-ocultar-GOs'>
               <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
             </div>
-            <div className='div-linha1-avancado-Rtecnico'>
-              <div className='div-Os-Rtecnico'>
+            <div className='div-linha1-avancado-GOs'>
+              <div className='div-Os-GOs'>
                 <div className='div-text-Os'>Os:</div>
                 <Input
                   className='input-100'
@@ -441,8 +391,8 @@ class ReservaTecnico extends Component {
                 />
               </div>
 
-              <div className='div-rs-Rtecnico'>
-                <div className='div-textRs-Rtecnico'>Razão social:</div>
+              <div className='div-rs-GOs'>
+                <div className='div-textRs-GOs'>Razão social:</div>
                 <Input
                   className='input-100'
                   style={{ width: '100%' }}
@@ -454,8 +404,8 @@ class ReservaTecnico extends Component {
                 />
               </div>
 
-              <div className='div-cnpj-Rtecnico'>
-                <div className='div-text-Rtecnico'>Cnpj:</div>
+              <div className='div-cnpj-GOs'>
+                <div className='div-text-GOs'>Cnpj:</div>
                 <Input
                   className='input-100'
                   style={{ width: '100%' }}
@@ -467,8 +417,8 @@ class ReservaTecnico extends Component {
                 />
               </div>
 
-              <div className='div-data-Rtecnico'>
-                <div className='div-text-Rtecnico'>Data:</div>
+              <div className='div-data-GOs'>
+                <div className='div-text-GOs'>Data:</div>
                 <Input
                   className='input-100'
                   style={{ width: '100%' }}
@@ -480,74 +430,79 @@ class ReservaTecnico extends Component {
                 />
               </div>
             </div></div> :
-          <div className='div-avancado-Rtecnico'>
+          <div className='div-avancado-GOs'>
             <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
           </div>}
 
-        <div className='div-cabecalho-Rtecnico'>
-          <div className='cel-mais-cabecalho-Rtecnico'>
+        <div className='div-cabecalho-GOs'>
+          <div className='cel-mais-cabecalho-GOs'>
           </div>
-          <div className='cel-os-cabecalho-Rtecnico'>
+          <div className='cel-os-cabecalho-GOs'>
             Nº Os
           </div>
-          <div className='cel-rs-cabecalho-Rtecnico'>
+          <div className='cel-rs-cabecalho-GOs'>
             Razão Social
           </div>
-          <div className='cel-cnpj-cabecalho-Rtecnico'>
+          <div className='cel-cnpj-cabecalho-GOs'>
             Cnpj
           </div>
-          <div className='cel-data-cabecalho-Rtecnico'>
+          <div className='cel-data-cabecalho-GOs'>
             Data do atendimento
           </div>
-          <div className='cel-acoes-cabecalho-Rtecnico'>
+          <div className='cel-acoes-cabecalho-GOs'>
             Ações
           </div>
         </div>
 
 
-        <div className=' div-separate-Rtecnico' />
+        <div className=' div-separate-GOs' />
         {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
           this.state.OsArray.rows.map((line) =>
             <div className='div-100-Gentrada'>
-              <div className='div-lines-Rtecnico' >
-                <div className='cel-mais-cabecalho-Rtecnico'>
+              <div className='div-lines-GOs' >
+                <div className='cel-mais-cabecalho-GOs'>
                   <div className='button-mais' onClick={() => this.mais(line)}>+</div>
                 </div>
-                <div className='cel-os-cabecalho-Rtecnico'>
-                  {line.os}
+                <div className='cel-os-cabecalho-GOs'>
+                  {line.id}
                 </div>
-                <div className='cel-rs-cabecalho-Rtecnico'>
+                <div className='cel-rs-cabecalho-GOs'>
                   {line.razaoSocial}
                 </div>
-                <div className='cel-cnpj-cabecalho-Rtecnico'>
+                <div className='cel-cnpj-cabecalho-GOs'>
                   {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
                 </div>
-                <div className='cel-data-cabecalho-Rtecnico'>
+                <div className='cel-data-cabecalho-GOs'>
                   {line.createdAt}
                 </div>
-                <div className='cel-acoes-cabecalho-Rtecnico'>
+                <div className='cel-acoes-cabecalho-GOs'>
                   {/* <Tooltip placement="topLeft" title='Detalhes'>
                     <Button type="primary" className='button-icon' onClick={this.openModalDetalhes}><Icon type="info-circle" /></Button>
                   </Tooltip> */}
                   <Tooltip placement="topLeft" title='Remover'>
                     <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button>
                   </Tooltip>
-                  <this.modalDetalhesLinha />
                   <this.modalRemover />
                 </div>
               </div>
-              {this.state.mais[line.id] ? <div className='div-100-Rtecnico'>
-                <div className='div-mais-Rtecnico'>
+              {this.state.mais[line.id] ? <div className='div-100-GOs'>
+                <div className='div-mais-GOs'>
                 <div className='div-normal-mais' >
-                <div className='div-produtos-mais'>Produtos</div>
+                <div className='div-produtos-mais-GOs'>Produtos</div>
                 <div className='div-quant-mais'>Quantidade</div>
+                <div className='div-button-mais-GOs'>
+                <Tooltip placement="topLeft" title='Adicionar produto'>
+                  <div className='button-mais-div' onClick={() => this.redirectSearchOs()}>+</div>
+                  {this.renderRedirect()}   
+                </Tooltip>
+                </div>
                 </div>
                 </div>
                 {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
                   this.state.lineSelected.rows.map((line) =>
                 <div className='div-branco-mais' >
-                <div className='div-produtos-mais'>{line.products.map((valor => <div  className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.name}</div>))}</div>
-                <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.quantMax}</div>))}</div>
+                <div className='div-produtos-mais-GOs'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.name}</div>))}</div>
+                <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.quantMax}</div>))}</div>
                 </div>)}
               </div> : null}
             <div className=' div-separate1-Gentrada'/>
@@ -558,4 +513,4 @@ class ReservaTecnico extends Component {
     }
   }
   
-export default ReservaTecnico
+export default OsDash

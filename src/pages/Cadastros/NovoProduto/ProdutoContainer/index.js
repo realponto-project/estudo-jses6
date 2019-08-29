@@ -643,7 +643,7 @@ class NovoProduto extends Component {
 
           <div className='div-serial-produtos'>
             <div className='div-textSerial-produtos'>Número de série:</div>
-            <Switch onChange={this.onChangeSerial} />
+            <Switch checked={this.state.serial} onChange={this.onChangeSerial} />
           </div>
         </div>
 

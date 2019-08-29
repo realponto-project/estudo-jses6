@@ -12,7 +12,7 @@ import { getTecnico } from '../../../../services/tecnico'
 const { TextArea } = Input;
 const { Option } = Select;
 
-class ReservaOs extends Component{
+class SearchOsDash extends Component{
 
   state={
     readOnly: false,
@@ -217,7 +217,7 @@ class ReservaOs extends Component{
     })
 
     const values = {
-      os: this.state.Os,
+      id: this.state.Os,
       razaoSocial: this.state.razaoSocial,
       cnpj: this.state.cnpj,
       date: this.state.data,
@@ -324,11 +324,35 @@ class ReservaOs extends Component{
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-Os'>
-          <h1 className='h1-Os'>Reserva Os</h1>
+          <h1 className='h1-Os'>Buscas por Os</h1>
         </div>
 
         <div className='div-linha-Os'>
-          <div className='div-rs1-Os'>
+        <div className='div-nOs-Os'>
+          <div className='div-textOs-Os'>Nº Os:</div>
+            <div className='div-inputs'>
+              <Input
+                allowClear={!this.state.fieldFalha.Os}
+                className={
+                  this.state.fieldFalha.Os ?
+                    'div-inputError-OS' :
+                    'input-100'}
+                style={{ width: '100%' }}
+                name='Os'
+                value={this.state.Os}
+                placeholder="3203"
+                onChange={this.onChange}
+                onBlur={this.getOs}
+                onFocus={this.onFocus}
+              />
+              {this.state.fieldFalha.Os ?
+                  <p className='div-feedbackError'>
+                    {this.state.message.Os}
+                  </p> : null}
+              </div>
+          </div>
+
+          <div className='div-rs-Os'>
           <div className='div-textRs-Os'>Razão social:</div>
             <div className='div-inputs'>
               <Input
@@ -534,4 +558,4 @@ class ReservaOs extends Component{
   }
 }
 
-export default ReservaOs
+export default SearchOsDash
