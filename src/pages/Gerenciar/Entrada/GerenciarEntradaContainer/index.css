@@ -95,15 +95,9 @@
 }
 .footer-Gentrada-button{
   margin-top: 10px;
-  width: 90%;
+  width: 85%;
   display: flex;
-  justify-content: flex-end
-}
-.footer-Gentrada100-button{
-  margin-top: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
 .div-teste{
   color: rgba(36, 35, 35, 0.6) !important;
