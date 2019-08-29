@@ -154,8 +154,8 @@ class Estoque extends Component{
             <Input
               className='input-100'
               style={{ width: '100%' }}
-              name='manufacturer'
-              value={this.state.manufacturer}
+              name='fabricante'
+              value={this.state.fabricante}
               placeholder="Digite o fabricante"
               onChange={this.onChange}
               allowClear
@@ -165,8 +165,8 @@ class Estoque extends Component{
           <div className='div-estoque-Rtecnico'>
           <div className='div-text-Rtecnico'>Estoque:</div>
           <Select value={this.state.estoqueBase} style={{ width: '100%' }} onChange={this.onChangeSelect} >
-            <Option value='REALPONTO'>REALPONTO</Option>
             <Option value='TODOS'>TODOS</Option>
+            <Option value='REALPONTO'>REALPONTO</Option>
             <Option value='NOVAREAL'>NOVA REALPONTO</Option>
             <Option value='PONTOREAL'>PONTOREAL</Option>
           </Select>
@@ -221,7 +221,7 @@ class Estoque extends Component{
                   </div>
                   <div className='cel-quant-cabecalho-estoque'>
                   <label className='div-table-label-cel-estoque'>
-                    1
+                    {line.available}
                   </label>
                   </div>
                   <div className='cel-estoque-cabecalho-estoque'>
