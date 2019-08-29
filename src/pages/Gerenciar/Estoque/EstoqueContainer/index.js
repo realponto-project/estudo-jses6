@@ -84,10 +84,6 @@ class Estoque extends Component{
       },
       page: this.state.page,
       total: this.state.total,
-      // order: {
-      //   field: 'createdAt',
-      //   acendent: true,
-      // },
     }
 
     await stock(query).then(
@@ -192,9 +188,7 @@ class Estoque extends Component{
             Estoque
           </div>
         </div>
-
         
-        <div className='div-test-estoque'/>
           {this.state.loading ? 
             <div className='spin'><Spin spinning={this.state.loading} /></div>
           : 
@@ -233,10 +227,10 @@ class Estoque extends Component{
               <div className=' div-separate1-estoque'/>
               </div>
             ) : null }
+        <this.Pages/>
             </div>
         }
 
-          <this.Pages/>
       </div>
     )
   }
