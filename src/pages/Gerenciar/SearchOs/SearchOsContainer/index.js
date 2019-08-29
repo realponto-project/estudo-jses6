@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import moment from 'moment'
 import './index.css'
-import { Input, DatePicker, InputNumber, Button, message, Select } from 'antd'
+import { Input, DatePicker, InputNumber, Button, message, Select, Icon } from 'antd'
+import { Redirect } from 'react-router-dom'
 
 import { validators, masks } from './validators'
 import { newReservaOs, getOsByOs } from '../../../../services/reservaOs';
@@ -15,6 +16,7 @@ const { Option } = Select;
 class SearchOsDash extends Component{
 
   state={
+    redirect: false,
     readOnly: false,
     serial: false,
     numeroSerieTest: '',
@@ -47,6 +49,18 @@ class SearchOsDash extends Component{
       data: '',
       technician: '',
     },
+  }
+
+  redirectGerenciarOs = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/logged/Os/dash' />
+    }
   }
 
   getAllTecnico = async () => {
@@ -323,8 +337,14 @@ class SearchOsDash extends Component{
   render(){
     return(
       <div className='div-card-Os'>
-        <div className='linhaTexto-Os'>
+        <div className='linhaTexto-GOs'>
+        <div className='div-nome-40'>
+        <div><Icon type="arrow-left" onClick={() => this.redirectGerenciarOs()} /></div>
+        {this.renderRedirect()}
+        </div>
+        <div className='div-nome-60'>
           <h1 className='h1-Os'>Buscas por Os</h1>
+        </div>
         </div>
 
         <div className='div-linha-Os'>

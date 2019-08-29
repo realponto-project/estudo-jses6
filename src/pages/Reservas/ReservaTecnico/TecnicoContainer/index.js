@@ -1,10 +1,13 @@
 import * as R from 'ramda'
 import React, { Component } from 'react'
 import './index.css'
-import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber } from 'antd'
+import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber, DatePicker, Select } from 'antd'
 
 import { getTecnico } from '../../../../services/tecnico'
 import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs';
+
+
+const { Option } = Select;
 
 class ReservaTecnico extends Component {
 
@@ -46,6 +49,14 @@ class ReservaTecnico extends Component {
     )
   }
 
+  searchDate = async(e) => {
+    if( !e[0] || !e[1] ) return
+    await this.setState({
+      valueDate: {start: e[0]._d, end: e[1]._d},
+    })
+    // await this.getAllEntrada()
+  }
+
   getAllTecnico = async () => {
 
     await getTecnico().then(
@@ -68,6 +79,13 @@ class ReservaTecnico extends Component {
     })
 
     const query = {
+      filters: {
+        technician: {
+          specific: {
+            name: this.state.tecnico,
+          },
+        },
+      },
       page: this.state.page,
       total: this.state.total,
       required: true,
@@ -276,9 +294,13 @@ class ReservaTecnico extends Component {
   }
 
   componentDidMount = async () => {
-    await this.getAllOs()
-
     await this.getAllTecnico()
+
+    await this.setState({
+      tecnico: this.state.tecnicoArray[0].name
+    })
+    
+    await this.getAllOs()
   }
 
   onChangeSelect = async (value) => {
@@ -290,7 +312,7 @@ class ReservaTecnico extends Component {
   onChangeTecnico = (value) => {
     this.setState({
       tecnico: value
-    })
+    }, this.getAllOs)
   }
 
   handleOkModalPeca = async () => {
@@ -415,7 +437,6 @@ class ReservaTecnico extends Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>
@@ -435,7 +456,7 @@ class ReservaTecnico extends Component {
                   style={{ width: '100%' }}
                   name='Os'
                   value={this.state.Os}
-                  placeholder="12"
+                  placeholder="Digite o Nº Os"
                   onChange={this.onChange}
                   allowClear
                 />
@@ -453,7 +474,9 @@ class ReservaTecnico extends Component {
                   allowClear
                 />
               </div>
+              </div>
 
+              <div className='div-linha1-avancado-Rtecnico'>
               <div className='div-cnpj-Rtecnico'>
                 <div className='div-text-Rtecnico'>Cnpj:</div>
                 <Input
@@ -469,15 +492,20 @@ class ReservaTecnico extends Component {
 
               <div className='div-data-Rtecnico'>
                 <div className='div-text-Rtecnico'>Data:</div>
-                <Input
-                  className='input-100'
-                  style={{ width: '100%' }}
-                  name='data'
-                  value={this.state.data}
-                  placeholder="Digite a data"
-                  onChange={this.onChange}
-                  allowClear
-                />
+                <DatePicker.RangePicker
+                  placeholder='Digite a data'
+                  format='DD/MM/YYYY'
+                  dropdownClassName='poucas'
+                  onChange={this.searchDate}
+                  onOk={this.searchDate}
+                  />
+              </div>
+
+              <div className='div-tecnico-Rtec'>
+                <div className='div-text-Rtecnico'>Técnico:</div>
+                {this.state.tecnicoArray.length === 0 ?
+                  <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select> :
+                  <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}>{this.state.tecnicoArray.map((valor) => <Option value={valor.name}>{valor.name}</Option>)}</Select>}
               </div>
             </div></div> :
           <div className='div-avancado-Rtecnico'>
@@ -514,7 +542,7 @@ class ReservaTecnico extends Component {
                   <div className='button-mais' onClick={() => this.mais(line)}>+</div>
                 </div>
                 <div className='cel-os-cabecalho-Rtecnico'>
-                  {line.os}
+                  {line.id}
                 </div>
                 <div className='cel-rs-cabecalho-Rtecnico'>
                   {line.razaoSocial}

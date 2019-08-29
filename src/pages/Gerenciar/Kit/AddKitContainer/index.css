@@ -8,10 +8,21 @@
   align-items: center
 }
 .linhaTexto-AddKit{
-  width: 100%;
+  width: 90%;
   display: flex;
-  justify-content: center;
   margin-top: 25px;
+}
+.div-nome-40{
+  width: 40%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center
+}
+.div-nome-60{
+  width: 60%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center
 }
 .h1-AddKit{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;

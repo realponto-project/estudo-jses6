@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Select, InputNumber, Button, message, Input } from 'antd'
+import { Select, InputNumber, Button, message, Input, Icon } from 'antd'
 import { getItens } from '../../../../services/produto';
 import { Redirect } from 'react-router-dom'
 
@@ -23,7 +23,7 @@ class AddKit extends Component{
     estoque: 'REALPONTO',
   }
 
-  redirectSearchOs = () => {
+  redirectReservaOs = () => {
     this.setState({
       redirect: true
     })
@@ -217,7 +217,12 @@ class AddKit extends Component{
     return(
       <div className='div-card-AddKit'>
         <div className='linhaTexto-AddKit'>
+        <div className='div-nome-40'>
+        <div><Icon type="arrow-left" onClick={() => this.redirectReservaOs()} /></div>
+        </div>
+        <div className='div-nome-60'>
           <h1 className='h1-AddKit'>Gerenciar kit</h1>
+        </div>
         </div>
 
         <div className='div-linha-Os'>
