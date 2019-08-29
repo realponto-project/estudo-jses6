@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './index.css'
 import { Select, InputNumber, Button, message, Input } from 'antd'
 import { getItens } from '../../../../services/produto';
+import { Redirect } from 'react-router-dom'
 
 import { NewKit } from '../../../../services/kit'
 
@@ -12,6 +13,7 @@ const { Option } = Select;
 class AddKit extends Component{
 
   state={
+    redirect: false,
     serial: false,
     numeroSerieTest: '',
     itemArray: [],
@@ -19,6 +21,18 @@ class AddKit extends Component{
     item: 'Não selecionado',
     quant: '1',
     estoque: 'REALPONTO',
+  }
+
+  redirectSearchOs = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/logged/reservaKit/dash' />
+    }
   }
 
   errorNumeroSerie = () => {
@@ -274,6 +288,8 @@ class AddKit extends Component{
                 <Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button>
               </div>)}
           </div>}
+
+          {this.renderRedirect()}
 
         <div className='div-buttonSalvar-Os'>
           <Button type='primary' className='button' onClick={this.saveTargetNewKit}>Salvar</Button>

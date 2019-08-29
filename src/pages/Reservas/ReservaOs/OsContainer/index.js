@@ -321,7 +321,6 @@ class ReservaOs extends Component{
 
 
   render(){
-    console.log(this.state)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-Os'>
@@ -329,31 +328,7 @@ class ReservaOs extends Component{
         </div>
 
         <div className='div-linha-Os'>
-        <div className='div-nOs-Os'>
-          <div className='div-textOs-Os'>Nº Os:</div>
-            <div className='div-inputs'>
-              <Input
-                allowClear={!this.state.fieldFalha.Os}
-                className={
-                  this.state.fieldFalha.Os ?
-                    'div-inputError-OS' :
-                    'input-100'}
-                style={{ width: '100%' }}
-                name='Os'
-                value={this.state.Os}
-                placeholder="3203"
-                onChange={this.onChange}
-                onBlur={this.getOs}
-                onFocus={this.onFocus}
-              />
-              {this.state.fieldFalha.Os ?
-                  <p className='div-feedbackError'>
-                    {this.state.message.Os}
-                  </p> : null}
-              </div>
-          </div>
-
-          <div className='div-rs-Os'>
+          <div className='div-rs1-Os'>
           <div className='div-textRs-Os'>Razão social:</div>
             <div className='div-inputs'>
               <Input
