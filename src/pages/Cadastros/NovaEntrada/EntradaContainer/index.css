@@ -115,6 +115,7 @@
   border-color: red !important;
 }
 .button{
+  margin: 0 2px;
   background-color: #001529 !important;
   border-color: #001529 !important;
 }

@@ -211,6 +211,8 @@ class NovaEntrada extends Component {
   }
 
   onChangeItem = (value, product) => {
+
+    console.log(product)
     this.setState({
       nomeProduto: value,
       serial: product.props.product.serial,
@@ -298,7 +300,7 @@ class NovaEntrada extends Component {
   )
 
   render() {
-    // console.log(this.state)
+    console.log(this.state)
     return (
       <div className='div-card-entrada'>
         <div className='linhaTexto-entrada'>
