@@ -5,8 +5,11 @@ export const masks = (nome, valor) => {
     value = value.replace(/\D/ig, '')
     value = value.slice(0, 8)
 
-    if (value.length === 8) {
-      value = value.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3')
+    if (value.length < 5) {
+      value = value.replace(/(\d{2})(\d{1,2})/, '$1/$2')
+    }
+    if (value.length > 4) {
+      value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3')
     }
 
     return {

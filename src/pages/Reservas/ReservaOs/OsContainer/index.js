@@ -4,7 +4,7 @@ import './index.css'
 import { Input, DatePicker, InputNumber, Button, message, Select } from 'antd'
 
 import { validators, masks } from './validators'
-import { newReservaOs, getOsByOs } from '../../../../services/reservaOs';
+import { newReservaOs } from '../../../../services/reservaOs';
 import { getItens } from '../../../../services/produto';
 import { getTecnico } from '../../../../services/tecnico'
 
@@ -134,41 +134,6 @@ class ReservaOs extends Component{
     })
   }
 
-  getOs = async () => {
-    const os  = await getOsByOs(this.state.Os)
-
-    if (os.status === 200) {
-      if (os.data.razaoSocial) {
-        await this.setState({
-          razaoSocial: os.data.razaoSocial,
-          cnpj: os.data.cnpj,
-          data: moment(os.data.data),
-          tecnico: os.data.technician,
-          carrinho: os.data.reserve,
-          readOnly: true,
-          fieldFalha: {
-            Os: false,
-            razaoSocial: false,
-            cnpj: false,
-            data: false,
-            technician: false,
-          },
-          message: {
-            Os: '',
-            razaoSocial: '',
-            cnpj: '',
-            data: '',
-            technician: '',
-          },
-        })
-      } else {
-        this.setState({
-          readOnly: false,
-        })
-      }
-    }
-  }
-
   onBlurValidator = (e) => {
     const {
       nome,
@@ -217,7 +182,6 @@ class ReservaOs extends Component{
     })
 
     const values = {
-      os: this.state.Os,
       razaoSocial: this.state.razaoSocial,
       cnpj: this.state.cnpj,
       date: this.state.data,
@@ -247,7 +211,6 @@ class ReservaOs extends Component{
     } if (resposta.status === 200) {
 
       this.setState({
-        Os: '',
         razaoSocial: '',
         cnpj: '',
         data: '',
