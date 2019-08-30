@@ -4,8 +4,8 @@ import './index.css'
 import { Input, DatePicker, InputNumber, Button, message, Select } from 'antd'
 
 import { validators, masks } from './validators'
-import { newReservaOs } from '../../../../services/reservaOs';
-import { getItens } from '../../../../services/produto';
+import { newReservaOs, getOsByOs } from '../../../../services/reservaOs';
+import { getProdutoByEstoque } from '../../../../services/produto';
 import { getTecnico } from '../../../../services/tecnico'
 
 
@@ -101,7 +101,12 @@ class ReservaOs extends Component{
   }
 
   getAllItens = async () => {
-    await getItens().then(
+
+    const query={
+      stockBase: this.state.estoque
+    }
+
+    await getProdutoByEstoque(query).then(
       resposta => this.setState({
         itemArray: resposta.data,
       })
@@ -215,6 +220,9 @@ class ReservaOs extends Component{
         cnpj: '',
         data: '',
         carrinho: [],
+        serial: false,
+        numeroSerieTest: '',
+        nomeProduto: 'Não selecionado',
         // tecnicoId: '',
         messageSuccess: true,
       })
@@ -284,6 +292,7 @@ class ReservaOs extends Component{
 
 
   render(){
+    console.log(this.state.carrinho)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-Os'>

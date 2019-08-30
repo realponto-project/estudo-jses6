@@ -156,6 +156,12 @@ class ReservaKit extends Component {
 
   componentDidMount = async () => {
     await this.getAllTecnico()
+
+    await this.setState({
+      tecnico: this.state.tecnicoArray[0].name
+    })
+
+    await this.getAllKit()
   }
 
   setRedirect = () => {
@@ -385,6 +391,7 @@ class ReservaKit extends Component {
   }
 
   getOs = async () => {
+
     const os  = await getOsByOs(this.state.os)
 
     if (os.status === 200) {
