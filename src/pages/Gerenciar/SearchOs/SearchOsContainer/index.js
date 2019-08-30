@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom'
 
 import { validators, masks } from './validators'
 import { newReservaOs, getOsByOs } from '../../../../services/reservaOs';
-import { getItens } from '../../../../services/produto';
+import { getProdutoByEstoque } from '../../../../services/produto';
 import { getTecnico } from '../../../../services/tecnico'
 
 
@@ -115,7 +115,12 @@ class SearchOsDash extends Component{
   }
 
   getAllItens = async () => {
-    await getItens().then(
+
+    const query={
+      stockBase: this.state.estoque
+    }
+
+    await getProdutoByEstoque(query).then(
       resposta => this.setState({
         itemArray: resposta.data,
       })
