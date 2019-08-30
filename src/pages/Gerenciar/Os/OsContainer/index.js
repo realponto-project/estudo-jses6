@@ -1,11 +1,14 @@
 import * as R from 'ramda'
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import './index.css'
 import { Button, Icon, Modal, Tooltip, Input, Spin } from 'antd'
 import { Redirect } from 'react-router-dom'
 
 import { getTecnico } from '../../../../services/tecnico'
-import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs';
+import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs'
+import { redirectValueOs } from '../OsRedux/action'
 
 class OsDash extends Component {
 
@@ -39,17 +42,30 @@ class OsDash extends Component {
     show: 0,
   }
 
-  redirectSearchOs = () => {
-    this.setState({
+  redirectSearchOs = async () => {
+    const value = {
+      Os: this.state.lineSelected.rows[0].id,
+      razaoSocial: this.state.lineSelected.rows[0].razaoSocial,
+      cnpj: this.state.lineSelected.rows[0].cnpj,
+      technician: this.state.lineSelected.rows[0].technician,
+      technicianId: this.state.lineSelected.rows[0].technicianId,
+      date: this.state.lineSelected.rows[0].date,
+      products: this.state.lineSelected.rows[0].products,
+    }
+    
+    await this.props.redirectValueOs(value)
+
+    await this.setState({
       redirect: true
     })
   }
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/logged/searchOs/dash' />
+      return <Redirect exact to='/logged/searchOs/dash' />
     }
   }
+
 
   changePages = (pages) => {
     this.setState({
@@ -365,7 +381,7 @@ class OsDash extends Component {
 
 
   render() {
-    console.log(this.state.OsArray.rows)
+    console.log(this.state)
     return (
       <div className='div-card-GOs'>
         <div className='linhaTexto-GOs'>
@@ -493,16 +509,22 @@ class OsDash extends Component {
                 <div className='div-button-mais-GOs'>
                 <Tooltip placement="topLeft" title='Adicionar produto'>
                   <div className='button-mais-div' onClick={() => this.redirectSearchOs()}>+</div>
-                  {this.renderRedirect()}   
+                  {this.renderRedirect()}
                 </Tooltip>
                 </div>
                 </div>
                 </div>
                 {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
                   this.state.lineSelected.rows.map((line) =>
-                <div className='div-branco-mais' >
-                <div className='div-produtos-mais-GOs'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.name}</div>))}</div>
-                <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.quantMax}</div>))}</div>
+                <div className='div-branco-mais'>
+                  {/* {line.products.map((valor =>
+                    <div className='div-produtos-mais-GOs'>
+                      <div className='div-peca-GOs'>{valor.name}</div>
+                      <div className='div-peca-GOs'>{valor.amount}</div>
+                    </div>
+                  ))} */}
+                  <div className='div-produtos-mais-GOs'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.name}</div>))}</div>
+                  <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.amount}</div>))}</div>
                 </div>)}
               </div> : null}
             <div className=' div-separate1-Gentrada'/>
@@ -512,5 +534,13 @@ class OsDash extends Component {
       )
     }
   }
+
+  function mapDispacthToProps(dispach) {
+    return bindActionCreators({ redirectValueOs }, dispach)
+  }
+
+  function mapStateToProps(state) {
+    return {}
+  }
   
-export default OsDash
+export default connect(mapStateToProps, mapDispacthToProps)(OsDash)

@@ -4,4 +4,8 @@ export default {
     AUTH: 'LOGIN_AUTH',
     LOGOUT: 'LOGOUT_AUTH',
   },
+
+  REDIRECT: {
+    OS: 'INICIAL_STATE_REDIRECT_OS',
+  }
 }

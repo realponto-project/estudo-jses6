@@ -333,7 +333,7 @@ class NovoTecnico extends Component{
   )
 
   render(){
-    console.log(this.state.externo)
+    console.log(this.state)
     return(
       <div className='div-card-tecnico'>
         <div className='linhaTexto-tecnico'>

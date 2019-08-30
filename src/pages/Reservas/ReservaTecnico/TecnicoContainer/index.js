@@ -154,7 +154,7 @@ class ReservaTecnico extends Component {
     })
 
     const value = {
-      osPartsId: this.state.produtoSelecionado.products.osPartsId,
+      osPartsId: this.state.produtoSelecionado.products.id,
       add:{
         return: this.state.teste
       }
@@ -201,7 +201,7 @@ class ReservaTecnico extends Component {
     })
 
     const value = {
-      osPartsId: this.state.produtoSelecionado.products.osPartsId,
+      osPartsId: this.state.produtoSelecionado.products.id,
       add:{
         missOut: this.state.teste
       }
@@ -248,7 +248,7 @@ class ReservaTecnico extends Component {
     })
 
     const value = {
-      osPartsId: this.state.produtoSelecionado.products.osPartsId,
+      osPartsId: this.state.produtoSelecionado.products.id,
       add:{
         output: this.state.teste
       }
@@ -322,6 +322,10 @@ class ReservaTecnico extends Component {
         products: {}
       },
       teste: NaN,
+      mais: {},
+      lineSelected: {
+        rows: [],
+      },
     })
   }
 
@@ -346,7 +350,7 @@ class ReservaTecnico extends Component {
       },
       lineSelected: {
         rows: [line],
-      },    
+      },
     })
   }
 

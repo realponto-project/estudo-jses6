@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import moment from 'moment'
+import * as R from 'ramda'
 import './index.css'
 import { Input, DatePicker, InputNumber, Button, message, Select, Icon } from 'antd'
 import { Redirect } from 'react-router-dom'
@@ -24,16 +27,15 @@ class SearchOsDash extends Component{
     itemArray: [],
     messageError: false,
     messageSuccess: false,
-    Os: '',
-    razaoSocial: '',
-    cnpj: '',
-    data: '',
-    tecnico: 'Não selecionado',
+    // data: this.props.osUpdateValue.date,
+    data: moment(this.props.osUpdateValue.date),
+    tecnico: this.props.osUpdateValue.technician,
     nomeProduto: 'Não selecionado',
     productId: '',
-    tecnicoId: '',
+    tecnicoId: this.props.osUpdateValue.technicianId,
     quant: '1',
-    carrinho: [],
+    quantObj: {},
+    carrinho: this.props.osUpdateValue.products,
     estoque: 'REALPONTO',
     fieldFalha: {
       Os: false,
@@ -112,6 +114,15 @@ class SearchOsDash extends Component{
   componentDidMount = async () => {
     await this.getAllItens()
     await this.getAllTecnico()
+
+    await this.state.carrinho.map((item) => {
+      this.setState({
+        quantObj: {
+          ...this.state.quantObj,
+          [`quant${item.name}`]: item.amount,
+        },
+      })
+    })
   }
 
   getAllItens = async () => {
@@ -229,27 +240,39 @@ class SearchOsDash extends Component{
     })
   }
 
-  saveTargetNewReservaOs = async () => {
+  updateTargetReservaOs = async () => {
+
+    const osParts = await this.state.carrinho.map((item) => {
+      let resp = {}
+      if (R.prop('id', item)){
+        resp = {
+          id: item.id,
+          amount: this.state.quantObj[`quant${item.name}`].toString(),
+        }
+      } else {
+        resp = {
+          ...item,
+          amount: this.state.quantObj[`quant${item.name}`].toString(),
+        }
+      }
+      return resp
+    })
+
+    const value = {
+      id: this.props.osUpdateValue.Os,
+      date: this.state.data,
+      technicianId: this.state.tecnicoId,
+      osParts,
+    }
+
+    console.log(value)
+    
 
     this.setState({
       loading: true
     })
 
-    const values = {
-      id: this.state.Os,
-      razaoSocial: this.state.razaoSocial,
-      cnpj: this.state.cnpj,
-      date: this.state.data,
-      technicianId: this.state.technicianId,
-      osParts: this.state.carrinho,
-      responsibleUser: 'modrp',
-    }
-
-    console.log(values)
-
-    const resposta = await newReservaOs(values)
-
-    console.log(resposta)
+    const resposta = await updateReservaOs(value)
 
     if (resposta.status === 422) {
 
@@ -277,7 +300,8 @@ class SearchOsDash extends Component{
       await this.success()
       this.setState({
         loading:false,
-        messageSuccess: false
+        messageSuccess: false,
+        redirect: true,
       })
     }
   }
@@ -291,7 +315,7 @@ class SearchOsDash extends Component{
   onChangeSelect = (value, props) => {
     this.setState({
       tecnico: value,
-      technicianId: props.props.props.id,
+      technicoId: props.props.props.id,
     })
   }
 
@@ -311,11 +335,25 @@ class SearchOsDash extends Component{
     })
   }
 
+  onChangeUpdateQuant = (name, value) => {
+
+    this.setState({
+      quantObj:{
+        ...this.state.quantObj,
+        [`quant${name}`]: value,
+      },
+    })
+  }
+
   addCarrinho = () => {
     if(this.state.nomeProduto !== 'Não selecionado' || ''){
     this.setState({
+      quantObj:{
+        ...this.state.quantObj,
+        [`quant${this.state.nomeProduto}`]: this.state.quant,
+      },
       carrinho:[{
-        nomeProdutoCarrinho: this.state.nomeProduto,
+        name: this.state.nomeProduto,
         productId: this.state.productId,
         amount: this.state.quant.toString(),
         stockBase: this.state.estoque,
@@ -340,6 +378,7 @@ class SearchOsDash extends Component{
 
 
   render(){
+    console.log(this.state)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-GOs'>
@@ -357,18 +396,10 @@ class SearchOsDash extends Component{
           <div className='div-textOs-Os'>Nº Os:</div>
             <div className='div-inputs'>
               <Input
-                allowClear={!this.state.fieldFalha.Os}
-                className={
-                  this.state.fieldFalha.Os ?
-                    'div-inputError-OS' :
-                    'input-100'}
+                readOnly
+                className='input-100'
                 style={{ width: '100%' }}
-                name='Os'
-                value={this.state.Os}
-                placeholder="3203"
-                onChange={this.onChange}
-                onBlur={this.getOs}
-                onFocus={this.onFocus}
+                value={this.props.osUpdateValue.Os}
               />
               {this.state.fieldFalha.Os ?
                   <p className='div-feedbackError'>
@@ -381,19 +412,10 @@ class SearchOsDash extends Component{
           <div className='div-textRs-Os'>Razão social:</div>
             <div className='div-inputs'>
               <Input
-                readOnly={this.state.readOnly}
-                allowClear={!this.state.fieldFalha.razaoSocial && !this.state.readOnly}
-                className={
-                  this.state.fieldFalha.razaoSocial ?
-                    'div-inputError-OS' :
-                    'input-100'}
+                readOnly
+                className='input-100'
                 style={{ width: '100%' }}
-                name='razaoSocial'
-                value={this.state.razaoSocial}
-                placeholder="Digite a razão social"
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
+                value={this.props.osUpdateValue.razaoSocial}
               />
               {this.state.fieldFalha.razaoSocial ?
                 <p className='div-feedbackError'>
@@ -408,19 +430,10 @@ class SearchOsDash extends Component{
           <div className='div-text-Os'>Cnpj:</div>
             <div className='div-inputs'>
               <Input
-                readOnly={this.state.readOnly}
-                allowClear={!this.state.fieldFalha.cnpj && !this.state.readOnly}
-                className={
-                  this.state.fieldFalha.cnpj ?
-                    'div-inputError-OS' :
-                    'input-100'}
+                readOnly
+                className='input-100'
                 style={{ width: '100%' }}
-                name='cnpj'
-                value={this.state.cnpj}
-                placeholder="Digite o cnpj"
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
+                value={this.props.osUpdateValue.cnpj}
               />
               {this.state.fieldFalha.cnpj ?
                 <p className='div-feedbackError'>
@@ -567,20 +580,33 @@ class SearchOsDash extends Component{
           <div className='div-linhaSepareteProdutos-Os'></div>
           {this.state.carrinho.map((valor) =>
             <div className='div-linha-Os'>
-              <label className='label-produto-Os'>{valor.nomeProdutoCarrinho}</label>
-              <label className='label-quant-Os'>{valor.amount} UN</label>
+              <label className='label-produto-Os'>{valor.name}</label>
+              <InputNumber 
+                min={1}
+                value={this.state.quantObj[`quant${valor.name}`]}
+                onChange={(value) => this.onChangeUpdateQuant(valor.name, value)} />
+              <label className='label-quant-Os'>
+                UN
+              </label>
               <Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button>
             </div>)
           }
         </div>}
 
         <div className='div-buttonSalvar-Os'>
-          <Button type='primary' className='button' onClick={this.saveTargetNewReservaOs}>Salvar</Button>
+          <Button type='primary' className='button' onClick={this.updateTargetReservaOs}>Salvar</Button>
         </div>
 
+        {this.state.redirect ? <Redirect to='/logged/Os/dash' /> : null }
       </div>
     )
   }
 }
 
-export default SearchOsDash
+function mapStateToProps(state) {
+  return {
+    osUpdateValue: state.osUpdateValue,
+  }
+}
+
+export default connect(mapStateToProps)(SearchOsDash)
