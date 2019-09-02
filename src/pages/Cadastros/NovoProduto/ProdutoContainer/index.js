@@ -396,13 +396,22 @@ class NovoProduto extends Component {
         <div className='div-marcaModal-produtos'>
           <div className='div-text-produtos'>Marca:</div>
           <Input
-            className='input-100'
+            allowClear={!this.state.fieldFalha.newMarca}
+            className={
+              this.state.fieldFalha.newMarca ?
+                'div-inputError-tecnico' :
+                'input-100'}
             placeholder="Digite a marca"
             name='newMarca'
             value={this.state.newMarca}
             onChange={this.onChange}
-            allowClear
+            onBlur={this.onBlurValidator}
+            onFocus={this.onFocus} 
           />
+          {this.state.fieldFalha.newMarca ?
+            <p className='div-feedbackError'>
+              {this.state.message.newMarca}
+            </p> : null}
         </div>
       </div>
 

@@ -189,6 +189,14 @@ class NovoTecnico extends Component{
         newModelo: '',
         newPlaca: '',
         newAno: '',
+        fieldFalha: {
+          ...this.state.fieldFalha,
+          newPlaca: false,
+        },
+        message: {
+          ...this.state.message,
+          newPlaca: '',
+        },
         messageSuccess: true,
       })
       await this.success()
@@ -213,7 +221,15 @@ class NovoTecnico extends Component{
       modalCarro: false,
       newAno: '',
       newModelo: '',
-      newPlaca: ''
+      newPlaca: '',
+      fieldFalha: {
+        ...this.state.fieldFalha,
+        newPlaca: false,
+      },
+      message: {
+        ...this.state.message,
+        newPlaca: '',
+      },
     })
   }
 
@@ -320,20 +336,29 @@ class NovoTecnico extends Component{
         <div className='div-placaModal-tecnico'>
           <div className='div-text-tecnico'>Placa:</div>
           <Input
-            className='input-100'
+            allowClear={!this.state.fieldFalha.newPlaca}
+            className={
+              this.state.fieldFalha.newPlaca ?
+                'div-inputError-tecnico' :
+                'input-100'}
             placeholder="ABC-1234"
             name='newPlaca'
             value={this.state.newPlaca}
             onChange={this.onChange}
-            allowClear
+            onBlur={this.onBlurValidator}
+            onFocus={this.onFocus} 
           />
+          {this.state.fieldFalha.newPlaca ?
+            <p className='div-feedbackError'>
+              {this.state.message.newPlaca}
+            </p> : null}
         </div>
       </div>
     </Modal>
   )
 
   render(){
-    console.log(this.state)
+    // console.log(this.state)
     return(
       <div className='div-card-tecnico'>
         <div className='linhaTexto-tecnico'>
