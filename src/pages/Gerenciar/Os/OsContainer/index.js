@@ -6,7 +6,6 @@ import './index.css'
 import { Button, Icon, Modal, Tooltip, Input, Spin } from 'antd'
 import { Redirect } from 'react-router-dom'
 
-import { getTecnico } from '../../../../services/tecnico'
 import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs'
 import { redirectValueOs } from '../OsRedux/action'
 
@@ -73,15 +72,6 @@ class OsDash extends Component {
     }, () => {
       this.getAllOs()
     }
-    )
-  }
-
-  getAllTecnico = async () => {
-
-    await getTecnico().then(
-      resposta => this.setState({
-        tecnicoArray: resposta.data,
-      })
     )
   }
 
@@ -307,8 +297,6 @@ class OsDash extends Component {
 
   componentDidMount = async () => {
     await this.getAllOs()
-
-    await this.getAllTecnico()
   }
 
   onChangeSelect = async (value) => {

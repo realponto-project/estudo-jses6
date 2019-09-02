@@ -145,6 +145,7 @@ class NovoTecnico extends Component{
         cnh: '',
         placa: 'Selecione o carro',
         externo: false,
+        rodizio: '',
         messageSuccess: true,
       })
       await this.success()

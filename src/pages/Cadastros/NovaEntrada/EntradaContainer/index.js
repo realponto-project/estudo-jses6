@@ -162,6 +162,7 @@ class NovaEntrada extends Component {
         quant: '1',
         numeroSerieTest: [],
         messageSuccess: true,
+        serial: false,
       })
       await this.success()
       this.setState({

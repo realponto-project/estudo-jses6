@@ -98,7 +98,7 @@ class ReservaTecnico extends Component {
         page: resposta.data.page,
         count: resposta.data.count,
         show: resposta.data.show,
-      }, console.log(resposta))
+      })
     )
 
     this.setState({
@@ -120,8 +120,17 @@ class ReservaTecnico extends Component {
   getAllOsSemLoading = async () => {
 
     const query = {
+      filters: {
+        technician: {
+          specific: {
+            name: this.state.tecnico,
+          },
+        },
+      },
       page: this.state.page,
       total: this.state.total,
+      required: true,
+      paranoid: true,
     }
 
     await getTodasOs(query).then(
@@ -171,20 +180,20 @@ class ReservaTecnico extends Component {
       })
     }
 
-    await this.getAllOsSemLoading()
-
+    
     // eslint-disable-next-line array-callback-return
     const x = this.state.OsArray.rows.filter((item) => {
       if (item.id === R.keys(this.state.mais)[0]) {
         return item
       }
     })
-
+    
     await this.setState({
       lineSelected: {
         rows: x
       },
     })
+    await this.getAllOsSemLoading()
   }
 
   perda = async () => {
@@ -218,20 +227,20 @@ class ReservaTecnico extends Component {
       })
     }
 
-    await this.getAllOsSemLoading()
-
+    
     // eslint-disable-next-line array-callback-return
     const x = this.state.OsArray.rows.filter((item) => {
       if (item.id === R.keys(this.state.mais)[0]) {
         return item
       }
     })
-
+    
     await this.setState({
       lineSelected: {
         rows: x
       },
     })
+    await this.getAllOsSemLoading()
   }
 
   liberar = async () => {
@@ -265,20 +274,20 @@ class ReservaTecnico extends Component {
       })
     }
 
-    await this.getAllOsSemLoading()
-
+    
     // eslint-disable-next-line array-callback-return
     const x = this.state.OsArray.rows.filter((item) => {
       if (item.id === R.keys(this.state.mais)[0]) {
         return item
       }
     })
-
+    
     await this.setState({
       lineSelected: {
         rows: x
       },
     })
+    await this.getAllOsSemLoading()
   }
 
   onChange = (e) => {

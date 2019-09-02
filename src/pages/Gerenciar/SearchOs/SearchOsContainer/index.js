@@ -113,6 +113,7 @@ class SearchOsDash extends Component{
     await this.getAllItens()
     await this.getAllTecnico()
 
+    // eslint-disable-next-line array-callback-return
     await this.state.carrinho.map((item) => {
       this.setState({
         quantObj: {
@@ -304,10 +305,12 @@ class SearchOsDash extends Component{
     }
   }
 
-  onChangeTecnico = (value) => {
+
+  onChangeEstoque = async (value) => {
     this.setState({
-      tecnico: value
+      estoque0: value
     })
+    await this.getAllItens()
   }
 
   onChangeSelect = (value, props) => {
@@ -359,7 +362,9 @@ class SearchOsDash extends Component{
       },...this.state.carrinho],
       nomeProduto: 'Não selecionado',
       quant: '1',
-      estoque: 'REALPONTO'
+      estoque: 'REALPONTO',
+      serial: false,
+      numeroSerieTest: '',
     })
   }else (
     this.errorProduto()
@@ -540,9 +545,9 @@ class SearchOsDash extends Component{
         <div className='div-linha-Os'> 
         <div className='div-estoque-Os'>
           <div className='div-text-Os'>Estoque:</div>
-          <Select value={this.state.estoque} style={{ width: '100%' }} onChange={this.onChangeSelect}>
+          <Select value={this.state.estoque} style={{ width: '100%' }} onChange={this.onChangeEstoque}>
             <Option value="REALPONTO">REALPONTO</Option>
-            <Option value="NOVA REALPONTO">NOVA REALPONTO</Option>
+            <Option value="NOVAREAL">NOVA REALPONTO</Option>
             <Option value="PONTOREAL">PONTOREAL</Option>
           </Select>
           </div>  
@@ -591,9 +596,9 @@ class SearchOsDash extends Component{
           }
         </div>}
 
-        <div className='div-buttonSalvar-Os'>
-          <Button type='primary' className='button' onClick={this.updateTargetReservaOs}>Salvar</Button>
-        </div>
+        {this.state.carrinho.length !== 0 ? <div className='div-buttonSalvar-Os'>
+          <Button type='primary' className='button' onClick={this.saveTargetNewReservaOs}>Salvar</Button>
+        </div> : null}
 
         {this.state.redirect ? <Redirect to='/logged/Os/dash' /> : null }
       </div>

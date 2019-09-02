@@ -6,7 +6,7 @@ import * as R from 'ramda'
 
 import { validators, masks } from './validators'
 import { NewReservaML } from '../../../../services/mercadoLivre';
-import { getItens } from '../../../../services/produto';
+import { getProdutoByEstoque } from '../../../../services/produto';
 
 
 const { TextArea } = Input;
@@ -113,8 +113,14 @@ class ReservaML extends Component{
     await this.getAllItens()
   }
 
+ 
   getAllItens = async () => {
-    await getItens().then(
+
+    const query={
+      stockBase: this.state.estoque
+    }
+
+    await getProdutoByEstoque(query).then(
       resposta => this.setState({
         itemArray: resposta.data,
       })
@@ -274,10 +280,12 @@ class ReservaML extends Component{
     }
   }
 
-  onChangeSelect = (value) => {
-    this.setState({
+  onChangeSelect = async (value) => {
+    await this.setState({
       estoque: value
     })
+
+    await this.getAllItens()
   }
 
   errorProduto = () => {
@@ -317,6 +325,12 @@ class ReservaML extends Component{
     })
   }
 
+  onChangeCodigoRastreio = (e) => {
+    this.setState({
+      codigo: e.target.value.replace(/\D/ig, '')
+    })
+  }
+
   onChange = (e) => {
     const { nome,
       valor,
@@ -328,7 +342,7 @@ class ReservaML extends Component{
   }
 
   render(){
-    // console.log(this.state)
+    console.log(this.state.itemArray)
     return(
       <div className='div-card-ML'>
         <div className='linhaTexto-ML'>
@@ -348,7 +362,7 @@ class ReservaML extends Component{
               name='codigo'
               value={this.state.codigo}
               placeholder="Código de rastreio"
-              onChange={this.onChange}
+              onChange={this.onChangeCodigoRastreio}
               onBlur={this.onBlurValidator}
               onFocus={this.onFocus}
               // allowClear
@@ -593,6 +607,7 @@ class ReservaML extends Component{
         <div className='div-linha-ML'>
         <div className='div-nome-ML'>
           <div className='div-textNomeProduto-ML'>Nome do produto:</div>
+          {this.state.itemArray.length !== 0 ? 
             <Select
               showSearch
               style={{ width: '100%' }}
@@ -605,7 +620,12 @@ class ReservaML extends Component{
               }
             >
               {this.state.itemArray.map((value)=> <Option product={value} value={value.name}>{value.name}</Option>)}
-            </Select>
+            </Select>:
+            <Select
+            style={{width: '100%'}}
+            value='Nenhum produto cadastrado'
+          >
+          </Select>}
         </div>  
 
         <div className='div-quant-ML'>
@@ -619,7 +639,7 @@ class ReservaML extends Component{
           <div className='div-text-ML'>Estoque:</div>
           <Select value={this.state.estoque} style={{ width: '100%' }} onChange={this.onChangeSelect}>
             <Option value="REALPONTO">REALPONTO</Option>
-            <Option value="NOVA REALPONTO">NOVA REALPONTO</Option>
+            <Option value="NOVAREAL">NOVA REALPONTO</Option>
             <Option value="PONTOREAL">PONTOREAL</Option>
           </Select>
           </div>  
