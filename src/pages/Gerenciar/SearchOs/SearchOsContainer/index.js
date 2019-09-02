@@ -5,10 +5,8 @@ import moment from 'moment'
 import * as R from 'ramda'
 import './index.css'
 import { Input, DatePicker, InputNumber, Button, message, Select, Icon } from 'antd'
-import { Redirect } from 'react-router-dom'
-
 import { validators, masks } from './validators'
-import { newReservaOs, getOsByOs } from '../../../../services/reservaOs';
+import { getOsByOs, updateReservaOs } from '../../../../services/reservaOs';
 import { getProdutoByEstoque } from '../../../../services/produto';
 import { getTecnico } from '../../../../services/tecnico'
 

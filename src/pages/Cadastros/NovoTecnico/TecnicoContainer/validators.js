@@ -145,5 +145,15 @@ export const validators = (nome, valor, state) => {
       fieldFalha,
       message
     }
+  } else if (nome === 'newPlaca') {
+    if (valor === '') {
+      message.newPlaca = 'É obrigatório.'
+      fieldFalha.newPlaca = true
+    } else fieldFalha.newPlaca = false
+
+    return {
+      fieldFalha,
+      message
+    }
   }
 }
