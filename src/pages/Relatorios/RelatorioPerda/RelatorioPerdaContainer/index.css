@@ -18,8 +18,23 @@
   font-weight: 500;
   font-size: 2.2em
 }
+.div-produto-RPerda{
+  width: 35%;
+  display: flex;
+  align-items: center;
+}
+.div-data-RPerda{
+  width: 27%;
+  display: flex;
+  align-items: center;
+}
+.div-tecnico-RPerda{
+  width: 35%;
+  display: flex;
+  align-items: center;
+}
 .div-cabecalho-RPerda{
-  margin-top: 40px;
+  margin-top: 10px;
   width: 90%;
   background-color: #FAFAFA;
   height: 60px;

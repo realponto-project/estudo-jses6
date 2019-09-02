@@ -234,6 +234,14 @@ class ReservaOs extends Component{
     }
   }
 
+  onChangeEstoque = async (valor) => {
+    await this.setState({
+      estoque: valor
+    })
+
+    await this.getAllItens()
+  }
+
   onChangeTecnico = (value) => {
     this.setState({
       tecnico: value
@@ -275,7 +283,9 @@ class ReservaOs extends Component{
       },...this.state.carrinho],
       nomeProduto: 'Não selecionado',
       quant: '1',
-      estoque: 'REALPONTO'
+      estoque: 'REALPONTO',
+      serial: false,
+      numeroSerieTest: '',
     })
   }else (
     this.errorProduto()
@@ -292,7 +302,7 @@ class ReservaOs extends Component{
 
 
   render(){
-    console.log(this.state.carrinho)
+    console.log(this.state.itemArray)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-Os'>
@@ -452,9 +462,9 @@ class ReservaOs extends Component{
         <div className='div-linha-Os'> 
         <div className='div-estoque-Os'>
           <div className='div-text-Os'>Estoque:</div>
-          <Select value={this.state.estoque} style={{ width: '100%' }} onChange={this.onChangeSelect}>
+          <Select value={this.state.estoque} style={{ width: '100%' }} onChange={this.onChangeEstoque}>
             <Option value="REALPONTO">REALPONTO</Option>
-            <Option value="NOVA REALPONTO">NOVA REALPONTO</Option>
+            <Option value="NOVAREAL">NOVA REALPONTO</Option>
             <Option value="PONTOREAL">PONTOREAL</Option>
           </Select>
           </div>  
@@ -497,9 +507,9 @@ class ReservaOs extends Component{
           }
         </div>}
 
-        <div className='div-buttonSalvar-Os'>
+        {this.state.carrinho.length !== 0 ? <div className='div-buttonSalvar-Os'>
           <Button type='primary' className='button' onClick={this.saveTargetNewReservaOs}>Salvar</Button>
-        </div>
+        </div> : null}
 
       </div>
     )

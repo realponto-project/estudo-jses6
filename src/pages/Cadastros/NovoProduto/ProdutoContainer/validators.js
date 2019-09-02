@@ -1,35 +1,9 @@
 export const masks = (nome, valor) => {
   
-  if (nome === 'cnh') {
+  if (nome === 'codigo') {
     let value = valor
     value = value.replace(/\D/ig, '')
-    value = value.slice(0, 8)
-
-    if (value.length === 8) {
-      value = value.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3')
-    }
-
-    return {
-      nome,
-      valor: value,
-    }
-  }else if (nome === 'newAno') {
-    let value = valor
-    value = value.replace(/\D/ig, '')
-    value = value.slice(0, 4)
-
-    return {
-      nome,
-      valor: value,
-    }
-  }else if (nome === 'newPlaca') {
-    let value = valor
-    value = value.slice(0, 8)
-    value = value.slice(0, 3).replace(/[^A-Za-z]/ig, '').toUpperCase() + value.slice(3, 8).replace(/\D/ig, '')
-
-    if (value.length > 3) {
-      value = value.replace(/(\w{3})(\d{1,4})/, '$1-$2')
-    }
+    value = value.slice(0, 30)
 
     return {
       nome,
@@ -61,7 +35,7 @@ export const validators = (nome, valor, state) => {
       fieldFalha,
       message
     }
-  } 
+  }
   else if (nome === 'codigo'){
     if (valor === '') {
       message.codigo = 'É obrigatório.'

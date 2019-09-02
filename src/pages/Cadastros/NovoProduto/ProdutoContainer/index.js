@@ -158,7 +158,7 @@ class NovoProduto extends Component {
         descricao: '',
         codigo: '',
         quantMin: '',
-        // serial: false,
+        serial: false,
         messageSuccess: true,
       })
       await this.success()
@@ -205,6 +205,8 @@ class NovoProduto extends Component {
         modalMarca: false,
       })
     }
+
+    await this.getAllMarca()
   }
 
   saveTargetNewFabricante = async () => {
@@ -240,6 +242,8 @@ class NovoProduto extends Component {
         modalFabricante: false,
       })
     }
+
+    await this.getAllFabricante()
   }
 
   saveTargetNewTipo = async () => {
@@ -276,6 +280,8 @@ class NovoProduto extends Component {
         modalTipo: false,
       })
     }
+
+    await this.getAllTipo()
   }
 
   onChangeSerial = () => {
@@ -327,6 +333,12 @@ class NovoProduto extends Component {
       quantMin: value
     })
   }
+
+    onChangeCodigo = (e) =>{
+      this.setState({
+        codigo: e.target.value.replace(/\D/ig, '')
+      })
+    }
 
   onBlurValidator = async (e) => {
     const {
@@ -456,31 +468,6 @@ class NovoProduto extends Component {
     </Modal>
   )
 
-  modalFabricante = () => (
-    <Modal
-      title="Adicionar fabricante"
-      visible={this.state.modalFabricante}
-      onOk={this.saveTargetNewFabricante}
-      okText='Salvar'
-      onCancel={this.handleOk}
-      cancelText='Cancelar'
-    >
-      <div className='linhaModal-produtos'>
-        <div className='div-modeloModal-produtos'>
-          <div className='div-text-produtos'>Fabricante:</div>
-          <Input
-            className='input-100'
-            placeholder="Digite o fabricante"
-            name='newFabricante'
-            value={this.state.newFabricante}
-            onChange={this.onChange}
-            allowClear
-          />
-        </div>
-      </div>
-    </Modal>
-  )
-
   render() {
     return (
       <div className='div-card-produtos'>
@@ -581,8 +568,6 @@ class NovoProduto extends Component {
               name='fabricante'
               value={this.state.fabricante}
             />
-            <Button className='buttonadd-marca-produtos' type="primary" name='modalFabricante' icon="plus" onClick={this.openModais}/>
-            <this.modalFabricante />
           </div>
 
         </div> : null}
@@ -615,7 +600,7 @@ class NovoProduto extends Component {
                   placeholder="12345"
                   name='codigo'
                   value={this.state.codigo}
-                  onChange={this.onChange}
+                  onChange={this.onChangeCodigo}
                   onBlur={this.onBlurValidator}
                   onFocus={this.onFocus}
                 />

@@ -1,8 +1,40 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Pagination } from 'antd'
+import { getRelatorioML } from '../../../../services/relatorioML';
 
 class GerenciarEntrada extends Component{
+
+  state={
+    relatorioArray: [],
+    loading: false,
+  }
+
+  getRelatorio = async () => {
+
+    this.setState({
+      loading: true
+    })
+
+    const query = {
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await getRelatorioML(query).then(
+      resposta => this.setState({
+        relatorioArray: resposta.data,
+        page: resposta.data.page,
+        count: resposta.data.count,
+        show: resposta.data.show,
+      })
+    )
+
+    this.setState({
+      loading: false
+    })
+  }
+
   render(){
     return(
       <div className='div-card-RML'>
@@ -11,14 +43,14 @@ class GerenciarEntrada extends Component{
         </div>
 
         <div className='div-cabecalho-RML'>
-          <div className='cel-produto-cabecalho-RML'>
-            Produto
+          <div className='cel-codigo-cabecalho-RML'>
+            Código
           </div>
-          <div className='cel-quant-cabecalho-RML'>
-            Qnt.
+          <div className='cel-nome-cabecalho-RML'>
+            Nome
           </div>
-          <div className='cel-usuario-cabecalho-RML'>
-            Usuário
+          <div className='cel-cep-cabecalho-RML'>
+            Cep
           </div>
           <div className='cel-data-cabecalho-RML'>
             Data lançamento
@@ -28,14 +60,14 @@ class GerenciarEntrada extends Component{
         
         <div className=' div-separate-RML'></div>
         <div className='div-lines-RML'>
-          <div className='cel-produto-cabecalho-RML'>
-            TESTEEEEEEEEEEEEEEEEEE
+          <div className='cel-codigo-cabecalho-RML'>
+            202020202020
           </div>
-          <div className='cel-quant-cabecalho-RML'>
-            12
+          <div className='cel-nome-cabecalho-RML'>
+            bla bla bla LTDA.
           </div>
-          <div className='cel-usuario-cabecalho-RML'>
-            TESTE
+          <div className='cel-cep-cabecalho-RML'>
+            09890-510
           </div>
           <div className='cel-data-cabecalho-RML'>
             22/11/2001 14:30

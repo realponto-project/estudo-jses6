@@ -231,7 +231,7 @@
 .button-mais-div{
   cursor: pointer;
   width: 100% !important;
-  height: 90% !important;
+  height: 20px !important;
   display: flex !important;
   justify-content: center !important;
   background-color: #000C17 !important;

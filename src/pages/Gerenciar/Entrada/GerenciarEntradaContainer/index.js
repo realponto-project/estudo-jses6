@@ -47,9 +47,9 @@ class GerenciarEntrada extends Component{
 
   getAllEntrada = async () => {
 
-    // this.setState({
-    //   loading: true
-    // })
+    this.setState({
+      loading: true
+    })
 
     const query = {
       filters: {
@@ -83,9 +83,9 @@ class GerenciarEntrada extends Component{
       })
     )
 
-    // this.setState({
-    //   loading: false
-    // })
+    this.setState({
+      loading: false
+    })
   }
 
   componentDidMount = async () => {
