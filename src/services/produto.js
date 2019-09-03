@@ -208,7 +208,7 @@ export const getProdutoByEstoque = async (query) => {
 
   let response = {}
 
-  await axios.get(`${BACKEND_URL}/api/product/getProductByStockBase`, { headers: headers, params: query }).then(
+  await axios.get(`${BACKEND_URL}/api/product/getProductByStockBase`, { headers: headers, params: { query } }).then(
     resp => {
       response = resp
     }
