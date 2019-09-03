@@ -685,7 +685,7 @@ class ReservaML extends Component{
           </div>}
 
         <div className='div-buttonSalvar-ML'>
-          <Button type='primary' className='button' onClick={this.saveTargetNewReservaML}>Salvar</Button>
+          {this.state.carrinho.length === 0 ? null : <Button type='primary' className='button' onClick={this.saveTargetNewReservaML}>Salvar</Button>}
         </div>
 
       </div>

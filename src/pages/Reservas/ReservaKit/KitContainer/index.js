@@ -147,7 +147,11 @@ class ReservaKit extends Component {
 
   getAllTecnico = async () => {
 
-    await getTecnico().then(
+    const query = {
+      external: true
+    }
+
+    await getTecnico(query).then(
       resposta => this.setState({
         tecnicoArray: resposta.data,
       })

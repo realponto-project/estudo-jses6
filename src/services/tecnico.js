@@ -27,7 +27,7 @@ export const getCarro = async () => {
   return response
 }
 
-export const getTecnico = async () => {
+export const getTecnico = async (query) => {
   const storeObject = store.getState()
 
   const headers = {
@@ -37,7 +37,7 @@ export const getTecnico = async () => {
 
   let response = {}
 
-  await axios.get(`${BACKEND_URL}/api/technician`, { headers: headers }).then(
+  await axios.get(`${BACKEND_URL}/api/technician`, { headers: headers, params: { query } }).then(
     resp => {
       response = resp
     }

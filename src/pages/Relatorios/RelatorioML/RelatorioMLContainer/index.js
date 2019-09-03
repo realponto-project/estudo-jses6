@@ -45,6 +45,36 @@ class GerenciarEntrada extends Component {
     })
   }
 
+
+  test = () => {
+    if (this.state.relatorioArray.rows.length !== 0) {
+      return (
+        this.state.relatorioArray.rows.map((line) =>
+          <div className='div-100-Gentrada'>
+            <div className='div-lines-RML'>
+              <div className='cel-codigo-cabecalho-RML'>
+                {line.trackingCode}
+              </div>
+              <div className='cel-nome-cabecalho-RML'>
+                {line.name}
+              </div>
+              <div className='cel-cep-cabecalho-RML'>
+                {line.zipCode.replace(/(\d{5})(\d{3})?/, '$1-$2')}
+              </div>
+              <div className='cel-data-cabecalho-RML'>
+                {line.createdAt}
+              </div>
+            </div>
+            <div className=' div-separate1-Gentrada' />
+          </div>
+        ))
+    }else{
+      return(
+        <div className='div-naotemnada'>Não há nenhuma reserva finalizada até o momento</div>
+      )
+    }
+  }
+
   render() {
     console.log(this.state.relatorioArray)
     return (
@@ -70,25 +100,7 @@ class GerenciarEntrada extends Component {
 
 
         <div className=' div-separate-RML'></div>
-        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
-          this.state.relatorioArray.rows.map((line) =>
-            <div className='div-100-Gentrada'>
-              <div className='div-lines-RML'>
-                <div className='cel-codigo-cabecalho-RML'>
-                  {line.trackingCode}
-                </div>
-                <div className='cel-nome-cabecalho-RML'>
-                  {line.name}
-                </div>
-                <div className='cel-cep-cabecalho-RML'>
-                  {line.zipCode.replace(/(\d{5})(\d{3})?/, '$1-$2')}
-                </div>
-                <div className='cel-data-cabecalho-RML'>
-                  {line.createdAt}
-                </div>
-              </div>
-        <div className=' div-separate1-Gentrada' />
-            </div>)}
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
         <div className='footer-RML'>
           <Pagination defaultCurrent={1} total={50} />

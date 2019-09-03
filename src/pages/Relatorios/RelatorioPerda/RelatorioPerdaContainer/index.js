@@ -1,19 +1,28 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, DatePicker, Select, Button, Input } from 'antd'
+import { Pagination, DatePicker, Select, Button, Input, Spin } from 'antd'
 import { getTecnico } from '../../../../services/tecnico'
+import { getRelatorioPerda } from '../../../../services/realatorioPerda';
 
 
 const { Option } = Select;
 
-class GerenciarEntrada extends Component{
+class GerenciarEntrada extends Component {
 
-  state={
+  state = {
     avancado: false,
     tecnicoArray: [],
     tecnico: 'Não selecionado',
     data: '',
     produto: '',
+    relatorioArray: {
+      rows: []
+    },
+    page: 1,
+    total: 10,
+    count: 0,
+    show: 0,
+    loading: false,
   }
 
   getAllTecnico = async () => {
@@ -27,6 +36,8 @@ class GerenciarEntrada extends Component{
 
   componentDidMount = async () => {
     await this.getAllTecnico()
+
+    await this.getRelatorio()
   }
 
   avancado = () => {
@@ -35,8 +46,69 @@ class GerenciarEntrada extends Component{
     })
   }
 
-  render(){
-    return(
+  getRelatorio = async () => {
+
+    this.setState({
+      loading: true
+    })
+
+    const query = {
+      filters: {
+        kitOut: {
+          specific: {
+            action: 'perda'
+          }
+        }
+      },
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await getRelatorioPerda(query).then(
+      resposta => this.setState({
+        relatorioArray: resposta.data,
+        page: resposta.data.page,
+        count: resposta.data.count,
+        show: resposta.data.show,
+      }, console.log(resposta))
+    )
+
+    this.setState({
+      loading: false
+    })
+  }
+
+  test = () => {
+    if(this.state.relatorioArray.rows.length !== 0){
+      return(
+        this.state.relatorioArray.rows.map((line) =>
+          <div className='div-100-Gentrada'>
+            <div className=' div-separate-RPerda'></div>
+            <div className='div-lines-RPerda'>
+              <div className='cel-produto-cabecalho-RPerda'>
+                {line.name}
+              </div>
+              <div className='cel-quant-cabecalho-RPerda'>
+                {line.amount}
+              </div>
+              <div className='cel-usuario-cabecalho-RPerda'>
+                {line.technician}
+              </div>
+              <div className='cel-data-cabecalho-Gentrada'>
+                {line.createdAt}
+              </div>
+            </div>
+          </div>
+      ))
+    }else{
+      return(
+        <div className='div-naotemnada'>Não há nenhuma perda até o momento</div>
+      )
+    }
+  }
+
+  render() {
+    return (
       <div className='div-card-RPerda'>
         <div className='linhaTexto-RPerda'>
           <h1 className='h1-RPerda'>Relatório de perda</h1>
@@ -69,7 +141,7 @@ class GerenciarEntrada extends Component{
                   dropdownClassName='poucas'
                   onChange={this.searchDate}
                   onOk={this.searchDate}
-                    />
+                />
               </div>
 
               <div className='div-tecnico-RPerda'>
@@ -80,9 +152,9 @@ class GerenciarEntrada extends Component{
               </div>
             </div>
           </div> :
-        <div className='div-avancado-Rtecnico'>
-          <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
-        </div> }
+          <div className='div-avancado-Rtecnico'>
+            <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+          </div>}
 
         <div className='div-cabecalho-RPerda'>
           <div className='cel-produto-cabecalho-RPerda'>
@@ -98,28 +170,13 @@ class GerenciarEntrada extends Component{
             Data lançamento
           </div>
         </div>
-
         
-        <div className=' div-separate-RPerda'></div>
-        <div className='div-lines-RPerda'>
-          <div className='cel-produto-cabecalho-RPerda'>
-            TESTEEEEEEEEEEEEEEEEEE
-          </div>
-          <div className='cel-quant-cabecalho-RPerda'>
-            12
-          </div>
-          <div className='cel-usuario-cabecalho-RPerda'>
-            TESTE
-          </div>
-          <div className='cel-data-cabecalho-Gentrada'>
-            22/11/2001 14:30
-          </div>
-        </div>
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
         <div className=' div-separate-Gentrada'></div>
-          <div className='footer-Gentrada'>
-            <Pagination defaultCurrent={1} total={50} />
-          </div>
+        <div className='footer-Gentrada'>
+          <Pagination defaultCurrent={1} total={50} />
+        </div>
       </div>
     )
   }

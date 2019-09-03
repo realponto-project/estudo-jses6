@@ -352,6 +352,64 @@ class OsDash extends Component {
     </Modal>
   )
 
+  test = () => {
+    if(this.state.OsArray.rows.length !== 0){
+      return(
+        this.state.OsArray.rows.map((line) =>
+            <div className='div-100-Gentrada'>
+              <div className='div-lines-GOs' >
+                <div className='cel-mais-cabecalho-GOs'>
+                  <div className='button-mais' onClick={() => this.mais(line)}>+</div>
+                </div>
+                <div className='cel-os-cabecalho-GOs'>
+                  {line.id}
+                </div>
+                <div className='cel-rs-cabecalho-GOs'>
+                  {line.razaoSocial}
+                </div>
+                <div className='cel-cnpj-cabecalho-GOs'>
+                  {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
+                </div>
+                <div className='cel-data-cabecalho-GOs'>
+                  {line.formatedDate}
+                </div>
+                <div className='cel-acoes-cabecalho-GOs'>
+                  <Tooltip placement="topLeft" title='Remover'>
+                    <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button>
+                  </Tooltip>
+                  <this.modalRemover />
+                </div>
+              </div>
+              {this.state.mais[line.id] ? <div className='div-100-GOs'>
+                <div className='div-mais-GOs'>
+                <div className='div-normal-mais' >
+                <div className='div-produtos-mais-GOs'>Produtos</div>
+                <div className='div-quant-mais'>Quantidade</div>
+                <div className='div-button-mais-GOs'>
+                <Tooltip placement="topLeft" title='Adicionar produto'>
+                  <div className='button-mais-div' onClick={() => this.redirectSearchOs()}>+</div>
+                  {this.renderRedirect()}
+                </Tooltip>
+                </div>
+                </div>
+                </div>
+                {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
+                  this.state.lineSelected.rows.map((line) =>
+                <div className='div-branco-mais'>
+                  <div className='div-produtos-mais-GOs'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.name}</div>))}</div>
+                  <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.amount}</div>))}</div>
+                </div>)}
+              </div> : null}
+            <div className=' div-separate1-Gentrada'/>
+          </div>
+      ))
+    }else{
+      return(
+        <div className='div-naotemnada'>Não há nenhuma reserva até o momento</div>
+      )
+    }
+  }
+
   Pages = () => (
 
     <div className='footer-Gentrada-button'>
@@ -369,7 +427,6 @@ class OsDash extends Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-GOs'>
         <div className='linhaTexto-GOs'>
@@ -459,65 +516,9 @@ class OsDash extends Component {
         </div>
 
 
-        <div className=' div-separate-GOs' />
-        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
-          this.state.OsArray.rows.map((line) =>
-            <div className='div-100-Gentrada'>
-              <div className='div-lines-GOs' >
-                <div className='cel-mais-cabecalho-GOs'>
-                  <div className='button-mais' onClick={() => this.mais(line)}>+</div>
-                </div>
-                <div className='cel-os-cabecalho-GOs'>
-                  {line.id}
-                </div>
-                <div className='cel-rs-cabecalho-GOs'>
-                  {line.razaoSocial}
-                </div>
-                <div className='cel-cnpj-cabecalho-GOs'>
-                  {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
-                </div>
-                <div className='cel-data-cabecalho-GOs'>
-                  {line.formatedDate}
-                </div>
-                <div className='cel-acoes-cabecalho-GOs'>
-                  {/* <Tooltip placement="topLeft" title='Detalhes'>
-                    <Button type="primary" className='button-icon' onClick={this.openModalDetalhes}><Icon type="info-circle" /></Button>
-                  </Tooltip> */}
-                  <Tooltip placement="topLeft" title='Remover'>
-                    <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button>
-                  </Tooltip>
-                  <this.modalRemover />
-                </div>
-              </div>
-              {this.state.mais[line.id] ? <div className='div-100-GOs'>
-                <div className='div-mais-GOs'>
-                <div className='div-normal-mais' >
-                <div className='div-produtos-mais-GOs'>Produtos</div>
-                <div className='div-quant-mais'>Quantidade</div>
-                <div className='div-button-mais-GOs'>
-                <Tooltip placement="topLeft" title='Adicionar produto'>
-                  <div className='button-mais-div' onClick={() => this.redirectSearchOs()}>+</div>
-                  {this.renderRedirect()}
-                </Tooltip>
-                </div>
-                </div>
-                </div>
-                {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
-                  this.state.lineSelected.rows.map((line) =>
-                <div className='div-branco-mais'>
-                  {/* {line.products.map((valor =>
-                    <div className='div-produtos-mais-GOs'>
-                      <div className='div-peca-GOs'>{valor.name}</div>
-                      <div className='div-peca-GOs'>{valor.amount}</div>
-                    </div>
-                  ))} */}
-                  <div className='div-produtos-mais-GOs'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.name}</div>))}</div>
-                  <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.amount}</div>))}</div>
-                </div>)}
-              </div> : null}
-            <div className=' div-separate1-Gentrada'/>
-          </div>)}
-            <this.Pages />
+        <div className=' div-separate-GOs'/>
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading}/></div> : this.test()}
+        <this.Pages />
       </div>
       )
     }

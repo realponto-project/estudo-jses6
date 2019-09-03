@@ -448,6 +448,59 @@ class ReservaTecnico extends Component {
     </div>
   )
 
+  test = () => {
+    if(this.state.OsArray.rows.length !== 0){
+      return (
+        this.state.OsArray.rows.map((line) =>
+        <div className='div-100-Gentrada'>
+          <div className='div-lines-Rtecnico' >
+            <div className='cel-mais-cabecalho-Rtecnico'>
+              <div className='button-mais' onClick={() => this.mais(line)}>+</div>
+            </div>
+            <div className='cel-os-cabecalho-Rtecnico'>
+              {line.id}
+            </div>
+            <div className='cel-rs-cabecalho-Rtecnico'>
+              {line.razaoSocial}
+            </div>
+            <div className='cel-cnpj-cabecalho-Rtecnico'>
+              {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
+            </div>
+            <div className='cel-data-cabecalho-Rtecnico'>
+              {line.createdAt}
+            </div>
+            <div className='cel-acoes-cabecalho-Rtecnico'>
+              <Tooltip placement="topLeft" title='Remover'>
+                <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button>
+              </Tooltip>
+              <this.modalDetalhesLinha />
+              <this.modalRemover />
+            </div>
+          </div>
+          {this.state.mais[line.id] ? <div className='div-100-Rtecnico'>
+            <div className='div-mais-Rtecnico'>
+            <div className='div-normal-mais' >
+            <div className='div-produtos-mais'>Produtos</div>
+            <div className='div-quant-mais'>Quantidade</div>
+            </div>
+            </div>
+            {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
+              this.state.lineSelected.rows.map((line) =>
+            <div className='div-branco-mais'>
+            <div className='div-produtos-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.name}</div>))}</div>
+            <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.quantMax}</div>))}</div>
+            </div>)}
+          </div> : null}
+        <div className=' div-separate1-Gentrada'/>
+      </div>
+      ))
+    }else{
+      return (
+        <div className='div-naotemnada'>Não há reservas para esse técnico</div>
+      )
+    }
+  } 
+
 
   render() {
     return (
@@ -547,52 +600,7 @@ class ReservaTecnico extends Component {
 
 
         <div className=' div-separate-Rtecnico' />
-        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
-          this.state.OsArray.rows.map((line) =>
-            <div className='div-100-Gentrada'>
-              <div className='div-lines-Rtecnico' >
-                <div className='cel-mais-cabecalho-Rtecnico'>
-                  <div className='button-mais' onClick={() => this.mais(line)}>+</div>
-                </div>
-                <div className='cel-os-cabecalho-Rtecnico'>
-                  {line.id}
-                </div>
-                <div className='cel-rs-cabecalho-Rtecnico'>
-                  {line.razaoSocial}
-                </div>
-                <div className='cel-cnpj-cabecalho-Rtecnico'>
-                  {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
-                </div>
-                <div className='cel-data-cabecalho-Rtecnico'>
-                  {line.createdAt}
-                </div>
-                <div className='cel-acoes-cabecalho-Rtecnico'>
-                  {/* <Tooltip placement="topLeft" title='Detalhes'>
-                    <Button type="primary" className='button-icon' onClick={this.openModalDetalhes}><Icon type="info-circle" /></Button>
-                  </Tooltip> */}
-                  <Tooltip placement="topLeft" title='Remover'>
-                    <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button>
-                  </Tooltip>
-                  <this.modalDetalhesLinha />
-                  <this.modalRemover />
-                </div>
-              </div>
-              {this.state.mais[line.id] ? <div className='div-100-Rtecnico'>
-                <div className='div-mais-Rtecnico'>
-                <div className='div-normal-mais' >
-                <div className='div-produtos-mais'>Produtos</div>
-                <div className='div-quant-mais'>Quantidade</div>
-                </div>
-                </div>
-                {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
-                  this.state.lineSelected.rows.map((line) =>
-                <div className='div-branco-mais' >
-                <div className='div-produtos-mais'>{line.products.map((valor => <div  className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.name}</div>))}</div>
-                <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.quantMax}</div>))}</div>
-                </div>)}
-              </div> : null}
-            <div className=' div-separate1-Gentrada'/>
-          </div>)}
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
             <this.Pages />
       </div>
       )
