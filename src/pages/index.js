@@ -46,9 +46,7 @@ class PagesRoute extends Component {
     response = await auth(value).then(
       resp => this.setState({
         auth: resp.data
-      },
-        // console.log(this.state)
-      )
+      })
     )
 
     return response

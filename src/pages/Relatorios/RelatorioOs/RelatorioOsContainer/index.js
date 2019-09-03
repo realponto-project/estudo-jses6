@@ -57,7 +57,7 @@ class GerenciarEntrada extends Component {
         page: resposta.data.page,
         count: resposta.data.count,
         show: resposta.data.show,
-      }, console.log(resposta))
+      })
     )
 
     this.setState({
@@ -144,7 +144,6 @@ class GerenciarEntrada extends Component {
   }
 
   render() {
-    console.log(this.state.OsArray)
     return (
       <div className='div-card-ROs'>
         <div className='linhaTexto-ROs'>

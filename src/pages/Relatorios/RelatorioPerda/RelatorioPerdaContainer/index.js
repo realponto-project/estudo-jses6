@@ -70,7 +70,7 @@ class GerenciarEntrada extends Component {
         page: resposta.data.page,
         count: resposta.data.count,
         show: resposta.data.show,
-      }, console.log(resposta))
+      })
     )
 
     this.setState({
@@ -171,7 +171,7 @@ class GerenciarEntrada extends Component {
           </div>
         </div>
         
-        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading}/></div> : this.test()}
 
         <div className=' div-separate-Gentrada'></div>
         <div className='footer-Gentrada'>
