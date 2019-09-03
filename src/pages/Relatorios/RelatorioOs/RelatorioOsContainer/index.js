@@ -34,14 +34,14 @@ class GerenciarEntrada extends Component {
     })
 
     const query = {
-      filters:{
+      filters: {
         os: {
-          specific:{
-            deletedAt: {start: '2019/01/01'}
+          specific: {
+            deletedAt: { start: '2019/01/01' }
           }
         }
       },
-      order:{
+      order: {
         field: 'deletedAt',
         acendent: true
       },
@@ -112,6 +112,35 @@ class GerenciarEntrada extends Component {
     const formatHours = moment(date).format('LT')
     const dateformated = `${formatDate} ${formatHours}`
     return dateformated
+  }
+
+  test = () => {
+    if (this.state.OsArray.rows.length !== 0) {
+      return (
+        this.state.OsArray.rows.map((line) =>
+          <div className='div-100-Gentrada'>
+            <div className='div-lines-ROs'>
+              <div className='cel-Os-cabecalho-ROs'>
+                {line.id}
+              </div>
+              <div className='cel-rs-cabecalho-ROs'>
+                {line.razaoSocial}
+              </div>
+              <div className='cel-tecnico-cabecalho-ROs'>
+                {line.technician}
+              </div>
+              <div className='cel-data-cabecalho-ROs'>
+                {line.formatedDate}
+              </div>
+            </div>
+            <div className=' div-separate1-Gentrada' />
+          </div>)
+      )
+    }else{
+      return(
+        <div className='div-naotemnada'>Não há nenhuma reserva finalizada</div>
+      )
+    }
   }
 
   render() {
@@ -196,25 +225,7 @@ class GerenciarEntrada extends Component {
 
 
         <div className=' div-separate-ROs'></div>
-        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
-          this.state.OsArray.rows.map((line) =>
-            <div className='div-100-Gentrada'>
-              <div className='div-lines-ROs'>
-                <div className='cel-Os-cabecalho-ROs'>
-                  {line.id}
-                </div>
-                <div className='cel-rs-cabecalho-ROs'>
-                  {line.razaoSocial}
-                </div>
-                <div className='cel-tecnico-cabecalho-ROs'>
-                  {line.technician}
-                </div>
-                <div className='cel-data-cabecalho-ROs'>
-                  {line.formatedDate}
-                </div>
-              </div>
-              <div className=' div-separate1-Gentrada' />
-            </div>)}
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
         <div className='footer-ROs'>
           <Pagination defaultCurrent={1} total={50} />

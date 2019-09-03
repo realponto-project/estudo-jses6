@@ -29,7 +29,7 @@
 .cel-codigo-cabecalho-RML{
   align-items: center;
   display: flex;
-  width: 23%;
+  width: 25%;
   height:30px;
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
@@ -45,7 +45,7 @@
 .cel-nome-cabecalho-RML{
   align-items: center;
   display: flex;
-  width: 42%;
+  width: 45%;
   height:30px;
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;

@@ -7,16 +7,16 @@ import { stock } from '../../../../services/estoque'
 
 const { Option } = Select;
 
-class Estoque extends Component{
+class Estoque extends Component {
 
-  state={
+  state = {
     lineSelect: {},
-    produto:'',
+    produto: '',
     fabricante: '',
     estoqueBase: 'TODOS',
     avancado: false,
     loading: false,
-    estoque:{
+    estoque: {
       rows: []
     },
     page: 1,
@@ -54,7 +54,7 @@ class Estoque extends Component{
     this.setState({
       avancado: !this.state.avancado
     })
-  } 
+  }
 
   getStock = async () => {
 
@@ -105,7 +105,7 @@ class Estoque extends Component{
   }
 
   Pages = () => (
-    
+
     <div className='footer-Gentrada100-button'>
       {Math.ceil(this.state.count / this.state.total) >= 5 && Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 4)}>{this.state.page - 4}</Button> : null}
       {Math.ceil(this.state.count / this.state.total) >= 4 && Math.ceil(this.state.count / this.state.total) - this.state.page < 2 && this.state.page > 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 3)}>{this.state.page - 3}</Button> : null}
@@ -117,60 +117,60 @@ class Estoque extends Component{
       {this.state.page + 2 < (this.state.count / this.state.total) && this.state.page < 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 3)}>{this.state.page + 3}</Button> : null}
       {this.state.page + 3 < (this.state.count / this.state.total) && this.state.page < 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 4)}>{this.state.page + 4}</Button> : null}
     </div>
-  ) 
+  )
 
-  render(){
-    return(
+  render() {
+    return (
       <div className='div-card-estoque'>
         <div className='linhaTexto-estoque'>
           <h1 className='h1-estoque'>Gerenciar estoque</h1>
         </div>
-        
-        {this.state.avancado ? 
-        <div className='div-linha-avancado-Rtecnico'>
-        <div className='div-ocultar-Rtecnico'>
-          <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
-        </div>
-        <div className='div-linha1-avancado-Rtecnico'>
-          <div className='div-produto-Rtecnico'>
-          <div className='div-text-Os'>Produto:</div>
-            <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='produto'
-              value={this.state.produto}
-              placeholder="Digite o nome do produto"
-              onChange={this.onChange}
-              allowClear
-            />
-          </div> 
 
-          <div className='div-fabricante-Rtecnico'>
-          <div className='div-text-Rtecnico'>Fabricante:</div>
-            <Input
-              className='input-100'
-              style={{ width: '100%' }}
-              name='fabricante'
-              value={this.state.fabricante}
-              placeholder="Digite o fabricante"
-              onChange={this.onChange}
-              allowClear
-            />
-          </div>
+        {this.state.avancado ?
+          <div className='div-linha-avancado-Rtecnico'>
+            <div className='div-ocultar-Rtecnico'>
+              <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
+            </div>
+            <div className='div-linha1-avancado-Rtecnico'>
+              <div className='div-produto-Rtecnico'>
+                <div className='div-text-Os'>Produto:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='produto'
+                  value={this.state.produto}
+                  placeholder="Digite o nome do produto"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
 
-          <div className='div-estoque-Rtecnico'>
-          <div className='div-text-Rtecnico'>Estoque:</div>
-          <Select value={this.state.estoqueBase} style={{ width: '100%' }} onChange={this.onChangeSelect} >
-            <Option value='TODOS'>TODOS</Option>
-            <Option value='REALPONTO'>REALPONTO</Option>
-            <Option value='NOVAREAL'>NOVA REALPONTO</Option>
-            <Option value='PONTOREAL'>PONTOREAL</Option>
-          </Select>
-          </div>
-        </div></div> : 
-        <div className='div-avancado-Rtecnico'>
-          <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
-        </div> }
+              <div className='div-fabricante-Rtecnico'>
+                <div className='div-text-Rtecnico'>Fabricante:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='fabricante'
+                  value={this.state.fabricante}
+                  placeholder="Digite o fabricante"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-estoque-Rtecnico'>
+                <div className='div-text-Rtecnico'>Estoque:</div>
+                <Select value={this.state.estoqueBase} style={{ width: '100%' }} onChange={this.onChangeSelect} >
+                  <Option value='TODOS'>TODOS</Option>
+                  <Option value='REALPONTO'>REALPONTO</Option>
+                  <Option value='NOVAREAL'>NOVA REALPONTO</Option>
+                  <Option value='PONTOREAL'>PONTOREAL</Option>
+                </Select>
+              </div>
+            </div></div> :
+          <div className='div-avancado-Rtecnico'>
+            <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+          </div>}
         <div className='div-cabecalho-estoque'>
           <div className='cel-produto-cabecalho-estoque'>
             Produto
@@ -188,47 +188,47 @@ class Estoque extends Component{
             Estoque
           </div>
         </div>
-        
-          {this.state.loading ? 
-            <div className='spin'><Spin spinning={this.state.loading} /></div>
-          : 
-            <div className='div-separate-estoque' >
+
+        {this.state.loading ?
+          <div className='spin'><Spin spinning={this.state.loading} /></div>
+          :
+          <div className='div-separate-estoque' >
             {this.state.estoque.rows.length !== 0 ? this.state.estoque.rows.map((line) =>
               <div className='div-100-estoque'>
                 <div className='div-lines-estoque'
                 //  onClick={() => this.openModalDetalhesCompany(line)}
                 >
                   <div className='cel-produto-cabecalho-estoque'>
-                  <label className='div-table-label-cel-estoque'>
-                    {line.name}
-                  </label>
+                    <label className='div-table-label-cel-estoque'>
+                      {line.name}
+                    </label>
                   </div>
                   <div className='cel-fabricante-cabecalho-estoque'>
-                  <label className='div-table-label-cel-estoque'>
-                    {line.manufacturer}
-                  </label>
+                    <label className='div-table-label-cel-estoque'>
+                      {line.manufacturer}
+                    </label>
                   </div>
                   <div className='cel-quant-cabecalho-estoque'>
-                  <label className='div-table-label-cel-estoque'>
-                    {line.amount}
-                  </label>
+                    <label className='div-table-label-cel-estoque'>
+                      {line.amount}
+                    </label>
                   </div>
                   <div className='cel-quant-cabecalho-estoque'>
-                  <label className='div-table-label-cel-estoque'>
-                    {line.available}
-                  </label>
+                    <label className='div-table-label-cel-estoque'>
+                      {line.available}
+                    </label>
                   </div>
                   <div className='cel-estoque-cabecalho-estoque'>
-                  <label className='div-table-label-cel-estoque'>
-                    {line.stockBase}
-                  </label>
+                    <label className='div-table-label-cel-estoque'>
+                      {line.stockBase}
+                    </label>
                   </div>
                 </div>
-              <div className=' div-separate1-estoque'/>
+                <div className=' div-separate1-estoque' />
               </div>
-            ) : null }
-        <this.Pages/>
-            </div>
+            ) : <div className='div-naotemnada'>Não há nada no estoque</div>}
+            <this.Pages />
+          </div>
         }
 
       </div>

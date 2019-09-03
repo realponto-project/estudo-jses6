@@ -115,6 +115,45 @@ class GerenciarEntrada extends Component{
     </div>
   ) 
 
+  test = () => {
+    if(this.state.entrada.rows.length !== 0){
+      return(
+        this.state.entrada.rows.map((line) =>
+        <div className='div-100-Gentrada'>
+        <div className='div-lines-Gentrada'
+        //  onClick={() => this.openModalDetalhesCompany(line)}
+         >
+        <div className='cel-produto-cabecalho-Gentrada'>
+        <label className='div-table-label-cel-Gentrada'>
+          {line.name}
+        </label>
+        </div>
+        <div className='cel-quant-cabecalho-Gentrada'>
+        <label className='div-table-label-cel-Gentrada'>
+          {line.amountAdded}
+        </label>
+        </div>
+        <div className='cel-usuario-cabecalho-Gentrada'>
+        <label className='div-table-label-cel-Gentrada'>
+          {line.responsibleUser}
+        </label>
+        </div>
+        <div className='cel-data-cabecalho-Gentrada'>
+        <label className='div-table-label-cel-Gentrada'>
+          {line.createdAt}
+        </label>
+        </div>
+      </div>
+        <div className=' div-separate1-Gentrada'/>
+      </div>
+      ))
+    }else{
+      return(
+        <div className='div-naotemnada'>Não há nenhuma entrada</div>
+      )
+    }
+  }
+
 
   render(){
     return(
@@ -194,36 +233,7 @@ class GerenciarEntrada extends Component{
 
         
         <div className=' div-separate-Gentrada'/>
-            {this.state.loading || this.state.entrada.rows.length === 0 ? <div className='spin'><Spin spinning={this.state.loading} /></div> : 
-          this.state.entrada.rows.map((line) =>
-          <div className='div-100-Gentrada'>
-          <div className='div-lines-Gentrada'
-          //  onClick={() => this.openModalDetalhesCompany(line)}
-           >
-          <div className='cel-produto-cabecalho-Gentrada'>
-          <label className='div-table-label-cel-Gentrada'>
-            {line.name}
-          </label>
-          </div>
-          <div className='cel-quant-cabecalho-Gentrada'>
-          <label className='div-table-label-cel-Gentrada'>
-            {line.amountAdded}
-          </label>
-          </div>
-          <div className='cel-usuario-cabecalho-Gentrada'>
-          <label className='div-table-label-cel-Gentrada'>
-            {line.responsibleUser}
-          </label>
-          </div>
-          <div className='cel-data-cabecalho-Gentrada'>
-          <label className='div-table-label-cel-Gentrada'>
-            {line.createdAt}
-          </label>
-          </div>
-        </div>
-          <div className=' div-separate1-Gentrada'/>
-        </div>
-        )}
+            {this.state.loading || this.state.entrada.rows.length === 0 ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
             <this.Pages/>
       </div>

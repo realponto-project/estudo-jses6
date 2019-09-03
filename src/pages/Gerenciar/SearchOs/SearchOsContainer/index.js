@@ -436,7 +436,7 @@ class SearchOsDash extends Component{
                 readOnly
                 className='input-100'
                 style={{ width: '100%' }}
-                value={this.props.osUpdateValue.cnpj}
+                value={this.props.osUpdateValue.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
               />
               {this.state.fieldFalha.cnpj ?
                 <p className='div-feedbackError'>

@@ -300,7 +300,7 @@ class AddKit extends Component{
           {this.renderRedirect()}
 
         <div className='div-buttonSalvar-Os'>
-          <Button type='primary' className='button' onClick={this.saveTargetNewKit}>Salvar</Button>
+          {this.state.carrinho.length === 0 ? null : <Button type='primary' className='button' onClick={this.saveTargetNewKit}>Salvar</Button>}
         </div>
 
       </div>
