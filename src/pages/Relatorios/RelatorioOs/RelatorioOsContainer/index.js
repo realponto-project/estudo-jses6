@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, DatePicker, Button, Input, Select } from 'antd'
+import { Pagination, DatePicker, Button, Input, Select, Spin } from 'antd'
 import { getTecnico } from '../../../../services/tecnico'
+import { getTodasOs } from '../../../../services/reservaOs';
+import moment from 'moment';
 
 
 const { Option } = Select;
@@ -15,7 +17,52 @@ class GerenciarEntrada extends Component {
     data: '',
     tecnico: 'Não selecionado',
     tecnicoArray: [],
-    valueDate: {start: '2019/01/01'}
+    valueDate: { start: '2019/01/01' },
+    page: 1,
+    total: 10,
+    count: 0,
+    show: 0,
+    OsArray: {
+      rows: []
+    },
+  }
+
+  getAllOs = async () => {
+
+    this.setState({
+      loading: true
+    })
+
+    const query = {
+      filters:{
+        os: {
+          specific:{
+            deletedAt: {start: '2019/01/01'}
+          }
+        }
+      },
+      order:{
+        field: 'deletedAt',
+        acendent: true
+      },
+      page: this.state.page,
+      total: this.state.total,
+      required: false,
+      paranoid: false,
+    }
+
+    await getTodasOs(query).then(
+      resposta => this.setState({
+        OsArray: resposta.data,
+        page: resposta.data.page,
+        count: resposta.data.count,
+        show: resposta.data.show,
+      }, console.log(resposta))
+    )
+
+    this.setState({
+      loading: false
+    })
   }
 
   getAllTecnico = async () => {
@@ -34,6 +81,8 @@ class GerenciarEntrada extends Component {
   }
 
   componentDidMount = async () => {
+    await this.getAllOs()
+
     await this.getAllTecnico()
   }
 
@@ -49,15 +98,24 @@ class GerenciarEntrada extends Component {
     })
   }
 
-  searchDate = async(e) => {
-    if( !e[0] || !e[1] ) return
+  searchDate = async (e) => {
+    if (!e[0] || !e[1]) return
     await this.setState({
-      valueDate: {start: e[0]._d, end: e[1]._d},
+      valueDate: { start: e[0]._d, end: e[1]._d },
     })
     // await this.getAllEntrada()
   }
 
+  formatDateFunct = (date) => {
+    moment.locale('pt-br')
+    const formatDate = moment(date).format('L')
+    const formatHours = moment(date).format('LT')
+    const dateformated = `${formatDate} ${formatHours}`
+    return dateformated
+  }
+
   render() {
+    console.log(this.state.OsArray)
     return (
       <div className='div-card-ROs'>
         <div className='linhaTexto-ROs'>
@@ -106,7 +164,7 @@ class GerenciarEntrada extends Component {
                   dropdownClassName='poucas'
                   onChange={this.searchDate}
                   onOk={this.searchDate}
-                    />
+                />
               </div>
 
               <div className='div-tecnico-ROs'>
@@ -117,9 +175,9 @@ class GerenciarEntrada extends Component {
               </div>
             </div>
           </div> :
-        <div className='div-avancado-Rtecnico'>
-          <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
-        </div> }
+          <div className='div-avancado-Rtecnico'>
+            <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+          </div>}
 
         <div className='div-cabecalho-ROs'>
           <div className='cel-Os-cabecalho-ROs'>
@@ -138,22 +196,26 @@ class GerenciarEntrada extends Component {
 
 
         <div className=' div-separate-ROs'></div>
-        <div className='div-lines-ROs'>
-          <div className='cel-Os-cabecalho-ROs'>
-            123456
-          </div>
-          <div className='cel-rs-cabecalho-ROs'>
-            bla bla bla LTDA
-          </div>
-          <div className='cel-tecnico-cabecalho-ROs'>
-            TESTE
-          </div>
-          <div className='cel-data-cabecalho-ROs'>
-            22/11/2001 14:30
-          </div>
-        </div>
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
+          this.state.OsArray.rows.map((line) =>
+            <div className='div-100-Gentrada'>
+              <div className='div-lines-ROs'>
+                <div className='cel-Os-cabecalho-ROs'>
+                  {line.id}
+                </div>
+                <div className='cel-rs-cabecalho-ROs'>
+                  {line.razaoSocial}
+                </div>
+                <div className='cel-tecnico-cabecalho-ROs'>
+                  {line.technician}
+                </div>
+                <div className='cel-data-cabecalho-ROs'>
+                  {line.formatedDate}
+                </div>
+              </div>
+              <div className=' div-separate1-Gentrada' />
+            </div>)}
 
-        <div className=' div-separate-ROs'></div>
         <div className='footer-ROs'>
           <Pagination defaultCurrent={1} total={50} />
         </div>

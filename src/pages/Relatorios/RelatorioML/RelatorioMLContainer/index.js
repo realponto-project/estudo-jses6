@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination } from 'antd'
+import { Pagination, Spin } from 'antd'
 import { getRelatorioML } from '../../../../services/relatorioML';
 
-class GerenciarEntrada extends Component{
+class GerenciarEntrada extends Component {
 
-  state={
-    relatorioArray: [],
+  state = {
+    relatorioArray: {
+      rows: []
+    },
+    page: 1,
+    total: 10,
+    count: 0,
+    show: 0,
     loading: false,
+  }
+
+  componentDidMount = async () => {
+    await this.getRelatorio()
   }
 
   getRelatorio = async () => {
@@ -35,11 +45,12 @@ class GerenciarEntrada extends Component{
     })
   }
 
-  render(){
-    return(
+  render() {
+    console.log(this.state.relatorioArray)
+    return (
       <div className='div-card-RML'>
         <div className='linhaTexto-RML'>
-          <h1 className='h1-RML'>Relatório das entradas</h1>
+          <h1 className='h1-RML'>Relatório do Mercado Livre</h1>
         </div>
 
         <div className='div-cabecalho-RML'>
@@ -57,27 +68,31 @@ class GerenciarEntrada extends Component{
           </div>
         </div>
 
-        
-        <div className=' div-separate-RML'></div>
-        <div className='div-lines-RML'>
-          <div className='cel-codigo-cabecalho-RML'>
-            202020202020
-          </div>
-          <div className='cel-nome-cabecalho-RML'>
-            bla bla bla LTDA.
-          </div>
-          <div className='cel-cep-cabecalho-RML'>
-            09890-510
-          </div>
-          <div className='cel-data-cabecalho-RML'>
-            22/11/2001 14:30
-          </div>
-        </div>
 
         <div className=' div-separate-RML'></div>
-          <div className='footer-RML'>
-            <Pagination defaultCurrent={1} total={50} />
-          </div>
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
+          this.state.relatorioArray.rows.map((line) =>
+            <div className='div-100-Gentrada'>
+              <div className='div-lines-RML'>
+                <div className='cel-codigo-cabecalho-RML'>
+                  {line.trackingCode}
+                </div>
+                <div className='cel-nome-cabecalho-RML'>
+                  {line.name}
+                </div>
+                <div className='cel-cep-cabecalho-RML'>
+                  {line.zipCode.replace(/(\d{5})(\d{3})?/, '$1-$2')}
+                </div>
+                <div className='cel-data-cabecalho-RML'>
+                  {line.createdAt}
+                </div>
+              </div>
+        <div className=' div-separate1-Gentrada' />
+            </div>)}
+
+        <div className='footer-RML'>
+          <Pagination defaultCurrent={1} total={50} />
+        </div>
       </div>
     )
   }
