@@ -17,6 +17,7 @@ class ReservaML extends Component{
   state={
     serial: false,
     numeroSerieTest: '',
+    disp: 1,
     itemArray: [],
     messageError: false,
     messageSuccess: false,
@@ -104,8 +105,9 @@ class ReservaML extends Component{
   onChangeItem = (value, product) => {
     this.setState({
       nomeProduto: value,
-      productId: product.props.product.id,
+      productBaseId: product.props.product.id,
       serial: product.props.product.serial,
+      disp: parseInt(product.props.product.available, 10),
     })
   }
 
@@ -302,7 +304,7 @@ class ReservaML extends Component{
     if(this.state.nomeProduto !== 'Não selecionado' || ''){
     this.setState({
       carrinho:[{
-        productId: this.state.productId,
+        productBaseId: this.state.productBaseId,
         nomeProdutoCarrinho: this.state.nomeProduto,
         amount: this.state.quant,
         stockBase: this.state.estoque,
@@ -342,7 +344,7 @@ class ReservaML extends Component{
   }
 
   render(){
-    console.log(this.state.itemArray)
+    console.log(this.state)
     return(
       <div className='div-card-ML'>
         <div className='linhaTexto-ML'>
@@ -630,7 +632,7 @@ class ReservaML extends Component{
 
         <div className='div-quant-ML'>
           <div className='div-text-ML'>Quant:</div>
-            <InputNumber min={1} defaultValue={this.state.quant} value={this.state.quant} onChange={this.onChangeQuant} />
+            <InputNumber min={1} max={this.state.disp} defaultValue={this.state.quant} value={this.state.quant} onChange={this.onChangeQuant} />
           </div>
         </div>
           

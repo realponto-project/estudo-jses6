@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Select, InputNumber, Button, message, Input, Icon } from 'antd'
-import { getItens } from '../../../../services/produto';
+import { getProdutoByEstoque } from '../../../../services/produto';
 import { Redirect } from 'react-router-dom'
 
 import { NewKit } from '../../../../services/kit'
@@ -15,6 +15,7 @@ class AddKit extends Component{
   state={
     redirect: false,
     serial: false,
+    disp: 1,
     numeroSerieTest: '',
     itemArray: [],
     carrinho: [],
@@ -77,23 +78,29 @@ class AddKit extends Component{
   }
 
   getAllItens = async () => {
-    await getItens().then(
+
+    const query={
+      stockBase: this.state.estoque
+    }
+
+    await getProdutoByEstoque(query).then(
       resposta => this.setState({
         itemArray: resposta.data,
-      }, console.log(resposta))
+      })
     )
   }
-
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
   }
 
-  onChangeSelect = (value) => {
-    this.setState({
-      estoque: value
+  onChangeEstoque = async (valor) => {
+    await this.setState({
+      estoque: valor
     })
+
+    await this.getAllItens()
   }
 
   onChangeQuant = (value) => {
@@ -110,9 +117,11 @@ class AddKit extends Component{
     message.error('Este item já foi selecionado');
   };
 
-  onChangeItem = (value) => {
+  onChangeItem = (value, props) => {
     this.setState({
-      item: value
+      item: value,
+      productBaseId: props.props.props.id,
+      disp: parseInt(props.props.props.available, 10),
     })
   }
 
@@ -120,9 +129,8 @@ class AddKit extends Component{
     const value = {
       kitParts: this.state.carrinho.map((valor) => {
         const resp = {
-          productId: valor.productId,
+          productBaseId: valor.productBaseId,
           amount: valor.amount.toString(),
-          stockBase: valor.stockBase,
         }
         return resp
       })
@@ -184,17 +192,11 @@ class AddKit extends Component{
       return
     }
 
-    // eslint-disable-next-line array-callback-return
-    const product = this.state.itemArray.filter((value) => {
-      if (value.name === this.state.item) return value.id
-    })
-
     await this.setState({
       carrinho:[{
         itemCarrinho: this.state.item,
-        productId: product[0].id,
+        productBaseId: this.state.productBaseId,
         amount: this.state.quant,
-        stockBase: this.state.estoque,
       },...this.state.carrinho],
       item: 'Não selecionado',
       quant: '1',
@@ -214,6 +216,7 @@ class AddKit extends Component{
   }
 
   render(){
+    console.log(this.state)
     return(
       <div className='div-card-AddKit'>
         <div className='linhaTexto-AddKit'>
@@ -238,22 +241,22 @@ class AddKit extends Component{
                   option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
               >
-              {this.state.itemArray.map((value)=> <Option value={value.name}>{value.name}</Option>)}
+              {this.state.itemArray.map((value)=> <Option value={value.name} props={value}>{value.name}</Option>)}
               </Select>
           </div>  
 
           <div className='div-quant-Os'>
             <div className='div-text-Os'>Quant:</div>
-            <InputNumber min={1} defaultValue={this.state.quant} value={this.state.quant} onChange={this.onChangeQuant} />
+            <InputNumber min={1} max={this.state.disp} defaultValue={this.state.quant} value={this.state.quant} onChange={this.onChangeQuant} />
           </div>
         </div>
           
         <div className='div-linha-Os'> 
         <div className='div-estoque-Os'>
           <div className='div-text-Os'>Estoque:</div>
-          <Select value={this.state.estoque} style={{ width: '100%' }} onChange={this.onChangeSelect}>
+          <Select value={this.state.estoque} style={{ width: '100%' }} onChange={this.onChangeEstoque}>
             <Option value="REALPONTO">REALPONTO</Option>
-            <Option value="NOVA REALPONTO">NOVA REALPONTO</Option>
+            <Option value="NOVAREAL">NOVA REALPONTO</Option>
             <Option value="PONTOREAL">PONTOREAL</Option>
           </Select>
           </div>  

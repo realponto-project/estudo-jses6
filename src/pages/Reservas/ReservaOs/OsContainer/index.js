@@ -17,6 +17,7 @@ class ReservaOs extends Component{
   state={
     readOnly: false,
     serial: false,
+    disp: 1,
     numeroSerieTest: '',
     tecnicoArray:[],
     itemArray: [],
@@ -28,7 +29,7 @@ class ReservaOs extends Component{
     data: '',
     tecnico: 'Não selecionado',
     nomeProduto: 'Não selecionado',
-    productId: '',
+    productBaseId: '',
     tecnicoId: '',
     quant: '1',
     carrinho: [],
@@ -116,8 +117,9 @@ class ReservaOs extends Component{
   onChangeItem = async (value, props) => {
    await this.setState({
       nomeProduto: value,
-      productId: props.props.props.id,
+      productBaseId: props.props.props.id,
       serial: props.props.props.serial,
+      disp: parseInt(props.props.props.available, 10),
     })
   }
 
@@ -276,7 +278,7 @@ class ReservaOs extends Component{
     this.setState({
       carrinho:[{
         nomeProdutoCarrinho: this.state.nomeProduto,
-        productId: this.state.productId,
+        productBaseId: this.state.productBaseId,
         amount: this.state.quant.toString(),
         stockBase: this.state.estoque,
         serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
@@ -455,7 +457,7 @@ class ReservaOs extends Component{
 
           <div className='div-quant-Os'>
             <div className='div-text-Os'>Quant:</div>
-            <InputNumber min={1} defaultValue={this.state.quant} value={this.state.quant} onChange={this.onChangeQuant} />
+            <InputNumber min={1} max={this.state.disp} defaultValue={this.state.quant} value={this.state.quant} onChange={this.onChangeQuant} />
           </div>
         </div>
           

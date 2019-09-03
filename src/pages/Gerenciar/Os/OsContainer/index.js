@@ -477,7 +477,7 @@ class OsDash extends Component {
                   {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
                 </div>
                 <div className='cel-data-cabecalho-GOs'>
-                  {line.createdAt}
+                  {line.formatedDate}
                 </div>
                 <div className='cel-acoes-cabecalho-GOs'>
                   {/* <Tooltip placement="topLeft" title='Detalhes'>
