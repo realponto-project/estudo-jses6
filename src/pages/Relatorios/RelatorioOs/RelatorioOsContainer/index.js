@@ -22,6 +22,7 @@ class GerenciarEntrada extends Component {
     total: 10,
     count: 0,
     show: 0,
+    mais: {},
     OsArray: {
       rows: []
     },
@@ -114,12 +115,26 @@ class GerenciarEntrada extends Component {
     return dateformated
   }
 
+  mais = async (line) => {
+    await this.setState({
+      mais: {
+        [line.id]: !this.state.mais[line.id],
+      },
+      lineSelected: {
+        rows: [line],
+      },
+    })
+  }
+
   test = () => {
     if (this.state.OsArray.rows.length !== 0) {
       return (
         this.state.OsArray.rows.map((line) =>
           <div className='div-100-Gentrada'>
             <div className='div-lines-ROs'>
+              <div className='cel-mais-cabecalho-ROs'>
+                <div className='button-mais' onClick={() => this.mais(line)}>+</div>
+              </div>
               <div className='cel-Os-cabecalho-ROs'>
                 {line.id}
               </div>
@@ -133,6 +148,20 @@ class GerenciarEntrada extends Component {
                 {line.formatedDate}
               </div>
             </div>
+            {this.state.mais[line.id] ? <div className='div-100-Rtecnico'>
+            <div className='div-mais-ROs'>
+              <div className='div-normal-mais-ROs' >
+                <div className='div-produtos-mais-ROs'>Produtos</div>
+                <div className='div-quant-mais-ROs'>Quantidade</div>
+              </div>
+            </div>
+            {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
+              this.state.lineSelected.rows.map((line) =>
+            <div className='div-branco-mais'>
+            <div className='div-produtos-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.name}</div>))}</div>
+            <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.quantMax}</div>))}</div>
+            </div>)}
+          </div> : null}
             <div className=' div-separate1-Gentrada' />
           </div>)
       )
@@ -208,6 +237,7 @@ class GerenciarEntrada extends Component {
           </div>}
 
         <div className='div-cabecalho-ROs'>
+          <div className='cel-mais-cabecalho-ROs'></div>
           <div className='cel-Os-cabecalho-ROs'>
             Nº Os
           </div>

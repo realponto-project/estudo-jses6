@@ -214,6 +214,7 @@
   border-color: rgb(31, 190, 71) !important;
 }
 .button-mais{
+  border-radius: 4px;
   width: 30% !important;
   height: 50% !important;
   display: flex !important;

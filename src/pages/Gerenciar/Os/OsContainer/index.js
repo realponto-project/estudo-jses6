@@ -427,6 +427,7 @@ class OsDash extends Component {
 
 
   render() {
+    console.log(this.state)
     return (
       <div className='div-card-GOs'>
         <div className='linhaTexto-GOs'>

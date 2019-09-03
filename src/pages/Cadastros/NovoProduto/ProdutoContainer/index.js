@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Input, InputNumber, Select, Button, Modal, Switch, message } from 'antd'
 import './index.css'
-import { validators } from './validators'
+import { validators, masks } from './validators'
 import { newMarca, newTipo, newFabricante, newProduto, getTipo, getMarca, getFabricante } from '../../../../services/produto'
 
 
@@ -323,22 +323,21 @@ class NovoProduto extends Component {
   }
 
   onChange = (e) => {
+    const { nome,
+      valor,
+    } = masks(e.target.name, e.target.value)
+
     this.setState({
-      [e.target.name]: e.target.value
+      [nome]: valor,
     })
   }
 
-  onChangeQuantMin = (value) => {
+
+  onChangeCodigo = (e) =>{
     this.setState({
-      quantMin: value
+      codigo: e.target.value.replace(/\D/ig, '')
     })
   }
-
-    onChangeCodigo = (e) =>{
-      this.setState({
-        codigo: e.target.value.replace(/\D/ig, '')
-      })
-    }
 
   onBlurValidator = async (e) => {
     const {
@@ -513,6 +512,12 @@ class NovoProduto extends Component {
               <div className='div-inputs'>
               {this.state.marcaArray.length !== 0 ?
                 <Select
+                  showSearch
+                  placeholder="Selecione o produto"
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
                   name='mark'
                   value={this.state.marca}
                   style={{ width: '100%'}}
@@ -600,7 +605,7 @@ class NovoProduto extends Component {
                   placeholder="12345"
                   name='codigo'
                   value={this.state.codigo}
-                  onChange={this.onChangeCodigo}
+                  onChange={this.onChange}
                   onBlur={this.onBlurValidator}
                   onFocus={this.onFocus}
                 />
