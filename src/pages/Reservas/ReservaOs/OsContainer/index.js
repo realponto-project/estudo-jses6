@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import moment from 'moment'
 import './index.css'
 import { Input, DatePicker, InputNumber, Button, message, Select } from 'antd'
 
 import { validators, masks } from './validators'
-import { newReservaOs, getOsByOs } from '../../../../services/reservaOs';
+import { newReservaOs } from '../../../../services/reservaOs';
 import { getProdutoByEstoque } from '../../../../services/produto';
 import { getTecnico } from '../../../../services/tecnico'
 
