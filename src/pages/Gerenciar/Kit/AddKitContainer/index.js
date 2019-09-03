@@ -72,7 +72,6 @@ class AddKit extends Component{
     }
   }
 
-
   componentDidMount = async () => {
     await this.getAllItens()
   }
@@ -80,7 +79,8 @@ class AddKit extends Component{
   getAllItens = async () => {
 
     const query={
-      stockBase: this.state.estoque
+      stockBase: this.state.estoque,
+      kit: true,
     }
 
     await getProdutoByEstoque(query).then(
