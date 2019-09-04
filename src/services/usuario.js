@@ -3,30 +3,6 @@ import { BACKEND_URL } from './var'
 import { store } from '../App'
 
 
-// export const getCarro = async () => {
-//   const storeObject = store.getState()
-
-//   const headers = {
-//     token: storeObject.auth.token,
-//     username: storeObject.auth.username,
-//   }
-
-//   let response = {}
-
-//   await axios.get(`${BACKEND_URL}/api/car`, { headers: headers, params: { } }).then(
-//     resp => {
-//       response = resp
-//     }
-//   ).catch((error) => {
-//     if (error.response) {
-//       response = error.response
-//     } else {
-//       console.log('Error', error.message);
-//     }
-//   })
-//   return response
-// }
-
 export const getTypeAccount = async (query) => {
   const storeObject = store.getState()
 
@@ -38,6 +14,30 @@ export const getTypeAccount = async (query) => {
   let response = {}
 
   await axios.get(`${BACKEND_URL}/api/typeAccount`, { headers: headers, params: { query } }).then(
+    resp => {
+      response = resp
+    }
+  ).catch((error) => {
+    if (error.response) {
+      response = error.response
+    } else {
+      console.log('Error', error.message);
+    }
+  })
+  return response
+} 
+
+export const getResourcesByTypeAccount = async (query) => {
+  const storeObject = store.getState()
+
+  const headers = {
+    token: storeObject.auth.token,
+    username: storeObject.auth.username,
+  }
+
+  let response = {}
+
+  await axios.get(`${BACKEND_URL}/api/typeAccount/getResourcesByTypeAccount`, { headers: headers, params: { query } }).then(
     resp => {
       response = resp
     }
