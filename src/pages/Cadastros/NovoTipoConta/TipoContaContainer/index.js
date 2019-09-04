@@ -130,30 +130,28 @@ class NovoTipoConta extends Component {
 
       this.setState({
         typeAccount: '',
-        permission:{
-          permission: {
-            addUser: false,
-            addTypeAccount: false,
-            responsibleUser: 'modrp',
-            stock: true,
-            labTec: false,
-            addTec: false,
-            addCar: false,
-            addMark: false,
-            addType: false,
-            addProd: false,
-            addFonr: false,
-            addEntr: false,
-            addKit: false,
-            addKitOut: false,
-            addOutPut: false,
-            addROs: false,
-            addRML: false,
-            gerROs: false,
-            delROs: false,
-            updateRos: false,
-          },
-        }
+        permission: {
+          addUser: false,
+          addTypeAccount: false,
+          responsibleUser: 'modrp',
+          stock: true,
+          labTec: false,
+          addTec: false,
+          addCar: false,
+          addMark: false,
+          addType: false,
+          addProd: false,
+          addFonr: false,
+          addEntr: false,
+          addKit: false,
+          addKitOut: false,
+          addOutPut: false,
+          addROs: false,
+          addRML: false,
+          gerROs: false,
+          delROs: false,
+          updateRos: false,
+        },
       })
       await this.success()
       this.setState({
