@@ -3,6 +3,8 @@ import './index.css'
 import { Input, Select, Card, Checkbox, Switch, Button } from 'antd'
 import { Redirect } from 'react-router-dom'
 
+import { getTypeAccount, getResourcesByTypeAccount } from '../../../../services/usuario'
+
 const { Option } = Select;
 
 class NovoUsuario extends Component {
@@ -24,13 +26,36 @@ class NovoUsuario extends Component {
         addUser: false,
         addTypeAccount: false,
       },
-    }
+    },
+    typeAccountArray: [],
+    typeName: 'Selecione um tipo de conta'
   }
 
   redirectReservaOs = () => {
     this.setState({
       redirect: true
     })
+  }
+
+  getAllTypeAccount = async () => {
+    const query = {
+      filters: {
+        typeAccount: {
+          specific: {
+            stock: true,
+          },
+        },
+      },
+    }
+
+    await getTypeAccount(query).then(
+    resposta => this.setState({
+      typeAccountArray: resposta.data.rows,
+    }))
+  }
+
+  componentDidMount = async () => {
+    await this.getAllTypeAccount()
   }
 
   renderRedirect = () => {
@@ -61,6 +86,27 @@ class NovoUsuario extends Component {
     })
   }
 
+  handleChange = async (value) => {
+    await this.setState({
+      typeName: value
+    })
+
+    const query = {
+      filters: {
+        typeAccount: {
+          specific: {
+            typeNametype: value,
+          },
+        },
+      },
+    }
+
+    await getResourcesByTypeAccount(query).then(
+    resposta => this.setState({
+      // typeAccountArray: resposta.data.rows,
+    }, console.log(resposta)))
+  }
+
   render() {
     return (
       <div className='div-card-usuario'>
@@ -82,11 +128,12 @@ class NovoUsuario extends Component {
 
           <div className='div-tipo-usuario'>
             <div className='div-textTipo-usuario'>Tipo de conta:</div>
-            <Select defaultValue="lucy" style={{ width: '100%' }} onChange={this.handleChange}>
-              <Option value="jack">Jack</Option>
-              <Option value="lucy">Lucy</Option>
-              <Option value="Yiminghe">yiminghe</Option>
-            </Select>
+            {this.state.typeAccountArray.length !== 0 ?
+              <Select value={this.state.typeName} style={{ width: '100%' }} onChange={this.handleChange}>
+                {this.state.typeAccountArray.map((valor) => 
+                <Option value={valor.typeName}>{valor.typeName}</Option>)}
+              </Select> :
+            <Select value='Nenhum tipo de conta cadastrado'></Select>}
             <Button className='buttonadd-marca-produtos' type="primary" name='modalTipo' icon="plus" onClick={this.redirectReservaOs} />
             {this.renderRedirect()}
           </div>
