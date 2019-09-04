@@ -51,29 +51,29 @@ export const getResourcesByTypeAccount = async (query) => {
   return response
 } 
 
-// export const newTecnico = async (values) => {
-//   const storeObject = store.getState()
+export const NovoUsuarioService = async (values) => {
+  const storeObject = store.getState()
 
-//   const headers = {
-//     token: storeObject.auth.token,
-//     username: storeObject.auth.username,
-//   }
+  const headers = {
+    token: storeObject.auth.token,
+    username: storeObject.auth.username,
+  }
 
-//   let response = {}
+  let response = {}
 
-//   await axios.post(`${BACKEND_URL}/api/technician`, values, { headers: headers }).then(
-//     resp => {
-//       response = resp
-//     }
-//   ).catch((error) => {
-//     if (error.response) {
-//       response = error.response
-//     } else {
-//       console.log('Error', error.message);
-//     }
-//   })
-//   return response
-// }
+  await axios.post(`${BACKEND_URL}/api/user`, values, { headers: headers }).then(
+    resp => {
+      response = resp
+    }
+  ).catch((error) => {
+    if (error.response) {
+      response = error.response
+    } else {
+      console.log('Error', error.message);
+    }
+  })
+  return response
+}
 
 // export const newCarro = async (values) => {
 //   const storeObject = store.getState()
