@@ -81,7 +81,7 @@ class NovoUsuario extends Component {
           </div>
 
           <div className='div-tipo-usuario'>
-            <div className='div-textTipo-usuario'>Tipo conta:</div>
+            <div className='div-textTipo-usuario'>Tipo de conta:</div>
             <Select defaultValue="lucy" style={{ width: '100%' }} onChange={this.handleChange}>
               <Option value="jack">Jack</Option>
               <Option value="lucy">Lucy</Option>
