@@ -1,28 +1,48 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Icon, Input, Card, Checkbox, Button } from 'antd'
+import { Icon, Input, Card, Checkbox, Button, message } from 'antd'
 import { Redirect } from 'react-router-dom'
+import { NovoTipoContaService } from '../../../../services/novoTipoConta' 
 
 class NovoTipoConta extends Component {
 
   state={
+    loading: false,
+    messageError: false,
+    messageSuccess: false,
     redirect: false,
     typeAccount: '',
-    permission:{
-      permission: {
-        addCompany: false,
-        addPart: false,
-        addAnalyze: false,
-        addEquip: false,
-        addEntry: false,
-        addEquipType: false,
-        tecnico: false,
-        addAccessories: false,
-        addUser: false,
-        addTypeAccount: false,
-      },
-    }
+    permission: {
+      addUser: false,
+      addTypeAccount: false,
+      responsibleUser: 'modrp',
+      stock: true,
+      labTec: false,
+      addTec: false,
+      addCar: false,
+      addMark: false,
+      addType: false,
+      addProd: false,
+      addFonr: false,
+      addEntr: false,
+      addKit: false,
+      addKitOut: false,
+      addOutPut: false,
+      addROs: false,
+      addRML: false,
+      gerROs: false,
+      delROs: false,
+      updateRos: false,
+    },
   }
+
+  success = () => {
+    message.success('Novo tipo de conta cadastrado');
+  };
+  
+  error = () => {
+    message.error('Tipo de conta não cadastrado');
+  };
 
   redirectReservaOs = () => {
     this.setState({
@@ -52,6 +72,98 @@ class NovoTipoConta extends Component {
     })
   }
 
+  saveTargetNewType = async () => {
+
+    this.setState({
+      loading: true
+    })
+
+    const values = {
+      typeName: this.state.typeAccount,
+      addCompany: false,
+      addPart: false,
+      addAnalyze: false,
+      addEquip: false,
+      addEntry: false,
+      addEquipType: false,
+      tecnico: false,
+      addAccessories: false,
+      addUser: this.state.permission.addUser,
+      addTypeAccount: this.state.permission.addTypeAccount,
+      responsibleUser: 'modrp',
+      stock: true,
+      labTec: false,
+      addTec: this.state.permission.addTec,
+      addCar: this.state.permission.addCar,
+      addMark: this.state.permission.addMark,
+      addType: this.state.permission.addType,
+      addProd: this.state.permission.addProd,
+      addFonr: this.state.permission.addFonr,
+      addEntr: this.state.permission.addEntr,
+      addKit: this.state.permission.addKit,
+      addKitOut: this.state.permission.addKitOut,
+      addOutPut: this.state.permission.addOutPut,
+      addROs: this.state.permission.addROs,
+      addRML: this.state.permission.addRML,
+      gerROs: this.state.permission.gerROs,
+      delROs: this.state.permission.delROs,
+      updateRos: this.state.permission.updateRos,
+    }
+
+    console.log(values)
+
+    const resposta = await NovoTipoContaService(values)
+
+    console.log(resposta)
+
+    if (resposta.status === 422) {
+
+      this.setState({
+        messageError: true,
+      })
+      await this.error()
+      this.setState({
+        loading:false,
+        messageError: false,
+      })
+    } if (resposta.status === 200) {
+
+      this.setState({
+        typeAccount: '',
+        permission:{
+          permission: {
+            addUser: false,
+            addTypeAccount: false,
+            responsibleUser: 'modrp',
+            stock: true,
+            labTec: false,
+            addTec: false,
+            addCar: false,
+            addMark: false,
+            addType: false,
+            addProd: false,
+            addFonr: false,
+            addEntr: false,
+            addKit: false,
+            addKitOut: false,
+            addOutPut: false,
+            addROs: false,
+            addRML: false,
+            gerROs: false,
+            delROs: false,
+            updateRos: false,
+          },
+        }
+      })
+      await this.success()
+      this.setState({
+        loading:false,
+        messageSuccess: false,
+      })
+    }
+  }
+
+
   render() {
     return (
       <div className='div-card-tipo'>
@@ -79,26 +191,35 @@ class NovoTipoConta extends Component {
         </div>
 
         <div className='linha1-tipo'>
-          <div className='div-cardInfo-usuario'>
-            <Card className='card-usuario'>
-            <div className='checkbox-card-usuario'>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEntry} name='addEntry'>Adicionar entrada</Checkbox>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addPart} name='addPart'>Adicionar peça</Checkbox>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addCompany} name='addCompany'>Adicionar empresa</Checkbox>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addAnalyze} name='addAnalyze'>Adicionar analise</Checkbox>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEquip} name='addEquip'>Adicionar equipamento</Checkbox>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addAccessories} name='addAccessories'>Adicionar acessórios</Checkbox>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTypeAccount} name='addTypeAccount'>Adicionar tipo de conta</Checkbox>
+          <div className='div-cardInfo-tipo'>
+            <Card className='card-tipo'>
+            <div className='checkbox-card-tipo'>
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addUser} name='addUser'>Adicionar usuário</Checkbox>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEquipType} name='addEquipType'>Adicionar tipo de equipamento</Checkbox>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.tecnico} name='tecnico'>Acesso a tela técnico</Checkbox> 
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTypeAccount} name='addTypeAccount'>Adicionar tipo de conta</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTec} name='addTec'>Adicionar técnico</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addCar} name='addCar'>Adicionar carro</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addMark} name='addMark'>Adicionar marca do carro</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addType} name='addType'>Adicionar tipo de equipamento</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addProd} name='addProd'>Adicionar produto</Checkbox> 
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addFonr} name='addFonr'>Adicionar fornecedor</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEntr} name='addEntr'>Adicionar entrada</Checkbox>
+              </div>
+              <div className='checkbox-card-tipo'>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addKit} name='addKit'>Gerenciar kit do técnico</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addKitOut} name='addKitOut'>Baixa no kit do técnico</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addOutPut} name='addOutPut'>Baixa na Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addROs} name='addROs'>Adicionar reserva por Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addRML} name='addRML'>Adicionar reserva por mercado livre</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.gerROs} name='gerROs'>Gerenciar reserva Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.delROs} name='delROs'>Deletar reserva por Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.updateRos} name='updateRos'>Atualizar reserva por Os</Checkbox> 
             </div>
             </Card>
           </div>
         </div>
 
         <div className='div-button-tipo'>
-          <Button className='button' type='primary'>Salvar</Button>
+          <Button className='button' type='primary' loading={this.state.loading} onClick={this.saveTargetNewType}>Salvar</Button>
         </div>
       </div>
     )
