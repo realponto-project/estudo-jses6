@@ -2,12 +2,17 @@ export const masks = (nome, valor) => {
   
   if (nome === 'codigo') {
     let value = valor
-    value = value.replace(/\D/ig, '')
+    value = value.replace(/\W/ig, '')
     value = value.slice(0, 30)
 
     return {
       nome,
       valor: value,
+    }
+  }else {
+    return {
+      nome,
+      valor,
     }
   }
 }

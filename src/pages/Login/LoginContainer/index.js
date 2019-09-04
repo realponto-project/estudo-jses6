@@ -16,7 +16,7 @@ class Login extends Component {
 
   enterKey = async (e) => {
     if (e.which === 13 || e.keyCode === 13) {
-      await this.props.onSubmit(this.props.value)
+      await this.props.onSubmit({...this.props.value, typeAccount: { stock: true }})
     }
   }
 
@@ -25,7 +25,7 @@ class Login extends Component {
   }
 
   onSubmit = async (e) => {
-    await this.props.onSubmit(this.props.value)
+    await this.props.onSubmit({...this.props.value, typeAccount: { stock: true }})
     if(this.hasAuth(this.props)){
       if (this.hasToken(this.props.auth)){
         if(uuidValidate(this.props.auth.token)){

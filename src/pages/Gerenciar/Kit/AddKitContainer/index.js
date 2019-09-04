@@ -4,6 +4,7 @@ import { Select, InputNumber, Button, message, Input, Icon } from 'antd'
 import { getProdutoByEstoque } from '../../../../services/produto';
 import { Redirect } from 'react-router-dom'
 
+import { getTecnico } from '../../../../services/tecnico'
 import { NewKit } from '../../../../services/kit'
 
 
@@ -22,6 +23,7 @@ class AddKit extends Component{
     item: 'Não selecionado',
     quant: '1',
     estoque: 'REALPONTO',
+    quantTec: 1,
   }
 
   redirectReservaOs = () => {
@@ -34,6 +36,19 @@ class AddKit extends Component{
     if (this.state.redirect) {
       return <Redirect to='/logged/reservaKit/dash' />
     }
+  }
+
+  getAllTecnico = async () => {
+
+    const query = {
+      external: true
+    }
+
+    await getTecnico(query).then(
+      resposta => this.setState({
+        quantTec: resposta.data.length,
+      })
+    )
   }
 
   errorNumeroSerie = () => {
@@ -74,6 +89,8 @@ class AddKit extends Component{
 
   componentDidMount = async () => {
     await this.getAllItens()
+
+    await this.getAllTecnico()
   }
 
   getAllItens = async () => {
@@ -216,7 +233,7 @@ class AddKit extends Component{
   }
 
   render(){
-    console.log(this.state)
+    console.log(this.state, Math.floor(this.state.disp/this.state.quantTec))
     return(
       <div className='div-card-AddKit'>
         <div className='linhaTexto-AddKit'>
@@ -247,7 +264,7 @@ class AddKit extends Component{
 
           <div className='div-quant-Os'>
             <div className='div-text-Os'>Quant:</div>
-            <InputNumber min={1} max={this.state.disp} defaultValue={this.state.quant} value={this.state.quant} onChange={this.onChangeQuant} />
+            <InputNumber min={1} max={Math.floor(this.state.disp/this.state.quantTec)} defaultValue={this.state.quant} value={this.state.quant} onChange={this.onChangeQuant} />
           </div>
         </div>
           
