@@ -25,6 +25,7 @@ import AddKitRoute from './Gerenciar/Kit';
 import SearchOsRoute from './Gerenciar/SearchOs';
 import OsDashRoute from './Gerenciar/Os';
 import NovoTipoContaRoute from './Cadastros/NovoTipoConta';
+import PerfilDashRoute from './Gerenciar/Perfil';
 
 class PagesRoute extends Component {
 
@@ -80,6 +81,7 @@ class PagesRoute extends Component {
           <Route path='/logged/relatorioML' component={RelatorioMLRoute} />
           <Route path='/logged/searchOs' component={SearchOsRoute} />
           <Route path='/logged/Os' component={OsDashRoute} />
+          <Route path='/logged/perfil' component={PerfilDashRoute} />
         </Switch>
       )
     } else {

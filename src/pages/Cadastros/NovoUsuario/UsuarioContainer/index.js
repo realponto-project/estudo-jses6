@@ -13,19 +13,28 @@ class NovoUsuario extends Component {
     redirect: false,
     user: '',
     checkboxAble: false,
-    permission:{
-      permission: {
-        addCompany: false,
-        addPart: false,
-        addAnalyze: false,
-        addEquip: false,
-        addEntry: false,
-        addEquipType: false,
-        tecnico: false,
-        addAccessories: false,
-        addUser: false,
-        addTypeAccount: false,
-      },
+    permission: {
+      addUser: false,
+      addTypeAccount: false,
+      responsibleUser: 'modrp',
+      stock: true,
+      labTec: false,
+      addTec: false,
+      addCar: false,
+      addMark: false,
+      addType: false,
+      addProd: false,
+      addFonr: false,
+      addEntr: false,
+      addKit: false,
+      addKitOut: false,
+      addOutPut: false,
+      addROs: false,
+      addRML: false,
+      gerROs: false,
+      delROs: false,
+      updateRos: false,
+      tecnico: false,
     },
     typeAccountArray: [],
     typeName: 'Selecione um tipo de conta'
@@ -95,7 +104,7 @@ class NovoUsuario extends Component {
       filters: {
         typeAccount: {
           specific: {
-            typeNametype: value,
+            typeName: value,
           },
         },
       },
@@ -103,11 +112,34 @@ class NovoUsuario extends Component {
 
     await getResourcesByTypeAccount(query).then(
     resposta => this.setState({
-      // typeAccountArray: resposta.data.rows,
+      permission:{
+        addUser: resposta.data.addUser,
+        addAccessories: resposta.data.addAccessories,
+        addTypeAccount: resposta.data.addTypeAccount,
+        stock: resposta.data.stock,
+        labTec: resposta.data.labTec,
+        addTec: resposta.data.addTec,
+        addCar: resposta.data.addCar,
+        addMark: resposta.data.addMark,
+        addType: resposta.data.addType,
+        addProd: resposta.data.addProd,
+        addFonr: resposta.data.addFonr,
+        addEntr: resposta.data.addEntr,
+        addKit: resposta.data.addKit,
+        addKitOut: resposta.data.addKitOut,
+        addOutPut: resposta.data.addOutPut,
+        addROs: resposta.data.addROs,
+        addRML: resposta.data.addRML,
+        gerROs: resposta.data.gerROs,
+        delROs: resposta.data.delROs,
+        updateRos: resposta.data.updateRos,
+        tecnico: resposta.data.tecnico
+      }
     }, console.log(resposta)))
   }
 
   render() {
+    console.log(this.state)
     return (
       <div className='div-card-usuario'>
         <div className='linhaTexto-usuario'>
@@ -149,30 +181,60 @@ class NovoUsuario extends Component {
         <div className='linha1-usuario'>
           <div className='div-cardInfo-usuario'>
             <Card className='card-usuario'>
-            {this.state.checkboxAble === false ? <div className='checkbox-card-usuario'>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEntry} name='addEntry' disabled>Adicionar entrada</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addPart} name='addPart' disabled>Adicionar peça</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addCompany} name='addCompany' disabled>Adicionar empresa</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addAnalyze} name='addAnalyze' disabled>Adicionar analise</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEquip} name='addEquip' disabled>Adicionar equipamento</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addAccessories} name='addAccessories' disabled>Adicionar acessórios</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTypeAccount} name='addTypeAccount' disabled>Adicionar tipo de conta</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addUser} name='addUser' disabled>Adicionar usuário</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEquipType} name='addEquipType' disabled>Adicionar tipo de equipamento</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.tecnico} name='tecnico' disabled>Acesso a tela técnico</Checkbox> </div> : <div className='checkbox-card-usuario'>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEntry} name='addEntry'>Adicionar entrada</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addPart} name='addPart'>Adicionar peça</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addCompany} name='addCompany'>Adicionar empresa</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addAnalyze} name='addAnalyze'>Adicionar analise</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEquip} name='addEquip'>Adicionar equipamento</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addAccessories} name='addAccessories'>Adicionar acessórios</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTypeAccount} name='addTypeAccount'>Adicionar tipo de conta</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addUser} name='addUser'>Adicionar usuário</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEquipType} name='addEquipType'>Adicionar tipo de equipamento</Checkbox>
-                <Checkbox onChange={this.onChangePermission} checked={this.state.permission.tecnico} name='tecnico'>Acesso a tela técnico</Checkbox> </div>}
+            {this.state.checkboxAble === false ? 
+            <div className='div-flex-usuario'>
+            <div className='checkbox-card-tipo'>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addUser} name='addUser' disabled>Adicionar usuário</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTypeAccount} name='addTypeAccount' disabled>Adicionar tipo de conta</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTec} name='addTec' disabled>Adicionar técnico</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addCar} name='addCar' disabled>Adicionar carro</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addMark} name='addMark' disabled>Adicionar marca do carro</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addType} name='addType' disabled>Adicionar tipo de equipamento</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addProd} name='addProd' disabled>Adicionar produto</Checkbox> 
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addFonr} name='addFonr' disabled>Adicionar fornecedor</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEntr} name='addEntr' disabled>Adicionar entrada</Checkbox>
+              </div>
+              <div className='checkbox-card-tipo' disabled>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addKit} name='addKit' disabled>Gerenciar kit do técnico</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addKitOut} name='addKitOut' disabled>Baixa no kit do técnico</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addOutPut} name='addOutPut' disabled>Baixa na Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addROs} name='addROs' disabled>Adicionar reserva por Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addRML} name='addRML' disabled>Adicionar reserva por mercado livre</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.gerROs} name='gerROs' disabled>Gerenciar reserva Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.delROs} name='delROs' disabled>Deletar reserva por Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.updateRos} name='updateRos' disabled>Atualizar reserva por Os</Checkbox> 
+            </div>
+            </div> : 
+            <div className='div-flex-usuario'>
+              <div className='checkbox-card-tipo'>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addUser} name='addUser'>Adicionar usuário</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTypeAccount} name='addTypeAccount'>Adicionar tipo de conta</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTec} name='addTec'>Adicionar técnico</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addCar} name='addCar'>Adicionar carro</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addMark} name='addMark'>Adicionar marca do carro</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addType} name='addType'>Adicionar tipo de equipamento</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addProd} name='addProd'>Adicionar produto</Checkbox> 
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addFonr} name='addFonr'>Adicionar fornecedor</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEntr} name='addEntr'>Adicionar entrada</Checkbox>
+              </div>
+              <div className='checkbox-card-tipo'>
+             <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addKit} name='addKit'>Gerenciar kit do técnico</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addKitOut} name='addKitOut'>Baixa no kit do técnico</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addOutPut} name='addOutPut'>Baixa na Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addROs} name='addROs'>Adicionar reserva por Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addRML} name='addRML'>Adicionar reserva por mercado livre</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.gerROs} name='gerROs'>Gerenciar reserva Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.delROs} name='delROs'>Deletar reserva por Os</Checkbox>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.updateRos} name='updateRos'>Atualizar reserva por Os</Checkbox>  
+              </div>
+              </div>}
             </Card>
           </div>
         </div>
+
+        {this.state.user !== '' ? <div className='div-button-tipo'>
+              <Button type='primary' className='button'>Salvar</Button>
+        </div> : null}
       </div>
     )
   }

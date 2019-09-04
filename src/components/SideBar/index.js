@@ -103,6 +103,8 @@ class SideBar extends Component {
           return <Redirect to='/logged/relatorioPerda/dash' />
         case 'relatorioML_dash':
           return <Redirect to='/logged/relatorioML/dash' />
+        case 'perfil_dash':
+          return <Redirect to='/logged/perfil/dash' />
         case 'logout':
           return <Redirect to='/login' />
         default:
@@ -123,12 +125,12 @@ class SideBar extends Component {
             <Icon className='menuIcon-icon' type="shopping-cart" onClick={()=> this.handleClickCompany("entrada_add", "Entrada")}/>
           </Tooltip>
 
-          <Tooltip placement="bottom" title={'Reserva Os'} >
-            <Icon className='menuIcon-icon' type="file-add" onClick={()=> this.handleClickCompany("reservaOs_dash", "Entrada")}/>
-          </Tooltip>
-
           <Tooltip placement="bottom" title={'Estoque'} >
             <Icon className='menuIcon-icon' type="stock" onClick={()=> this.handleClickCompany("estoque_dash", "Entrada")}/>
+          </Tooltip>
+          
+          <Tooltip placement="bottom" title={'Perfil'} >
+            <Icon className='menuIcon-icon' type="user" onClick={()=> this.handleClickCompany("perfil_dash")}/>
           </Tooltip>
 
         </div>
