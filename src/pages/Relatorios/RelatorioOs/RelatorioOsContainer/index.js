@@ -152,14 +152,20 @@ class GerenciarEntrada extends Component {
             <div className='div-mais-ROs'>
               <div className='div-normal-mais-ROs' >
                 <div className='div-produtos-mais-ROs'>Produtos</div>
-                <div className='div-quant-mais-ROs'>Quantidade</div>
+                <div className='div-amount-mais-ROs'>Reservado</div>
+                <div className='div-missOut-mais-ROs'>Perca</div>
+                <div className='div-output-mais-ROs'>Saída</div>
+                <div className='div-return-mais-ROs'>Retorno</div>
               </div>
             </div>
             {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
               this.state.lineSelected.rows.map((line) =>
-            <div className='div-branco-mais'>
-            <div className='div-produtos-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.name}</div>))}</div>
-            <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.quantMax}</div>))}</div>
+            <div className='div-branco-mais-ROs'>
+            <div className='div-produtos-mais-ROs'>{line.products.map((valor => <div className='div-peca'>{valor.name}</div>))}</div>
+            <div className='div-amount-mais-ROs'>{line.products.map((valor => <div className='div-peca'>{valor.amount}</div>))}</div>
+            <div className='div-missOut-mais-ROs'>{line.products.map((valor => <div className='div-peca'>{valor.missOut}</div>))}</div>
+            <div className='div-output-mais-ROs'>{line.products.map((valor => <div className='div-peca'>{valor.output}</div>))}</div>
+            <div className='div-return-mais-ROs'>{line.products.map((valor => <div className='div-peca'>{valor.return}</div>))}</div>
             </div>)}
           </div> : null}
             <div className=' div-separate1-Gentrada' />
