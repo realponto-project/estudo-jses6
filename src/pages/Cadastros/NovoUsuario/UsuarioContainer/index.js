@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Input, Select, Card, Checkbox, Switch, Button } from 'antd'
+import { Input, Select, Card, Checkbox, Switch, Button, message } from 'antd'
 import { Redirect } from 'react-router-dom'
 
-import { getTypeAccount, getResourcesByTypeAccount } from '../../../../services/usuario'
+import { getTypeAccount, getResourcesByTypeAccount, NovoUsuarioService } from '../../../../services/usuario'
 
 const { Option } = Select;
 
@@ -39,6 +39,14 @@ class NovoUsuario extends Component {
     typeAccountArray: [],
     typeName: 'Selecione um tipo de conta'
   }
+
+  success = () => {
+    message.success('Novo usuário cadastrado');
+  };
+  
+  error = () => {
+    message.error('Usuário não cadastrado');
+  };
 
   redirectReservaOs = () => {
     this.setState({
@@ -135,7 +143,93 @@ class NovoUsuario extends Component {
         updateRos: resposta.data.updateRos,
         tecnico: resposta.data.tecnico
       }
-    }, console.log(resposta)))
+    }))
+  }
+
+  saveTargetNewUser = async () => {
+
+    this.setState({
+      loading: true
+    })
+
+    const values = {
+      user:this.state.user,
+      typeAccount: this.state.typeName,
+      addUser: this.state.permission.addUser,
+      addTypeAccount: this.state.permission.addTypeAccount,
+      responsibleUser: 'modrp',
+      stock: true,
+      labTec: this.state.permission.labTec,
+      addTec: this.state.permission.addTec,
+      addCar: this.state.permission.addCar,
+      addMark: this.state.permission.addMark,
+      addType: this.state.permission.addType,
+      addProd: this.state.permission.addProd,
+      addFonr: this.state.permission.addFonr,
+      addEntr: this.state.permission.addEntr,
+      addKit: this.state.permission.addKit,
+      addKitOut: this.state.permission.addKitOut,
+      addOutPut: this.state.permission.addOutPut,
+      addROs: this.state.permission.addROs,
+      addRML: this.state.permission.addRML,
+      gerROs: this.state.permission.gerROs,
+      delROs: this.state.permission.delROs,
+      updateRos: this.state.permission.updateRos,
+      tecnico: this.state.permission.tecnico,
+    }
+
+    console.log(values)
+
+    const resposta = await NovoUsuarioService(values)
+
+    console.log(resposta)
+
+    if (resposta.status === 422) {
+
+      this.setState({
+        messageError: true,
+      })
+      await this.error()
+      this.setState({
+        loading:false,
+        messageError: false,
+      })
+    } if (resposta.status === 200) {
+
+      this.setState({
+        typeName: 'Selecione um tipo de conta',
+        user: '',
+        checkboxAble: false,
+        permission: {
+          addUser: false,
+          addTypeAccount: false,
+          responsibleUser: 'modrp',
+          stock: true,
+          labTec: false,
+          addTec: false,
+          addCar: false,
+          addMark: false,
+          addType: false,
+          addProd: false,
+          addFonr: false,
+          addEntr: false,
+          addKit: false,
+          addKitOut: false,
+          addOutPut: false,
+          addROs: false,
+          addRML: false,
+          gerROs: false,
+          delROs: false,
+          updateRos: false,
+          tecnico: false,
+        },
+      })
+      await this.success()
+      this.setState({
+        loading:false,
+        messageSuccess: false,
+      })
+    }
   }
 
   render() {
@@ -233,7 +327,7 @@ class NovoUsuario extends Component {
         </div>
 
         {this.state.user !== '' ? <div className='div-button-tipo'>
-              <Button type='primary' className='button'>Salvar</Button>
+              <Button type='primary' className='button' onClick={this.saveTargetNewUser} loading={this.state.loading}>Salvar</Button>
         </div> : null}
       </div>
     )
