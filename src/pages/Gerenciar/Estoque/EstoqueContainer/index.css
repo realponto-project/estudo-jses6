@@ -37,6 +37,12 @@
   display: flex;
   justify-content: space-between;
 }
+.footer-Gentrada100-button{
+  margin-top: 10px;
+  width: 98%;
+  display: flex;
+  justify-content: flex-end;
+}
 .div-fabricante-Rtecnico{
   width: 28%;
   display: flex;

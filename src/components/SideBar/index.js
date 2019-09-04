@@ -69,6 +69,8 @@ class SideBar extends Component {
       switch (this.state.current) {
         case 'novoUsuario_add':
           return <Redirect to='/logged/novoUsuario/add' />
+        case 'novoTipoConta_add':
+          return <Redirect to='/logged/novoTipoConta/add' />
         case 'newTecnico_add':
           return <Redirect to='/logged/novoTecnico/add' />
         case 'novoProduto_add':

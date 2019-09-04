@@ -228,7 +228,6 @@ class NovoFornecedor extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-fornecedor'>
         <div className='linhaTexto-fornecedor'>

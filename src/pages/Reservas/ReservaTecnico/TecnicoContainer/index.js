@@ -503,6 +503,7 @@ class ReservaTecnico extends Component {
 
 
   render() {
+    console.log(this.state.lineSelected.rows)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>

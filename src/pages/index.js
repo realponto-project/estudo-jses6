@@ -24,6 +24,7 @@ import RelatorioMLRoute from './Relatorios/RelatorioML';
 import AddKitRoute from './Gerenciar/Kit';
 import SearchOsRoute from './Gerenciar/SearchOs';
 import OsDashRoute from './Gerenciar/Os';
+import NovoTipoContaRoute from './Cadastros/NovoTipoConta';
 
 class PagesRoute extends Component {
 
@@ -62,6 +63,7 @@ class PagesRoute extends Component {
         <Switch>
           <Route exact path='/logged/dash' component={Dash} />
           <Route path='/logged/novoUsuario' component={NovoUsuarioRoute} />
+          <Route path='/logged/novoTipoConta' component={NovoTipoContaRoute} />
           <Route path='/logged/novoFornecedor' component={NovoFornecedorRoute} /> 
           <Route path='/logged/novoProduto' component={NovoProdutoRoute} />
           <Route path='/logged/novoTecnico' component={NovoTecnicoRoute} />
