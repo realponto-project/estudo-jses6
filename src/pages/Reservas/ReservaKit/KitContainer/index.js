@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Button, Select, Input, Icon, Modal, Tooltip, InputNumber, Spin, message } from 'antd'
+import { Button, Select, Input, Icon, Modal, Tooltip, InputNumber, Spin, message, DatePicker } from 'antd'
+import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 // import * as R from 'ramda'
 
@@ -14,6 +15,7 @@ const { Option } = Select;
 class ReservaKit extends Component {
 
   state = {
+    valueDate: {start: '2019/01/01'},
     modalBaixa: false,
     produtoSelecionado: {
       products: {}
@@ -74,6 +76,16 @@ class ReservaKit extends Component {
         technician: {
           specific: {
             name: this.state.tecnico,
+          },
+        },
+        product: {
+          specific: {
+            name: this.state.produto,
+          },
+        },
+        kitParts:{
+          specific: {
+            updatedAt: this.state.valueDate,
           },
         },
       },
@@ -192,10 +204,12 @@ class ReservaKit extends Component {
     })
   }
 
-  onChange = (e) => {
-    this.setState({
+  onChange = async (e) => {
+    await this.setState({
       [e.target.name]: e.target.value,
     })
+
+    await this.getAllKit()
   }
 
   avancado = () => {
@@ -401,6 +415,14 @@ class ReservaKit extends Component {
     // })
   }
 
+  searchDate = async(e) => {
+    if( !e[0] || !e[1] ) return
+    await this.setState({
+      valueDate: {start: e[0]._d, end: e[1]._d},
+    })
+    await this.getAllKit()
+  }
+
   getOs = async () => {
 
     const os  = await getOsByOs(this.state.os)
@@ -513,7 +535,7 @@ class ReservaKit extends Component {
           <div className='div-avancado-buttons-kit'>
             <div className='div-button-avancado-kit'>
               {this.renderRedirect()}
-              <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button>
+              {this.props.auth.addKit ? <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button> : null }
               <Button className='button' type='primary' onClick={this.avancado}>Ocultar</Button>
             </div>
             <div className='div-linha1-avancado-Rtecnico'>
@@ -532,7 +554,7 @@ class ReservaKit extends Component {
 
               <div className='div-data-kit'>
                 <div className='div-text-Rtecnico'>Data:</div>
-                <Input
+                {/* <Input
                   className='input-100'
                   style={{ width: '100%' }}
                   name='data'
@@ -540,7 +562,21 @@ class ReservaKit extends Component {
                   placeholder="Digite a data"
                   onChange={this.onChange}
                   allowClear
-                />
+                /> */}
+                <DatePicker.RangePicker
+                placeholder='Digite a data'
+                format='DD/MM/YYYY'
+                dropdownClassName='poucas'
+                onChange={this.searchDate}
+                onOk={this.searchDate}
+                    // className='input-100'
+                    // style={{ width: '100%' }}
+                    // name='data'
+                    // value={this.state.data}
+                    // placeholder="Digite a data"
+                    // onChange={this.onChange}
+                    // allowClear
+                  />
               </div>
 
               <div className='div-tecnico1-kit'>
@@ -553,7 +589,7 @@ class ReservaKit extends Component {
           <div className='div-avancado-buttons-kit'>
             <div className='div-button-avancado-kit'>
               {this.renderRedirect()}
-              <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button>
+              {this.props.auth.addKit ? <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button> : null }
               <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
             </div>
           </div>}
@@ -601,4 +637,10 @@ class ReservaKit extends Component {
   }
 }
 
-export default ReservaKit
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(ReservaKit)

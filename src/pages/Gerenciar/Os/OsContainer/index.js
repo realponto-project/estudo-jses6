@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import './index.css'
-import { Button, Icon, Modal, Tooltip, Input, Spin } from 'antd'
+import { Button, Icon, Modal, Tooltip, Input, Spin, DatePicker } from 'antd'
 import { Redirect } from 'react-router-dom'
 
 import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs'
@@ -12,6 +12,7 @@ import { redirectValueOs } from '../OsRedux/action'
 class OsDash extends Component {
 
   state = {
+    valueDate: {start: '2019/01/01'},
     redirect: false,
     avancado: false,
     loading: false,
@@ -81,6 +82,14 @@ class OsDash extends Component {
     })
   }
 
+  searchDate = async(e) => {
+    if( !e[0] || !e[1] ) return
+    await this.setState({
+      valueDate: {start: e[0]._d, end: e[1]._d},
+    })
+    await this.getAllOs()
+  }
+
   getAllOs = async () => {
 
     this.setState({
@@ -88,6 +97,16 @@ class OsDash extends Component {
     })
 
     const query = {
+      filters: {
+        os: {
+          specific: {
+            os: this.state.Os,
+            razaoSocial: this.state.razaoSocial,
+            cnpj: this.state.cnpj,
+            date: this.state.valueDate,
+          },
+        },
+      },
       page: this.state.page,
       total: this.state.total,
       required: true,
@@ -283,10 +302,12 @@ class OsDash extends Component {
     })
   }
 
-  onChange = (e) => {
-    this.setState({
+  onChange = async (e) => {
+    await this.setState({
       [e.target.name]: e.target.value
     })
+
+    await this.getAllOs()
   }
 
   avancado = () => {
@@ -375,7 +396,7 @@ class OsDash extends Component {
                 </div>
                 <div className='cel-acoes-cabecalho-GOs'>
                   <Tooltip placement="topLeft" title='Remover'>
-                    <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button>
+                    {this.props.auth.delROs ? <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button> : null }
                   </Tooltip>
                   <this.modalRemover />
                 </div>
@@ -387,7 +408,7 @@ class OsDash extends Component {
                 <div className='div-quant-mais'>Quantidade</div>
                 <div className='div-button-mais-GOs'>
                 <Tooltip placement="topLeft" title='Adicionar produto'>
-                  <div className='button-mais-div' onClick={() => this.redirectSearchOs()}>+</div>
+                  {this.props.auth.updateROs ? <div className='button-mais-div' onClick={() => this.redirectSearchOs()}>+</div> : null }
                   {this.renderRedirect()}
                 </Tooltip>
                 </div>
@@ -481,15 +502,13 @@ class OsDash extends Component {
 
               <div className='div-data-GOs'>
                 <div className='div-text-GOs'>Data:</div>
-                <Input
-                  className='input-100'
-                  style={{ width: '100%' }}
-                  name='data'
-                  value={this.state.data}
-                  placeholder="Digite a data"
-                  onChange={this.onChange}
-                  allowClear
-                />
+                <DatePicker.RangePicker
+                  placeholder='Digite a data'
+                  format='DD/MM/YYYY'
+                  dropdownClassName='poucas'
+                  onChange={this.searchDate}
+                  onOk={this.searchDate}
+                  />
               </div>
             </div></div> :
           <div className='div-avancado-GOs'>
@@ -530,7 +549,9 @@ class OsDash extends Component {
   }
 
   function mapStateToProps(state) {
-    return {}
+    return {
+      auth: state.auth,
+    }
   }
   
 export default connect(mapStateToProps, mapDispacthToProps)(OsDash)

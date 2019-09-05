@@ -15,7 +15,7 @@ class GerenciarEntrada extends Component {
     os: '',
     rs: '',
     data: '',
-    tecnico: 'Não selecionado',
+    tecnico: '',
     tecnicoArray: [],
     valueDate: { start: '2019/01/01' },
     page: 1,
@@ -38,9 +38,17 @@ class GerenciarEntrada extends Component {
       filters: {
         os: {
           specific: {
-            deletedAt: { start: '2019/01/01' }
-          }
-        }
+            deletedAt: { start: '2019/01/01' },
+            os: this.state.os,
+            razaoSocial: this.state.rs,
+            date: this.state.valueDate,
+          },
+        },
+        technician: {
+          specific: {
+            name: this.state.tecnico,
+          },
+        },
       },
       order: {
         field: 'deletedAt',
@@ -66,6 +74,15 @@ class GerenciarEntrada extends Component {
     })
   }
 
+  changePages = (pages) => {
+    this.setState({
+      page: pages
+    }, () => {
+      this.getAllOs()
+    }
+    )
+  }
+
   getAllTecnico = async () => {
 
     await getTecnico().then(
@@ -79,6 +96,8 @@ class GerenciarEntrada extends Component {
     await this.setState({
       tecnico: value
     })
+
+    await this.getAllOs()
   }
 
   componentDidMount = async () => {
@@ -93,10 +112,12 @@ class GerenciarEntrada extends Component {
     })
   }
 
-  onChange = (e) => {
-    this.setState({
+  onChange = async (e) => {
+    await this.setState({
       [e.target.name]: e.target.value
     })
+
+    await this.getAllOs()
   }
 
   searchDate = async (e) => {
@@ -104,7 +125,8 @@ class GerenciarEntrada extends Component {
     await this.setState({
       valueDate: { start: e[0]._d, end: e[1]._d },
     })
-    // await this.getAllEntrada()
+    
+    await this.getAllOs()
   }
 
   formatDateFunct = (date) => {
@@ -178,6 +200,20 @@ class GerenciarEntrada extends Component {
     }
   }
 
+  Pages = () => (
+    <div className='footer-Gentrada100-button'>
+      {Math.ceil(this.state.count / this.state.total) >= 5 && Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 4)}>{this.state.page - 4}</Button> : null}
+      {Math.ceil(this.state.count / this.state.total) >= 4 && Math.ceil(this.state.count / this.state.total) - this.state.page < 2 && this.state.page > 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 3)}>{this.state.page - 3}</Button> : null}
+      {this.state.page >= 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 2)}>{this.state.page - 2}</Button> : null}
+      {this.state.page >= 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 1)}>{this.state.page - 1}</Button> : null}
+      <div className='div-teste'>{this.state.page}</div>
+      {this.state.page < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 1)}>{this.state.page + 1}</Button> : null}
+      {this.state.page + 1 < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 2)}>{this.state.page + 2}</Button> : null}
+      {this.state.page + 2 < (this.state.count / this.state.total) && this.state.page < 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 3)}>{this.state.page + 3}</Button> : null}
+      {this.state.page + 3 < (this.state.count / this.state.total) && this.state.page < 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 4)}>{this.state.page + 4}</Button> : null}
+    </div>
+  )
+
   render() {
     return (
       <div className='div-card-ROs'>
@@ -234,7 +270,10 @@ class GerenciarEntrada extends Component {
                 <div className='div-text-Rtecnico'>Técnico:</div>
                 {this.state.tecnicoArray.length === 0 ?
                   <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select> :
-                  <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}>{this.state.tecnicoArray.map((valor) => <Option value={valor.name}>{valor.name}</Option>)}</Select>}
+                  <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}>
+                    <Option value=''>TODOS</Option>{
+                    this.state.tecnicoArray.map((valor) => <Option value={valor.name}>{valor.name}</Option>)}
+                  </Select>}
               </div>
             </div>
           </div> :
@@ -263,7 +302,8 @@ class GerenciarEntrada extends Component {
         {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
         <div className='footer-ROs'>
-          <Pagination defaultCurrent={1} total={50} />
+          {/* <Pagination defaultCurrent={1} total={50} /> */}
+          <this.Pages />
         </div>
       </div>
     )

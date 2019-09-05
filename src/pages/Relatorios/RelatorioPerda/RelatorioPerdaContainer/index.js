@@ -10,9 +10,10 @@ const { Option } = Select;
 class GerenciarEntrada extends Component {
 
   state = {
+    valueDate: {start: '2019/01/01'},    
     avancado: false,
     tecnicoArray: [],
-    tecnico: 'Não selecionado',
+    tecnico: '',
     data: '',
     produto: '',
     relatorioArray: {
@@ -26,7 +27,6 @@ class GerenciarEntrada extends Component {
   }
 
   getAllTecnico = async () => {
-
     await getTecnico().then(
       resposta => this.setState({
         tecnicoArray: resposta.data,
@@ -56,7 +56,18 @@ class GerenciarEntrada extends Component {
       filters: {
         kitOut: {
           specific: {
-            action: 'perda'
+            action: 'perda',
+            createdAt: this.state.valueDate,
+          },
+        },
+        technician: {
+          specific: {
+            name: this.state.tecnico,
+          },
+        },
+        product: {
+          specific: {
+            name: this.state.produto,
           }
         }
       },
@@ -76,6 +87,37 @@ class GerenciarEntrada extends Component {
     this.setState({
       loading: false
     })
+  }
+
+  changePages = (pages) => {
+    this.setState({
+      page: pages
+    }, () => {
+      this.getRelatorio()
+    }
+    )
+  }
+
+  onChange = async (e) => {
+    await this.setState({
+      [e.target.name]: e.target.value
+    })
+
+    await this.getRelatorio()
+  }
+
+  searchDate = async(e) => {
+    if( !e[0] || !e[1] ) return
+    await this.setState({
+      valueDate: {start: e[0]._d, end: e[1]._d},
+    })
+    await this.getRelatorio()
+  }
+
+  onChangeTecnico = (value) => {
+    this.setState({
+      tecnico: value
+    }, this.getRelatorio)
   }
 
   test = () => {
@@ -106,6 +148,20 @@ class GerenciarEntrada extends Component {
       )
     }
   }
+
+  Pages = () => (
+    <div className='footer-Gentrada100-button'>
+      {Math.ceil(this.state.count / this.state.total) >= 5 && Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 4)}>{this.state.page - 4}</Button> : null}
+      {Math.ceil(this.state.count / this.state.total) >= 4 && Math.ceil(this.state.count / this.state.total) - this.state.page < 2 && this.state.page > 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 3)}>{this.state.page - 3}</Button> : null}
+      {this.state.page >= 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 2)}>{this.state.page - 2}</Button> : null}
+      {this.state.page >= 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 1)}>{this.state.page - 1}</Button> : null}
+      <div className='div-teste'>{this.state.page}</div>
+      {this.state.page < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 1)}>{this.state.page + 1}</Button> : null}
+      {this.state.page + 1 < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 2)}>{this.state.page + 2}</Button> : null}
+      {this.state.page + 2 < (this.state.count / this.state.total) && this.state.page < 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 3)}>{this.state.page + 3}</Button> : null}
+      {this.state.page + 3 < (this.state.count / this.state.total) && this.state.page < 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 4)}>{this.state.page + 4}</Button> : null}
+    </div>
+  )
 
   render() {
     return (
@@ -148,7 +204,10 @@ class GerenciarEntrada extends Component {
                 <div className='div-text-Rtecnico'>Técnico:</div>
                 {this.state.tecnicoArray.length === 0 ?
                   <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select> :
-                  <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}>{this.state.tecnicoArray.map((valor) => <Option value={valor.name}>{valor.name}</Option>)}</Select>}
+                  <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}>
+                    <Option value=''>TODOS</Option>
+                    {this.state.tecnicoArray.map((valor) => <Option value={valor.name}>{valor.name}</Option>)}
+                  </Select>}
               </div>
             </div>
           </div> :
@@ -174,8 +233,9 @@ class GerenciarEntrada extends Component {
         {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading}/></div> : this.test()}
 
         <div className=' div-separate-Gentrada'></div>
-        <div className='footer-Gentrada'>
-          <Pagination defaultCurrent={1} total={50} />
+        <div className='footer-ROs'>
+          {/* <Pagination defaultCurrent={1} total={50} /> */}
+          <this.Pages />
         </div>
       </div>
     )

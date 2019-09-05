@@ -2,6 +2,7 @@ import * as R from 'ramda'
 import React, { Component } from 'react'
 import './index.css'
 import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber, DatePicker, Select } from 'antd'
+import { connect } from 'react-redux'
 
 import { getTecnico } from '../../../../services/tecnico'
 import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs';
@@ -12,6 +13,7 @@ const { Option } = Select;
 class ReservaTecnico extends Component {
 
   state = {
+    valueDate: {start: '2019/01/01'},
     avancado: false,
     loading: false,
     OsArray: {
@@ -49,14 +51,6 @@ class ReservaTecnico extends Component {
     )
   }
 
-  searchDate = async(e) => {
-    if( !e[0] || !e[1] ) return
-    await this.setState({
-      valueDate: {start: e[0]._d, end: e[1]._d},
-    })
-    // await this.getAllEntrada()
-  }
-
   getAllTecnico = async () => {
 
     await getTecnico().then(
@@ -77,12 +71,20 @@ class ReservaTecnico extends Component {
     this.setState({
       loading: true
     })
-
+    parseInt(this.state.Os, 10)
     const query = {
       filters: {
         technician: {
           specific: {
             name: this.state.tecnico,
+          },
+        },
+        os: {
+          specific: {
+            os: this.state.Os,
+            razaoSocial: this.state.razaoSocial,
+            cnpj: this.state.cnpj,
+            date: this.state.valueDate,
           },
         },
       },
@@ -141,6 +143,14 @@ class ReservaTecnico extends Component {
         show: resposta.data.show,
       })
     )
+  }
+
+  searchDate = async(e) => {
+    if( !e[0] || !e[1] ) return
+    await this.setState({
+      valueDate: {start: e[0]._d, end: e[1]._d},
+    })
+    await this.getAllOs()
   }
 
   onChangeModal = (value) => {
@@ -290,10 +300,12 @@ class ReservaTecnico extends Component {
     await this.getAllOsSemLoading()
   }
 
-  onChange = (e) => {
-    this.setState({
+  onChange = async (e) => {
+    await this.setState({
       [e.target.name]: e.target.value
     })
+
+    await this.getAllOs()
   }
 
   avancado = () => {
@@ -467,11 +479,11 @@ class ReservaTecnico extends Component {
               {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
             </div>
             <div className='cel-data-cabecalho-Rtecnico'>
-              {line.createdAt}
+              {line.formatedDate}
             </div>
             <div className='cel-acoes-cabecalho-Rtecnico'>
               <Tooltip placement="topLeft" title='Remover'>
-                <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button>
+                {this.props.auth.delROs ? <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button> : null }
               </Tooltip>
               <this.modalDetalhesLinha />
               <this.modalRemover />
@@ -487,8 +499,12 @@ class ReservaTecnico extends Component {
             {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
               this.state.lineSelected.rows.map((line) =>
             <div className='div-branco-mais'>
-            <div className='div-produtos-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.name}</div>))}</div>
-            <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca' onClick={() => this.openModalDetalhes(valor)}>{valor.quantMax}</div>))}</div>
+            <div className='div-produtos-mais'>
+              {line.products.map((valor => <div className='div-peca' onClick={this.props.auth.addOutPut ? () => this.openModalDetalhes(valor) : null}>{valor.name}</div>))}
+            </div>
+            <div className='div-quant-mais'>
+              {line.products.map((valor => <div className='div-peca' onClick={this.props.auth.addOutPut ? () => this.openModalDetalhes(valor) : null }>{valor.quantMax}</div>))}
+            </div>
             </div>)}
           </div> : null}
         <div className=' div-separate1-Gentrada'/>
@@ -503,7 +519,7 @@ class ReservaTecnico extends Component {
 
 
   render() {
-    console.log(this.state.lineSelected.rows)
+    console.log(this.state)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>
@@ -607,5 +623,11 @@ class ReservaTecnico extends Component {
       )
     }
   }
-  
-export default ReservaTecnico
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(ReservaTecnico)

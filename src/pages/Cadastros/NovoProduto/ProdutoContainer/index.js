@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Input, InputNumber, Select, Button, Modal, Switch, message } from 'antd'
+import { connect } from 'react-redux'
 import './index.css'
 import { validators, masks } from './validators'
 import { newMarca, newTipo, newFabricante, newProduto, getTipo, getMarca, getFabricante } from '../../../../services/produto'
@@ -534,7 +535,7 @@ class NovoProduto extends Component {
                     {this.state.message.mark}
                   </p> : null}
               </div>
-            <Button className='buttonadd-marca-produtos' type="primary" icon="plus" name='modalMarca' onClick={this.openModais} />
+              {this.props.auth.addMark ? <Button className='buttonadd-marca-produtos' type="primary" icon="plus" name='modalMarca' onClick={this.openModais}/> : null }
           </div>
           <this.modalMarca />
         </div>
@@ -560,7 +561,7 @@ class NovoProduto extends Component {
                     {this.state.message.type}
                   </p> : null}
             </div>
-            <Button className='buttonadd-marca-produtos' type="primary" name='modalTipo' icon="plus" onClick={this.openModais} />
+            {this.props.auth.addType ? <Button className='buttonadd-marca-produtos' type="primary" name='modalTipo' icon="plus" onClick={this.openModais}/> : null }
             <this.modalTipo />
           </div>
 
@@ -655,4 +656,10 @@ class NovoProduto extends Component {
   }
 }
 
-export default NovoProduto
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(NovoProduto)
