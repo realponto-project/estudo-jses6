@@ -13,10 +13,37 @@
   justify-content: center;
   margin-top: 25px;
 }
+.card-perfil{
+  width: 220px;
+  height: 200px;
+}
 .h1-perfil{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
   font-weight: 500;
   font-size: 2.2em
+}
+.div-linhaCard-perfil{
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+  margin: 50px 0 10px 0;
+}
+.div-info-perfil{
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+}
+.div-cardInfos-perfil{
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+}
+.div-editarCard-perfil{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  cursor: pointer;
 }
 .div-linha-perfil{
   width: 85%;
@@ -35,14 +62,98 @@
   color: rgb(90, 90, 90);
   margin-right: 5px;
 }
+.div-text1-perfil{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 17px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+}
+.div-text2-perfil{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 17px;
+  color: rgb(90, 90, 90);
+  margin-left: 20px;
+  font-weight: bold;
+}
+.label-text-perfil{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  cursor: pointer;
+}
+.div-textPass-perfil{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 17px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 20%
+}
+.div-textConfPass-perfil{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 17px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 30%
+}
+.div-textNewPass-perfil{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 17px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 20%
+}
 .div-user-perfil{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 15px
+}
+.div-pass-perfil{
   width: 40%;
+  display: flex;
+  align-items: center;
+}
+.div-userEditar-perfil{
+  width: 50%;
   display: flex;
   align-items: center;
   margin-right: 20px
 }
-.div-pass-perfil{
-  width: 30%;
+.div-passEditar-perfil{
+  width: 45%;
   display: flex;
   align-items: center;
+}
+.div-editar-perfil{
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end
+}
+.form-perfil{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+.div-buttonEditar-perfil{
+  width: 85%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+.bg-wrapper-perfil{
+  height: 170px;
+  overflow: hidden;
+}
+.div-editar2-perfil{
+  width: 85%;
+}
+.div-button-perfil{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
