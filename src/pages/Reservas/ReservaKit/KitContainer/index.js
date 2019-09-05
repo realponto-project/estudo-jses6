@@ -6,9 +6,8 @@ import { Redirect } from 'react-router-dom'
 
 import { getTecnico } from '../../../../services/tecnico'
 // import { baixaReservaOs } from '../../../../services/reservaOs';
-import { getKit, baixasKit } from '../../../../services/kit'
-import { getOsByOs } from '../../../../services/reservaOs';
-
+import { getKit, baixasKitOut } from '../../../../services/kit'
+import { getOsByOs } from '../../../../services/reservaOs'
 
 const { Option } = Select;
 
@@ -105,6 +104,66 @@ class ReservaKit extends Component {
       perdas: 0,
     })
   }
+
+  saveTargetNewKitOut = async () => {
+
+    this.setState({
+      loading: true
+    })
+
+    const values = {
+      reposicao: this.state.incluidos.toString(),
+      expedicao: this.state.liberados.toString(),
+      perda: this.state.perdas.toString(),
+      os: this.state.os,
+      kitPartId: this.state.produtoSelecionado.products.kitPartId,
+    }
+
+    console.log(values)
+
+    const resposta = await baixasKitOut(values)
+
+    console.log(resposta)
+
+    if (resposta.status === 422) {
+
+      this.setState({
+        messageError: true,
+        fieldFalha: resposta.data.fields[0].field,
+        message: resposta.data.fields[0].message,
+      })
+      await this.error()
+      this.setState({
+        loading:false,
+        messageError: false,
+      })
+    } if (resposta.status === 200) {
+
+      this.setState({
+        modalBaixa: false,
+        os: '',
+        incluidos: 0,
+        liberados: 0,
+        perdas: 0,
+        messageSuccess: true,
+      })
+      await this.success()
+      this.setState({
+        loading:false,
+        messageSuccess: false
+      })
+
+      await this.getAllKit()
+    }
+  }
+
+  success = () => {
+    message.success('A reserva foi efetuada');
+  };
+
+  error = () => {
+    message.error('A reserva não foi efetuada');
+  };
 
   handleOkModalPeca = async () => {
     await this.setState({
@@ -342,58 +401,6 @@ class ReservaKit extends Component {
     // })
   }
 
-  saveTargetNewProduto = async () => {
-
-    this.setState({
-      loading: true
-    })
-
-    const values = {
-      reposicao: this.state.incluidos,
-      expedicao:this.state.liberados,
-      perda: this.state.perdas,
-      os:this.state.os,
-      kitPartId: this.state.produtoSelecionado.products.id,
-    }
-
-    const resposta = await baixasKit(values)
-
-    console.log(resposta)
-
-    if (resposta.status === 422) {
-
-      this.setState({
-        messageError: true,
-        fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message,
-      })
-      await this.error()
-      this.setState({
-        loading:false,
-        messageError: false,
-      })
-    } if (resposta.status === 200) {
-
-      this.setState({
-        item: '',
-        categoria: 'Equipamento',
-        marca: "Não selecionado",
-        tipo: "Não selecionado",
-        fabricante: '',
-        descricao: '',
-        codigo: '',
-        quantMin: '',
-        // serial: false,
-        messageSuccess: true,
-      })
-      await this.success()
-      this.setState({
-        loading:false,
-        messageSuccess: false
-      })
-    }
-  }
-
   getOs = async () => {
 
     const os  = await getOsByOs(this.state.os)
@@ -441,7 +448,7 @@ class ReservaKit extends Component {
       onCancel={this.aviso}
       footer={<div>
         <Button type='primary' onClick={this.closeModal} >Cancelar</Button>
-        <Button type='primary' onClick={this.closeModal} >Finalizar</Button>
+        <Button type='primary' onClick={this.saveTargetNewKitOut} >Finalizar</Button>
       </div>}
     > 
     <div className='div-space-modal'>
@@ -495,6 +502,7 @@ class ReservaKit extends Component {
   )
 
   render() {
+    console.log(this.state)
     return (
       <div className='div-card-kit'>
         <div className='linhaTexto-kit'>
