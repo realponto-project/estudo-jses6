@@ -24,6 +24,12 @@
   cursor: pointer;
 }
 
+.menuIcon-icon-notPermission {
+  margin: 10px;
+  padding: 3px !important;
+  cursor: not-allowed;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 7px;

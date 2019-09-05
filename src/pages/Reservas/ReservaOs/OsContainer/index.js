@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Input, DatePicker, InputNumber, Button, message, Select } from 'antd'
+import { connect } from 'react-redux'
 
 import { validators, masks } from './validators'
 import { newReservaOs } from '../../../../services/reservaOs';
@@ -517,4 +518,10 @@ class ReservaOs extends Component{
   }
 }
 
-export default ReservaOs
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(ReservaOs)

@@ -64,6 +64,7 @@ class SideBar extends Component {
   }
 
   render() {
+    console.log(this.props.auth)
     if (this.state.redirect) {
       this.changeRedirectState()
       switch (this.state.current) {
@@ -122,7 +123,10 @@ class SideBar extends Component {
           </Tooltip>
 
           <Tooltip placement="bottom" title={'Nova entrada'} >
-            <Icon className='menuIcon-icon' type="shopping-cart" onClick={()=> this.handleClickCompany("entrada_add", "Entrada")}/>
+            <Icon
+              className={this.props.auth.addEntr ? 'menuIcon-icon' : 'menuIcon-icon-notPermission'}
+              type="shopping-cart"
+              onClick={this.props.auth.addEntr? ()=> this.handleClickCompany("entrada_add", "Entrada") : null }/>
           </Tooltip>
 
           <Tooltip placement="bottom" title={'Estoque'} >
@@ -152,10 +156,10 @@ class SideBar extends Component {
               </span>
             }
           >
-            <Menu.Item key="novoUsuario_add"><Icon type="user" />Usuário</Menu.Item>
-            <Menu.Item key="newTecnico_add"><Icon type="user-add" />Técnico</Menu.Item>
-            <Menu.Item key="novoProduto_add"><Icon type="setting" />Produto</Menu.Item>
-            <Menu.Item key="novoFornecedor_add"><Icon type="bank" />Fornecedor</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.addUser} key="novoUsuario_add"><Icon type="user" />Usuário</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.addTec} key="newTecnico_add"><Icon type="user-add" />Técnico</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.addProd} key="novoProduto_add"><Icon type="setting" />Produto</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.addFonr} key="novoFornecedor_add"><Icon type="bank" />Fornecedor</Menu.Item>
           </SubMenu>
           <SubMenu
             key="Entrada"
@@ -166,7 +170,7 @@ class SideBar extends Component {
               </span>
             }
           >
-            <Menu.Item key="entrada_add"><Icon type="shopping-cart" />Nova</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.addEntr} key="entrada_add"><Icon type="shopping-cart" />Nova</Menu.Item>
             <Menu.Item key="entrada_dash"><Icon type="unordered-list" />Gerenciar</Menu.Item>
           </SubMenu>
           <SubMenu
@@ -190,11 +194,11 @@ class SideBar extends Component {
               </span>
             }
           >
-            <Menu.Item key="reservaKit_dash"><Icon type="shopping" />Kit</Menu.Item>
-            <Menu.Item key="reservaTecnico_dash"><Icon type="user" />Técnico</Menu.Item>
-            <Menu.Item key="reservaOs_dash"><Icon type="file-add" />Nova Os</Menu.Item>
-            <Menu.Item key="reservaML_dash"><Icon type="ie" />Mercado Livre</Menu.Item>
-            <Menu.Item key="Os_dash"><Icon type="unordered-list" />Gerenciar Os</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.addKitOut} key="reservaKit_dash"><Icon type="shopping" />Kit</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.addOutPut} key="reservaTecnico_dash"><Icon type="user" />Técnico</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.addROs} key="reservaOs_dash"><Icon type="file-add" />Nova Os</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.addRML} key="reservaML_dash"><Icon type="ie" />Mercado Livre</Menu.Item>
+            <Menu.Item disabled={!this.props.auth.gerROs} key="Os_dash"><Icon type="unordered-list" />Gerenciar Os</Menu.Item>
           </SubMenu>
 
           <SubMenu

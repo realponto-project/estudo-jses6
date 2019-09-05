@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Input, Button, Select, Modal, message, Switch } from 'antd'
+import { connect } from 'react-redux'
 import { validators, masks } from './validators'
 import { newTecnico, newCarro, getCarro } from '../../../../services/tecnico'
 
@@ -434,7 +435,7 @@ class NovoTecnico extends Component{
                 {this.state.message.car}
               </p> : null}
             </div>           
-          <Button className='buttonadd-marca-tecnico' type="primary" icon="plus" onClick={this.openModal} />
+          {this.props.auth.addCar ? <Button className='buttonadd-marca-tecnico' type="primary" icon="plus" onClick={this.openModal}/> : null }
           </div>
 
           <div className='div-rodizio-tecnico'>
@@ -464,4 +465,10 @@ class NovoTecnico extends Component{
   }
 }
 
-export default NovoTecnico
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(NovoTecnico)

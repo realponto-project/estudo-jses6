@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './index.css'
 import { Input, Select, Card, Checkbox, Switch, Button, message } from 'antd'
 import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import { getTypeAccount, getResourcesByTypeAccount, NovoUsuarioService } from '../../../../services/usuario'
 
@@ -17,8 +18,6 @@ class NovoUsuario extends Component {
       addUser: false,
       addTypeAccount: false,
       responsibleUser: 'modrp',
-      stock: true,
-      labTec: false,
       addTec: false,
       addCar: false,
       addMark: false,
@@ -124,8 +123,6 @@ class NovoUsuario extends Component {
         addUser: resposta.data.addUser,
         addAccessories: resposta.data.addAccessories,
         addTypeAccount: resposta.data.addTypeAccount,
-        stock: resposta.data.stock,
-        labTec: resposta.data.labTec,
         addTec: resposta.data.addTec,
         addCar: resposta.data.addCar,
         addMark: resposta.data.addMark,
@@ -141,9 +138,15 @@ class NovoUsuario extends Component {
         gerROs: resposta.data.gerROs,
         delROs: resposta.data.delROs,
         updateRos: resposta.data.updateRos,
-        tecnico: resposta.data.tecnico
+        tecnico: resposta.data.tecnico,
+        addAnalyze: resposta.data.addAnalyze,
+        addCompany: resposta.data.addCompany,
+        addEntry: resposta.data.addEntry,
+        addEquip: resposta.data.addEquip,
+        addEquipType: resposta.data.addEquipType,
+        addPart: resposta.data.addPart,
       }
-    }))
+    }, console.log(resposta)))
   }
 
   saveTargetNewUser = async () => {
@@ -153,13 +156,12 @@ class NovoUsuario extends Component {
     })
 
     const values = {
-      user:this.state.user,
-      typeAccount: this.state.typeName,
+      username:this.state.user,
+      typeName: this.state.typeName,
+      customized: this.state.checkboxAble,
       addUser: this.state.permission.addUser,
       addTypeAccount: this.state.permission.addTypeAccount,
       responsibleUser: 'modrp',
-      stock: true,
-      labTec: this.state.permission.labTec,
       addTec: this.state.permission.addTec,
       addCar: this.state.permission.addCar,
       addMark: this.state.permission.addMark,
@@ -176,6 +178,13 @@ class NovoUsuario extends Component {
       delROs: this.state.permission.delROs,
       updateRos: this.state.permission.updateRos,
       tecnico: this.state.permission.tecnico,
+      addAnalyze: this.state.permission.addAnalyze,
+      addCompany: this.state.permission.addCompany,
+      addEntry: this.state.permission.addEntry,
+      addEquip: this.state.permission.addEquip,
+      addEquipType: this.state.permission.addEquipType,
+      addPart: this.state.permission.addPart,
+      addAccessories: this.state.permission.addAccessories,
     }
 
     console.log(values)
@@ -233,7 +242,6 @@ class NovoUsuario extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-usuario'>
         <div className='linhaTexto-usuario'>
@@ -260,7 +268,7 @@ class NovoUsuario extends Component {
                 <Option value={valor.typeName}>{valor.typeName}</Option>)}
               </Select> :
             <Select value='Nenhum tipo de conta cadastrado'></Select>}
-            <Button className='buttonadd-marca-produtos' type="primary" name='modalTipo' icon="plus" onClick={this.redirectReservaOs} />
+            {this.props.auth.addTypeAccount ? <Button className='buttonadd-marca-produtos' type="primary" name='modalTipo' icon="plus" onClick={this.redirectReservaOs}/> : null }
             {this.renderRedirect()}
           </div>
         </div>
@@ -334,4 +342,10 @@ class NovoUsuario extends Component {
   }
 }
 
-export default NovoUsuario
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(NovoUsuario)
