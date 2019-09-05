@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Input } from 'antd'
+import { Input, Button } from 'antd'
 
 class PerfilDash extends Component {
 
@@ -22,7 +22,7 @@ class PerfilDash extends Component {
           <h1 className='h1-perfil'>Seu perfil</h1>
         </div>
 
-        <div className='div-linha1-perfil'>
+        <div className='div-linha-perfil'>
           <div className='div-user-perfil'>
             <div className='div-text-Os'>Usuário:</div>
             <Input
@@ -46,6 +46,10 @@ class PerfilDash extends Component {
               placeholder="Digite a senha atual"
               onChange={this.onChange}
             />
+          </div>
+
+          <div className='div-pass-perfil'>
+            <Button type='primary' className='button'>Editar</Button>
           </div>
         </div>
       </div>
