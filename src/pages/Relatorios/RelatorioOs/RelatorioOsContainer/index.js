@@ -215,6 +215,7 @@ class GerenciarEntrada extends Component {
   )
 
   render() {
+    console.log(this.state)
     return (
       <div className='div-card-ROs'>
         <div className='linhaTexto-ROs'>

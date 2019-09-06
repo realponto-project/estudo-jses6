@@ -208,6 +208,12 @@ class ReservaKit extends Component {
     await this.getAllKit()
   }
 
+  onChangeOs = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    })
+  }
+
   avancado = () => {
     this.setState({
       avancado: !this.state.avancado
@@ -374,7 +380,7 @@ class ReservaKit extends Component {
       <div className='div-textProdutos-Rtecnico'>Produtos reservados</div>
       <div className='div-os-modal'>
       <Input
-        onChange={this.onChange}
+        onChange={this.onChangeOs}
         value={this.state.os}
         name='os'
         placeholder='Nº Os'

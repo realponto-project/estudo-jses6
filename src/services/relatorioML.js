@@ -3,7 +3,7 @@ import { BACKEND_URL } from './var'
 import { store } from '../App'
 
 
-export const getRelatorioML = async () => {
+export const getRelatorioML = async (query) => {
   const storeObject = store.getState()
 
   const headers = {
@@ -13,7 +13,7 @@ export const getRelatorioML = async () => {
 
   let response = {}
 
-  await axios.get(`${BACKEND_URL}/api/reserve/freeMarket`, { headers: headers, params: { } }).then(
+  await axios.get(`${BACKEND_URL}/api/reserve/freeMarket`, { headers: headers, params: { query } }).then(
     resp => {
       response = resp
     }
