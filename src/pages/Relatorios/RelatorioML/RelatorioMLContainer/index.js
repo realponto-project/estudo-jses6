@@ -24,6 +24,7 @@ class GerenciarEntrada extends Component {
     count: 0,
     show: 0,
     loading: false,
+    valueDate: { start: '2019/01/01' },
   }
 
   componentDidMount = async () => {
@@ -43,6 +44,16 @@ class GerenciarEntrada extends Component {
     })
 
     const query = {
+      filters: {
+        freeMarket: {
+          specific: {
+            createdAt: this.state.valueDate,
+            name: this.state.produto,
+            zipCode: this.state.cep,
+            trackingCode: this.state.codigo,
+          },
+        },
+      },
       page: this.state.page,
       total: this.state.total,
     }
@@ -73,10 +84,12 @@ class GerenciarEntrada extends Component {
     })
   }
 
-  onChange = (e) => {
-    this.setState({
+  onChange = async (e) => {
+    await this.setState({
       [e.target.name]: e.target.value
     })
+
+    await this.getRelatorio()
   }
 
   searchDate = async (e) => {
