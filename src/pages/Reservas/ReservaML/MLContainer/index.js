@@ -267,7 +267,7 @@ class ReservaML extends Component{
         complemento: '',
         pontoReferencia: '',
         carrinho: [],
-        // tecnicoId: '',
+        codigo: '',
         messageSuccess: true,
       })
       await this.success()

@@ -28,6 +28,7 @@ class OsDash extends Component {
     tecnicoArray: [],
     modalDetalhes: false,
     modalRemove: false,
+    idLine: '',
     Os: '',
     razaoSocial: '',
     cnpj: '',
@@ -76,9 +77,10 @@ class OsDash extends Component {
     )
   }
 
-  removerLinha = () => {
+  removerLinha = (line) => {
     this.setState({
-      modalRemove: true
+      modalRemove: true,
+      idLine: line
     })
   }
 
@@ -127,15 +129,20 @@ class OsDash extends Component {
     })
   }
 
-  removeOs = async (line) => {
+  removeOs = async () => {
 
     const query = {
-      osId: line
+      osId: this.state.idLine
     }
 
     await removeReservaOs(query)
 
     await this.getAllOsSemLoading()
+
+    await this.setState({
+      modalRemove: false, 
+      idLine: '',
+    })
   }
 
   getAllOsSemLoading = async () => {
@@ -358,7 +365,7 @@ class OsDash extends Component {
     <Modal
       title="Confirmação"
       visible={this.state.modalRemove}
-      onOk={this.handleOk}
+      onOk={this.removeOs}
       onCancel={this.handleOk}
       okText='Continuar'
       cancelText='Cancelar'
@@ -390,7 +397,7 @@ class OsDash extends Component {
                 </div>
                 <div className='cel-acoes-cabecalho-GOs'>
                   <Tooltip placement="topLeft" title='Remover'>
-                    {this.props.auth.delROs ? <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button> : null }
+                    {this.props.auth.delROs ? <Button type="primary" className='button-icon-remove' onClick={() => this.removerLinha(line.id)}><Icon type="delete" /></Button> : null }
                   </Tooltip>
                   <this.modalRemover />
                 </div>
@@ -398,7 +405,7 @@ class OsDash extends Component {
               {this.state.mais[line.id] ? <div className='div-100-GOs'>
                 <div className='div-mais-GOs'>
                 <div className='div-normal-mais' >
-                <div className='div-produtos-mais-GOs'>Produtos</div>
+                <div className='div-produtos-mais'>Produtos</div>
                 <div className='div-quant-mais'>Quantidade</div>
                 <div className='div-button-mais-GOs'>
                 <Tooltip placement="topLeft" title='Adicionar produto'>
@@ -411,7 +418,7 @@ class OsDash extends Component {
                 {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
                   this.state.lineSelected.rows.map((line) =>
                 <div className='div-branco-mais'>
-                  <div className='div-produtos-mais-GOs'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.name}</div>))}</div>
+                  <div className='div-produtos-mais'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.name}</div>))}</div>
                   <div className='div-quant-mais'>{line.products.map((valor => <div className='div-peca-GOs'>{valor.amount}</div>))}</div>
                 </div>)}
               </div> : null}
@@ -442,6 +449,7 @@ class OsDash extends Component {
 
 
   render() {
+    console.log(this.state.idLine)
     return (
       <div className='div-card-GOs'>
         <div className='linhaTexto-GOs'>

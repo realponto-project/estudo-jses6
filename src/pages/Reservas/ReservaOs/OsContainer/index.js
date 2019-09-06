@@ -221,7 +221,7 @@ class ReservaOs extends Component{
         serial: false,
         numeroSerieTest: '',
         nomeProduto: 'Não selecionado',
-        // tecnicoId: '',
+        tecnico: 'Não selecionado', 
         messageSuccess: true,
       })
       await this.success()

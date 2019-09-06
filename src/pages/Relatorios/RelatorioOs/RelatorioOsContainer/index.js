@@ -182,7 +182,7 @@ class GerenciarEntrada extends Component {
             </div>
             {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
               this.state.lineSelected.rows.map((line) =>
-            <div className='div-branco-mais-ROs'>
+            <div className='div-branco-mais'>
             <div className='div-produtos-mais-ROs'>{line.products.map((valor => <div className='div-peca'>{valor.name}</div>))}</div>
             <div className='div-amount-mais-ROs'>{line.products.map((valor => <div className='div-peca'>{valor.amount}</div>))}</div>
             <div className='div-missOut-mais-ROs'>{line.products.map((valor => <div className='div-peca'>{valor.missOut}</div>))}</div>
@@ -302,7 +302,6 @@ class GerenciarEntrada extends Component {
         {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
         <div className='footer-ROs'>
-          {/* <Pagination defaultCurrent={1} total={50} /> */}
           <this.Pages />
         </div>
       </div>
