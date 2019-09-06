@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, Spin, Button, Input, DatePicker } from 'antd'
+import { Spin, Button, Input, DatePicker } from 'antd'
 import { getRelatorioML } from '../../../../services/relatorioML';
 
 
@@ -134,6 +134,20 @@ class GerenciarEntrada extends Component {
     }
   }
 
+  Pages = () => (
+    <div className='footer-Gentrada-button'>
+      {Math.ceil(this.state.count / this.state.total) >= 5 && Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 4)}>{this.state.page - 4}</Button> : null}
+      {Math.ceil(this.state.count / this.state.total) >= 4 && Math.ceil(this.state.count / this.state.total) - this.state.page < 2 && this.state.page > 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 3)}>{this.state.page - 3}</Button> : null}
+      {this.state.page >= 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 2)}>{this.state.page - 2}</Button> : null}
+      {this.state.page >= 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 1)}>{this.state.page - 1}</Button> : null}
+      <div className='div-teste'>{this.state.page}</div>
+      {this.state.page < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 1)}>{this.state.page + 1}</Button> : null}
+      {this.state.page + 1 < (this.state.count / this.state.total) ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 2)}>{this.state.page + 2}</Button> : null}
+      {this.state.page + 2 < (this.state.count / this.state.total) && this.state.page < 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 3)}>{this.state.page + 3}</Button> : null}
+      {this.state.page + 3 < (this.state.count / this.state.total) && this.state.page < 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 4)}>{this.state.page + 4}</Button> : null}
+    </div>
+  )
+
   render() {
     return (
       <div className='div-card-RML'>
@@ -227,9 +241,7 @@ class GerenciarEntrada extends Component {
         <div className=' div-separate-RML'></div>
         {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
-        <div className='footer-RML'>
-          <Pagination defaultCurrent={1} total={50} />
-        </div>
+        <this.Pages/>
       </div>
     )
   }
