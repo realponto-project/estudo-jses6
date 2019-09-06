@@ -13,6 +13,7 @@ const { Option } = Select;
 class ReservaTecnico extends Component {
 
   state = {
+    idLine: '',
     valueDate: {start: '2019/01/01'},
     avancado: false,
     loading: false,
@@ -60,12 +61,6 @@ class ReservaTecnico extends Component {
     )
   }
 
-  removerLinha = () => {
-    this.setState({
-      modalRemove: true
-    })
-  }
-
   getAllOs = async () => {
 
     this.setState({
@@ -108,16 +103,29 @@ class ReservaTecnico extends Component {
     })
   }
 
-  removeOs = async (line) => {
+  removeOs = async () => {
 
     const query = {
-      osId: line
+      osId: this.state.idLine
     }
 
     await removeReservaOs(query)
 
     await this.getAllOsSemLoading()
+
+    await this.setState({
+      modalRemove: false, 
+      idLine: '',
+    })
   }
+
+  removerLinha = (line) => {
+    this.setState({
+      modalRemove: true,
+      idLine: line
+    })
+  }
+
 
   getAllOsSemLoading = async () => {
 
@@ -436,7 +444,7 @@ class ReservaTecnico extends Component {
     <Modal
       title="Confirmação"
       visible={this.state.modalRemove}
-      onOk={this.handleOk}
+      onOk={this.removeOs}
       onCancel={this.handleOk}
       okText='Continuar'
       cancelText='Cancelar'
@@ -483,7 +491,7 @@ class ReservaTecnico extends Component {
             </div>
             <div className='cel-acoes-cabecalho-Rtecnico'>
               <Tooltip placement="topLeft" title='Remover'>
-                {this.props.auth.delROs ? <Button type="primary" className='button-icon-remove' onClick={() => this.removeOs(line.id)}><Icon type="delete" /></Button> : null }
+                {this.props.auth.delROs ? <Button type="primary" className='button-icon-remove' onClick={() => this.removerLinha(line.id)}><Icon type="delete" /></Button> : null }
               </Tooltip>
               <this.modalDetalhesLinha />
               <this.modalRemover />

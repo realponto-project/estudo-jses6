@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, DatePicker, Select, Button, Input, Spin } from 'antd'
+import { DatePicker, Select, Button, Input, Spin } from 'antd'
 import { getTecnico } from '../../../../services/tecnico'
 import { getRelatorioPerda } from '../../../../services/realatorioPerda';
 

@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Pagination, Spin } from 'antd'
+import { Pagination, Spin, Button, Input, DatePicker } from 'antd'
 import { getRelatorioML } from '../../../../services/relatorioML';
+
 
 class GerenciarEntrada extends Component {
 
   state = {
+    codigo: '',
+    produto: '',
+    cep: '',
+    data: '',
+    avancado: false,
     lineSelected: {
       rows: []
     },
@@ -22,6 +28,12 @@ class GerenciarEntrada extends Component {
 
   componentDidMount = async () => {
     await this.getRelatorio()
+  }
+
+  avancado = () => {
+    this.setState({
+      avancado: !this.state.avancado
+    })
   }
 
   getRelatorio = async () => {
@@ -61,6 +73,20 @@ class GerenciarEntrada extends Component {
     })
   }
 
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  searchDate = async (e) => {
+    if (!e[0] || !e[1]) return
+    await this.setState({
+      valueDate: { start: e[0]._d, end: e[1]._d },
+    })
+    
+    await this.getRelatorio()
+  }
 
   test = () => {
     if (this.state.relatorioArray.rows.length !== 0) {
@@ -109,12 +135,76 @@ class GerenciarEntrada extends Component {
   }
 
   render() {
-    console.log(this.state.lineSelected)
     return (
       <div className='div-card-RML'>
         <div className='linhaTexto-RML'>
           <h1 className='h1-RML'>Relatório do Mercado Livre</h1>
         </div>
+
+        {this.state.avancado ?
+          <div className='div-linha-avancado-Rtecnico'>
+            <div className='div-ocultar-Rtecnico'>
+              <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
+            </div>
+            <div className='div-linha1-avancado-Rtecnico'>
+              <div className='div-codigo-ROs'>
+                <div className='div-text-Rtecnico'>Código:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='codigo'
+                  value={this.state.codigo}
+                  placeholder="Digite o código"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-produto-ROs'>
+                <div className='div-text-Os'>Produto:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='produto'
+                  value={this.state.produto}
+                  placeholder="Digite o nome do produto"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+            </div>
+
+            <div className='div-linha-avancado-RML'>
+            <div className='div-cep-ROs'>
+                <div className='div-text-Os'>Cep:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='cep'
+                  value={this.state.cep}
+                  placeholder="Digite o cep"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+
+              <div className='div-data-ROs'>
+                <div className='div-text-Rtecnico'>Data:</div>
+                <DatePicker.RangePicker
+                  placeholder='Digite a data'
+                  format='DD/MM/YYYY'
+                  dropdownClassName='poucas'
+                  onChange={this.searchDate}
+                  onOk={this.searchDate}
+                />
+              </div>
+
+            </div>
+          </div> :
+          <div className='div-avancado-Rtecnico'>
+            <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+          </div>}
 
         <div className='div-cabecalho-RML'>
           <div className='cel-mais-cabecalho-Rtecnico'>
