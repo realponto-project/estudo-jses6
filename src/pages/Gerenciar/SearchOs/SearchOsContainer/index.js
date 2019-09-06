@@ -268,6 +268,8 @@ class SearchOsDash extends Component{
       loading: true
     })
 
+    console.log(value)
+
     const resposta = await updateReservaOs(value)
 
     if (resposta.status === 422) {
@@ -378,6 +380,7 @@ class SearchOsDash extends Component{
 
 
   render(){
+    console.log(this.state)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-GOs'>
@@ -593,7 +596,7 @@ class SearchOsDash extends Component{
         </div>}
 
         {this.state.carrinho.length !== 0 ? <div className='div-buttonSalvar-Os'>
-          <Button type='primary' className='button' onClick={this.saveTargetNewReservaOs}>Salvar</Button>
+          <Button type='primary' className='button' onClick={this.updateTargetReservaOs}>Salvar</Button>
         </div> : null}
 
         {this.state.redirect ? <Redirect to='/logged/Os/dash' /> : null }
