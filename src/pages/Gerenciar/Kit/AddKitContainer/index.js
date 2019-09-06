@@ -155,9 +155,6 @@ class AddKit extends Component{
 
     const resposta = await NewKit(value)
 
-
-    console.log(resposta)
-
     if (resposta.status === 422) {
 
       this.setState({
@@ -233,7 +230,6 @@ class AddKit extends Component{
   }
 
   render(){
-    console.log(this.state, Math.floor(this.state.disp/this.state.quantTec))
     return(
       <div className='div-card-AddKit'>
         <div className='linhaTexto-AddKit'>

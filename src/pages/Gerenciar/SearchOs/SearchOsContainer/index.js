@@ -264,9 +264,6 @@ class SearchOsDash extends Component{
       osParts,
     }
 
-    console.log(value)
-    
-
     this.setState({
       loading: true
     })
@@ -381,7 +378,6 @@ class SearchOsDash extends Component{
 
 
   render(){
-    console.log(this.state)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-GOs'>
