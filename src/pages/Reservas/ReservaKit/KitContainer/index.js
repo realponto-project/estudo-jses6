@@ -25,6 +25,7 @@ class ReservaKit extends Component {
     produto: '',
     data: '',
     teste: NaN,
+    teste1: 1,
     totalModal: 0,
     incluidos: 0,
     liberados: 0,
@@ -114,6 +115,8 @@ class ReservaKit extends Component {
       incluidos: 0,
       liberados: 0,
       perdas: 0,
+      teste: NaN,
+      teste1: 1
     })
   }
 
@@ -180,6 +183,7 @@ class ReservaKit extends Component {
         products: {}
       },
       teste: NaN,
+      teste1: 1,
     })
   }
 
@@ -196,7 +200,7 @@ class ReservaKit extends Component {
     })
 
     await this.setState({
-      teste: this.state.totalModal
+      teste: this.state.totalModal,
     })
   }
 
@@ -270,8 +274,14 @@ class ReservaKit extends Component {
     })
   }
 
+  onChangeModal1 = (value) => {
+    this.setState({
+      teste1: value
+    })
+  }
+
   retornar = async () => {
-    const menos = parseInt(this.state.produtoSelecionado.products.amount, 10) + this.state.teste
+    const menos = parseInt(this.state.produtoSelecionado.products.amount, 10) + this.state.teste1
 
     this.setState({
       produtoSelecionado: {
@@ -281,8 +291,8 @@ class ReservaKit extends Component {
         }
       },
       totalModal: menos,
-      incluidos: this.state.incluidos + this.state.teste,
-      teste: 1
+      incluidos: this.state.incluidos + this.state.teste1,
+      teste1: 1
     })
   }
 
@@ -390,23 +400,29 @@ class ReservaKit extends Component {
     </div>
       <div className='div-body-modal'>
         <div className='div-text-modal'>
-          <div className='div-produtos-modal'>Produtos</div>
+          <div className='div-produtos-modal-kit'>Produtos</div>
           <div className='div-quant-modal'>Quant.</div>
-          <div className='div-acoes-modal'>Ações</div>
+          <div className='div-acoes-modal-kit'>Ações</div>
         </div>
         <div className='div-separate-modal' />
         <div className='div-text-modal'>
-          <div className='div-produtos-modal'>{this.state.produtoSelecionado.products.name}</div>
-          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.quantMax} defaultValue={this.state.teste} style={{ width: '90%' }} value={this.state.teste} onChange={this.onChangeModal} /></div>
-          <div className='div-acoes-modal'>
-            <Tooltip placement="top" title='Adicionar' >
-              <Button type='primary' className='button' onClick={this.retornar} ><Icon type="plus" /></Button>
-            </Tooltip>
+          <div className='div-produtos-modal-kit'>{this.state.produtoSelecionado.products.name}</div>
+          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.amount} defaultValue={this.state.teste} style={{ width: '90%' }} value={this.state.teste} onChange={this.onChangeModal} /></div>
+          <div className='div-acoes-modal-kit'>
             <Tooltip placement="top" title='Liberar' >
               <Button type='primary' className='button-liberar' onClick={this.liberar}><Icon type="arrow-right" /></Button>
             </Tooltip>
             <Tooltip placement="top" title='Perda' >
               <Button type='primary' className='button-remove-entrada' onClick={this.perda}><Icon type="alert" /></Button>
+            </Tooltip>
+          </div>
+        </div>
+        <div className='div-text-modal'>
+          <div className='div-produtos-modal-kit'></div>
+          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.quantMax} defaultValue={this.state.teste1} style={{ width: '90%' }} value={this.state.teste1} onChange={this.onChangeModal1} /></div>
+          <div className='div-acoes-modalMais-kit'>
+            <Tooltip placement="top" title='Adicionar'>
+              <Button type='primary' className='button' onClick={this.retornar} ><Icon type="plus" /></Button>
             </Tooltip>
           </div>
         </div>

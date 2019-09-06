@@ -14,14 +14,14 @@ class ReservaTecnico extends Component {
 
   state = {
     idLine: '',
-    valueDate: {start: '2019/01/01'},
+    valueDate: { start: '2019/01/01' },
     avancado: false,
     loading: false,
     OsArray: {
-      rows:[]
+      rows: []
     },
     produtoSelecionado: {
-      products:{}
+      products: {}
     },
     mais: {},
     quantModal: NaN,
@@ -34,7 +34,7 @@ class ReservaTecnico extends Component {
     cnpj: '',
     data: '',
     lineSelected: {
-      rows:[]
+      rows: []
     },
     tecnico: 'Não selecionado',
     page: 1,
@@ -114,7 +114,7 @@ class ReservaTecnico extends Component {
     await this.getAllOsSemLoading()
 
     await this.setState({
-      modalRemove: false, 
+      modalRemove: false,
       idLine: '',
     })
   }
@@ -153,10 +153,10 @@ class ReservaTecnico extends Component {
     )
   }
 
-  searchDate = async(e) => {
-    if( !e[0] || !e[1] ) return
+  searchDate = async (e) => {
+    if (!e[0] || !e[1]) return
     await this.setState({
-      valueDate: {start: e[0]._d, end: e[1]._d},
+      valueDate: { start: e[0]._d, end: e[1]._d },
     })
     await this.getAllOs()
   }
@@ -171,8 +171,8 @@ class ReservaTecnico extends Component {
     const menos = this.state.produtoSelecionado.products.quantMax - this.state.teste
 
     this.setState({
-      produtoSelecionado:{
-        products:{
+      produtoSelecionado: {
+        products: {
           ...this.state.produtoSelecionado.products,
           quantMax: menos,
           return: parseInt(this.state.produtoSelecionado.products.return, 10) + this.state.teste
@@ -182,7 +182,7 @@ class ReservaTecnico extends Component {
 
     const value = {
       osPartsId: this.state.produtoSelecionado.products.id,
-      add:{
+      add: {
         return: this.state.teste
       }
     }
@@ -196,14 +196,14 @@ class ReservaTecnico extends Component {
       })
     }
 
-    
+
     // eslint-disable-next-line array-callback-return
     const x = this.state.OsArray.rows.filter((item) => {
       if (item.id === R.keys(this.state.mais)[0]) {
         return item
       }
     })
-    
+
     await this.setState({
       lineSelected: {
         rows: x
@@ -216,8 +216,8 @@ class ReservaTecnico extends Component {
     const menos = this.state.produtoSelecionado.products.quantMax - this.state.teste
 
     this.setState({
-      produtoSelecionado:{
-        products:{
+      produtoSelecionado: {
+        products: {
           ...this.state.produtoSelecionado.products,
           quantMax: menos,
           missOut: parseInt(this.state.produtoSelecionado.products.missOut, 10) + this.state.teste
@@ -227,7 +227,7 @@ class ReservaTecnico extends Component {
 
     const value = {
       osPartsId: this.state.produtoSelecionado.products.id,
-      add:{
+      add: {
         missOut: this.state.teste
       }
     }
@@ -241,14 +241,14 @@ class ReservaTecnico extends Component {
       })
     }
 
-    
+
     // eslint-disable-next-line array-callback-return
     const x = this.state.OsArray.rows.filter((item) => {
       if (item.id === R.keys(this.state.mais)[0]) {
         return item
       }
     })
-    
+
     await this.setState({
       lineSelected: {
         rows: x
@@ -261,8 +261,8 @@ class ReservaTecnico extends Component {
     const menos = this.state.produtoSelecionado.products.quantMax - this.state.teste
 
     this.setState({
-      produtoSelecionado:{
-        products:{
+      produtoSelecionado: {
+        products: {
           ...this.state.produtoSelecionado.products,
           quantMax: menos,
           output: parseInt(this.state.produtoSelecionado.products.output, 10) + this.state.teste
@@ -272,7 +272,7 @@ class ReservaTecnico extends Component {
 
     const value = {
       osPartsId: this.state.produtoSelecionado.products.id,
-      add:{
+      add: {
         output: this.state.teste
       }
     }
@@ -286,14 +286,14 @@ class ReservaTecnico extends Component {
       })
     }
 
-    
+
     // eslint-disable-next-line array-callback-return
     const x = this.state.OsArray.rows.filter((item) => {
       if (item.id === R.keys(this.state.mais)[0]) {
         return item
       }
     })
-    
+
     await this.setState({
       lineSelected: {
         rows: x
@@ -322,7 +322,7 @@ class ReservaTecnico extends Component {
     await this.setState({
       tecnico: ''
     })
-    
+
     await this.getAllOs()
   }
 
@@ -404,17 +404,17 @@ class ReservaTecnico extends Component {
         <div className='div-separate-modal' />
         <div className='div-text-modal'>
           <div className='div-produtos-modal'>{this.state.produtoSelecionado.products.name}</div>
-          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.quantMax} defaultValue={this.state.teste} style={{width: '90%'}} value={this.state.teste} onChange={this.onChangeModal} /></div>
+          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.quantMax} defaultValue={this.state.teste} style={{ width: '90%' }} value={this.state.teste} onChange={this.onChangeModal} /></div>
           <div className='div-acoes-modal'>
-          <Tooltip placement="top" title='Retornar' > 
-            <Button type='primary' className='button' onClick={this.retornar} ><Icon type="arrow-left" /></Button>
-          </Tooltip>
-          <Tooltip placement="top" title='Liberar' > 
-            <Button type='primary' className='button-liberar' onClick={this.liberar}><Icon type="arrow-right" /></Button>
-          </Tooltip>
-          <Tooltip placement="top" title='Perda' > 
-            <Button type='primary' className='button-remove-entrada' onClick={this.perda}><Icon type="alert" /></Button>
-          </Tooltip>
+            <Tooltip placement="top" title='Retornar' >
+              <Button type='primary' className='button' onClick={this.retornar} ><Icon type="arrow-left" /></Button>
+            </Tooltip>
+            <Tooltip placement="top" title='Liberar' >
+              <Button type='primary' className='button-liberar' onClick={this.liberar}><Icon type="arrow-right" /></Button>
+            </Tooltip>
+            <Tooltip placement="top" title='Perda' >
+              <Button type='primary' className='button-remove-entrada' onClick={this.perda}><Icon type="alert" /></Button>
+            </Tooltip>
           </div>
         </div>
         <div className='div-total-modal'>
@@ -463,61 +463,64 @@ class ReservaTecnico extends Component {
   )
 
   test = () => {
-    if(this.state.OsArray.rows.length !== 0){
+    if (this.state.OsArray.rows.length !== 0) {
       return (
         this.state.OsArray.rows.map((line) =>
-        <div className='div-100-Gentrada'>
-          <div className='div-lines-Rtecnico' >
-            <div className='cel-mais-cabecalho-Rtecnico'>
-              <div className='button-mais' onClick={() => this.mais(line)}>+</div>
+          <div className='div-100-Gentrada'>
+            <div className='div-lines-Rtecnico' >
+              <div className='cel-mais-cabecalho-Rtecnico'>
+                <div className='button-mais' onClick={() => this.mais(line)}>+</div>
+              </div>
+              <div className='cel-os-cabecalho-Rtecnico'>
+                {line.id}
+              </div>
+              <div className='cel-rs-cabecalho-Rtecnico'>
+                {line.razaoSocial}
+              </div>
+              <div className='cel-cnpj-cabecalho-Rtecnico'>
+                {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
+              </div>
+              <div className='cel-data-cabecalho-Rtecnico'>
+                {line.formatedDate}
+              </div>
+              <div className='cel-acoes-cabecalho-Rtecnico'>
+                {this.props.auth.delROs && !line.notDelet ?
+                  <Tooltip placement="topLeft" title='Remover'>
+                    <Button type="primary" className='button-icon-remove' onClick={() => this.removerLinha(line.id)}><Icon type="delete" /></Button>
+                  </Tooltip>
+                  :
+                  <Button type="primary" disabled className='button-disabled'><Icon type="stop" /></Button>}
+                <this.modalDetalhesLinha />
+                <this.modalRemover />
+              </div>
             </div>
-            <div className='cel-os-cabecalho-Rtecnico'>
-              {line.id}
-            </div>
-            <div className='cel-rs-cabecalho-Rtecnico'>
-              {line.razaoSocial}
-            </div>
-            <div className='cel-cnpj-cabecalho-Rtecnico'>
-              {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
-            </div>
-            <div className='cel-data-cabecalho-Rtecnico'>
-              {line.formatedDate}
-            </div>
-            <div className='cel-acoes-cabecalho-Rtecnico'>
-              <Tooltip placement="topLeft" title='Remover'>
-                {this.props.auth.delROs ? <Button type="primary" className='button-icon-remove' onClick={() => this.removerLinha(line.id)}><Icon type="delete" /></Button> : null }
-              </Tooltip>
-              <this.modalDetalhesLinha />
-              <this.modalRemover />
-            </div>
+            {this.state.mais[line.id] ? <div className='div-100-Rtecnico'>
+              <div className='div-mais-Rtecnico'>
+                <div className='div-normal-mais' >
+                  <div className='div-produtos-mais'>Produtos</div>
+                  <div className='div-quant-mais'>Quantidade</div>
+                </div>
+              </div>
+              {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
+                this.state.lineSelected.rows.map((line) =>
+                  <div className='div-branco-mais'>
+                    <div className='div-produtos-mais'>
+                      {line.products.map((valor => <div className='div-peca' onClick={this.props.auth.addOutPut ? () => this.openModalDetalhes(valor) : null}>{valor.name}</div>))}
+                    </div>
+                    <div className='div-quant-mais'>
+                      {line.products.map((valor => <div className='div-peca' onClick={this.props.auth.addOutPut ? () => this.openModalDetalhes(valor) : null}>{valor.quantMax}</div>))}
+                    </div>
+                  </div>)}
+            </div> : null}
+            <div className=' div-separate1-Gentrada' />
           </div>
-          {this.state.mais[line.id] ? <div className='div-100-Rtecnico'>
-            <div className='div-mais-Rtecnico'>
-            <div className='div-normal-mais' >
-            <div className='div-produtos-mais'>Produtos</div>
-            <div className='div-quant-mais'>Quantidade</div>
-            </div>
-            </div>
-            {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> :
-              this.state.lineSelected.rows.map((line) =>
-            <div className='div-branco-mais'>
-            <div className='div-produtos-mais'>
-              {line.products.map((valor => <div className='div-peca' onClick={this.props.auth.addOutPut ? () => this.openModalDetalhes(valor) : null}>{valor.name}</div>))}
-            </div>
-            <div className='div-quant-mais'>
-              {line.products.map((valor => <div className='div-peca' onClick={this.props.auth.addOutPut ? () => this.openModalDetalhes(valor) : null }>{valor.quantMax}</div>))}
-            </div>
-            </div>)}
-          </div> : null}
-        <div className=' div-separate1-Gentrada'/>
-      </div>
-      ))
-    }else{
+        ))
+    } else {
       return (
         <div className='div-naotemnada'>Não há reservas para esse técnico</div>
       )
     }
-  } 
+  }
 
   render() {
     return (
@@ -557,9 +560,9 @@ class ReservaTecnico extends Component {
                   allowClear
                 />
               </div>
-              </div>
+            </div>
 
-              <div className='div-linha1-avancado-Rtecnico'>
+            <div className='div-linha1-avancado-Rtecnico'>
               <div className='div-cnpj-Rtecnico'>
                 <div className='div-text-Rtecnico'>Cnpj:</div>
                 <Input
@@ -581,7 +584,7 @@ class ReservaTecnico extends Component {
                   dropdownClassName='poucas'
                   onChange={this.searchDate}
                   onOk={this.searchDate}
-                  />
+                />
               </div>
 
               <div className='div-tecnico-Rtec'>
@@ -618,11 +621,11 @@ class ReservaTecnico extends Component {
 
         <div className=' div-separate-Rtecnico' />
         {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
-            <this.Pages />
+        <this.Pages />
       </div>
-      )
-    }
+    )
   }
+}
 
 function mapStateToProps(state) {
   return {
