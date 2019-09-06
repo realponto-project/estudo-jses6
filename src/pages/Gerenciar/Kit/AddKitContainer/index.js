@@ -5,7 +5,7 @@ import { getProdutoByEstoque } from '../../../../services/produto';
 import { Redirect } from 'react-router-dom'
 
 import { getTecnico } from '../../../../services/tecnico'
-import { NewKit } from '../../../../services/kit'
+import { NewKit, getKitDefaultValue } from '../../../../services/kit'
 
 
 const { TextArea } = Input;
@@ -51,6 +51,16 @@ class AddKit extends Component{
     )
   }
 
+  getKitDefault = async () => {
+    const query = {}
+
+    await getKitDefaultValue(query).then(
+      resposta => this.setState({
+        carrinho: resposta.data.rows,
+      }, console.log(resposta))
+    )
+  }
+
   errorNumeroSerie = () => {
     message.error('Este equipamento ja foi registrado');
   };
@@ -91,6 +101,8 @@ class AddKit extends Component{
     await this.getAllItens()
 
     await this.getAllTecnico()
+
+    await this.getKitDefault()
   }
 
   getAllItens = async () => {

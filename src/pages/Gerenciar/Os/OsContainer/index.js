@@ -402,7 +402,7 @@ class OsDash extends Component {
                 <div className='div-quant-mais'>Quantidade</div>
                 <div className='div-button-mais-GOs'>
                 <Tooltip placement="topLeft" title='Adicionar produto'>
-                  {this.props.auth.updateROs ? <div className='button-mais-div' onClick={() => this.redirectSearchOs()}>+</div> : null }
+                  {this.props.auth.updateRos ? <div className='button-mais-div' onClick={() => this.redirectSearchOs()}>+</div> : null }
                   {this.renderRedirect()}
                 </Tooltip>
                 </div>

@@ -391,7 +391,7 @@ class ReservaKit extends Component {
         <div className='div-separate-modal' />
         <div className='div-text-modal'>
           <div className='div-produtos-modal'>{this.state.produtoSelecionado.products.name}</div>
-          <div className='div-quant-modal'><InputNumber min={1} defaultValue={this.state.teste} style={{ width: '90%' }} value={this.state.teste} onChange={this.onChangeModal} /></div>
+          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.quantMax} defaultValue={this.state.teste} style={{ width: '90%' }} value={this.state.teste} onChange={this.onChangeModal} /></div>
           <div className='div-acoes-modal'>
             <Tooltip placement="top" title='Adicionar' >
               <Button type='primary' className='button' onClick={this.retornar} ><Icon type="plus" /></Button>
