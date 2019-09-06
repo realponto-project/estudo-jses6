@@ -90,8 +90,6 @@ class NovoFornecedor extends Component {
 
     const resposta = await newFornecedor(values)
 
-    console.log(resposta)
-
     if (resposta.status === 422) {
 
       this.setState({
@@ -194,8 +192,6 @@ class NovoFornecedor extends Component {
       fieldFalha.neighborhood = false
       fieldFalha.street = false
       const address = await getAddressByZipCode(zipCode)
-
-      // console.log(address)
 
       if (R.has('erro', address.data)) {
         fieldFalha.zipCode = true

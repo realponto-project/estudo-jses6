@@ -64,7 +64,6 @@ class SideBar extends Component {
   }
 
   render() {
-    console.log(this.props.auth)
     if (this.state.redirect) {
       this.changeRedirectState()
       switch (this.state.current) {

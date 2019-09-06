@@ -119,7 +119,7 @@ class OsDash extends Component {
         page: resposta.data.page,
         count: resposta.data.count,
         show: resposta.data.show,
-      }, console.log(resposta))
+      })
     )
 
     this.setState({
@@ -183,8 +183,6 @@ class OsDash extends Component {
 
     const resposta = await baixaReservaOs(value)
 
-    console.log(resposta)
-
     if (resposta.status === 200) {
 
       this.setState({
@@ -230,8 +228,6 @@ class OsDash extends Component {
 
     const resposta = await baixaReservaOs(value)
 
-    console.log(resposta)
-
     if (resposta.status === 200) {
 
       this.setState({
@@ -276,8 +272,6 @@ class OsDash extends Component {
     }
 
     const resposta = await baixaReservaOs(value)
-
-    console.log(resposta)
 
     if (resposta.status === 200) {
 
@@ -448,7 +442,6 @@ class OsDash extends Component {
 
 
   render() {
-    console.log(this.props)
     return (
       <div className='div-card-GOs'>
         <div className='linhaTexto-GOs'>

@@ -76,9 +76,6 @@ class PerfilDash extends Component {
         newPassword: this.state.newPass,
       }
 
-      console.log(value)
-
-
       this.setState({
         loading: true
       })

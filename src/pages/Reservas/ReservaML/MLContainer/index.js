@@ -148,8 +148,6 @@ class ReservaML extends Component{
       fieldFalha.rua = false
       const address = await getAddressByZipCode(cep)
 
-      // console.log(address)
-
       if (R.has('erro', address.data)) {
         fieldFalha.cep = true
         message.cep = 'Cep não encontrado.'
@@ -242,8 +240,6 @@ class ReservaML extends Component{
     }
 
     const resposta = await NewReservaML(values)
-
-    console.log(resposta)
 
     if (resposta.status === 422) {
 
@@ -344,7 +340,6 @@ class ReservaML extends Component{
   }
 
   render(){
-    console.log(this.state)
     return(
       <div className='div-card-ML'>
         <div className='linhaTexto-ML'>
