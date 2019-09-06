@@ -7,6 +7,8 @@ import { validators, masks } from './validators'
 import { newReservaOs } from '../../../../services/reservaOs';
 import { getProdutoByEstoque } from '../../../../services/produto';
 import { getTecnico } from '../../../../services/tecnico'
+import moment from 'moment';
+
 
 
 const { TextArea } = Input;
@@ -232,6 +234,10 @@ class ReservaOs extends Component{
     }
   }
 
+  disabledDate = (current) => {
+    return current && current < moment().subtract(1, 'day');
+  }
+
   onChangeEstoque = async (valor) => {
     await this.setState({
       estoque: valor
@@ -363,6 +369,7 @@ class ReservaOs extends Component{
           <div className='div-textData-Os'>Data do atendimento:</div>
             <div className='div-inputs'>
               <DatePicker
+              disabledDate={this.disabledDate}
                 className={
                   this.state.fieldFalha.data ?
                     'div-inputError-OS' :

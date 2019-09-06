@@ -3,7 +3,7 @@
   width: calc(100% - 190px) !important;
   display: flex;
   justify-content: center;
-  background-color: #f0f2f5;
+  /* background-color: #f0f2f5; */
   align-items: center;
 }
 .div-main-route{
