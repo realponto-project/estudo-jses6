@@ -320,7 +320,7 @@ class ReservaTecnico extends Component {
     await this.getAllTecnico()
 
     await this.setState({
-      tecnico: this.state.tecnicoArray[0].name
+      tecnico: ''
     })
     
     await this.getAllOs()
@@ -519,7 +519,6 @@ class ReservaTecnico extends Component {
     }
   } 
 
-
   render() {
     return (
       <div className='div-card-Rtecnico'>
@@ -589,7 +588,7 @@ class ReservaTecnico extends Component {
                 <div className='div-text-Rtecnico'>Técnico:</div>
                 {this.state.tecnicoArray.length === 0 ?
                   <Select value='Nenhum tecnico cadastrado' style={{ width: '100%' }}></Select> :
-                  <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}>{this.state.tecnicoArray.map((valor) => <Option value={valor.name}>{valor.name}</Option>)}</Select>}
+                  <Select value={this.state.tecnico} style={{ width: '100%' }} onChange={this.onChangeTecnico}><Option value=''>TODOS</Option>{this.state.tecnicoArray.map((valor) => <Option value={valor.name}>{valor.name}</Option>)}</Select>}
               </div>
             </div></div> :
           <div className='div-avancado-Rtecnico'>

@@ -46,6 +46,12 @@ class NovoProduto extends Component {
     },
   }
 
+  onChangeQuantMin = (value) => {
+    this.setState({
+      quantMin: value
+    })
+  }
+
   handleChangeTipo = (value) => {
     this.setState({
       tipo: value
@@ -614,7 +620,6 @@ class NovoProduto extends Component {
               <div className='div-inputs'>
                 <InputNumber
                   min={1}
-                  // allowClear={!this.state.fieldFalha.quantMin}
                   className={
                     this.state.fieldFalha.quantMin ?
                       'div-inputError-produtos' :
@@ -623,8 +628,6 @@ class NovoProduto extends Component {
                   name='quantMin'
                   value={this.state.quantMin}
                   onChange={this.onChangeQuantMin}
-                  // onBlur={this.onBlurValidator}
-                  // onFocus={this.onFocus}
                 />
                 {this.state.fieldFalha.quantMin ?
                   <p className='div-feedbackError'>

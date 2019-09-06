@@ -256,9 +256,8 @@
   justify-content: space-around
 }
 .div-produtos-mais-GOs{
-  height: 50px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   padding: 10px;
   width: 75%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -270,7 +269,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 1em;
 }
-.div-quant-mais{
+/* .div-quant-mais{
   height: 50px;
   display: flex;
   align-items: center;
@@ -278,7 +277,7 @@
   width: 17%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 1em
-}
+} */
 .div-peca-GOs{
   margin: 10px;
   height: 10px;

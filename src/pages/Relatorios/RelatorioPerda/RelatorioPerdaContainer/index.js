@@ -234,7 +234,6 @@ class GerenciarEntrada extends Component {
 
         <div className=' div-separate-Gentrada'></div>
         <div className='footer-ROs'>
-          {/* <Pagination defaultCurrent={1} total={50} /> */}
           <this.Pages />
         </div>
       </div>

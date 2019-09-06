@@ -410,8 +410,6 @@ class NovoFornecedor extends Component {
                 name='number'
                 value={this.state.number}
                 onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
               />
               {this.state.fieldFalha.number ?
                 <p className='div-feedbackError'>

@@ -97,6 +97,12 @@ class GerenciarEntrada extends Component{
     await this.setState({
       valueDate: {start: e[0]._d, end: e[1]._d},
     })
+
+    console.log(e)
+
+    // await this.setState({
+    //   data: this.state.valueDate,
+    // })
     await this.getAllEntrada()
   }
 
@@ -156,6 +162,7 @@ class GerenciarEntrada extends Component{
 
 
   render(){
+    console.log(this.state)
     return(
       <div className='div-card-Gentrada'>
         <div className='linhaTexto-Gentrada'>
@@ -197,18 +204,11 @@ class GerenciarEntrada extends Component{
           <div className='div-data-Gentrada'>
           <div className='div-text-Rtecnico'>Data:</div>
           <DatePicker.RangePicker
-          placeholder='Digite a data'
-          format='DD/MM/YYYY'
-          dropdownClassName='poucas'
-          onChange={this.searchDate}
-          onOk={this.searchDate}
-              // className='input-100'
-              // style={{ width: '100%' }}
-              // name='data'
-              // value={this.state.data}
-              // placeholder="Digite a data"
-              // onChange={this.onChange}
-              // allowClear
+            placeholder='Digite a data'
+            format='DD/MM/YYYY'
+            dropdownClassName='poucas'
+            onChange={this.searchDate}
+            onOk={this.searchDate}
             />
           </div>
         </div></div> : 
