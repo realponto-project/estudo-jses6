@@ -197,11 +197,7 @@ class ReservaOs extends Component{
       responsibleUser: 'modrp',
     }
 
-    console.log(values)
-
     const resposta = await newReservaOs(values)
-
-    console.log(resposta)
 
     if (resposta.status === 422) {
 
@@ -304,7 +300,6 @@ class ReservaOs extends Component{
 
 
   render(){
-    console.log(this.state.itemArray)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-Os'>

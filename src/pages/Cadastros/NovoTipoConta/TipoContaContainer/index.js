@@ -110,11 +110,7 @@ class NovoTipoConta extends Component {
       updateRos: this.state.permission.updateRos,
     }
 
-    console.log(values)
-
     const resposta = await NovoTipoContaService(values)
-
-    console.log(resposta)
 
     if (resposta.status === 422) {
 

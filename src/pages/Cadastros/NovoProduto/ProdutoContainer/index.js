@@ -134,8 +134,6 @@ class NovoProduto extends Component {
 
     const resposta = await newProduto(values)
 
-    console.log(resposta)
-
     if (resposta.status === 422) {
 
       this.setState({
@@ -180,8 +178,6 @@ class NovoProduto extends Component {
 
     const resposta = await newMarca(values)
 
-    console.log(values)
-
     if (resposta.status === 422) {
 
       this.setState({
@@ -218,8 +214,6 @@ class NovoProduto extends Component {
 
     const resposta = await newFabricante(values)
 
-    console.log(resposta)
-
     if (resposta.status === 422) {
 
       this.setState({
@@ -255,8 +249,6 @@ class NovoProduto extends Component {
     }
 
     const resposta = await newTipo(values)
-
-    console.log(resposta)
 
     if (resposta.status === 422) {
 

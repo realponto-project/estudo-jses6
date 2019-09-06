@@ -189,8 +189,6 @@ class ReservaTecnico extends Component {
 
     const resposta = await baixaReservaOs(value)
 
-    console.log(resposta)
-
     if (resposta.status === 200) {
 
       this.setState({
@@ -236,8 +234,6 @@ class ReservaTecnico extends Component {
 
     const resposta = await baixaReservaOs(value)
 
-    console.log(resposta)
-
     if (resposta.status === 200) {
 
       this.setState({
@@ -282,8 +278,6 @@ class ReservaTecnico extends Component {
     }
 
     const resposta = await baixaReservaOs(value)
-
-    console.log(resposta)
 
     if (resposta.status === 200) {
 
@@ -527,7 +521,6 @@ class ReservaTecnico extends Component {
 
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>

@@ -146,7 +146,7 @@ class NovoUsuario extends Component {
         addEquipType: resposta.data.addEquipType,
         addPart: resposta.data.addPart,
       }
-    }, console.log(resposta)))
+    }))
   }
 
   saveTargetNewUser = async () => {
@@ -187,11 +187,7 @@ class NovoUsuario extends Component {
       addAccessories: this.state.permission.addAccessories,
     }
 
-    console.log(values)
-
     const resposta = await NovoUsuarioService(values)
-
-    console.log(resposta)
 
     if (resposta.status === 422) {
 

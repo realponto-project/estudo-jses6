@@ -134,11 +134,7 @@ class NovaEntrada extends Component {
       responsibleUser: 'modrp',
     }
 
-    console.log(values)
-
     const resposta = await newEntrada(values)
-
-    console.log(resposta)
 
     if (resposta.status === 422) {
 
@@ -212,8 +208,6 @@ class NovaEntrada extends Component {
   }
 
   onChangeItem = (value, product) => {
-
-    console.log(product)
     this.setState({
       nomeProduto: value,
       serial: product.props.product.serial,
@@ -301,7 +295,6 @@ class NovaEntrada extends Component {
   )
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-entrada'>
         <div className='linhaTexto-entrada'>

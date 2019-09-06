@@ -125,8 +125,6 @@ class NovoTecnico extends Component{
 
     const resposta = await newTecnico(values)
 
-    console.log(resposta)
-
     if (resposta.status === 422) {
 
       this.setState({
@@ -170,8 +168,6 @@ class NovoTecnico extends Component{
     }
 
     const resposta = await newCarro(values)
-
-    console.log(resposta)
 
     if (resposta.status === 422) {
 
@@ -360,7 +356,6 @@ class NovoTecnico extends Component{
   )
 
   render(){
-    // console.log(this.state)
     return(
       <div className='div-card-tecnico'>
         <div className='linhaTexto-tecnico'>

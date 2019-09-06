@@ -131,11 +131,7 @@ class ReservaKit extends Component {
       kitPartId: this.state.produtoSelecionado.products.kitPartId,
     }
 
-    console.log(values)
-
     const resposta = await baixasKitOut(values)
-
-    console.log(resposta)
 
     if (resposta.status === 422) {
 
@@ -282,39 +278,6 @@ class ReservaKit extends Component {
       incluidos: this.state.incluidos + this.state.teste,
       teste: 1
     })
-
-    // const value = {
-    //   osPartsId: this.state.produtoSelecionado.products.osPartsId,
-    //   add: {
-    //     return: this.state.teste
-    //   }
-    // }
-
-    // const resposta = await baixaReservaOs(value)
-
-    // console.log(resposta)
-
-    // if (resposta.status === 200) {
-
-    //   this.setState({
-    //     teste: menos,
-    //   })
-    // }
-
-    // await this.getAllKit()
-
-    // eslint-disable-next-line array-callback-return
-    // const x = this.state.OsArray.rows.filter((item) => {
-    //   if (item.id === R.keys(this.state.mais)[0]) {
-    //     return item
-    //   }
-    // })
-
-    // await this.setState({
-    //   lineSelected: {
-    //     rows: x
-    //   },
-    // })
   }
 
   perda = async () => {
@@ -331,39 +294,6 @@ class ReservaKit extends Component {
       perdas: this.state.perdas + this.state.teste,
       teste: 1
     })
-
-    // const value = {
-    //   osPartsId: this.state.produtoSelecionado.products.osPartsId,
-    //   add: {
-    //     missOut: this.state.teste
-    //   }
-    // }
-
-    // const resposta = await baixaReservaOs(value)
-
-    // console.log(resposta)
-
-    // if (resposta.status === 200) {
-
-    //   this.setState({
-    //     teste: menos,
-    //   })
-    // }
-
-    // await this.getAllKit()
-
-    // // eslint-disable-next-line array-callback-return
-    // const x = this.state.OsArray.rows.filter((item) => {
-    //   if (item.id === R.keys(this.state.mais)[0]) {
-    //     return item
-    //   }
-    // })
-
-    // await this.setState({
-    //   lineSelected: {
-    //     rows: x
-    //   },
-    // })
   }
 
   liberar = async () => {
@@ -380,39 +310,6 @@ class ReservaKit extends Component {
       liberados: this.state.liberados + this.state.teste,
       teste: 1
     })
-
-    // const value = {
-    //   osPartsId: this.state.produtoSelecionado.products.osPartsId,
-    //   add: {
-    //     output: this.state.teste
-    //   }
-    // }
-
-    // const resposta = await baixaReservaOs(value)
-
-    // console.log(resposta)
-
-    // if (resposta.status === 200) {
-
-    //   this.setState({
-    //     teste: menos,
-    //   })
-    // }
-
-    // await this.getAllKit()
-
-    // // eslint-disable-next-line array-callback-return
-    // const x = this.state.OsArray.rows.filter((item) => {
-    //   if (item.id === R.keys(this.state.mais)[0]) {
-    //     return item
-    //   }
-    // })
-
-    // await this.setState({
-    //   lineSelected: {
-    //     rows: x
-    //   },
-    // })
   }
 
   searchDate = async(e) => {
@@ -524,7 +421,6 @@ class ReservaKit extends Component {
   )
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-kit'>
         <div className='linhaTexto-kit'>
