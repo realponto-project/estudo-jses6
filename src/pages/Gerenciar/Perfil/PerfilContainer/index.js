@@ -118,7 +118,7 @@ class PerfilDash extends Component {
       <div className='div-card-perfil'>
         <div className='form-perfil'>
           <div className='linhaTexto-perfil'>
-            <h1 className='h1-perfil'>Seu perfil</h1>
+            <h1 className='h1-perfil'>Meu perfil</h1>
           </div>
 
           <div className='div-linhaCard-perfil'>
