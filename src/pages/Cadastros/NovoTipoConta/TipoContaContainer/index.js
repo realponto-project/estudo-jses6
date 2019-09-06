@@ -13,6 +13,7 @@ class NovoTipoConta extends Component {
     redirect: false,
     typeAccount: '',
     permission: {
+      todas: false,
       addUser: false,
       addTypeAccount: false,
       responsibleUser: 'modrp',
@@ -34,6 +35,68 @@ class NovoTipoConta extends Component {
       delROs: false,
       updateRos: false,
     },
+  }
+
+  todas = async () =>{
+    await this.setState({
+      permission:{
+        todas: !this.state.permission.todas
+      }
+    })
+
+    if(this.state.permission.todas){
+      await this.setState({
+        permission: {
+          todas: true,
+          addUser: true,
+          addTypeAccount: true,
+          responsibleUser: 'modrp',
+          stock: true,
+          labTec: true,
+          addTec: true,
+          addCar: true,
+          addMark: true,
+          addType: true,
+          addProd: true,
+          addFonr: true,
+          addEntr: true,
+          addKit: true,
+          addKitOut: true,
+          addOutPut: true,
+          addROs: true,
+          addRML: true,
+          gerROs: true,
+          delROs: true,
+          updateRos: true,
+        }
+      })
+    }else if(!this.state.permission.todas){
+      await this.setState({
+        permission: {
+          todas: false,
+          addUser: false,
+          addTypeAccount: false,
+          responsibleUser: 'modrp',
+          stock: true,
+          labTec: false,
+          addTec: false,
+          addCar: false,
+          addMark: false,
+          addType: false,
+          addProd: false,
+          addFonr: false,
+          addEntr: false,
+          addKit: false,
+          addKitOut: false,
+          addOutPut: false,
+          addROs: false,
+          addRML: false,
+          gerROs: false,
+          delROs: false,
+          updateRos: false,
+        }
+      })
+    }
   }
 
   success = () => {
@@ -62,9 +125,8 @@ class NovoTipoConta extends Component {
     })
   }
 
-  onChangePermission = (e) => {
-
-    this.setState({
+  onChangePermission = async (e) => {
+    await this.setState({
       permission: {
         ...this.state.permission,
         [e.target.name]: e.target.checked
@@ -188,6 +250,7 @@ class NovoTipoConta extends Component {
           <div className='div-cardInfo-tipo'>
             <Card className='card-tipo'>
             <div className='checkbox-card-tipo'>
+              <Checkbox onChange={this.todas} checked={this.state.permission.todas} name='todas'>Selecionar todas</Checkbox>
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addUser} name='addUser'>Adicionar usuário</Checkbox>
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTypeAccount} name='addTypeAccount'>Adicionar tipo de conta</Checkbox>
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addTec} name='addTec'>Adicionar técnico</Checkbox>
@@ -196,9 +259,9 @@ class NovoTipoConta extends Component {
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addType} name='addType'>Adicionar tipo de equipamento</Checkbox>
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addProd} name='addProd'>Adicionar produto</Checkbox> 
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addFonr} name='addFonr'>Adicionar fornecedor</Checkbox>
-              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEntr} name='addEntr'>Adicionar entrada</Checkbox>
               </div>
               <div className='checkbox-card-tipo'>
+              <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addEntr} name='addEntr'>Adicionar entrada</Checkbox>
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addKit} name='addKit'>Gerenciar kit do técnico</Checkbox>
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addKitOut} name='addKitOut'>Baixa no kit do técnico</Checkbox>
               <Checkbox onChange={this.onChangePermission} checked={this.state.permission.addOutPut} name='addOutPut'>Baixa na Os</Checkbox>

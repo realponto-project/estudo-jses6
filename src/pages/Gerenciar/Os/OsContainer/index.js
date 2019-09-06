@@ -396,9 +396,12 @@ class OsDash extends Component {
                   {line.formatedDate}
                 </div>
                 <div className='cel-acoes-cabecalho-GOs'>
+                    {this.props.auth.delROs && !line.notDelet ? 
                   <Tooltip placement="topLeft" title='Remover'>
-                    {this.props.auth.delROs ? <Button type="primary" className='button-icon-remove' onClick={() => this.removerLinha(line.id)}><Icon type="delete" /></Button> : null }
-                  </Tooltip>
+                    <Button type="primary" className='button-icon-remove' onClick={() => this.removerLinha(line.id)}><Icon type="delete" /></Button>
+                    </Tooltip> 
+                    :  
+                    <Button type="primary" disabled className='button-disabled'><Icon type="stop" /></Button> }
                   <this.modalRemover />
                 </div>
               </div>
@@ -449,7 +452,6 @@ class OsDash extends Component {
 
 
   render() {
-    console.log(this.state.idLine)
     return (
       <div className='div-card-GOs'>
         <div className='linhaTexto-GOs'>
