@@ -226,8 +226,9 @@ class ReservaTecnico extends Component {
     const value = {
       osPartsId: this.state.produtoSelecionado.products.id,
       add: {
-        return: this.state.teste
-      }
+        return: this.state.teste,
+      },
+      serialNumberArray: ['55'],
     }
 
     const resposta = await baixaReservaOs(value)
@@ -272,7 +273,8 @@ class ReservaTecnico extends Component {
       osPartsId: this.state.produtoSelecionado.products.id,
       add: {
         missOut: this.state.teste
-      }
+      },
+      serialNumberArray: ['55'],
     }
 
     const resposta = await baixaReservaOs(value)

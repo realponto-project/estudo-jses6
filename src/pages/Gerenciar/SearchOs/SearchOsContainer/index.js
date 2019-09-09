@@ -29,7 +29,7 @@ class SearchOsDash extends Component{
     data: moment(this.props.osUpdateValue.date),
     tecnico: this.props.osUpdateValue.technician,
     nomeProduto: 'Não selecionado',
-    productId: '',
+    productBaseId: '',
     tecnicoId: this.props.osUpdateValue.technicianId,
     quant: '1',
     quantObj: {},
@@ -140,7 +140,7 @@ class SearchOsDash extends Component{
   onChangeItem = async (value, props) => {
    await this.setState({
       nomeProduto: value,
-      productId: props.props.props.id,
+      productBaseId: props.props.props.id,
       serial: props.props.props.serial,
     })
   }
@@ -354,7 +354,7 @@ class SearchOsDash extends Component{
       },
       carrinho:[{
         name: this.state.nomeProduto,
-        productId: this.state.productId,
+        productBaseId: this.state.productBaseId,
         amount: this.state.quant.toString(),
         stockBase: this.state.estoque,
         serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
