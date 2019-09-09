@@ -14,7 +14,7 @@ class ReservaTecnico extends Component {
 
   state = {
     idLine: '',
-    numeroSerieTest: [],
+    numeroSerieTest: '',
     valueDate: { start: '2019/01/01' },
     avancado: false,
     loading: false,
@@ -587,7 +587,7 @@ class ReservaTecnico extends Component {
   }
 
   render() {
-    console.log(this.state.produtoSelecionado)
+    console.log(this.state.numeroSerieTest)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>
