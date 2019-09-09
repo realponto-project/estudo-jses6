@@ -77,6 +77,8 @@ class SideBar extends Component {
           return <Redirect to='/logged/novoProduto/add' />
         case 'novoFornecedor_add':
           return <Redirect to='/logged/novoFornecedor/add' />
+        case 'gerenciarProduto_dash':
+          return <Redirect to='/logged/gerenciarProduto/dash' />
         case 'entrada_add':
           return <Redirect to='/logged/entrada/add' />
         case 'entrada_dash':
@@ -159,6 +161,7 @@ class SideBar extends Component {
             <Menu.Item disabled={!this.props.auth.addTec} key="newTecnico_add"><Icon type="user-add" />Técnico</Menu.Item>
             <Menu.Item disabled={!this.props.auth.addProd} key="novoProduto_add"><Icon type="setting" />Produto</Menu.Item>
             <Menu.Item disabled={!this.props.auth.addFonr} key="novoFornecedor_add"><Icon type="bank" />Fornecedor</Menu.Item>
+            <Menu.Item key="gerenciarProduto_dash"><Icon type="unordered-list" />Gerenciar</Menu.Item>
           </SubMenu>
           <SubMenu
             key="Entrada"

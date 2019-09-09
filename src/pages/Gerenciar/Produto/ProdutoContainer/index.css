@@ -1,0 +1,48 @@
+.div-cabecalho-GCadastros{
+  width: 90%;
+  background-color: #FAFAFA;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px
+}
+.cel-os-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 13%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-rs-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 30%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-cnpj-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 23%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-acoes-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 14%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-data-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 20%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}

@@ -26,6 +26,7 @@ import SearchOsRoute from './Gerenciar/SearchOs';
 import OsDashRoute from './Gerenciar/Os';
 import NovoTipoContaRoute from './Cadastros/NovoTipoConta';
 import PerfilDashRoute from './Gerenciar/Perfil';
+import GerenciarProdutoRoute from './Gerenciar/Produto';
 
 class PagesRoute extends Component {
 
@@ -68,6 +69,7 @@ class PagesRoute extends Component {
           <Route path='/logged/novoFornecedor' component={NovoFornecedorRoute} /> 
           <Route path='/logged/novoProduto' component={NovoProdutoRoute} />
           <Route path='/logged/novoTecnico' component={NovoTecnicoRoute} />
+          <Route path='/logged/gerenciarProduto' component={GerenciarProdutoRoute} />
           <Route path='/logged/entrada' component={NovaEntradaRoute} />
           <Route path='/logged/gerenciarEntrada' component={GerenciarEntradaRoute} />
           <Route path='/logged/estoque' component={EstoqueRoute} />
