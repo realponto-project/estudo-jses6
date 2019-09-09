@@ -593,7 +593,7 @@ class NovoProduto extends Component {
 
         <div className='linhaSemEspaco-produtos'>
           <div className='div-codigo-produtos'>
-            <div className='div-text-produtos'>Código:</div>
+            <div className='div-text-produtos'>SKU:</div>
               <div className='div-inputs'>
                 <Input
                   allowClear={!this.state.fieldFalha.codigo}

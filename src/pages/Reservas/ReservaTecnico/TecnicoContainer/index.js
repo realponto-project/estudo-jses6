@@ -1,19 +1,20 @@
 import * as R from 'ramda'
 import React, { Component } from 'react'
 import './index.css'
-import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber, DatePicker, Select } from 'antd'
+import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber, DatePicker, Select, message } from 'antd'
 import { connect } from 'react-redux'
 
 import { getTecnico } from '../../../../services/tecnico'
 import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs';
 
-
+const { TextArea } = Input;
 const { Option } = Select;
 
 class ReservaTecnico extends Component {
 
   state = {
     idLine: '',
+    numeroSerieTest: [],
     valueDate: { start: '2019/01/01' },
     avancado: false,
     loading: false,
@@ -43,6 +44,42 @@ class ReservaTecnico extends Component {
     show: 0,
   }
 
+  errorNumeroSerie = () => {
+    message.error('Este equipamento ja foi registrado');
+  };
+
+  filter = async (e) => {
+
+    await this.setState({
+      numeroSerieTest: e.target.value
+    })
+
+    const teste = this.state.numeroSerieTest.split(/\n/)
+
+    if (/\n/.test(this.state.numeroSerieTest[this.state.numeroSerieTest.length - 1])) {
+
+      let count = 0
+
+      // eslint-disable-next-line array-callback-return
+      teste.map((valor) => {
+        if (valor === teste[teste.length - 2]) count++
+      })
+
+      if (count > 1) {
+
+        this.errorNumeroSerie()
+
+        teste.splice(teste.length - 2, 1)
+
+        const testeArray = teste.toString()
+
+        this.setState({
+          numeroSerieTest: testeArray.replace(/,/ig, '\n')
+        })
+      }
+    }
+  }
+
   changePages = (pages) => {
     this.setState({
       page: pages
@@ -59,6 +96,12 @@ class ReservaTecnico extends Component {
         tecnicoArray: resposta.data,
       })
     )
+  }
+
+  copy = (acessorio) => {
+    this.setState({
+      numeroSerieTest: `${this.state.numeroSerieTest}\n${acessorio}`,
+    })
   }
 
   getAllOs = async () => {
@@ -417,6 +460,25 @@ class ReservaTecnico extends Component {
             </Tooltip>
           </div>
         </div>
+        {this.state.produtoSelecionado.products.serial ? 
+        <div className='div-text-modal'>
+        <div className='div-numSerie-modal'>
+        {this.state.produtoSelecionado.products.serialNumbers.map((valor) => 
+        <div onClick={() => {this.copy(valor.serialNumber)}}>{valor.serialNumber}</div>)}
+        </div>
+        <div className='div-serie-modal'>
+        <TextArea
+          className='input-100'
+          placeholder="Selecione o número de serie"
+          autosize={{ minRows: 2, maxRows: 2 }}
+          rows={4}
+          name='numeroSerieTest'
+          value={this.state.numeroSerieTest}
+          onChange={this.filter}
+          readOnly
+        />
+        </div>
+        </div> :  null}
         <div className='div-total-modal'>
           <div className='div-baixo'>Total:</div>
           <div className='div-baixo'>Retornados:</div>
@@ -523,6 +585,7 @@ class ReservaTecnico extends Component {
   }
 
   render() {
+    console.log(this.state.produtoSelecionado)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>
