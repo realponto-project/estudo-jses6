@@ -147,6 +147,7 @@ class ReservaKit extends Component {
       this.setState({
         loading:false,
         messageError: false,
+        modalBaixa: false,
       })
     } if (resposta.status === 200) {
 
@@ -326,7 +327,7 @@ class ReservaKit extends Component {
       },
       totalModal: menos,
       liberados: this.state.liberados + this.state.teste,
-      teste: 1
+      teste: 1,
     })
   }
 
