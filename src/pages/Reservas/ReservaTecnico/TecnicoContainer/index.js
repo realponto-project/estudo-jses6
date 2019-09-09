@@ -98,10 +98,37 @@ class ReservaTecnico extends Component {
     )
   }
 
-  copy = (acessorio) => {
-    this.setState({
-      numeroSerieTest: `${this.state.numeroSerieTest}\n${acessorio}`,
+  copy = async (acessorio) => {
+    await this.setState({
+      numeroSerieTest: this.state.numeroSerieTest ? `${this.state.numeroSerieTest}\n${acessorio}` : acessorio,
     })
+
+    const teste = this.state.numeroSerieTest.split(/\n/)
+
+    console.log(teste)
+
+    let count = 0
+
+    // eslint-disable-next-line array-callback-return
+    teste.map((valor) => {
+      if (valor === teste[teste.length - 1]) count++
+    })
+
+    // console.log(teste.filter((valor) => valor === teste[teste.length - 1]))
+    console.log(count)
+
+    if (count > 1) {
+
+      this.errorNumeroSerie()
+
+      teste.splice(teste.length - 1, 1)
+
+      const testeArray = teste.toString()
+
+      this.setState({
+        numeroSerieTest: testeArray.replace(/,/ig, '\n')
+      })
+    }
   }
 
   getAllOs = async () => {
@@ -228,7 +255,7 @@ class ReservaTecnico extends Component {
       add: {
         return: this.state.teste,
       },
-      serialNumberArray: ['55'],
+      serialNumberArray: this.state.numeroSerieTest.length > 0 ? this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ) : null,
     }
 
     const resposta = await baixaReservaOs(value)
@@ -274,7 +301,8 @@ class ReservaTecnico extends Component {
       add: {
         missOut: this.state.teste
       },
-      serialNumberArray: ['55'],
+      serialNumberArray: this.state.numeroSerieTest.length > 0 ? this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ) : null,
+
     }
 
     const resposta = await baixaReservaOs(value)
@@ -319,7 +347,8 @@ class ReservaTecnico extends Component {
       osPartsId: this.state.produtoSelecionado.products.id,
       add: {
         output: this.state.teste
-      }
+      },
+      serialNumberArray: this.state.numeroSerieTest.length > 0 ? this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ) : null,
     }
 
     const resposta = await baixaReservaOs(value)
