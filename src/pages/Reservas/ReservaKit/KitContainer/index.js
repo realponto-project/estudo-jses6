@@ -240,9 +240,11 @@ class ReservaKit extends Component {
   componentDidMount = async () => {
     await this.getAllTecnico()
 
-    await this.setState({
-      tecnico: this.state.tecnicoArray[0].name
-    })
+    if(this.state.tecnicoArray.length !== 0){
+      await this.setState({
+        tecnico: this.state.tecnicoArray[0].name
+      })
+    }
 
     await this.getAllKit()
   }

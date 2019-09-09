@@ -358,6 +358,7 @@ class SearchOsDash extends Component{
         amount: this.state.quant.toString(),
         stockBase: this.state.estoque,
         serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
+        serial: this.state.serial,
       },...this.state.carrinho],
       nomeProduto: 'Não selecionado',
       quant: '1',
@@ -380,7 +381,8 @@ class SearchOsDash extends Component{
 
 
   render(){
-    console.log(this.state)
+
+    console.log(this.state.carrinho)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-GOs'>
@@ -577,19 +579,37 @@ class SearchOsDash extends Component{
           </div>
           <div className='div-linha1-Os'>
             <label className='label-produto-Os'>Produto</label>
-            <label className='label-quant-Os'>Quantidade</label>
+            <label className='label-quant-SearchOs'>Quantidade</label> 
+            {this.state.carrinho.filter((teste) => teste.serial === true).length > 0 ? <label className='label-serial-SearchOs'>Nº Série</label> : null }
           </div>
           <div className='div-linhaSepareteProdutos-Os'></div>
           {this.state.carrinho.map((valor) =>
             <div className='div-linha-Os'>
               <label className='label-produto-Os'>{valor.name}</label>
+              {valor.serial ? <label className='label-quant-SearchOs'>
               <InputNumber 
                 min={1}
                 value={this.state.quantObj[`quant${valor.name}`]}
                 onChange={(value) => this.onChangeUpdateQuant(valor.name, value)} />
-              <label className='label-quant-Os'>
                 UN
-              </label>
+              </label> : <label className='label-quant-Os'>
+              <InputNumber 
+                min={1}
+                value={this.state.quantObj[`quant${valor.name}`]}
+                onChange={(value) => this.onChangeUpdateQuant(valor.name, value)} />
+                UN
+              </label>}
+              {valor.serial ? <label className='label-serial-SearchOs'>
+              <TextArea
+                style={{width: '90%'}}
+                placeholder="Digite o número de série"
+                autosize={{ minRows: 2, maxRows: 4 }}
+                rows={4}
+                name='numeroSerie'
+                value={valor.serialNumbers.map((testeValor) => testeValor.serialNumber)}
+                onChange={this.onChange}
+              />
+              </label> : null}
               <Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button>
             </div>)
           }
