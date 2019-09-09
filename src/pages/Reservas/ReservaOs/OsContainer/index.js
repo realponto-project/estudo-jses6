@@ -232,6 +232,8 @@ class ReservaOs extends Component{
         messageSuccess: false
       })
     }
+
+    await this.getAllItens()
   }
 
   disabledDate = (current) => {

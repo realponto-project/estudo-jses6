@@ -166,7 +166,7 @@ class NovoProduto extends Component {
         fabricante: '',
         descricao: '',
         codigo: '',
-        quantMin: '',
+        quantMin: 1,
         serial: false,
         messageSuccess: true,
       })
