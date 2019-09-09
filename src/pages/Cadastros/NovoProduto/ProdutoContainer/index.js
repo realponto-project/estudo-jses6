@@ -48,7 +48,7 @@ class NovoProduto extends Component {
 
   onChangeQuantMin = (value) => {
     this.setState({
-      quantMin: value
+      quantMin: value ? value : 1,
     })
   }
 
@@ -86,6 +86,10 @@ class NovoProduto extends Component {
   
   error = () => {
     message.error('O cadastro não foi efetuado');
+  };
+
+  errorQuant = () => {
+    message.error('Coloque a quantidade mínima');
   };
 
   componentDidMount = async () => {
@@ -628,6 +632,8 @@ class NovoProduto extends Component {
                   name='quantMin'
                   value={this.state.quantMin}
                   onChange={this.onChangeQuantMin}
+                  onBlur={this.onBlurValidator}
+                  onFocus={this.onFocus}
                 />
                 {this.state.fieldFalha.quantMin ?
                   <p className='div-feedbackError'>
