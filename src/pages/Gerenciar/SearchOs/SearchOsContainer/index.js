@@ -122,6 +122,22 @@ class SearchOsDash extends Component{
         },
       })
     })
+
+    let textArea = {}
+
+    // eslint-disable-next-line array-callback-return
+    this.state.carrinho.map((item) => {
+      if (item.serial) {
+        textArea = {
+          ...textArea,
+          [item.id]: item.serialNumbers.map((testeValor) => testeValor.serialNumber).toString().replace(/,/gi, '\n'),
+        }
+      }
+    })
+
+    await this.setState({
+      textArea,
+    })
   }
 
   getAllItens = async () => {
@@ -247,6 +263,7 @@ class SearchOsDash extends Component{
         resp = {
           id: item.id,
           amount: this.state.quantObj[`quant${item.name}`].toString(),
+
         }
       } else {
         resp = {
@@ -256,6 +273,7 @@ class SearchOsDash extends Component{
       }
       return resp
     })
+
 
     const value = {
       id: this.props.osUpdateValue.Os,
@@ -329,6 +347,15 @@ class SearchOsDash extends Component{
     })
   }
 
+  onChangeTextArea= (e) => {
+    this.setState({
+      textArea: {
+          ...this.state.textArea,
+        [e.target.name]: e.target.value,
+      }
+    })
+  }
+
   onChangeQuant = (value) => {
     this.setState({
       quant: value
@@ -366,6 +393,21 @@ class SearchOsDash extends Component{
       serial: false,
       numeroSerieTest: '',
     })
+    let textArea = {}
+
+    // eslint-disable-next-line array-callback-return
+    this.state.carrinho.map((item) => {
+      if (item.serial) {
+        textArea = {
+          ...textArea,
+          [item.id]: '',
+        }
+      }
+    })
+
+    this.setState({
+      textArea,
+    })
   }else (
     this.errorProduto()
   )}
@@ -381,7 +423,6 @@ class SearchOsDash extends Component{
 
 
   render(){
-
     console.log(this.state.carrinho)
     return(
       <div className='div-card-Os'>
@@ -580,36 +621,34 @@ class SearchOsDash extends Component{
           <div className='div-linha1-Os'>
             <label className='label-produto-Os'>Produto</label>
             <label className='label-quant-SearchOs'>Quantidade</label> 
-            {this.state.carrinho.filter((teste) => teste.serial === true).length > 0 ? <label className='label-serial-SearchOs'>Nº Série</label> : null }
+            {/* {this.state.carrinho.filter((teste) => teste.serial === true).length > 0 ? <label className='label-serial-SearchOs'>Nº Série</label> : null } */}
           </div>
           <div className='div-linhaSepareteProdutos-Os'></div>
           {this.state.carrinho.map((valor) =>
             <div className='div-linha-Os'>
               <label className='label-produto-Os'>{valor.name}</label>
-              {valor.serial ? <label className='label-quant-SearchOs'>
+              <label className='label-quant-SearchOs'>
               <InputNumber 
                 min={1}
+                disabled={valor.serial}
                 value={this.state.quantObj[`quant${valor.name}`]}
                 onChange={(value) => this.onChangeUpdateQuant(valor.name, value)} />
                 UN
-              </label> : <label className='label-quant-Os'>
-              <InputNumber 
-                min={1}
-                value={this.state.quantObj[`quant${valor.name}`]}
-                onChange={(value) => this.onChangeUpdateQuant(valor.name, value)} />
-                UN
-              </label>}
-              {valor.serial ? <label className='label-serial-SearchOs'>
+              </label>
+              
+              {/* {valor.serial ? <label className='label-serial-SearchOs'>
               <TextArea
                 style={{width: '90%'}}
                 placeholder="Digite o número de série"
                 autosize={{ minRows: 2, maxRows: 4 }}
                 rows={4}
-                name='numeroSerie'
-                value={valor.serialNumbers.map((testeValor) => testeValor.serialNumber)}
-                onChange={this.onChange}
+                name={valor.id}
+                value={this.state.textArea ? this.state.textArea[valor.id]
+                  // .replace(/,/ig, '\n' )
+                  : null }
+                onChange={this.onChangeTextArea}
               />
-              </label> : null}
+              </label> : null} */}
               <Button type='primary' className='button-remove-Os' onClick={() => this.remove(valor)}>Remover</Button>
             </div>)
           }

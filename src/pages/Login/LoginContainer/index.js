@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react'
 import './index.css'
-import { Input, Icon, Button, message } from 'antd';
+import { Input, Icon, Button } from 'antd';
 import 'antd/dist/antd.css';
 import * as R from 'ramda'
 
@@ -20,11 +20,7 @@ class Login extends Component {
     }
   }
 
-  error = () => {
-    message.error('Erro ao logar');
-  }
-
-  onSubmit = async (e) => {
+  onSubmit = async () => {
     await this.props.onSubmit({...this.props.value, typeAccount: { stock: true }})
     if(this.hasAuth(this.props)){
       if (this.hasToken(this.props.auth)){
@@ -32,7 +28,6 @@ class Login extends Component {
         }
       }
     }
-    // this.error()
   }
 
   render() {
