@@ -384,7 +384,7 @@ class OsDash extends Component {
                   <div className='button-mais' onClick={() => this.mais(line)}>+</div>
                 </div>
                 <div className='cel-os-cabecalho-GOs'>
-                  {line.id}
+                  {line.os}
                 </div>
                 <div className='cel-rs-cabecalho-GOs'>
                   {line.razaoSocial}

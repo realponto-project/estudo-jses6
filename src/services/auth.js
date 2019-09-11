@@ -20,7 +20,7 @@ export const logout = async (token) => {
   return true
 } 
 
-export const auth = async(value) => {
+export const  auth = async(value) => {
  
 let response = null
 
