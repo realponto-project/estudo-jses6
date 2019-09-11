@@ -158,7 +158,7 @@ class GerenciarEntrada extends Component {
                 <div className='button-mais' onClick={() => this.mais(line)}>+</div>
               </div>
               <div className='cel-Os-cabecalho-ROs'>
-                {line.id}
+                {line.os}
               </div>
               <div className='cel-rs-cabecalho-ROs'>
                 {line.razaoSocial}
@@ -215,7 +215,7 @@ class GerenciarEntrada extends Component {
   )
 
   render() {
-    console.log(this.state)
+    console.log(this.state.OsArray)
     return (
       <div className='div-card-ROs'>
         <div className='linhaTexto-ROs'>

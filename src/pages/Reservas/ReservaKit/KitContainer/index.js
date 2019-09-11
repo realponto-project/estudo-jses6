@@ -542,7 +542,7 @@ class ReservaKit extends Component {
                   {line.amount}
                 </div>
                 <div className='cel-data-cabecalho-kit'>
-                  22/11/2001 14:30
+                  {line.updatedAt}
                 </div>
                 <div className='cel-acoes-cabecalho-kit'>
                   <Button className='button' type='primary' onClick={() => this.openModalDetalhes(line)} ><Icon type="edit" /></Button>

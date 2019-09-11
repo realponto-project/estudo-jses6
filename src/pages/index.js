@@ -27,11 +27,27 @@ import OsDashRoute from './Gerenciar/Os';
 import NovoTipoContaRoute from './Cadastros/NovoTipoConta';
 import PerfilDashRoute from './Gerenciar/Perfil';
 import GerenciarProdutoRoute from './Gerenciar/Produto';
+import * as R from 'ramda'
+import uuidValidate from 'uuid-validate'
 
 class PagesRoute extends Component {
 
   state = {
     auth: true
+  }
+
+  hasAuth = R.has('auth')
+  hasToken = R.has('token')
+
+  forceLogout = async () => {
+    console.log('teste')
+    if (!this.hasAuth(this.props)) {
+      await this.logout()
+    } else if (!this.hasToken(this.props.auth)) {
+      await this.logout()
+    } else if (!uuidValidate(this.props.auth.token)) {
+      await this.logout()
+    }
   }
 
   logout = async () => {
@@ -48,15 +64,17 @@ class PagesRoute extends Component {
 
     response = await auth(value).then(
       resp => this.setState({
-        auth: resp.data
+        auth: resp ? resp.data : false
       })
     )
 
     return response
   }
 
-  componentDidMount = () => {
-    this.auth()
+  componentDidMount = async () => {
+    await this.auth()
+
+    await this.forceLogout()
   }
 
   render() {

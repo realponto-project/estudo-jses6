@@ -105,7 +105,9 @@ class ReservaTecnico extends Component {
 
     const teste = this.state.numeroSerieTest.split(/\n/)
 
-    console.log(teste)
+    await this.setState({
+      teste: teste.length
+    })
 
     let count = 0
 
@@ -113,9 +115,6 @@ class ReservaTecnico extends Component {
     teste.map((valor) => {
       if (valor === teste[teste.length - 1]) count++
     })
-
-    // console.log(teste.filter((valor) => valor === teste[teste.length - 1]))
-    console.log(count)
 
     if (count > 1) {
 
@@ -125,9 +124,19 @@ class ReservaTecnico extends Component {
 
       const testeArray = teste.toString()
 
-      this.setState({
-        numeroSerieTest: testeArray.replace(/,/ig, '\n')
+      await this.setState({
+        numeroSerieTest: testeArray.replace(/,/ig, '\n'),
+        teste: teste.length
       })
+    }else{
+      await this.setState({
+        produtoSelecionado: {
+          products:{
+            ...this.state.produtoSelecionado.products,
+            serialNumbers: this.state.produtoSelecionado.products.serialNumbers.filter((serial)=> serial.serialNumber !== acessorio.toString())
+          }
+        }
+      }, console.log(acessorio, this.state.produtoSelecionado.products.serialNumbers, this.state.produtoSelecionado.products.serialNumbers.filter((serial)=> serial.serialNumber !== acessorio.toString())))
     }
   }
 
@@ -279,8 +288,9 @@ class ReservaTecnico extends Component {
       lineSelected: {
         rows: x
       },
-    })
-    await this.getAllOsSemLoading()
+      teste: 0,
+      numeroSerieTest: '',
+    },  await this.getAllOsSemLoading())
   }
 
   perda = async () => {
@@ -311,7 +321,7 @@ class ReservaTecnico extends Component {
 
       this.setState({
         teste: menos,
-      })
+      }, await this.getAllOsSemLoading())
     }
 
 
@@ -326,8 +336,9 @@ class ReservaTecnico extends Component {
       lineSelected: {
         rows: x
       },
-    })
-    await this.getAllOsSemLoading()
+      teste: 0,
+      numeroSerieTest: '',
+    }, await this.getAllOsSemLoading())
   }
 
   liberar = async () => {
@@ -356,8 +367,9 @@ class ReservaTecnico extends Component {
     if (resposta.status === 200) {
 
       this.setState({
-        teste: menos,
-      })
+        teste: 0,
+        numeroSerieTest: '',
+      }, await this.getAllOsSemLoading())
     }
 
 
@@ -423,6 +435,7 @@ class ReservaTecnico extends Component {
       lineSelected: {
         rows: [],
       },
+      numeroSerieTest: '',
     })
   }
 
@@ -436,7 +449,7 @@ class ReservaTecnico extends Component {
     })
 
     await this.setState({
-      teste: this.state.produtoSelecionado.products.quantMax
+      teste: this.state.produtoSelecionado.products.serial ? 0 : this.state.produtoSelecionado.products.quantMax,
     })
   }
 
@@ -478,7 +491,14 @@ class ReservaTecnico extends Component {
         <div className='div-separate-modal' />
         <div className='div-text-modal'>
           <div className='div-produtos-modal'>{this.state.produtoSelecionado.products.name}</div>
-          <div className='div-quant-modal'><InputNumber min={1} max={this.state.produtoSelecionado.products.quantMax} defaultValue={this.state.teste} style={{ width: '90%' }} value={this.state.teste} onChange={this.onChangeModal} /></div>
+          <div className='div-quant-modal'>
+            <InputNumber 
+            max={this.state.produtoSelecionado.products.quantMax} 
+            defaultValue={this.state.teste} 
+            style={{ width: '90%' }} 
+            value={this.state.teste} 
+            onChange={this.onChangeModal}
+            /></div>
           <div className='div-acoes-modal'>
             <Tooltip placement="top" title='Retornar' >
               <Button type='primary' className='button' onClick={this.retornar} ><Icon type="arrow-left" /></Button>
@@ -565,7 +585,7 @@ class ReservaTecnico extends Component {
                 <div className='button-mais' onClick={() => this.mais(line)}>+</div>
               </div>
               <div className='cel-os-cabecalho-Rtecnico'>
-                {line.id}
+                {line.os}
               </div>
               <div className='cel-rs-cabecalho-Rtecnico'>
                 {line.razaoSocial}
@@ -616,7 +636,6 @@ class ReservaTecnico extends Component {
   }
 
   render() {
-    console.log(this.state.numeroSerieTest)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>

@@ -31,15 +31,15 @@ class PrivateRoute extends Component {
 
     response = await auth(value).then(
       resp => this.setState({
-        auth: resp.data
+        auth: resp ? resp.data : false
       })
     )
 
     return response
   }
 
-  componentDidMount = () => {
-    this.auth()
+  componentDidMount = async () => {
+   await this.auth()
   }
 
 
