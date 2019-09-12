@@ -2,6 +2,7 @@ import actions from '../../../../store/actions'
 
 
 const INICIAL_STATE_REDIRECT_OS ={
+  id: '',
   Os: '',
   razaoSocial: '',
   cnpj: '',

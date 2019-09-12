@@ -276,7 +276,7 @@ class SearchOsDash extends Component{
 
 
     const value = {
-      id: this.props.osUpdateValue.Os,
+      id: this.props.osUpdateValue.id,
       date: this.state.data,
       technicianId: this.state.tecnicoId,
       osParts,

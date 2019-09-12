@@ -186,6 +186,8 @@ class NovaEntrada extends Component {
         if (valor === teste[teste.length - 2]) count++
       })
 
+      
+
       if (count > 1) {
 
         this.errorNumeroSerie()
