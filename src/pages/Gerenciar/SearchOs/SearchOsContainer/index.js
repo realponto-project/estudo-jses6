@@ -395,8 +395,21 @@ class SearchOsDash extends Component{
     })
   }
 
+  errorSelecionado = () => {
+    message.error('Este item já foi selecionado');
+  };
+  
   addCarrinho = () => {
     if(this.state.nomeProduto !== 'Não selecionado' || ''){
+    const array = this.state.carrinho.map(value => value.name)
+
+    if(array.filter(value => value === this.state.nomeProduto).length > 0){
+      this.errorSelecionado()
+      this.setState({
+        nomeProduto: '',
+      })
+      return
+    }
     this.setState({
       quantObj:{
         ...this.state.quantObj,
@@ -446,7 +459,7 @@ class SearchOsDash extends Component{
 
 
   render(){
-    console.log(this.state.carrinho)
+    console.log(this.state)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-GOs'>

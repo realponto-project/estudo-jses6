@@ -300,25 +300,40 @@ class ReservaOs extends Component{
     })
   }
 
+  errorSelecionado = () => {
+    message.error('Este item já foi selecionado');
+  };
+
   addCarrinho = () => {
     if(this.state.nomeProduto !== 'Não selecionado' || ''){
-    this.setState({
-      carrinho:[{
-        nomeProdutoCarrinho: this.state.nomeProduto,
-        productBaseId: this.state.productBaseId,
-        amount: this.state.quant.toString(),
-        stockBase: this.state.estoque,
-        serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
-      },...this.state.carrinho],
-      nomeProduto: 'Não selecionado',
-      quant: '1',
-      estoque: 'REALPONTO',
-      serial: false,
-      numeroSerieTest: '',
-    })
-  }else (
-    this.errorProduto()
-  )}
+      const array = this.state.carrinho.map(value => value.nomeProdutoCarrinho)
+
+      if(array.filter(value => value === this.state.nomeProduto).length > 0){
+        this.errorSelecionado()
+        this.setState({
+          nomeProduto: '',
+        })
+        return
+      }
+
+      this.setState({
+        carrinho:[{
+          nomeProdutoCarrinho: this.state.nomeProduto,
+          productBaseId: this.state.productBaseId,
+          amount: this.state.quant.toString(),
+          stockBase: this.state.estoque,
+          serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
+        },...this.state.carrinho],
+        nomeProduto: 'Não selecionado',
+        quant: '1',
+        estoque: 'REALPONTO',
+        serial: false,
+          numeroSerieTest: '',
+      })
+    }else (
+      this.errorProduto()
+    )
+  }
 
   remove = (value) => {
     const oldCarrinho = this.state.carrinho
