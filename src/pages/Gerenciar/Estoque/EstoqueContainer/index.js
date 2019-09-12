@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import './index.css'
 import { Spin, Button, Input, Select } from 'antd'
 import { stock } from '../../../../services/estoque'
-import { getSerial } from '../../../../services/serialNumber';
-
 
 
 const { Option } = Select;
@@ -102,18 +100,6 @@ class Estoque extends Component {
     })
   }
 
-  // getSerialNumber = async () => {
-
-  //   const serialNumber = this.state.numeroSerie
-    
-
-  //   await getSerial(serialNumber).then(
-  //     resposta => this.setState({
-  //       resp: resposta.data,
-  //     }, console.log(resposta))
-  //   )
-  // }
-
   componentDidMount = async () => {
     await this.getStock()
   }
@@ -209,7 +195,6 @@ class Estoque extends Component {
             {this.state.estoque.rows.length !== 0 ? this.state.estoque.rows.map((line) =>
               <div className='div-100-estoque'>
                 <div className='div-lines-estoque'
-                //  onClick={() => this.openModalDetalhesCompany(line)}
                 >
                   <div className='cel-produto-cabecalho-estoque'>
                     <label className='div-table-label-cel-estoque'>
