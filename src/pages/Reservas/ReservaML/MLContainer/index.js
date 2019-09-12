@@ -7,6 +7,7 @@ import * as R from 'ramda'
 import { validators, masks } from './validators'
 import { NewReservaML } from '../../../../services/mercadoLivre';
 import { getProdutoByEstoque } from '../../../../services/produto';
+import { getSerial } from '../../../../services/serialNumber';
 
 
 const { TextArea } = Input;
@@ -66,8 +67,8 @@ class ReservaML extends Component{
     }
   }
 
-  errorNumeroSerie = () => {
-    message.error('Este equipamento ja foi registrado');
+  errorNumeroSerie = (value) => {
+    message.error(value, 10);
   };
 
   filter = async (e) => {
@@ -76,7 +77,7 @@ class ReservaML extends Component{
       numeroSerieTest: e.target.value
     })
 
-    const teste = this.state.numeroSerieTest.split(/\n/)
+    const teste = this.state.numeroSerieTest.split(/\n/, 10)
 
     if (/\n/.test(this.state.numeroSerieTest[this.state.numeroSerieTest.length - 1])) {
 
@@ -87,9 +88,31 @@ class ReservaML extends Component{
         if (valor === teste[teste.length - 2]) count++
       })
 
+      let mensagem = 'Este equipamento ja foi inserido nessa reserva'
+
+      const resp = await getSerial(teste[teste.length - 2])
+
+      if (resp.data) {
+        if (resp.data.reserved) {
+          count ++
+          if (resp.data.deletedAt) {
+            if (resp.data.osParts) {
+              mensagem = `Este equipamento ja foi liberado para a OS: ${resp.data.osPart.o.os}`
+            } else if (resp.data.freeMarketPart){
+              mensagem = `Este equipamento foi liberado para mercado livre com código de restreamento: ${resp.data.freeMarketPart.freeMarket.trackingCode}`
+            }
+          } else {
+            mensagem = `Este equipamento ja foi reservado para a OS: ${resp.data.osPart.o.os}`
+          }
+        }
+      } else {
+        mensagem = 'Este equipamento não consta na base de dados'
+        count ++
+      }
+
       if (count > 1) {
 
-        this.errorNumeroSerie()
+        this.errorNumeroSerie(mensagem)
 
         teste.splice(teste.length - 2, 1)
 
@@ -323,12 +346,6 @@ class ReservaML extends Component{
     })
   }
 
-  onChangeCodigoRastreio = (e) => {
-    this.setState({
-      codigo: e.target.value.replace(/\D/ig, '')
-    })
-  }
-
   onChange = (e) => {
     const { nome,
       valor,
@@ -359,7 +376,7 @@ class ReservaML extends Component{
               name='codigo'
               value={this.state.codigo}
               placeholder="Código de rastreio"
-              onChange={this.onChangeCodigoRastreio}
+              onChange={this.onChange}
               onBlur={this.onBlurValidator}
               onFocus={this.onFocus}
               // allowClear

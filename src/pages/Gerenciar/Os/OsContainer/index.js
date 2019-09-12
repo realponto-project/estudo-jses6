@@ -45,7 +45,8 @@ class OsDash extends Component {
 
   redirectSearchOs = async () => {
     const value = {
-      Os: this.state.lineSelected.rows[0].id,
+      id: this.state.lineSelected.rows[0].id,
+      Os: this.state.lineSelected.rows[0].os,
       razaoSocial: this.state.lineSelected.rows[0].razaoSocial,
       cnpj: this.state.lineSelected.rows[0].cnpj,
       technician: this.state.lineSelected.rows[0].technician,
@@ -53,7 +54,7 @@ class OsDash extends Component {
       date: this.state.lineSelected.rows[0].date,
       products: this.state.lineSelected.rows[0].products,
     }
-    
+    console.log(this.state.lineSelected.rows[0])
     await this.props.redirectValueOs(value)
 
     await this.setState({
