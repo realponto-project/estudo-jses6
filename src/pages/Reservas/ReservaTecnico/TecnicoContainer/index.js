@@ -493,6 +493,7 @@ class ReservaTecnico extends Component {
           <div className='div-produtos-modal'>{this.state.produtoSelecionado.products.name}</div>
           <div className='div-quant-modal'>
             <InputNumber 
+            disabled={this.state.produtoSelecionado.products.serial}
             max={this.state.produtoSelecionado.products.quantMax} 
             defaultValue={this.state.teste} 
             style={{ width: '90%' }} 

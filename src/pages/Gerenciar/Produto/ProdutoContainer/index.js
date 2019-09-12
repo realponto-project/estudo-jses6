@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Spin, Button } from 'antd'
+import { Spin, Button, Input } from 'antd'
 import { getProdutos } from '../../../../services/produto';
 
 class GerenciarProdutoDash extends Component {
@@ -10,11 +10,18 @@ class GerenciarProdutoDash extends Component {
     OsArray: {
       rows: []
     },
+    avancado: false,
     produto: '',
     page: 1,
     total: 10,
     count: 0,
     show: 0,
+  }
+
+  avancado = () => {
+    this.setState({
+      avancado: !this.state.avancado
+    })
   }
 
   changePages = (pages) => {
@@ -115,6 +122,84 @@ class GerenciarProdutoDash extends Component {
         <div className='linhaTexto-Rtecnico'>
           <h1 className='h1-Rtecnico'>Gerenciar cadastros</h1>
         </div>
+
+        {this.state.avancado ?
+          <div className='div-linha-avancado-Rtecnico'>
+            <div className='div-ocultar-Rtecnico'>
+              <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
+            </div>
+            <div className='div-linha1-avancado-Rtecnico'>
+              <div className='div-Os-ROs'>
+                <div className='div-text-Rtecnico'>SKU:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='os'
+                  value={this.state.os}
+                  placeholder="Digite a Os"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-rs-ROs'>
+                <div className='div-text-Os'>Produto:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='rs'
+                  value={this.state.rs}
+                  placeholder="Digite o razão social"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+            </div>
+
+            <div className='div-linha1-avancado-Rtecnico'>
+              <div className='div-categoria-GCadastros'>
+                <div className='div-text-Rtecnico'>Categoria:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='rs'
+                  value={this.state.rs}
+                  placeholder="Digite o razão social"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-marca-GCadastros'>
+                <div className='div-text-Rtecnico'>Marca:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='rs'
+                  value={this.state.rs}
+                  placeholder="Digite o razão social"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-tipo-GCadastros'>
+                <div className='div-text-Rtecnico'>Tipo:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='rs'
+                  value={this.state.rs}
+                  placeholder="Digite o razão social"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+            </div>
+          </div> :
+          <div className='div-avancado-Rtecnico'>
+            <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
+          </div>}
         <div className='div-cabecalho-GCadastros'>
           <div className='cel-os-cabecalho-GCadastros'>
             SKU
