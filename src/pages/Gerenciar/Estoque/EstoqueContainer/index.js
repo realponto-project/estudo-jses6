@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './index.css'
 import { Spin, Button, Input, Select } from 'antd'
 import { stock } from '../../../../services/estoque'
+import { getSerial } from '../../../../services/serialNumber';
 
 
 
@@ -10,7 +11,7 @@ const { Option } = Select;
 class Estoque extends Component {
 
   state = {
-    lineSelect: {},
+    numeroSerie: '',
     produto: '',
     fabricante: '',
     estoqueBase: 'TODOS',
@@ -42,18 +43,13 @@ class Estoque extends Component {
     this.getStock()
   }
 
+
   onChangeSelect = async (value) => {
     await this.setState({
       estoqueBase: value
     })
 
     this.getStock()
-  }
-
-  avancado = () => {
-    this.setState({
-      avancado: !this.state.avancado
-    })
   }
 
   getStock = async () => {
@@ -99,6 +95,24 @@ class Estoque extends Component {
       loading: false
     })
   }
+
+  avancado = () => {
+    this.setState({
+      avancado: !this.state.avancado
+    })
+  }
+
+  // getSerialNumber = async () => {
+
+  //   const serialNumber = this.state.numeroSerie
+    
+
+  //   await getSerial(serialNumber).then(
+  //     resposta => this.setState({
+  //       resp: resposta.data,
+  //     }, console.log(resposta))
+  //   )
+  // }
 
   componentDidMount = async () => {
     await this.getStock()
