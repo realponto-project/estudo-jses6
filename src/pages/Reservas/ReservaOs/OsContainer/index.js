@@ -7,6 +7,7 @@ import { validators, masks } from './validators'
 import { newReservaOs } from '../../../../services/reservaOs';
 import { getProdutoByEstoque } from '../../../../services/produto';
 import { getTecnico } from '../../../../services/tecnico'
+import { getSerial } from '../../../../services/serialNumber';
 import moment from 'moment';
 
 
@@ -61,8 +62,8 @@ class ReservaOs extends Component{
     )
   }
 
-  errorNumeroSerie = () => {
-    message.error('Este equipamento ja foi registrado');
+  errorNumeroSerie = (value) => {
+    message.error(value, 10);
   };
 
   filter = async (e) => {
@@ -82,9 +83,31 @@ class ReservaOs extends Component{
         if (valor === teste[teste.length - 2]) count++
       })
 
+      let mensagem = 'Este equipamento ja foi inserido nessa reserva'
+
+      const resp = await getSerial(teste[teste.length - 2])
+
+      if (resp.data) {
+        if (resp.data.reserved) {
+          count ++
+          if (resp.data.deletedAt) {
+            if (resp.data.osParts) {
+              mensagem = `Este equipamento ja foi liberado para a OS: ${resp.data.osPart.o.os}`
+            } else if (resp.data.freeMarketPart){
+              mensagem = `Este equipamento foi liberado para mercado livre com código de restreamento: ${resp.data.freeMarketPart.freeMarket.trackingCode}`
+            }
+          } else {
+            mensagem = `Este equipamento ja foi reservado para a OS: ${resp.data.osPart.o.os}`
+          }
+        }
+      } else {
+        mensagem = 'Este equipamento não consta na base de dados'
+        count ++
+      }
+
       if (count > 1) {
 
-        this.errorNumeroSerie()
+        this.errorNumeroSerie(mensagem)
 
         teste.splice(teste.length - 2, 1)
 

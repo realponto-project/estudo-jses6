@@ -5,6 +5,7 @@ import { validators } from './validators'
 import { newEntrada } from '../../../../services/entrada'
 import { getItens } from '../../../../services/produto';
 import { getFornecedor } from '../../../../services/fornecedores';
+import { getSerial } from '../../../../services/serialNumber';
 
 
 const { Option } = Select;
@@ -186,7 +187,9 @@ class NovaEntrada extends Component {
         if (valor === teste[teste.length - 2]) count++
       })
 
-      
+      const resp = await getSerial(teste[teste.length - 2])
+
+      if (resp.data) count ++
 
       if (count > 1) {
 

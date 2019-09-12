@@ -39,6 +39,16 @@ export const masks = (nome, valor) => {
         nome,
         valor: value,
       }
+    }else if (nome === 'codigo'){
+      let value = valor
+      value = value.replace(/\W/ig, '')
+      value = value.slice(0, 13)
+
+
+      return {
+        nome,
+        valor: value,
+      }
     }else if (nome === 'cep'){
       let value = valor
       value = value.replace(/\D/ig, '')
