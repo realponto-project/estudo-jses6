@@ -124,12 +124,11 @@ class ReservaKit extends Component {
   }
 
   saveTargetNewKitOut = async () => {
+    console.log(this.state.liberados)
+    console.log(this.state.liberados.toString() !== '0')
+    console.log(this.state.os === '' && this.state.liberados.toString() !== '0')
 
-    if(this.state.os !== ''){
-
-    this.setState({
-      loading: true
-    })
+    if(!(this.state.os === '' && this.state.liberados.toString() !== '0')){
 
     const values = {
       reposicao: this.state.incluidos.toString(),
@@ -148,14 +147,12 @@ class ReservaKit extends Component {
         fieldFalha: resposta.data.fields[0].field,
         message: resposta.data.fields[0].message,
       })
-      await this.error()
+      await this.error(resposta.data.fields[0].field.message ? resposta.data.fields[0].message.message : 'A reserva não foi efetuada')
       this.setState({
-        modalBaixa: false,
         os: '',
         incluidos: 0,
         liberados: 0,
         perdas: 0,
-        loading: false,
         messageError: false,
       })
     } if (resposta.status === 200) {
@@ -170,7 +167,6 @@ class ReservaKit extends Component {
       })
       await this.success()
       this.setState({
-        loading: false,
         messageSuccess: false
       })
 
@@ -185,8 +181,8 @@ class ReservaKit extends Component {
     message.success('A reserva foi efetuada');
   };
 
-  error = () => {
-    message.error('A reserva não foi efetuada');
+  error = (value) => {
+    message.error(value);
   };
 
   handleOkModalPeca = async () => {
@@ -375,6 +371,7 @@ class ReservaKit extends Component {
           fieldFalha: {
             Os: true
           },
+          os: '',
         }, this.messageError())
       }
     }

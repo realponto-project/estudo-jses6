@@ -395,8 +395,8 @@ class SearchOsDash extends Component{
     })
   }
 
-  errorSelecionado = () => {
-    message.error('Este item já foi selecionado');
+  errorSelecionado = (value) => {
+    message.error(value);
   };
   
   addCarrinho = () => {
@@ -404,12 +404,18 @@ class SearchOsDash extends Component{
     const array = this.state.carrinho.map(value => value.name)
 
     if(array.filter(value => value === this.state.nomeProduto).length > 0){
-      this.errorSelecionado()
+      this.errorSelecionado('Este item já foi selecionado')
       this.setState({
         nomeProduto: '',
       })
       return
     }
+
+    if(this.state.serial && this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ).length !== this.state.quant){
+      this.errorSelecionado('Quantidade de numero de serie não condiz com a quantidade adicionada')
+      return
+    }
+
     this.setState({
       quantObj:{
         ...this.state.quantObj,

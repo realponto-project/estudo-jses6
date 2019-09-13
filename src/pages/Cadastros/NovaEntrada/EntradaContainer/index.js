@@ -80,8 +80,8 @@ class NovaEntrada extends Component {
     message.success('A entrada foi efetuada');
   };
 
-  error = () => {
-    message.error('A entrada não foi efetuada');
+  error = (value) => {
+    message.error(value);
   };
 
   errorNumeroSerie = () => {
@@ -144,7 +144,8 @@ class NovaEntrada extends Component {
         fieldFalha: resposta.data.fields[0].field,
         message: resposta.data.fields[0].message,
       })
-      await this.error()
+
+      await this.error(resposta.data.fields[0].field.message ? resposta.data.fields[0].message.message : 'A entrada não foi efetuada')
       this.setState({
         loading:false,
         messageError: false,
