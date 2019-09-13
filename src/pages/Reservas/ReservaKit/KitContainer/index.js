@@ -15,7 +15,7 @@ const { Option } = Select;
 class ReservaKit extends Component {
 
   state = {
-    valueDate: {start: '2019/01/01'},
+    valueDate: { start: '2019/01/01' },
     modalBaixa: false,
     produtoSelecionado: {
       products: {}
@@ -35,15 +35,15 @@ class ReservaKit extends Component {
       rows: []
     },
     tecnico: 'Não selecionado',
-    redirect: false, 
+    redirect: false,
     page: 1,
     total: 10,
     count: 0,
     show: 0,
-    message:{
+    message: {
       Os: ''
     },
-    fieldFalha:{
+    fieldFalha: {
       Os: false,
     },
   }
@@ -64,7 +64,7 @@ class ReservaKit extends Component {
   messageError = () => {
     message.error('Essa ordem de serviço não consta no nosso sistema');
   };
-  
+
 
   getAllKit = async () => {
 
@@ -84,7 +84,7 @@ class ReservaKit extends Component {
             name: this.state.produto,
           },
         },
-        kitParts:{
+        kitParts: {
           specific: {
             updatedAt: this.state.valueDate,
           },
@@ -145,7 +145,7 @@ class ReservaKit extends Component {
       })
       await this.error()
       this.setState({
-        loading:false,
+        loading: false,
         messageError: false,
         modalBaixa: false,
       })
@@ -161,7 +161,7 @@ class ReservaKit extends Component {
       })
       await this.success()
       this.setState({
-        loading:false,
+        loading: false,
         messageSuccess: false
       })
 
@@ -241,7 +241,7 @@ class ReservaKit extends Component {
   componentDidMount = async () => {
     await this.getAllTecnico()
 
-    if(this.state.tecnicoArray.length !== 0){
+    if (this.state.tecnicoArray.length !== 0) {
       await this.setState({
         tecnico: this.state.tecnicoArray[0].name
       })
@@ -331,17 +331,17 @@ class ReservaKit extends Component {
     })
   }
 
-  searchDate = async(e) => {
-    if( !e[0] || !e[1] ) return
+  searchDate = async (e) => {
+    if (!e[0] || !e[1]) return
     await this.setState({
-      valueDate: {start: e[0]._d, end: e[1]._d},
+      valueDate: { start: e[0]._d, end: e[1]._d },
     })
     await this.getAllKit()
   }
 
   getOs = async () => {
 
-    const os  = await getOsByOs(this.state.os)
+    const os = await getOsByOs(this.state.os)
 
     if (os.status === 200) {
       if (os.data.razaoSocial) {
@@ -353,7 +353,7 @@ class ReservaKit extends Component {
             Os: '',
           },
         })
-      } else{
+      } else {
         this.setState({
           fieldFalha: {
             Os: true
@@ -364,7 +364,7 @@ class ReservaKit extends Component {
   }
 
   Pages = () => (
-    
+
     <div className='footer-Gentrada-button'>
       {Math.ceil(this.state.count / this.state.total) >= 5 && Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 4)}>{this.state.page - 4}</Button> : null}
       {Math.ceil(this.state.count / this.state.total) >= 4 && Math.ceil(this.state.count / this.state.total) - this.state.page < 2 && this.state.page > 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page - 3)}>{this.state.page - 3}</Button> : null}
@@ -376,7 +376,7 @@ class ReservaKit extends Component {
       {this.state.page + 2 < (this.state.count / this.state.total) && this.state.page < 3 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 3)}>{this.state.page + 3}</Button> : null}
       {this.state.page + 3 < (this.state.count / this.state.total) && this.state.page < 2 ? <Button className='button' type="primary" onClick={() => this.changePages(this.state.page + 4)}>{this.state.page + 4}</Button> : null}
     </div>
-  ) 
+  )
 
 
   modalDetalhesLinha = () => (
@@ -388,19 +388,19 @@ class ReservaKit extends Component {
         <Button type='primary' onClick={this.closeModal} >Cancelar</Button>
         <Button type='primary' onClick={this.saveTargetNewKitOut} >Finalizar</Button>
       </div>}
-    > 
-    <div className='div-space-modal'>
-      <div className='div-textProdutos-Rtecnico'>Produtos reservados</div>
-      <div className='div-os-modal'>
-      <Input
-        onChange={this.onChangeOs}
-        value={this.state.os}
-        name='os'
-        placeholder='Nº Os'
-        onBlur={this.getOs}
-      />
+    >
+      <div className='div-space-modal'>
+        <div className='div-textProdutos-Rtecnico'>Produtos reservados</div>
+        <div className='div-os-modal'>
+          <Input
+            onChange={this.onChangeOs}
+            value={this.state.os}
+            name='os'
+            placeholder='Nº Os'
+            onBlur={this.getOs}
+          />
+        </div>
       </div>
-    </div>
       <div className='div-body-modal'>
         <div className='div-text-modal'>
           <div className='div-produtos-modal-kit'>Produtos</div>
@@ -445,6 +445,36 @@ class ReservaKit extends Component {
     </Modal>
   )
 
+  test = () => {
+    if (this.state.kitArray.rows.length !== 0) {
+      return (
+        this.state.kitArray.rows.map((line) =>
+          <div className='div-100-Gentrada'>
+            <div className='div-lines1-kit'>
+              <div className='cel-produto-cabecalho-kit'>
+                {line.name}
+              </div>
+              <div className='cel-quant-cabecalho-kit'>
+                {line.amount}
+              </div>
+              <div className='cel-data-cabecalho-kit'>
+                {line.updatedAt}
+              </div>
+              <div className='cel-acoes-cabecalho-kit'>
+                <Button className='button' type='primary' onClick={() => this.openModalDetalhes(line)} ><Icon type="edit" /></Button>
+              </div>
+              <this.modalDetalhesLinha />
+            </div>
+            <div className='div-separate1-kit'></div>
+          </div>
+        ))
+    } else {
+      return (
+        <div className='div-naotemnada'>Não há nenhuma reserva finalizada até o momento</div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className='div-card-kit'>
@@ -456,7 +486,7 @@ class ReservaKit extends Component {
           <div className='div-avancado-buttons-kit'>
             <div className='div-button-avancado-kit'>
               {this.renderRedirect()}
-              {this.props.auth.addKit ? <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button> : null }
+              {this.props.auth.addKit ? <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button> : null}
               <Button className='button' type='primary' onClick={this.avancado}>Ocultar</Button>
             </div>
             <div className='div-linha1-avancado-Rtecnico'>
@@ -485,19 +515,19 @@ class ReservaKit extends Component {
                   allowClear
                 /> */}
                 <DatePicker.RangePicker
-                placeholder='Digite a data'
-                format='DD/MM/YYYY'
-                dropdownClassName='poucas'
-                onChange={this.searchDate}
-                onOk={this.searchDate}
-                    // className='input-100'
-                    // style={{ width: '100%' }}
-                    // name='data'
-                    // value={this.state.data}
-                    // placeholder="Digite a data"
-                    // onChange={this.onChange}
-                    // allowClear
-                  />
+                  placeholder='Digite a data'
+                  format='DD/MM/YYYY'
+                  dropdownClassName='poucas'
+                  onChange={this.searchDate}
+                  onOk={this.searchDate}
+                // className='input-100'
+                // style={{ width: '100%' }}
+                // name='data'
+                // value={this.state.data}
+                // placeholder="Digite a data"
+                // onChange={this.onChange}
+                // allowClear
+                />
               </div>
 
               <div className='div-tecnico1-kit'>
@@ -510,7 +540,7 @@ class ReservaKit extends Component {
           <div className='div-avancado-buttons-kit'>
             <div className='div-button-avancado-kit'>
               {this.renderRedirect()}
-              {this.props.auth.addKit ? <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button> : null }
+              {this.props.auth.addKit ? <Button className='button' type='primary' onClick={this.setRedirect}>Gerenciar kit</Button> : null}
               <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
             </div>
           </div>}
@@ -531,28 +561,9 @@ class ReservaKit extends Component {
 
 
         <div className=' div-separate-kit'></div>
-        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : 
-          this.state.kitArray.rows.map((line) =>
-            <div className='div-100-Gentrada'>
-              <div className='div-lines1-kit'>
-                <div className='cel-produto-cabecalho-kit'>
-                  {line.name}
-                </div>
-                <div className='cel-quant-cabecalho-kit'>
-                  {line.amount}
-                </div>
-                <div className='cel-data-cabecalho-kit'>
-                  {line.updatedAt}
-                </div>
-                <div className='cel-acoes-cabecalho-kit'>
-                  <Button className='button' type='primary' onClick={() => this.openModalDetalhes(line)} ><Icon type="edit" /></Button>
-                </div>
-                <this.modalDetalhesLinha />
-              </div>
-              <div className='div-separate1-kit'></div>
-            </div>)}
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
-            <this.Pages/>
+        <this.Pages />
       </div>
     )
   }

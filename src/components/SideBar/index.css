@@ -1,5 +1,5 @@
 .menu{
-  height: calc(100vh - 50px);
+  height: calc(100vh - 40px);
   width: 190px !important;
   position: fixed !important;
   top: 40px; 
