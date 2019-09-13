@@ -73,12 +73,12 @@ class GerenciarProdutoDash extends Component {
         },
         mark: {
           specific: {
-            mark: this.state.mark,
+            mark: this.state.marca,
           },
         },
         equipType: {
           specific: {
-            type: this.state.type,
+            type: this.state.tipo,
           },
         },
       },
