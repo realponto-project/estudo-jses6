@@ -343,6 +343,8 @@ class ReservaML extends Component{
           serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
         },...this.state.carrinho],
         nomeProduto: 'Não selecionado',
+        serial: false,
+        numeroSerieTest: '',
         quant: '1',
         estoque: 'REALPONTO'
       })

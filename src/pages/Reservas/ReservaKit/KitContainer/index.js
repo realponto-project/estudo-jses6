@@ -65,6 +65,9 @@ class ReservaKit extends Component {
     message.error('Essa ordem de serviço não consta no nosso sistema');
   };
 
+  messageErrorKit = () => {
+    message.error('É necessário ter um número de os');
+  };
 
   getAllKit = async () => {
 
@@ -122,6 +125,8 @@ class ReservaKit extends Component {
 
   saveTargetNewKitOut = async () => {
 
+    if(this.state.os !== ''){
+
     this.setState({
       loading: true
     })
@@ -145,9 +150,13 @@ class ReservaKit extends Component {
       })
       await this.error()
       this.setState({
+        modalBaixa: false,
+        os: '',
+        incluidos: 0,
+        liberados: 0,
+        perdas: 0,
         loading: false,
         messageError: false,
-        modalBaixa: false,
       })
     } if (resposta.status === 200) {
 
@@ -167,6 +176,9 @@ class ReservaKit extends Component {
 
       await this.getAllKit()
     }
+  }else {
+    await this.messageErrorKit()
+  }
   }
 
   success = () => {
@@ -316,6 +328,11 @@ class ReservaKit extends Component {
   }
 
   liberar = async () => {
+
+    if(this.state.os === ''){
+      return this.messageErrorKit()
+    }
+
     const menos = parseInt(this.state.produtoSelecionado.products.amount, 10) - this.state.teste
 
     this.setState({
