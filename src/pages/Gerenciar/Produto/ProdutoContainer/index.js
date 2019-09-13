@@ -1,21 +1,44 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Spin, Button, Input } from 'antd'
+import { Spin, Button, Input, Select } from 'antd'
 import { getProdutos } from '../../../../services/produto';
+
+
+const { Option } = Select;
 
 class GerenciarProdutoDash extends Component {
 
   state = {
+    sku: '',
+    produto: '',
+    marca: '',
+    tipo: '',
+    categoria: '',
     loading: false,
     OsArray: {
       rows: []
     },
     avancado: false,
-    produto: '',
     page: 1,
     total: 10,
     count: 0,
     show: 0,
+  }
+
+  onChange = async (e) => {
+    await this.setState({
+      [e.target.name]: e.target.value
+    })
+
+    await this.getAllProdutos()
+  }
+
+  handleChange = async (value) => {
+    await this.setState({
+      categoria: value,
+    })
+
+    await this.getAllProdutos()
   }
 
   avancado = () => {
@@ -44,6 +67,18 @@ class GerenciarProdutoDash extends Component {
         product: {
           specific: {
             name: this.state.produto,
+            SKU: this.state.sku,
+            category: this.state.categoria,
+          },
+        },
+        mark: {
+          specific: {
+            mark: this.state.mark,
+          },
+        },
+        equipType: {
+          specific: {
+            type: this.state.type,
           },
         },
       },
@@ -85,7 +120,7 @@ class GerenciarProdutoDash extends Component {
   )
 
   test = () => {
-    if (this.state.OsArray.rows.length !== 0) {
+     if (this.state.OsArray.rows.length !== 0) {
       return (
         this.state.OsArray.rows.map((line) =>
           <div className='div-100-Gentrada'>
@@ -134,9 +169,9 @@ class GerenciarProdutoDash extends Component {
                 <Input
                   className='input-100'
                   style={{ width: '100%' }}
-                  name='os'
-                  value={this.state.os}
-                  placeholder="Digite a Os"
+                  name='sku'
+                  value={this.state.sku}
+                  placeholder="Digite o sku"
                   onChange={this.onChange}
                   allowClear
                 />
@@ -147,9 +182,9 @@ class GerenciarProdutoDash extends Component {
                 <Input
                   className='input-100'
                   style={{ width: '100%' }}
-                  name='rs'
-                  value={this.state.rs}
-                  placeholder="Digite o razão social"
+                  name='produto'
+                  value={this.state.produto}
+                  placeholder="Digite o produto"
                   onChange={this.onChange}
                   allowClear
                 />
@@ -159,15 +194,11 @@ class GerenciarProdutoDash extends Component {
             <div className='div-linha1-avancado-Rtecnico'>
               <div className='div-categoria-GCadastros'>
                 <div className='div-text-Rtecnico'>Categoria:</div>
-                <Input
-                  className='input-100'
-                  style={{ width: '100%' }}
-                  name='rs'
-                  value={this.state.rs}
-                  placeholder="Digite o razão social"
-                  onChange={this.onChange}
-                  allowClear
-                />
+                    <Select value='Não selecionado' style={{ width: '100%' }} onChange={this.handleChange}>
+                  <Option value='equipamento'>Equipamento</Option>
+                  <Option value='peca'>Peca</Option>
+                  <Option value='outros'>Outros</Option>
+                </Select>
               </div>
 
               <div className='div-marca-GCadastros'>
@@ -175,9 +206,9 @@ class GerenciarProdutoDash extends Component {
                 <Input
                   className='input-100'
                   style={{ width: '100%' }}
-                  name='rs'
-                  value={this.state.rs}
-                  placeholder="Digite o razão social"
+                  name='marca'
+                  value={this.state.marca}
+                  placeholder="Digite a marca"
                   onChange={this.onChange}
                   allowClear
                 />
@@ -188,9 +219,9 @@ class GerenciarProdutoDash extends Component {
                 <Input
                   className='input-100'
                   style={{ width: '100%' }}
-                  name='rs'
-                  value={this.state.rs}
-                  placeholder="Digite o razão social"
+                  name='tipo'
+                  value={this.state.tipo}
+                  placeholder="Digite o tipo"
                   onChange={this.onChange}
                   allowClear
                 />
