@@ -457,6 +457,9 @@ class SearchOsDash extends Component{
     })
   }
 
+  disabledDate = (current) => {
+    return current && current < moment().subtract(1, 'day');
+  }
 
   render(){
     console.log(this.state)
@@ -527,6 +530,7 @@ class SearchOsDash extends Component{
           <div className='div-textData-Os'>Data do atendimento:</div>
             <div className='div-inputs'>
               <DatePicker
+                disabledDate={this.disabledDate}
                 className={
                   this.state.fieldFalha.data ?
                     'div-inputError-OS' :

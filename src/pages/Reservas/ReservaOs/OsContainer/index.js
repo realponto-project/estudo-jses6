@@ -300,8 +300,8 @@ class ReservaOs extends Component{
     })
   }
 
-  errorSelecionado = () => {
-    message.error('Este item já foi selecionado');
+  errorSelecionado = (value) => {
+    message.error(value);
   };
 
   addCarrinho = () => {
@@ -309,10 +309,16 @@ class ReservaOs extends Component{
       const array = this.state.carrinho.map(value => value.nomeProdutoCarrinho)
 
       if(array.filter(value => value === this.state.nomeProduto).length > 0){
-        this.errorSelecionado()
+        this.errorSelecionado('Este item já foi selecionado')
         this.setState({
           nomeProduto: '',
         })
+        return
+      }
+
+
+      if(this.state.serial && this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ).length !== this.state.quant){
+        this.errorSelecionado('Quantidade de numero de serie não condiz com a quantidade adicionada')
         return
       }
 
@@ -409,7 +415,7 @@ class ReservaOs extends Component{
           <div className='div-textData-Os'>Data do atendimento:</div>
             <div className='div-inputs'>
               <DatePicker
-              disabledDate={this.disabledDate}
+                disabledDate={this.disabledDate}
                 className={
                   this.state.fieldFalha.data ?
                     'div-inputError-OS' :

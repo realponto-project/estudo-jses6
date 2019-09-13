@@ -35,7 +35,8 @@ class Estoque extends Component {
 
   onChange = async (e) => {
     await this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      page: 1
     })
 
     this.getStock()

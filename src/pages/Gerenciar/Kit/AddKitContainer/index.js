@@ -213,7 +213,8 @@ class AddKit extends Component{
       await this.success()
       this.setState({
         loading:false,
-        messageSuccess: false
+        messageSuccess: false,
+        redirect: true
       })
     }
   }
