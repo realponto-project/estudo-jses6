@@ -140,6 +140,7 @@ class GerenciarEntrada extends Component {
                 {line.createdAt}
               </div>
             </div>
+        <div className=' div-separate-Gentrada'></div>
           </div>
       ))
     }else{
@@ -229,10 +230,10 @@ class GerenciarEntrada extends Component {
             Data lançamento
           </div>
         </div>
+        <div className=' div-separate-Gentrada'></div>
         
         {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading}/></div> : this.test()}
 
-        <div className=' div-separate-Gentrada'></div>
         <div className='footer-ROs'>
           <this.Pages />
         </div>

@@ -97,12 +97,7 @@ class GerenciarEntrada extends Component{
     await this.setState({
       valueDate: {start: e[0]._d, end: e[1]._d},
     })
-
-    console.log(e)
-
-    // await this.setState({
-    //   data: this.state.valueDate,
-    // })
+    
     await this.getAllEntrada()
   }
 
@@ -127,7 +122,6 @@ class GerenciarEntrada extends Component{
         this.state.entrada.rows.map((line) =>
         <div className='div-100-Gentrada'>
         <div className='div-lines-Gentrada'
-        //  onClick={() => this.openModalDetalhesCompany(line)}
          >
         <div className='cel-produto-cabecalho-Gentrada'>
         <label className='div-table-label-cel-Gentrada'>
@@ -233,7 +227,7 @@ class GerenciarEntrada extends Component{
 
         
         <div className=' div-separate-Gentrada'/>
-            {this.state.loading || this.state.entrada.rows.length === 0 ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
+            {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
             <this.Pages/>
       </div>
