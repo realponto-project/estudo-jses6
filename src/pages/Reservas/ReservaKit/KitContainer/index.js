@@ -62,7 +62,7 @@ class ReservaKit extends Component {
   }
 
   messageError = () => {
-    message.error('Essa ordem de serviço não consta no nosso sistema');
+    message.error('Essa OS não consta no nosso sistema ou já foi liberado');
   };
 
   messageErrorKit = () => {
