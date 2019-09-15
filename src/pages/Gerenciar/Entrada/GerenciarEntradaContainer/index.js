@@ -4,7 +4,7 @@ import { Spin, DatePicker, Button, Input } from 'antd'
 import { getEntrada } from '../../../../services/entrada';
 
 class GerenciarEntrada extends Component{
-
+ 
   state={
     avancado: false,
     loading: false,
