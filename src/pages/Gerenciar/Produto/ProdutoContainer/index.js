@@ -9,6 +9,17 @@ const { Option } = Select;
 class GerenciarProdutoDash extends Component {
 
   state = {
+    cnh: '',
+    nome: '',
+    telefone: '',
+    fornecedor: '',
+    tecnico: '',
+    placa: '',
+    cnpj: '',
+    razaoSocial: '',
+    uf: '',
+    tipoConta: '',
+    usuario: '',
     gerenciar: 'produtos',
     sku: '',
     produto: '',
@@ -200,7 +211,7 @@ class GerenciarProdutoDash extends Component {
               Externo
         </div>
             <div className='cel-carro-cabecalho-GCadastros'>
-              Carro
+              Placa
         </div>
             <div className='cel-cnh-cabecalho-GCadastros'>
               Validade CNH
@@ -250,7 +261,7 @@ class GerenciarProdutoDash extends Component {
     }
   }
 
-  tables = () => {
+  Tables = () => {
     if (this.state.gerenciar === 'produtos') {
       return (
         <div className='div-tables-GCadastros'>
@@ -331,7 +342,7 @@ class GerenciarProdutoDash extends Component {
               Externo
         </div>
             <div className='cel-carro-cabecalho-GCadastros'>
-              Carro
+              Placa
         </div>
             <div className='cel-cnh-cabecalho-GCadastros'>
               Validade CNH
@@ -345,14 +356,9 @@ class GerenciarProdutoDash extends Component {
     }
   }
 
-  render() {
-    return (
-      <div className='div-card-Rtecnico'>
-        <div className='linhaTexto-Rtecnico'>
-          <h1 className='h1-Rtecnico'>Gerenciar cadastros</h1>
-        </div>
-
-        {this.state.avancado ?
+  Avancado = () => {
+    if(this.state.avancado && this.state.gerenciar === 'produtos'){
+      return(
           <div className='div-linha-avancado-Rtecnico'>
             <div className='div-ocultar-GCadastros'>
               <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
@@ -421,8 +427,170 @@ class GerenciarProdutoDash extends Component {
                 />
               </div>
             </div>
-          </div> :
-          <div className='div-avancado-GCadastros'>
+          </div> 
+      )
+    }else if(this.state.avancado && this.state.gerenciar === 'fornecedor'){
+      return(
+          <div className='div-linha-avancado-Rtecnico'>
+            <div className='div-ocultar-GCadastros'>
+              <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
+            </div>
+            <div className='div-linha1-avancado-Rtecnico'>
+              <div className='div-cnpj-GCadastros'>
+                <div className='div-text-Rtecnico'>Cnpj:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='cnpj'
+                  value={this.state.cnpj}
+                  placeholder="Digite o cnpj"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-rs-GCadastros'>
+                <div className='div-textRs-Os'>Razão social:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='razaoSocial'
+                  value={this.state.razaoSocial}
+                  placeholder="Digite a razão social"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+            </div>
+
+            <div className='div-linha1-avancado-Rtecnico'>
+              <div className='div-uf-GCadastros'>
+                <div className='div-text-Rtecnico'>UF:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='uf'
+                  value={this.state.uf}
+                  placeholder="SP"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-nome-GCadastros'>
+                <div className='div-text-Rtecnico'>Nome:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='nome'
+                  value={this.state.nome}
+                  placeholder="Digite o nome"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-tel-GCadastros'>
+                <div className='div-text-Rtecnico'>Telefone:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='telefone'
+                  value={this.state.telefone}
+                  placeholder="Digite o telefone"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+            </div>
+          </div> 
+      )
+    }else if(this.state.avancado && this.state.gerenciar === 'tecnico'){
+      return(
+          <div className='div-linha-avancado-Rtecnico'>
+            <div className='div-ocultar-GCadastros'>
+              <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
+            </div>
+            <div className='div-linha1-avancado-Rtecnico'>
+              <div className='div-tecnico-GCadastros'>
+                <div className='div-text-Rtecnico'>Técnico:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='tecnico'
+                  value={this.state.martecnicoca}
+                  placeholder="Digite o tecnico"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-carro-GCadastros'>
+                <div className='div-text-Rtecnico'>Placa:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='placa'
+                  value={this.state.placa}
+                  placeholder="Digite a placa"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-cnh-GCadastros'>
+                <div className='div-text-Rtecnico'>CNH:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='cnh'
+                  value={this.state.cnh}
+                  placeholder="20/11/2020"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+            </div>
+          </div> 
+      )
+    }else if(this.state.avancado && this.state.gerenciar === 'usuario'){
+      return(
+          <div className='div-linha-avancado-Rtecnico'>
+            <div className='div-ocultar-GCadastros'>
+              <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
+            </div>
+            <div className='div-linha1-avancado-GCadastros'>
+              <div className='div-usuario-GCadastros'>
+                <div className='div-text-Rtecnico'>Usuário:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='usuario'
+                  value={this.state.usuario}
+                  placeholder="Digite o usuário"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+
+              <div className='div-tipoConta-GCadastros'>
+                <div className='div-textTipo-GCadastros'>Tipo de conta:</div>
+                <Input
+                  className='input-100'
+                  style={{ width: '100%' }}
+                  name='tipoConta'
+                  value={this.state.tipoConta}
+                  placeholder="Digite o tipo de conta"
+                  onChange={this.onChange}
+                  allowClear
+                />
+              </div>
+            </div>
+          </div> 
+      )
+    }else{
+      return(
+        <div className='div-avancado-GCadastros'>
             <Select value={this.state.gerenciar} style={{ width: '25%' }} onChange={this.handleChangeGerenciar}>
               <Option value='usuario'>USUÁRIO</Option>
               <Option value='tecnico'>TÉCNICO</Option>
@@ -430,9 +598,21 @@ class GerenciarProdutoDash extends Component {
               <Option value='fornecedor'>FORNECEDOR</Option>
             </Select>
             <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
-          </div>}
+          </div>
+      )
+    }
+  }
 
-        <this.tables />
+  render() {
+    return (
+      <div className='div-card-Rtecnico'>
+        <div className='linhaTexto-Rtecnico'>
+          <h1 className='h1-Rtecnico'>Gerenciar cadastros</h1>
+        </div>
+
+        <this.Avancado/>
+
+        <this.Tables />
 
         <this.Pages />
 
