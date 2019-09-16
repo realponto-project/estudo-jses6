@@ -9,6 +9,7 @@ const { Option } = Select;
 class GerenciarProdutoDash extends Component {
 
   state = {
+    gerenciar: 'produtos',
     sku: '',
     produto: '',
     marca: '',
@@ -39,6 +40,14 @@ class GerenciarProdutoDash extends Component {
     })
 
     await this.getAllProdutos()
+  }
+
+  handleChangeGerenciar = async (value) => {
+    await this.setState({
+      gerenciar: value,
+    })
+
+    // await this.getAllProdutos()
   }
 
   avancado = () => {
@@ -119,8 +128,8 @@ class GerenciarProdutoDash extends Component {
     </div>
   )
 
-  test = () => {
-     if (this.state.OsArray.rows.length !== 0) {
+  produtos = () => {
+    if (this.state.OsArray.rows.length !== 0) {
       return (
         this.state.OsArray.rows.map((line) =>
           <div className='div-100-Gentrada'>
@@ -151,6 +160,191 @@ class GerenciarProdutoDash extends Component {
     }
   }
 
+  usuario = () => {
+    if (this.state.OsArray.rows.length !== 0) {
+      return (
+        //  this.state.OsArray.rows.map((line) =>
+        <div className='div-100-Gentrada'>
+          <div className='div-lines-Rtecnico' >
+            <div className='cel-usuario-cabecalho-GCadastros'>
+              Usuário
+        </div>
+            <div className='cel-tipoConta-cabecalho-GCadastros'>
+              Tipo de conta
+        </div>
+            <div className='cel-customizado-cabecalho-GCadastros'>
+              Customizado
+        </div>
+          </div>
+          <div className=' div-separate1-Gentrada' />
+        </div>
+        //  )
+      )
+    } else {
+      return (
+        <div className='div-naotemnada'>Não há reservas para esse técnico</div>
+      )
+    }
+  }
+
+  tecnico = () => {
+    if (this.state.OsArray.rows.length !== 0) {
+      return (
+        //  this.state.OsArray.rows.map((line) =>
+        <div className='div-100-Gentrada'>
+          <div className='div-lines-Rtecnico' >
+            <div className='cel-tecnico-cabecalho-GCadastros'>
+              Técnico
+        </div>
+            <div className='cel-externo-cabecalho-GCadastros'>
+              Externo
+        </div>
+            <div className='cel-carro-cabecalho-GCadastros'>
+              Carro
+        </div>
+            <div className='cel-cnh-cabecalho-GCadastros'>
+              Validade CNH
+        </div>
+          </div>
+          <div className=' div-separate1-Gentrada' />
+        </div>
+        //  )
+      )
+    } else {
+      return (
+        <div className='div-naotemnada'>Não há reservas para esse técnico</div>
+      )
+    }
+  }
+
+  fornecedor = () => {
+    if (this.state.OsArray.rows.length !== 0) {
+      return (
+        //  this.state.OsArray.rows.map((line) =>
+        <div className='div-100-Gentrada'>
+          <div className='div-lines-Rtecnico' >
+            <div className='cel-cnpj-cabecalho-GCadastros'>
+              Cnpj
+        </div>
+            <div className='cel-rs-cabecalho-GCadastros'>
+              Razão social
+        </div>
+            <div className='cel-uf-cabecalho-GCadastros'>
+              UF
+        </div>
+            <div className='cel-nome-cabecalho-GCadastros'>
+              Nome
+        </div>
+            <div className='cel-telefone-cabecalho-GCadastros'>
+              Telefone
+        </div>
+          </div>
+          <div className=' div-separate1-Gentrada' />
+        </div>
+        //  )
+      )
+    } else {
+      return (
+        <div className='div-naotemnada'>Não há reservas para esse técnico</div>
+      )
+    }
+  }
+
+  tables = () => {
+    if (this.state.gerenciar === 'produtos') {
+      return (
+        <div className='div-tables-GCadastros'>
+          <div className='div-cabecalho-GCadastros'>
+            <div className='cel-os-cabecalho-GCadastros'>
+              SKU
+          </div>
+            <div className='cel-rs-cabecalho-GCadastros'>
+              Produto
+          </div>
+            <div className='cel-cnpj-cabecalho-GCadastros'>
+              Categoria
+          </div>
+            <div className='cel-data-cabecalho-GCadastros'>
+              Marca
+          </div>
+            <div className='cel-acoes-cabecalho-GCadastros'>
+              Tipo
+          </div>
+          </div>
+
+          <div className=' div-separate-Rtecnico' />
+          {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.produtos()}
+        </div>
+      )
+    } else if (this.state.gerenciar === 'usuario') {
+      return (
+        <div className='div-tables-GCadastros'>
+          <div className='div-cabecalho-GCadastros'>
+            <div className='cel-usuario-cabecalho-GCadastros'>
+              Usuário
+        </div>
+            <div className='cel-tipoConta-cabecalho-GCadastros'>
+              Tipo de conta
+        </div>
+            <div className='cel-customizado-cabecalho-GCadastros'>
+              Customizado
+        </div>
+          </div>
+
+          <div className=' div-separate-Rtecnico' />
+          {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.usuario()}
+        </div>
+      )
+    } else if (this.state.gerenciar === 'fornecedor') {
+      return (
+        <div className='div-tables-GCadastros'>
+          <div className='div-cabecalho-GCadastros'>
+            <div className='cel-cnpj-cabecalho-GCadastros'>
+              Cnpj
+        </div>
+            <div className='cel-rs-cabecalho-GCadastros'>
+              Razão social
+        </div>
+            <div className='cel-uf-cabecalho-GCadastros'>
+              UF
+        </div>
+            <div className='cel-nome-cabecalho-GCadastros'>
+              Nome
+        </div>
+            <div className='cel-telefone-cabecalho-GCadastros'>
+              Telefone
+        </div>
+          </div>
+
+          <div className=' div-separate-Rtecnico' />
+          {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.fornecedor()}
+        </div>
+      )
+    } else if (this.state.gerenciar === 'tecnico') {
+      return (
+        <div className='div-tables-GCadastros'>
+          <div className='div-cabecalho-GCadastros'>
+            <div className='cel-tecnico-cabecalho-GCadastros'>
+              Técnico
+        </div>
+            <div className='cel-externo-cabecalho-GCadastros'>
+              Externo
+        </div>
+            <div className='cel-carro-cabecalho-GCadastros'>
+              Carro
+        </div>
+            <div className='cel-cnh-cabecalho-GCadastros'>
+              Validade CNH
+        </div>
+          </div>
+
+          <div className=' div-separate-Rtecnico' />
+          {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.tecnico()}
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className='div-card-Rtecnico'>
@@ -160,7 +354,7 @@ class GerenciarProdutoDash extends Component {
 
         {this.state.avancado ?
           <div className='div-linha-avancado-Rtecnico'>
-            <div className='div-ocultar-Rtecnico'>
+            <div className='div-ocultar-GCadastros'>
               <Button type="primary" className='button' onClick={this.avancado}>Ocultar</Button>
             </div>
             <div className='div-linha1-avancado-Rtecnico'>
@@ -194,7 +388,7 @@ class GerenciarProdutoDash extends Component {
             <div className='div-linha1-avancado-Rtecnico'>
               <div className='div-categoria-GCadastros'>
                 <div className='div-text-Rtecnico'>Categoria:</div>
-                    <Select value='Não selecionado' style={{ width: '100%' }} onChange={this.handleChange}>
+                <Select value='Não selecionado' style={{ width: '100%' }} onChange={this.handleChange}>
                   <Option value='equipamento'>Equipamento</Option>
                   <Option value='peca'>Peca</Option>
                   <Option value='outros'>Outros</Option>
@@ -228,31 +422,20 @@ class GerenciarProdutoDash extends Component {
               </div>
             </div>
           </div> :
-          <div className='div-avancado-Rtecnico'>
+          <div className='div-avancado-GCadastros'>
+            <Select value={this.state.gerenciar} style={{ width: '25%' }} onChange={this.handleChangeGerenciar}>
+              <Option value='usuario'>USUÁRIO</Option>
+              <Option value='tecnico'>TÉCNICO</Option>
+              <Option value='produtos'>PRODUTOS</Option>
+              <Option value='fornecedor'>FORNECEDOR</Option>
+            </Select>
             <Button type="primary" className='button' onClick={this.avancado}>Avançado</Button>
           </div>}
-        <div className='div-cabecalho-GCadastros'>
-          <div className='cel-os-cabecalho-GCadastros'>
-            SKU
-          </div>
-          <div className='cel-rs-cabecalho-GCadastros'>
-            Produto
-          </div>
-          <div className='cel-cnpj-cabecalho-GCadastros'>
-            Categoria
-          </div>
-          <div className='cel-data-cabecalho-GCadastros'>
-            Marca
-          </div>
-          <div className='cel-acoes-cabecalho-GCadastros'>
-            Tipo
-          </div>
-        </div>
 
-        <div className=' div-separate-Rtecnico' />
-        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
+        <this.tables />
+
         <this.Pages />
-      
+
       </div>
     )
   }

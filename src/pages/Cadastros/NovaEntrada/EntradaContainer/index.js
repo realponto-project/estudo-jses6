@@ -24,7 +24,7 @@ class NovaEntrada extends Component {
     estoque: 'REALPONTO',
     nomeProduto: 'Não selecionado',
     fornecedor: 'Não selecionado',
-    quant: '1',
+    quant: 1,
     modalConfirm: false,
     arrayProdutos: [],
     fieldFalha: {
@@ -66,7 +66,7 @@ class NovaEntrada extends Component {
       modalConfirm: false,
       nomeProduto: '',
       fornecedor: '',
-      quant: '1'
+      quant: 1
     });
   };
 
@@ -157,7 +157,7 @@ class NovaEntrada extends Component {
         estoque: 'REALPONTO',
         nomeProduto: 'Não selecionado',
         fornecedor: 'Não selecionado',
-        quant: '1',
+        quant: 1,
         numeroSerieTest: [],
         messageSuccess: true,
         serial: false,

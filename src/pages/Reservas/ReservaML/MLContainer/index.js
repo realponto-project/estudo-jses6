@@ -23,7 +23,7 @@ class ReservaML extends Component{
     messageError: false,
     messageSuccess: false,
     nomeProduto: 'Não selecionado',
-    quant: '1',
+    quant: 1,
     carrinho: [],
     estoque: 'REALPONTO',
     codigo: '',
@@ -352,7 +352,7 @@ class ReservaML extends Component{
         nomeProduto: 'Não selecionado',
         serial: false,
         numeroSerieTest: '',
-        quant: '1',
+        quant: 1,
         estoque: 'REALPONTO'
       })
     }else (
