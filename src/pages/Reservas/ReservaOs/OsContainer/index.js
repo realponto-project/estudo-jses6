@@ -34,7 +34,7 @@ class ReservaOs extends Component{
     nomeProduto: 'Não selecionado',
     productBaseId: '',
     tecnicoId: '',
-    quant: '1',
+    quant: 1,
     carrinho: [],
     estoque: 'REALPONTO',
     fieldFalha: {
@@ -331,7 +331,7 @@ class ReservaOs extends Component{
           serialNumberArray: this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ),
         },...this.state.carrinho],
         nomeProduto: 'Não selecionado',
-        quant: '1',
+        quant: 1,
         estoque: 'REALPONTO',
         serial: false,
           numeroSerieTest: '',

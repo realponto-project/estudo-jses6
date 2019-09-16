@@ -22,7 +22,7 @@ class AddKit extends Component{
     itemArray: [],
     carrinho: [],
     item: 'Não selecionado',
-    quant: '1',
+    quant: 1,
     estoque: 'REALPONTO',
     quantTec: 1,
   }
@@ -206,7 +206,7 @@ class AddKit extends Component{
       this.setState({
         carrinho: [],
         item: 'Não selecionado',
-        quant: '1',
+        quant: 1,
         estoque: 'REALPONTO',
         messageSuccess: true,
       })
@@ -248,7 +248,7 @@ class AddKit extends Component{
         amount: this.state.quant,
       },...this.state.carrinho],
       item: 'Não selecionado',
-      quant: '1',
+      quant: 1,
       estoque: 'REALPONTO'
     })
   }else (
