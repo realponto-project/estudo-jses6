@@ -5,6 +5,7 @@ import { getProdutos } from '../../../../services/produto';
 import { getAllFornecedor } from '../../../../services/fornecedores';
 import { getAllTecnico } from '../../../../services/tecnico'
 import { getUsers } from '../../../../services/usuario'
+import { masks } from './validators'
 
 const { Option } = Select;
 class GerenciarProdutoDash extends Component {
@@ -47,10 +48,51 @@ class GerenciarProdutoDash extends Component {
     show: 0,
   }
 
-  onChange = async (e) => {
+  onChangeUsuario = async (e) => {
+    const { nome,
+      valor,
+    } = masks(e.target.name, e.target.value)
+
     await this.setState({
-      [e.target.name]: e.target.value
+      [nome]: valor,
     })
+
+    await this.getAllUsers()
+  }
+
+  onChangeTecnico = async (e) => {
+    const { nome,
+      valor,
+    } = masks(e.target.name, e.target.value)
+
+    await this.setState({
+      [nome]: valor,
+    })
+
+    await this.getAllTecnicos()
+  }
+
+  onChangeFornecedor = async (e) => {
+    const { nome,
+      valor,
+    } = masks(e.target.name, e.target.value)
+
+    await this.setState({
+      [nome]: valor,
+    })
+
+    await this.getAllFornecedor()
+  }
+
+  onChangeProduto = async (e) => {
+    const { nome,
+      valor,
+    } = masks(e.target.name, e.target.value)
+
+    await this.setState({
+      [nome]: valor,
+    })
+
 
     await this.getAllProdutos()
   }
@@ -68,12 +110,28 @@ class GerenciarProdutoDash extends Component {
       gerenciar: value,
     })
 
-    // await this.getAllProdutos()
+    // await this.getAllUsers()
   }
 
   avancado = () => {
     this.setState({
-      avancado: !this.state.avancado
+      avancado: !this.state.avancado,
+      cnh: '',
+      nome: '',
+      telefone: '',
+      fornecedor: '',
+      tecnico: '',
+      placa: '',
+      cnpj: '',
+      razaoSocial: '',
+      uf: '',
+      tipoConta: '',
+      usuario: '',
+      sku: '',
+      produto: '',
+      marca: '',
+      tipo: '',
+      categoria: '',
     })
   }
 
@@ -92,7 +150,23 @@ class GerenciarProdutoDash extends Component {
       loading: true
     })
 
-    await getAllFornecedor().then(
+    const query = {
+      filters: {
+        company: {
+          specific: {
+            cnpj: this.state.cnpj.replace(/\D/ig, ''),
+            razaoSocial: this.state.razaoSocial,
+            state: this.state.uf,
+            nameContact: this.state.nome,
+            telphone: this.state.telefone.replace(/\D/ig, ''),
+          },
+        },
+      },
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await getAllFornecedor(query).then(
       resposta => this.setState({
         fornecedorArray: resposta.data,
       })
@@ -109,7 +183,25 @@ class GerenciarProdutoDash extends Component {
       loading: true
     })
 
-    await getAllTecnico().then(
+    const query = {
+      filters: {
+        technician: {
+          specific: {
+            name: this.state.tecnico,
+            CNH: this.state.cnh.replace(/\D/ig, ''),
+          },
+        },
+        car: {
+          specific: {
+            plate: this.state.placa,
+          },
+        },
+      },
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await getAllTecnico(query).then(
       resposta => this.setState({
         tecnicoArray: resposta.data,
       })
@@ -126,7 +218,24 @@ class GerenciarProdutoDash extends Component {
       loading: true
     })
 
-    await getUsers().then(
+    const query = {
+      filters: {
+        user: {
+          specific: {
+            username: this.state.usuario,
+          },
+        },
+        typeAccount: {
+          specific: {
+            typeName: this.state.tipoConta,
+          },
+        },
+      },
+      page: this.state.page,
+      total: this.state.total,
+    }
+
+    await getUsers(query).then(
       resposta => this.setState({
         userArray: resposta.data,
       })
@@ -278,7 +387,7 @@ class GerenciarProdutoDash extends Component {
               {line.plate}
             </div>
             <div className='cel-cnh-cabecalho-GCadastros'>
-              {line.CNH}
+              {line.CNH.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3')}
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -436,7 +545,7 @@ class GerenciarProdutoDash extends Component {
                   name='sku'
                   value={this.state.sku}
                   placeholder="Digite o sku"
-                  onChange={this.onChange}
+                  onChange={this.onChangeProduto}
                   allowClear
                 />
               </div>
@@ -449,7 +558,7 @@ class GerenciarProdutoDash extends Component {
                   name='produto'
                   value={this.state.produto}
                   placeholder="Digite o produto"
-                  onChange={this.onChange}
+                  onChange={this.onChangeProduto}
                   allowClear
                 />
               </div>
@@ -458,7 +567,8 @@ class GerenciarProdutoDash extends Component {
             <div className='div-linha1-avancado-Rtecnico'>
               <div className='div-categoria-GCadastros'>
                 <div className='div-text-Rtecnico'>Categoria:</div>
-                <Select value='Não selecionado' style={{ width: '100%' }} onChange={this.handleChange}>
+                <Select defaultValue="Não selecionado" style={{ width: '100%' }} onChange={this.handleChange}>
+                  <Option value=''>Todos</Option>
                   <Option value='equipamento'>Equipamento</Option>
                   <Option value='peca'>Peca</Option>
                   <Option value='outros'>Outros</Option>
@@ -473,7 +583,7 @@ class GerenciarProdutoDash extends Component {
                   name='marca'
                   value={this.state.marca}
                   placeholder="Digite a marca"
-                  onChange={this.onChange}
+                  onChange={this.onChangeProduto}
                   allowClear
                 />
               </div>
@@ -486,7 +596,7 @@ class GerenciarProdutoDash extends Component {
                   name='tipo'
                   value={this.state.tipo}
                   placeholder="Digite o tipo"
-                  onChange={this.onChange}
+                  onChange={this.onChangeProduto}
                   allowClear
                 />
               </div>
@@ -508,7 +618,7 @@ class GerenciarProdutoDash extends Component {
                   name='cnpj'
                   value={this.state.cnpj}
                   placeholder="Digite o cnpj"
-                  onChange={this.onChange}
+                  onChange={this.onChangeFornecedor}
                   allowClear
                 />
               </div>
@@ -521,7 +631,7 @@ class GerenciarProdutoDash extends Component {
                   name='razaoSocial'
                   value={this.state.razaoSocial}
                   placeholder="Digite a razão social"
-                  onChange={this.onChange}
+                  onChange={this.onChangeFornecedor}
                   allowClear
                 />
               </div>
@@ -536,7 +646,7 @@ class GerenciarProdutoDash extends Component {
                   name='uf'
                   value={this.state.uf}
                   placeholder="SP"
-                  onChange={this.onChange}
+                  onChange={this.onChangeFornecedor}
                   allowClear
                 />
               </div>
@@ -549,7 +659,7 @@ class GerenciarProdutoDash extends Component {
                   name='nome'
                   value={this.state.nome}
                   placeholder="Digite o nome"
-                  onChange={this.onChange}
+                  onChange={this.onChangeFornecedor}
                   allowClear
                 />
               </div>
@@ -562,7 +672,7 @@ class GerenciarProdutoDash extends Component {
                   name='telefone'
                   value={this.state.telefone}
                   placeholder="Digite o telefone"
-                  onChange={this.onChange}
+                  onChange={this.onChangeFornecedor}
                   allowClear
                 />
               </div>
@@ -582,9 +692,9 @@ class GerenciarProdutoDash extends Component {
                   className='input-100'
                   style={{ width: '100%' }}
                   name='tecnico'
-                  value={this.state.martecnicoca}
+                  value={this.state.tecnico}
                   placeholder="Digite o tecnico"
-                  onChange={this.onChange}
+                  onChange={this.onChangeTecnico}
                   allowClear
                 />
               </div>
@@ -597,7 +707,7 @@ class GerenciarProdutoDash extends Component {
                   name='placa'
                   value={this.state.placa}
                   placeholder="Digite a placa"
-                  onChange={this.onChange}
+                  onChange={this.onChangeTecnico}
                   allowClear
                 />
               </div>
@@ -610,7 +720,7 @@ class GerenciarProdutoDash extends Component {
                   name='cnh'
                   value={this.state.cnh}
                   placeholder="20/11/2020"
-                  onChange={this.onChange}
+                  onChange={this.onChangeTecnico}
                   allowClear
                 />
               </div>
@@ -632,7 +742,7 @@ class GerenciarProdutoDash extends Component {
                   name='usuario'
                   value={this.state.usuario}
                   placeholder="Digite o usuário"
-                  onChange={this.onChange}
+                  onChange={this.onChangeUsuario}
                   allowClear
                 />
               </div>
@@ -645,7 +755,7 @@ class GerenciarProdutoDash extends Component {
                   name='tipoConta'
                   value={this.state.tipoConta}
                   placeholder="Digite o tipo de conta"
-                  onChange={this.onChange}
+                  onChange={this.onChangeUsuario}
                   allowClear
                 />
               </div>
