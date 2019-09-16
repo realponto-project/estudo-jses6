@@ -230,7 +230,7 @@ class GerenciarProdutoDash extends Component {
         ))
     } else {
       return (
-        <div className='div-naotemnada'>Não há reservas para esse técnico</div>
+        <div className='div-naotemnada'>Não há nenhum produto cadastrado</div>
       )
     }
   }
@@ -257,7 +257,7 @@ class GerenciarProdutoDash extends Component {
       )
     } else {
       return (
-        <div className='div-naotemnada'>Não há reservas para esse técnico</div>
+        <div className='div-naotemnada'>Não há nenhum usuário cadastrado</div>
       )
     }
   }
@@ -287,7 +287,7 @@ class GerenciarProdutoDash extends Component {
       )
     } else {
       return (
-        <div className='div-naotemnada'>Não há reservas para esse técnico</div>
+        <div className='div-naotemnada'>Não há nenhum técnico cadastrado</div>
       )
     }
   }
@@ -320,7 +320,7 @@ class GerenciarProdutoDash extends Component {
       )
     } else {
       return (
-        <div className='div-naotemnada'>Não há reservas para esse técnico</div>
+        <div className='div-naotemnada'>Não há nenhum fornecedor cadastrado</div>
       )
     }
   }
