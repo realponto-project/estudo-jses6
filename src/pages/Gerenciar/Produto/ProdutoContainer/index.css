@@ -142,9 +142,40 @@
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
-
+.div-cnpj-GCadastros{
+  width: 27%;
+  display: flex;
+  align-items: center;
+}
+.div-rs-GCadastros{
+  width: 70%;
+  display: flex;
+  align-items: center;
+}
+.div-uf-GCadastros{
+  width: 15%;
+  display: flex;
+  align-items: center;
+}
+.div-nome-GCadastros{
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+.div-textTipo-GCadastros{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 40%
+}
+.div-linha1-avancado-GCadastros{
+  width: 100%;
+  margin: 10px 0 10px 0;
+  display: flex;
+}
 .div-categoria-GCadastros{
-  width: 32%;
+  width: 30%;
   display: flex;
   align-items: center;
 }
@@ -154,7 +185,38 @@
   align-items: center;
 }
 .div-tipo-GCadastros{
-  width: 35%;
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-tel-GCadastros{
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-tecnico-GCadastros{
+  width: 40%;
+  display: flex;
+  align-items: center;
+}
+.div-carro-GCadastros{
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-cnh-GCadastros{
+  width: 25%;
+  display: flex;
+  align-items: center;
+}
+.div-usuario-GCadastros{
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-tipoConta-GCadastros{
+  margin-left: 25px;
+  width: 40%;
   display: flex;
   align-items: center;
 }
