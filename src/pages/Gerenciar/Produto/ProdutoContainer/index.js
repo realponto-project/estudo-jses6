@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import './index.css'
-import { Spin, Button, Input, Select } from 'antd'
+import { Spin, Button, Input, Select, Icon } from 'antd'
 import { getProdutos } from '../../../../services/produto';
-
+import { getAllFornecedor } from '../../../../services/fornecedores';
+import { getAllTecnico } from '../../../../services/tecnico'
+import { getUsers } from '../../../../services/usuario'
 
 const { Option } = Select;
-
 class GerenciarProdutoDash extends Component {
 
   state = {
@@ -27,6 +28,15 @@ class GerenciarProdutoDash extends Component {
     tipo: '',
     categoria: '',
     loading: false,
+    userArray: {
+      rows: []
+    },
+    tecnicoArray:{
+      rows: []
+    },
+    fornecedorArray: {
+      rows: []
+    },
     OsArray: {
       rows: []
     },
@@ -76,6 +86,57 @@ class GerenciarProdutoDash extends Component {
     )
   }
 
+  getAllFornecedor = async () => {
+    
+    await this.setState({
+      loading: true
+    })
+
+    await getAllFornecedor().then(
+      resposta => this.setState({
+        fornecedorArray: resposta.data,
+      })
+    )
+
+    await this.setState({
+      loading: false
+    })
+  }
+  
+  getAllTecnicos = async () => {
+    
+    await this.setState({
+      loading: true
+    })
+
+    await getAllTecnico().then(
+      resposta => this.setState({
+        tecnicoArray: resposta.data,
+      })
+    )
+
+    await this.setState({
+      loading: false
+    })
+  }
+  
+  getAllUsers = async () => {
+    
+    await this.setState({
+      loading: true
+    })
+
+    await getUsers().then(
+      resposta => this.setState({
+        userArray: resposta.data,
+      })
+    )
+
+    await this.setState({
+      loading: false
+    })
+  }
+
   getAllProdutos = async () => {
 
     await this.setState({
@@ -122,6 +183,9 @@ class GerenciarProdutoDash extends Component {
 
   componentDidMount = async () => {
     await this.getAllProdutos()
+    await this.getAllFornecedor()
+    await this.getAllTecnicos()
+    await this.getAllUsers()
   }
 
   Pages = () => (
@@ -172,24 +236,24 @@ class GerenciarProdutoDash extends Component {
   }
 
   usuario = () => {
-    if (this.state.OsArray.rows.length !== 0) {
+    if (this.state.userArray.rows.length !== 0) {
       return (
-        //  this.state.OsArray.rows.map((line) =>
+        this.state.userArray.rows.map((line) =>
         <div className='div-100-Gentrada'>
           <div className='div-lines-Rtecnico' >
             <div className='cel-usuario-cabecalho-GCadastros'>
-              Usuário
-        </div>
+              {line.username}
+            </div>
             <div className='cel-tipoConta-cabecalho-GCadastros'>
-              Tipo de conta
-        </div>
+              {line.typeName}
+            </div>
             <div className='cel-customizado-cabecalho-GCadastros'>
-              Customizado
-        </div>
+              {line.customired ? <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> : <Icon type="close-circle" theme="twoTone" twoToneColor="#f01b0c" />} 
+            </div>
           </div>
           <div className=' div-separate1-Gentrada' />
         </div>
-        //  )
+        )
       )
     } else {
       return (
@@ -199,27 +263,27 @@ class GerenciarProdutoDash extends Component {
   }
 
   tecnico = () => {
-    if (this.state.OsArray.rows.length !== 0) {
+    if (this.state.tecnicoArray.rows.length !== 0) {
       return (
-        //  this.state.OsArray.rows.map((line) =>
+        this.state.tecnicoArray.rows.map((line) =>
         <div className='div-100-Gentrada'>
           <div className='div-lines-Rtecnico' >
             <div className='cel-tecnico-cabecalho-GCadastros'>
-              Técnico
-        </div>
+              {line.name}
+            </div>
             <div className='cel-externo-cabecalho-GCadastros'>
-              Externo
-        </div>
+              {line.external ? <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> : <Icon type="close-circle" theme="twoTone" twoToneColor="#eb2f96" /> }
+            </div>
             <div className='cel-carro-cabecalho-GCadastros'>
-              Placa
-        </div>
+              {line.plate}
+            </div>
             <div className='cel-cnh-cabecalho-GCadastros'>
-              Validade CNH
-        </div>
+              {line.CNH}
+            </div>
           </div>
           <div className=' div-separate1-Gentrada' />
         </div>
-        //  )
+        )
       )
     } else {
       return (
@@ -229,30 +293,30 @@ class GerenciarProdutoDash extends Component {
   }
 
   fornecedor = () => {
-    if (this.state.OsArray.rows.length !== 0) {
+    if (this.state.fornecedorArray.rows.length !== 0) {
       return (
-        //  this.state.OsArray.rows.map((line) =>
+        this.state.fornecedorArray.rows.map((line) =>
         <div className='div-100-Gentrada'>
           <div className='div-lines-Rtecnico' >
             <div className='cel-cnpj-cabecalho-GCadastros'>
-              Cnpj
-        </div>
+              {line.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5')}
+            </div>
             <div className='cel-rs-cabecalho-GCadastros'>
-              Razão social
-        </div>
+              {line.razaoSocial}
+            </div>
             <div className='cel-uf-cabecalho-GCadastros'>
-              UF
-        </div>
+              {line.state}
+            </div>
             <div className='cel-nome-cabecalho-GCadastros'>
-              Nome
-        </div>
+              {line.nameContact}
+            </div>
             <div className='cel-telefone-cabecalho-GCadastros'>
-              Telefone
-        </div>
+              {line.telphone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3')}
+            </div>
           </div>
           <div className=' div-separate1-Gentrada' />
         </div>
-        //  )
+        )
       )
     } else {
       return (
