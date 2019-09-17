@@ -133,6 +133,12 @@ render() {
         return <Redirect to='/logged/perfil/dash' />
       case 'gerenciarProdutos_dash':
         return <Redirect to='/logged/gerenciarProdutos/dash' />
+      case 'gerenciarFornecedor_dash':
+        return <Redirect to='/logged/gerenciarFornecedor/dash' />
+      case 'gerenciarUsuario_dash':
+        return <Redirect to='/logged/gerenciarUsuario/dash' />
+      case 'gerenciarTecnico_dash':
+        return <Redirect to='/logged/gerenciarTecnico/dash' />
       case 'logout':
         return <Redirect to='/login' />
       default:

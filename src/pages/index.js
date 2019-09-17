@@ -29,6 +29,9 @@ import PerfilDashRoute from './Gerenciar/Perfil';
 import GerenciarProdutoRoute from './Gerenciar/Produto';
 import * as R from 'ramda'
 import uuidValidate from 'uuid-validate'
+import GerenciarFornecedorRoute from './Gerenciar/GerenciarFornecedores';
+import GerenciarUsuarioRoute from './Gerenciar/GerenciarUsuarios';
+import GerenciarTecnicoRoute from './Gerenciar/GerenciarTecnico';
 
 class PagesRoute extends Component {
 
@@ -103,6 +106,9 @@ class PagesRoute extends Component {
           <Route path='/logged/Os' component={OsDashRoute} />
           <Route path='/logged/perfil' component={PerfilDashRoute} />
           <Route path='/logged/gerenciarProdutos' component={GerenciarProdutoRoute} />
+          <Route path='/logged/gerenciarFornecedores' component={GerenciarFornecedorRoute} />
+          <Route path='/logged/gerenciarUsuario' component={GerenciarUsuarioRoute} />
+          <Route path='/logged/gerenciarTecnico' component={GerenciarTecnicoRoute} />
         </Switch>
       )
     } else {
