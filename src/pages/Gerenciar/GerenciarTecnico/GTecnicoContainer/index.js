@@ -357,11 +357,10 @@ class GerenciarTecnico extends Component{
   )
 
   render(){
-    console.log(this.props)
     return(
       <div className='div-card-tecnico'>
         <div className='linhaTexto-tecnico'>
-          <h1 className='h1-tecnico'>Técnico</h1>
+          <h1 className='h1-tecnico'>Atualizar técnico</h1>
         </div>
 
         <div className='linha1-tecnico'>

@@ -189,6 +189,8 @@ class NovoUsuario extends Component {
 
     const resposta = await NovoUsuarioService(values)
 
+    console.log(values)
+
     if (resposta.status === 422) {
 
       this.setState({

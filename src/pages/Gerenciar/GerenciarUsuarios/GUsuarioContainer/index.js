@@ -10,8 +10,8 @@ const { Option } = Select;
 class GerenciarUsuario extends Component {
 
   state = {
-    redirect: false,
-    user: '',
+    redirect: this.props.usuarioUpdateValue.customized,
+    user: this.props.usuarioUpdateValue.username,
     checkboxAble: false,
     permission: {
       addUser: false,
@@ -35,7 +35,7 @@ class GerenciarUsuario extends Component {
       tecnico: false,
     },
     typeAccountArray: [],
-    typeName: 'Selecione um tipo de conta'
+    typeName: this.props.usuarioUpdateValue.typeName
   }
 
   success = () => {
@@ -240,7 +240,7 @@ class GerenciarUsuario extends Component {
     return (
       <div className='div-card-usuario'>
         <div className='linhaTexto-usuario'>
-          <h1 className='h1-usuario'>Novo usuário</h1>
+          <h1 className='h1-usuario'>Atualizar usuário</h1>
         </div>
 
         <div className='linha-usuario'>
@@ -340,6 +340,7 @@ class GerenciarUsuario extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    usuarioUpdateValue: state.usuarioUpdateValue
   }
 }
 
