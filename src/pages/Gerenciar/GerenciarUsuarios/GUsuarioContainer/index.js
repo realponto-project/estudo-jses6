@@ -10,9 +10,9 @@ const { Option } = Select;
 class GerenciarUsuario extends Component {
 
   state = {
-    redirect: this.props.usuarioUpdateValue.customized,
+    redirect: false,
     user: this.props.usuarioUpdateValue.username,
-    checkboxAble: false,
+    checkboxAble: this.props.usuarioUpdateValue.customized,
     permission: {
       addUser: this.props.usuarioUpdateValue.resource.addUser,
       addTypeAccount: this.props.usuarioUpdateValue.resource.addTypeAccount,
@@ -199,35 +199,6 @@ class GerenciarUsuario extends Component {
         messageError: false,
       })
     } if (resposta.status === 200) {
-
-      this.setState({
-        typeName: 'Selecione um tipo de conta',
-        user: '',
-        checkboxAble: false,
-        permission: {
-          addUser: false,
-          addTypeAccount: false,
-          responsibleUser: 'modrp',
-          stock: true,
-          labTec: false,
-          addTec: false,
-          addCar: false,
-          addMark: false,
-          addType: false,
-          addProd: false,
-          addFonr: false,
-          addEntr: false,
-          addKit: false,
-          addKitOut: false,
-          addOutPut: false,
-          addROs: false,
-          addRML: false,
-          gerROs: false,
-          delROs: false,
-          updateRos: false,
-          tecnico: false,
-        },
-      })
       await this.success()
       this.setState({
         loading:false,
@@ -248,6 +219,7 @@ class GerenciarUsuario extends Component {
           <div className='div-usuario-usuario'>
             <div className='div-text-usuario'>Usuário:</div>
             <Input
+              readOnly
               className='input-100'
               placeholder="Digite o nome do usuário"
               name='user'

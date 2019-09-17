@@ -15,7 +15,7 @@ class GerenciarTecnico extends Component{
     messageError: false,
     messageSuccess: false,
     nome: this.props.tecnicoUpdateValue.name,
-    cnh: this.props.tecnicoUpdateValue.CNH,
+    cnh: this.props.tecnicoUpdateValue.CNH.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3'),
     carro: '',
     placa: this.props.tecnicoUpdateValue.plate,
     rodizio: '',
@@ -139,14 +139,9 @@ class GerenciarTecnico extends Component{
       })
     } if (resposta.status === 200) {
 
-      // this.setState({
-      //   nome: '',
-      //   cnh: '',
-      //   placa: 'Selecione o carro',
-      //   externo: false,
-      //   rodizio: '',
-      //   messageSuccess: true,
-      // })
+      this.setState({
+        messageSuccess: true,
+      })
       await this.success()
       this.setState({
         loading:false,

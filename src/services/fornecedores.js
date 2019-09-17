@@ -91,7 +91,7 @@ export const updateFornecedor = async (values) => {
 
   let response = {}
 
-  await axios.post(`${BACKEND_URL}/api/company/update`, values, { headers: headers }).then(
+  await axios.put(`${BACKEND_URL}/api/company/update`, values, { headers: headers }).then(
     resp => {
       response = resp
     }

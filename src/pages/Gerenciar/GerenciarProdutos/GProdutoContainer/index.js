@@ -159,15 +159,6 @@ class GerenciarProdutos extends Component {
     } if (resposta.status === 200) {
 
       this.setState({
-        item: '',
-        categoria: 'Equipamento',
-        marca: "Não selecionado",
-        tipo: "Não selecionado",
-        fabricante: '',
-        descricao: '',
-        codigo: '',
-        quantMin: 1,
-        serial: false,
         messageSuccess: true,
       })
       await this.success()
