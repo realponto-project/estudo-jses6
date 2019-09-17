@@ -131,8 +131,8 @@ render() {
         return <Redirect to='/logged/relatorioML/dash' />
       case 'perfil_dash':
         return <Redirect to='/logged/perfil/dash' />
-      case 'gerenciarProdutos_dash':
-        return <Redirect to='/logged/gerenciarProdutos/dash' />
+      case 'gerenciarProdutosDash_dash':
+        return <Redirect to='/logged/gerenciarProdutosDash/dash' />
       case 'gerenciarFornecedor_dash':
         return <Redirect to='/logged/gerenciarFornecedor/dash' />
       case 'gerenciarUsuario_dash':
