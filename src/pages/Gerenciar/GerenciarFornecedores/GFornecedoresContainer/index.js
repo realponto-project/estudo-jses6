@@ -10,9 +10,9 @@ class GerenciarFornecedor extends Component {
   state = {
     messageError: false,
     messageSuccess: false,
-    cnpj: this.props.fornecedorUpdateValue.cnpj,
+    cnpj: this.props.fornecedorUpdateValue.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5'),
     razaoSocial: this.props.fornecedorUpdateValue.razaoSocial,
-    zipCode: this.props.fornecedorUpdateValue.zipCode,
+    zipCode: this.props.fornecedorUpdateValue.zipCode.replace(/(\d{5})(\d{3})/, '$1-$2'),
     state: this.props.fornecedorUpdateValue.state,
     city: this.props.fornecedorUpdateValue.city,
     neighborhood: this.props.fornecedorUpdateValue.neighborhood,
@@ -22,7 +22,7 @@ class GerenciarFornecedor extends Component {
     pontoReferencia: this.props.fornecedorUpdateValue.referencePoint,
     nameContact: this.props.fornecedorUpdateValue.nameContact,
     email: this.props.fornecedorUpdateValue.email,
-    telphone: this.props.fornecedorUpdateValue.telphone,
+    telphone: this.props.fornecedorUpdateValue.telphone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3'),
     loading: false,
     fieldFalha: {
       cnpj: false,
@@ -71,6 +71,7 @@ class GerenciarFornecedor extends Component {
     })
 
     const values = {
+      id: this.props.fornecedorUpdateValue.id,
       razaoSocial: this.state.razaoSocial,
       cnpj: this.state.cnpj,
       street: this.state.street,
@@ -104,19 +105,6 @@ class GerenciarFornecedor extends Component {
     } if (resposta.status === 200) {
 
       this.setState({
-        cnpj: '',
-        razaoSocial: '',
-        zipCode: '',
-        state: '',
-        city: '',
-        neighborhood: '',
-        street: '',
-        number: '',
-        complemento: '',
-        pontoReferencia: '',
-        nameContact: '',
-        email: '',
-        telphone: '',
         messageSuccess: true,
       })
       await this.success()

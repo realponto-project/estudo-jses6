@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import './index.css'
-import { Spin, Button, Input, Select, Icon } from 'antd'
+import { Spin, Button, Input, Select, Icon, Tooltip } from 'antd'
 import { getProdutos } from '../../../../services/produto';
 import { getAllFornecedor } from '../../../../services/fornecedores';
 import { getAllTecnico } from '../../../../services/tecnico'
@@ -340,12 +340,14 @@ class GerenciarProdutoDash extends Component {
                 {line.type}
               </div>
               <div className='cel-edit-cabecalho-GCadastros'>
-                <Icon
-                  type="edit"
-                  className='icon-edit'
-                  onClick={() => this.redirectProduto(line)}
-                  style={{ fontSize: '20px', color: '#08c'}}
-                  theme="outlined" />
+                <Tooltip placement="topLeft" title='Editar'>
+                  <Icon
+                    type="edit"
+                    className='icon-edit'
+                    onClick={() => this.redirectProduto(line)}
+                    style={{ fontSize: '20px', color: '#08c'}}
+                    theme="outlined" />
+                </Tooltip>
               </div>
             </div>
             <div className=' div-separate1-Gentrada' />
@@ -374,12 +376,14 @@ class GerenciarProdutoDash extends Component {
               {line.customized ? <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> : <Icon type="close-circle" theme="twoTone" twoToneColor="#f01b0c" />} 
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
-              <Icon
-                type="edit"
-                className='icon-edit'
-                style={{ fontSize: '20px', color: '#08c'}}
-                onClick={() => this.redirectUsuario(line)}
-                theme="outlined" />
+              <Tooltip placement="topLeft" title='Editar'>
+                <Icon
+                  type="edit"
+                  className='icon-edit'
+                  style={{ fontSize: '20px', color: '#08c'}}
+                  onClick={() => this.redirectUsuario(line)}
+                  theme="outlined" />
+              </Tooltip>
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -412,12 +416,14 @@ class GerenciarProdutoDash extends Component {
               {line.CNH.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3')}
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
-              <Icon
-                type="edit"
-                className='icon-edit'
-                style={{ fontSize: '20px', color: '#08c'}}
-                onClick={() => this.redirectTecnico(line)}
-                theme="outlined" />
+              <Tooltip placement="topLeft" title='Editar'>
+                <Icon
+                  type="edit"
+                  className='icon-edit'
+                  style={{ fontSize: '20px', color: '#08c'}}
+                  onClick={() => this.redirectTecnico(line)}
+                  theme="outlined" />
+              </Tooltip>
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -453,12 +459,14 @@ class GerenciarProdutoDash extends Component {
               {line.telphone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3')}
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
-              <Icon
-                type="edit"
-                className='icon-edit'
-                style={{ fontSize: '20px', color: '#08c'}}
-                onClick={() => this.redirectFornecedor(line)}
-                theme="outlined" />
+              <Tooltip placement="topLeft" title='Editar'>
+                <Icon
+                  type="edit"
+                  className='icon-edit'
+                  style={{ fontSize: '20px', color: '#08c'}}
+                  onClick={() => this.redirectFornecedor(line)}
+                  theme="outlined" />
+              </Tooltip>
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
