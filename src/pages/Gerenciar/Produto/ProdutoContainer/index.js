@@ -9,7 +9,7 @@ import { getAllFornecedor } from '../../../../services/fornecedores';
 import { getAllTecnico } from '../../../../services/tecnico'
 import { getUsers } from '../../../../services/usuario'
 import { masks } from './validators'
-import { redirectValueProduto } from '../ProdutoRedux/action'
+import { redirectValueProduto, redirectValueFornecedor, redirectValueUsuario, redirectValueTecnico } from '../ProdutoRedux/action'
 
 
 const { Option } = Select;
@@ -474,6 +474,7 @@ class GerenciarProdutoDash extends Component {
 
   redirectProduto = async (produto) => {
     const value = {
+      id: produto.id,
       name: produto.name,
       category: produto.category,
       mark: produto.mark,
@@ -484,7 +485,6 @@ class GerenciarProdutoDash extends Component {
       minimumStock: produto.minimumStock,
       serial: produto.serial,
     }
-    console.log(produto)
     await this.props.redirectValueProduto(value)
 
     await this.setState({
@@ -510,9 +510,7 @@ class GerenciarProdutoDash extends Component {
       telphone: fornecedor.telphone,
     }
 
-    console.log(fornecedor)
-
-    // await this.props.redirectValueProduto(value)
+    await this.props.redirectValueFornecedor(value)
 
     await this.setState({
       redirect: 'fornecedor'
@@ -520,21 +518,14 @@ class GerenciarProdutoDash extends Component {
   }
 
   redirectUsuario = async (usuario) => {
-    // const value = {
-    //   name: produto.name,
-    //   category: produto.category,
-    //   mark: produto.mark,
-    //   type: produto.type,
-    //   manufacturer: produto.manufacturer,
-    //   description: produto.description,
-    //   sku: produto.sku,
-    //   minimumStock: produto.minimumStock,
-    //   serial: produto.serial,
-    // }
+    const value = {
+      id: usuario.id,
+      customized: usuario.customized,
+      typeName: usuario.typeName,
+      username: usuario.username,
+    }
 
-    console.log(usuario)
-
-    // await this.props.redirectValueProduto(value)
+    await this.props.redirectValueUsuario(value)
 
     await this.setState({
       redirect: 'usuario'
@@ -543,21 +534,15 @@ class GerenciarProdutoDash extends Component {
 
 
   redirectTecnico = async (tecnico) => {
-    // const value = {
-    //   name: produto.name,
-    //   category: produto.category,
-    //   mark: produto.mark,
-    //   type: produto.type,
-    //   manufacturer: produto.manufacturer,
-    //   description: produto.description,
-    //   sku: produto.sku,
-    //   minimumStock: produto.minimumStock,
-    //   serial: produto.serial,
-    // }
+    const value = {
+      id: tecnico.id,
+      name: tecnico.name,
+      CNH: tecnico.CNH,
+      plate: tecnico.plate,
+      external: tecnico.external,
+    }
 
-    console.log(tecnico)
-
-    // await this.props.redirectValueProduto(value)
+    await this.props.redirectValueTecnico(value)
 
     await this.setState({
       redirect: 'tecnico'
@@ -569,23 +554,16 @@ class GerenciarProdutoDash extends Component {
     // eslint-disable-next-line default-case
     switch (this.state.redirect) {
       case 'produto': 
-        console.log('produto')
         return <Redirect exact path to='/logged/gerenciarProdutosDash/dash' />
         // eslint-disable-next-line no-duplicate-case
         case 'fornecedor': 
-        console.log('fornecedor')
-        // return <Redirect exact to='/logged/searchOs/dash' />
-        break;
+        return <Redirect exact path to='/logged/gerenciarFornecedor/dash'/>
         // eslint-disable-next-line no-duplicate-case
         case 'usuario': 
-        console.log('usuario')
-        // return <Redirect exact to='/logged/searchOs/dash' />
-        break;
+        return <Redirect exact path to='/logged/gerenciarUsuario/dash' />
         // eslint-disable-next-line no-duplicate-case
         case 'tecnico': 
-        console.log('tecnico')
-        // return <Redirect exact to='/logged/searchOs/dash' />
-        break;
+        return <Redirect exact path to='/logged/gerenciarTecnico/dash' />
     }
   }
 
@@ -956,7 +934,7 @@ class GerenciarProdutoDash extends Component {
 }
 
 function mapDispacthToProps(dispach) {
-  return bindActionCreators({ redirectValueProduto }, dispach)
+  return bindActionCreators({ redirectValueProduto, redirectValueFornecedor, redirectValueUsuario, redirectValueTecnico }, dispach)
 }
 
 function mapStateToProps(state) {
