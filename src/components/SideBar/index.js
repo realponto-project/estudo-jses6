@@ -25,7 +25,6 @@ class SideBar extends Component {
 
 
   forceLogout = async () => {
-    console.log('teste')
     if (!this.hasAuth(this.props)) {
       await this.logout()
     } else if (!this.hasToken(this.props.auth)) {
