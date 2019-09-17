@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import './index.css'
 import { Spin, Button, Input, Select, Icon } from 'antd'
 import { getProdutos } from '../../../../services/produto';
@@ -6,11 +9,14 @@ import { getAllFornecedor } from '../../../../services/fornecedores';
 import { getAllTecnico } from '../../../../services/tecnico'
 import { getUsers } from '../../../../services/usuario'
 import { masks } from './validators'
+import { redirectValueProduto } from '../ProdutoRedux/action'
+
 
 const { Option } = Select;
 class GerenciarProdutoDash extends Component {
 
   state = {
+    redirect: '',
     cnh: '',
     nome: '',
     telefone: '',
@@ -334,7 +340,12 @@ class GerenciarProdutoDash extends Component {
                 {line.type}
               </div>
               <div className='cel-edit-cabecalho-GCadastros'>
-                <Icon type="edit" className='icon-edit' style={{ fontSize: '20px', color: '#08c'}} theme="outlined" />
+                <Icon
+                  type="edit"
+                  className='icon-edit'
+                  onClick={() => this.redirectProduto(line)}
+                  style={{ fontSize: '20px', color: '#08c'}}
+                  theme="outlined" />
               </div>
             </div>
             <div className=' div-separate1-Gentrada' />
@@ -363,7 +374,11 @@ class GerenciarProdutoDash extends Component {
               {line.customired ? <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> : <Icon type="close-circle" theme="twoTone" twoToneColor="#f01b0c" />} 
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
-              <Icon type="edit" className='icon-edit' style={{ fontSize: '20px', color: '#08c'}} theme="outlined" />
+              <Icon
+                type="edit"
+                className='icon-edit'
+                style={{ fontSize: '20px', color: '#08c'}}
+                theme="outlined" />
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -396,7 +411,11 @@ class GerenciarProdutoDash extends Component {
               {line.CNH.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3')}
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
-              <Icon type="edit" className='icon-edit' style={{ fontSize: '20px', color: '#08c'}} theme="outlined" />
+              <Icon
+                type="edit"
+                className='icon-edit'
+                style={{ fontSize: '20px', color: '#08c'}}
+                theme="outlined" />
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -432,7 +451,11 @@ class GerenciarProdutoDash extends Component {
               {line.telphone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3')}
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
-              <Icon type="edit" className='icon-edit' style={{ fontSize: '20px', color: '#08c'}} theme="outlined" />
+              <Icon
+                type="edit"
+                className='icon-edit'
+                style={{ fontSize: '20px', color: '#08c'}}
+                theme="outlined" />
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -443,6 +466,53 @@ class GerenciarProdutoDash extends Component {
       return (
         <div className='div-naotemnada'>Não há nenhum fornecedor cadastrado</div>
       )
+    }
+  }
+
+  redirectProduto = async (produto) => {
+    const value = {
+      name: produto.name,
+      category: produto.category,
+      mark: produto.mark,
+      type: produto.type,
+      manufacturer: produto.manufacturer,
+      description: produto.description,
+      sku: produto.sku,
+      minimumStock: produto.minimumStock,
+      serial: produto.serial,
+    }
+
+    await this.props.redirectValueProduto(value)
+
+    await this.setState({
+      redirect: 'produto'
+    })
+  }
+
+  renderRedirect = () => {
+    // eslint-disable-next-line default-case
+    switch (this.state.redirect) {
+      case 'produto': 
+        console.log('produto')
+        return <Redirect exact path to='/logged/gerenciarProdutos/dash' />
+        // eslint-disable-next-line no-duplicate-case
+        case 'fornecedor': 
+        console.log('fornecedor')
+        // return <Redirect exact to='/logged/searchOs/dash' />
+        break;
+        // eslint-disable-next-line no-duplicate-case
+        case 'usuario': 
+        console.log('usuario')
+        // return <Redirect exact to='/logged/searchOs/dash' />
+        break;
+        // eslint-disable-next-line no-duplicate-case
+        case 'tecnico': 
+        console.log('tecnico')
+        // return <Redirect exact to='/logged/searchOs/dash' />
+        break;
+        default :
+        console.log('tecnico')
+        // null;
     }
   }
 
@@ -806,9 +876,20 @@ class GerenciarProdutoDash extends Component {
 
         <this.Pages />
 
+        {this.renderRedirect()}
       </div>
     )
   }
 }
 
-export default GerenciarProdutoDash
+function mapDispacthToProps(dispach) {
+  return bindActionCreators({ redirectValueProduto }, dispach)
+}
+
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps, mapDispacthToProps)(GerenciarProdutoDash)
