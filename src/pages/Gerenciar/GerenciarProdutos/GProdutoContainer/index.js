@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Input, InputNumber, Select, Button, Modal, Switch, message } from 'antd'
 import { connect } from 'react-redux'
 import { validators, masks } from './validators'
-import { newMarca, newTipo, newFabricante, newProduto, getTipo, getMarca, getFabricante } from '../../../../services/produto'
+import { newMarca, newTipo, updateProduto, getTipo, getMarca, getFabricante } from '../../../../services/produto'
 
 
 const { Option } = Select;
@@ -123,13 +123,14 @@ class GerenciarProdutos extends Component {
     )
   }
 
-  saveTargetNewProduto = async () => {
+  saveTargetUpdateProduto = async () => {
 
     this.setState({
       loading: true
     })
 
     const values = {
+      id: this.props.produtoUpdateValue.id,
       category: this.state.categoria.toLocaleLowerCase(),
       SKU: this.state.codigo,
       description: this.state.descricao,
@@ -141,7 +142,7 @@ class GerenciarProdutos extends Component {
       responsibleUser: 'modrp',
     }
 
-    const resposta = await newProduto(values)
+    const resposta = await updateProduto(values)
 
     if (resposta.status === 422) {
 
@@ -213,41 +214,6 @@ class GerenciarProdutos extends Component {
     }
 
     await this.getAllMarca()
-  }
-
-  saveTargetNewFabricante = async () => {
-
-    const values = {
-      manufacturer: this.state.newFabricante,
-    }
-
-    const resposta = await newFabricante(values)
-
-    if (resposta.status === 422) {
-
-      this.setState({
-        messageError: true,
-        fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message,
-      })
-      await this.error()
-      this.setState({
-        messageError: false,
-      })
-    } if (resposta.status === 200) {
-
-      this.setState({
-        newFabricante: '',
-        messageSuccess: true,
-      })
-      await this.success()
-      this.setState({
-        messageSuccess: false,
-        modalFabricante: false,
-      })
-    }
-
-    await this.getAllFabricante()
   }
 
   saveTargetNewTipo = async () => {
@@ -648,7 +614,7 @@ class GerenciarProdutos extends Component {
         </div>
 
         <div className='linha-button-produtos'>
-          <Button className='button' type="primary" loading={this.state.loading} onClick={this.saveTargetNewProduto}>Atualizar</Button>
+          <Button className='button' type="primary" loading={this.state.loading} onClick={this.saveTargetUpdateProduto}>Atualizar</Button>
         </div>
 
       </div>

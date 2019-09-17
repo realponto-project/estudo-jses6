@@ -502,7 +502,7 @@ class GerenciarProdutoDash extends Component {
       city: fornecedor.city,
       neighborhood: fornecedor.neighborhood,
       street: fornecedor.street,
-      number: fornecedor.minimumStock,
+      number: fornecedor.number,
       complement: fornecedor.complement,
       referencePoint: fornecedor.referencePoint,
       nameContact: fornecedor.nameContact,

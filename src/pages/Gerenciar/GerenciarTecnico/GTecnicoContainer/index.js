@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Input, Button, Select, Modal, message, Switch } from 'antd'
 import { connect } from 'react-redux'
 import { validators, masks } from './validators'
-import { newTecnico, newCarro, getCarro } from '../../../../services/tecnico'
+import { updateTecnico, newCarro, getCarro } from '../../../../services/tecnico'
 
 
 const { Option } = Select;
@@ -109,7 +109,7 @@ class GerenciarTecnico extends Component{
     }
   }
 
-  saveTargetNewFornecedor= async () => {
+  saveTargetUpdateTechnician= async () => {
 
     this.setState({
       loading: true
@@ -122,7 +122,7 @@ class GerenciarTecnico extends Component{
       external: this.state.externo
     }
 
-    const resposta = await newTecnico(values)
+    const resposta = await updateTecnico(values)
 
     if (resposta.status === 422) {
 
@@ -454,7 +454,7 @@ class GerenciarTecnico extends Component{
         </div>
 
         <div className='linha-button-tecnico'>
-          <Button className='button' type="primary" onClick={this.saveTargetNewFornecedor} loading={this.state.loading}>Atualizar</Button>
+          <Button className='button' type="primary" onClick={this.saveTargetUpdateTechnician} loading={this.state.loading}>Salvar</Button>
         </div>
       </div>
     )
