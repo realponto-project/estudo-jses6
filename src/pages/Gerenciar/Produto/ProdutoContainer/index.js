@@ -378,6 +378,7 @@ class GerenciarProdutoDash extends Component {
                 type="edit"
                 className='icon-edit'
                 style={{ fontSize: '20px', color: '#08c'}}
+                onClick={() => this.redirectUsuario(line)}
                 theme="outlined" />
             </div>
           </div>
@@ -415,6 +416,7 @@ class GerenciarProdutoDash extends Component {
                 type="edit"
                 className='icon-edit'
                 style={{ fontSize: '20px', color: '#08c'}}
+                onClick={() => this.redirectTecnico(line)}
                 theme="outlined" />
             </div>
           </div>
@@ -455,6 +457,7 @@ class GerenciarProdutoDash extends Component {
                 type="edit"
                 className='icon-edit'
                 style={{ fontSize: '20px', color: '#08c'}}
+                onClick={() => this.redirectFornecedor(line)}
                 theme="outlined" />
             </div>
           </div>
@@ -481,13 +484,86 @@ class GerenciarProdutoDash extends Component {
       minimumStock: produto.minimumStock,
       serial: produto.serial,
     }
-
+    console.log(produto)
     await this.props.redirectValueProduto(value)
 
     await this.setState({
       redirect: 'produto'
     })
   }
+
+  redirectFornecedor = async (fornecedor) => {
+    const value = {
+      id: fornecedor.id,
+      cnpj: fornecedor.cnpj,
+      razaoSocial: fornecedor.razaoSocial,
+      zipCode: fornecedor.zipCode,
+      state: fornecedor.state,
+      city: fornecedor.city,
+      neighborhood: fornecedor.neighborhood,
+      street: fornecedor.street,
+      number: fornecedor.minimumStock,
+      complement: fornecedor.complement,
+      referencePoint: fornecedor.referencePoint,
+      nameContact: fornecedor.nameContact,
+      email: fornecedor.email,
+      telphone: fornecedor.telphone,
+    }
+
+    console.log(fornecedor)
+
+    // await this.props.redirectValueProduto(value)
+
+    await this.setState({
+      redirect: 'fornecedor'
+    })
+  }
+
+  redirectUsuario = async (usuario) => {
+    // const value = {
+    //   name: produto.name,
+    //   category: produto.category,
+    //   mark: produto.mark,
+    //   type: produto.type,
+    //   manufacturer: produto.manufacturer,
+    //   description: produto.description,
+    //   sku: produto.sku,
+    //   minimumStock: produto.minimumStock,
+    //   serial: produto.serial,
+    // }
+
+    console.log(usuario)
+
+    // await this.props.redirectValueProduto(value)
+
+    await this.setState({
+      redirect: 'usuario'
+    })
+  }
+
+
+  redirectTecnico = async (tecnico) => {
+    // const value = {
+    //   name: produto.name,
+    //   category: produto.category,
+    //   mark: produto.mark,
+    //   type: produto.type,
+    //   manufacturer: produto.manufacturer,
+    //   description: produto.description,
+    //   sku: produto.sku,
+    //   minimumStock: produto.minimumStock,
+    //   serial: produto.serial,
+    // }
+
+    console.log(tecnico)
+
+    // await this.props.redirectValueProduto(value)
+
+    await this.setState({
+      redirect: 'tecnico'
+    })
+  }
+
 
   renderRedirect = () => {
     // eslint-disable-next-line default-case
