@@ -333,6 +333,9 @@ class GerenciarProdutoDash extends Component {
               <div className='cel-acoes-cabecalho-GCadastros'>
                 {line.type}
               </div>
+              <div className='cel-edit-cabecalho-GCadastros'>
+                <Icon type="edit" className='icon-edit' style={{ fontSize: '20px', color: '#08c'}} theme="outlined" />
+              </div>
             </div>
             <div className=' div-separate1-Gentrada' />
           </div>
@@ -358,6 +361,9 @@ class GerenciarProdutoDash extends Component {
             </div>
             <div className='cel-customizado-cabecalho-GCadastros'>
               {line.customired ? <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> : <Icon type="close-circle" theme="twoTone" twoToneColor="#f01b0c" />} 
+            </div>
+            <div className='cel-edit-cabecalho-GCadastros'>
+              <Icon type="edit" className='icon-edit' style={{ fontSize: '20px', color: '#08c'}} theme="outlined" />
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -388,6 +394,9 @@ class GerenciarProdutoDash extends Component {
             </div>
             <div className='cel-cnh-cabecalho-GCadastros'>
               {line.CNH.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3')}
+            </div>
+            <div className='cel-edit-cabecalho-GCadastros'>
+              <Icon type="edit" className='icon-edit' style={{ fontSize: '20px', color: '#08c'}} theme="outlined" />
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -422,6 +431,9 @@ class GerenciarProdutoDash extends Component {
             <div className='cel-telefone-cabecalho-GCadastros'>
               {line.telphone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3')}
             </div>
+            <div className='cel-edit-cabecalho-GCadastros'>
+              <Icon type="edit" className='icon-edit' style={{ fontSize: '20px', color: '#08c'}} theme="outlined" />
+            </div>
           </div>
           <div className=' div-separate1-Gentrada' />
         </div>
@@ -441,19 +453,20 @@ class GerenciarProdutoDash extends Component {
           <div className='div-cabecalho-GCadastros'>
             <div className='cel-os-cabecalho-GCadastros'>
               SKU
-          </div>
+            </div>
             <div className='cel-rs-cabecalho-GCadastros'>
               Produto
-          </div>
+            </div>
             <div className='cel-cnpj-cabecalho-GCadastros'>
               Categoria
-          </div>
+            </div>
             <div className='cel-data-cabecalho-GCadastros'>
               Marca
-          </div>
+            </div>
             <div className='cel-acoes-cabecalho-GCadastros'>
               Tipo
-          </div>
+            </div>
+            <div className='cel-edit-cabecalho-GCadastros' />
           </div>
 
           <div className=' div-separate-Rtecnico' />
@@ -466,13 +479,14 @@ class GerenciarProdutoDash extends Component {
           <div className='div-cabecalho-GCadastros'>
             <div className='cel-usuario-cabecalho-GCadastros'>
               Usuário
-        </div>
+            </div>
             <div className='cel-tipoConta-cabecalho-GCadastros'>
               Tipo de conta
-        </div>
+            </div>
             <div className='cel-customizado-cabecalho-GCadastros'>
               Customizado
-        </div>
+            </div>
+            <div className='cel-edit-cabecalho-GCadastros' />
           </div>
 
           <div className=' div-separate-Rtecnico' />
@@ -485,19 +499,20 @@ class GerenciarProdutoDash extends Component {
           <div className='div-cabecalho-GCadastros'>
             <div className='cel-cnpj-cabecalho-GCadastros'>
               Cnpj
-        </div>
+            </div>
             <div className='cel-rs-cabecalho-GCadastros'>
               Razão social
-        </div>
+            </div>
             <div className='cel-uf-cabecalho-GCadastros'>
               UF
-        </div>
+            </div>
             <div className='cel-nome-cabecalho-GCadastros'>
               Nome
-        </div>
+            </div>
             <div className='cel-telefone-cabecalho-GCadastros'>
               Telefone
-        </div>
+            </div>
+            <div className='cel-edit-cabecalho-GCadastros' />
           </div>
 
           <div className=' div-separate-Rtecnico' />
@@ -510,16 +525,17 @@ class GerenciarProdutoDash extends Component {
           <div className='div-cabecalho-GCadastros'>
             <div className='cel-tecnico-cabecalho-GCadastros'>
               Técnico
-        </div>
+            </div>
             <div className='cel-externo-cabecalho-GCadastros'>
               Externo
-        </div>
+            </div>
             <div className='cel-carro-cabecalho-GCadastros'>
               Placa
-        </div>
+            </div>
             <div className='cel-cnh-cabecalho-GCadastros'>
               Validade CNH
-        </div>
+            </div>
+            <div className='cel-edit-cabecalho-GCadastros' />
           </div>
 
           <div className=' div-separate-Rtecnico' />
