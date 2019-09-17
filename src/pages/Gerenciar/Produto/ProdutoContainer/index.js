@@ -570,7 +570,7 @@ class GerenciarProdutoDash extends Component {
     switch (this.state.redirect) {
       case 'produto': 
         console.log('produto')
-        return <Redirect exact path to='/logged/gerenciarProdutos/dash' />
+        return <Redirect exact path to='/logged/gerenciarProdutosDash/dash' />
         // eslint-disable-next-line no-duplicate-case
         case 'fornecedor': 
         console.log('fornecedor')
@@ -586,9 +586,6 @@ class GerenciarProdutoDash extends Component {
         console.log('tecnico')
         // return <Redirect exact to='/logged/searchOs/dash' />
         break;
-        default :
-        console.log('tecnico')
-        // null;
     }
   }
 
