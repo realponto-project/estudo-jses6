@@ -14,25 +14,25 @@ class GerenciarUsuario extends Component {
     user: this.props.usuarioUpdateValue.username,
     checkboxAble: false,
     permission: {
-      addUser: false,
-      addTypeAccount: false,
+      addUser: this.props.usuarioUpdateValue.resource.addUser,
+      addTypeAccount: this.props.usuarioUpdateValue.resource.addTypeAccount,
       responsibleUser: 'modrp',
-      addTec: false,
-      addCar: false,
-      addMark: false,
-      addType: false,
-      addProd: false,
-      addFonr: false,
-      addEntr: false,
-      addKit: false,
-      addKitOut: false,
-      addOutPut: false,
-      addROs: false,
-      addRML: false,
-      gerROs: false,
-      delROs: false,
-      updateRos: false,
-      tecnico: false,
+      addTec: this.props.usuarioUpdateValue.resource.addTec,
+      addCar: this.props.usuarioUpdateValue.resource.addCar,
+      addMark: this.props.usuarioUpdateValue.resource.addMark,
+      addType: this.props.usuarioUpdateValue.resource.addType,
+      addProd: this.props.usuarioUpdateValue.resource.addProd,
+      addFonr: this.props.usuarioUpdateValue.resource.addFonr,
+      addEntr: this.props.usuarioUpdateValue.resource.addEntr,
+      addKit: this.props.usuarioUpdateValue.resource.addKit,
+      addKitOut: this.props.usuarioUpdateValue.resource.addKitOut,
+      addOutPut: this.props.usuarioUpdateValue.resource.addOutPut,
+      addROs: this.props.usuarioUpdateValue.resource.addROs,
+      addRML: this.props.usuarioUpdateValue.resource.addRML,
+      gerROs: this.props.usuarioUpdateValue.resource.gerROs,
+      delROs: this.props.usuarioUpdateValue.resource.delROs,
+      updateRos: this.props.usuarioUpdateValue.resource.updateRos,
+      tecnico: this.props.usuarioUpdateValue.resource.tecnico,
     },
     typeAccountArray: [],
     typeName: this.props.usuarioUpdateValue.typeName
@@ -237,6 +237,7 @@ class GerenciarUsuario extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className='div-card-usuario'>
         <div className='linhaTexto-usuario'>
