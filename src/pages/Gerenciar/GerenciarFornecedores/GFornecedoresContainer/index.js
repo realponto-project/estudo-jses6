@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Input, Button, message } from 'antd';
 import { validators, masks } from './validators'
 import * as R from 'ramda'
+import { connect } from 'react-redux'
 import { getAddressByZipCode, newFornecedor } from '../../../../services/fornecedores'
 
 class GerenciarFornecedor extends Component {
@@ -9,19 +10,19 @@ class GerenciarFornecedor extends Component {
   state = {
     messageError: false,
     messageSuccess: false,
-    cnpj: '',
-    razaoSocial: '',
-    zipCode: '',
-    state: '',
-    city: '',
-    neighborhood: '',
-    street: '',
-    number: '',
-    complemento: '',
-    pontoReferencia: '',
-    nameContact: '',
-    email: '',
-    telphone: '',
+    cnpj: this.props.fornecedorUpdateValue.cnpj,
+    razaoSocial: this.props.fornecedorUpdateValue.razaoSocial,
+    zipCode: this.props.fornecedorUpdateValue.zipCode,
+    state: this.props.fornecedorUpdateValue.state,
+    city: this.props.fornecedorUpdateValue.city,
+    neighborhood: this.props.fornecedorUpdateValue.neighborhood,
+    street: this.props.fornecedorUpdateValue.street,
+    number: this.props.fornecedorUpdateValue.number,
+    complemento: this.props.fornecedorUpdateValue.complement,
+    pontoReferencia: this.props.fornecedorUpdateValue.referencePoint,
+    nameContact: this.props.fornecedorUpdateValue.nameContact,
+    email: this.props.fornecedorUpdateValue.email,
+    telphone: this.props.fornecedorUpdateValue.telphone,
     loading: false,
     fieldFalha: {
       cnpj: false,
@@ -223,10 +224,11 @@ class GerenciarFornecedor extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className='div-card-fornecedor'>
         <div className='linhaTexto-fornecedor'>
-          <h1 className='h1-fornecedor'>Novo fornecedor</h1>
+          <h1 className='h1-fornecedor'>Atualizar fornecedor</h1>
         </div>
 
         <div className='linha1-fornecedor'>
@@ -520,7 +522,7 @@ class GerenciarFornecedor extends Component {
         </div>
 
         <div className='linha-button-fornecedor'>
-          <Button type="primary" className='button' onClick={this.saveTargetNewFornecedor} loading={this.state.loading}>Salvar</Button>
+          <Button type="primary" className='button' onClick={this.saveTargetNewFornecedor} loading={this.state.loading}>Atualizar</Button>
         </div>
 
       </div>
@@ -528,4 +530,10 @@ class GerenciarFornecedor extends Component {
   }
 }
 
-export default GerenciarFornecedor
+function mapStateToProps(state) {
+  return {
+    fornecedorUpdateValue: state.fornecedorUpdateValue
+  }
+}
+
+export default connect(mapStateToProps)(GerenciarFornecedor)

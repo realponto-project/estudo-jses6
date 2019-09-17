@@ -10,14 +10,14 @@ const { Option } = Select;
 class GerenciarTecnico extends Component{
 
   state={
-    externo: false,
+    externo: this.props.tecnicoUpdateValue.external,
     carroArray:[],
     messageError: false,
     messageSuccess: false,
-    nome: '',
-    cnh: '',
+    nome: this.props.tecnicoUpdateValue.name,
+    cnh: this.props.tecnicoUpdateValue.CNH,
     carro: '',
-    placa: 'Selecione o carro',
+    placa: this.props.tecnicoUpdateValue.plate,
     rodizio: '',
     loading: false,
     modalCarro: false,
@@ -232,6 +232,8 @@ class GerenciarTecnico extends Component{
 
   componentDidMount = async () => {
     await this.getAllCarro()
+
+    await this.rodizio()
   }
 
 
@@ -355,6 +357,7 @@ class GerenciarTecnico extends Component{
   )
 
   render(){
+    console.log(this.props)
     return(
       <div className='div-card-tecnico'>
         <div className='linhaTexto-tecnico'>
@@ -452,7 +455,7 @@ class GerenciarTecnico extends Component{
         </div>
 
         <div className='linha-button-tecnico'>
-          <Button className='button' type="primary" onClick={this.saveTargetNewFornecedor} loading={this.state.loading}>Salvar</Button>
+          <Button className='button' type="primary" onClick={this.saveTargetNewFornecedor} loading={this.state.loading}>Atualizar</Button>
         </div>
       </div>
     )
@@ -462,6 +465,7 @@ class GerenciarTecnico extends Component{
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    tecnicoUpdateValue: state.tecnicoUpdateValue
   }
 }
 
