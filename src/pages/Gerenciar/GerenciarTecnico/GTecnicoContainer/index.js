@@ -116,6 +116,7 @@ class GerenciarTecnico extends Component{
     })
 
     const values = {
+      id: this.props.tecnicoUpdateValue.id,
       name: this.state.nome,
       CNH: this.state.cnh,
       plate: this.state.placa,
@@ -126,11 +127,11 @@ class GerenciarTecnico extends Component{
 
     if (resposta.status === 422) {
 
-      this.setState({
-        messageError: true,
-        fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message,
-      })
+      // this.setState({
+      //   messageError: true,
+      //   fieldFalha: resposta.data.fields[0].field,
+      //   message: resposta.data.fields[0].message,
+      // })
       await this.error()
       this.setState({
         loading:false,
@@ -138,14 +139,14 @@ class GerenciarTecnico extends Component{
       })
     } if (resposta.status === 200) {
 
-      this.setState({
-        nome: '',
-        cnh: '',
-        placa: 'Selecione o carro',
-        externo: false,
-        rodizio: '',
-        messageSuccess: true,
-      })
+      // this.setState({
+      //   nome: '',
+      //   cnh: '',
+      //   placa: 'Selecione o carro',
+      //   externo: false,
+      //   rodizio: '',
+      //   messageSuccess: true,
+      // })
       await this.success()
       this.setState({
         loading:false,
@@ -454,7 +455,7 @@ class GerenciarTecnico extends Component{
         </div>
 
         <div className='linha-button-tecnico'>
-          <Button className='button' type="primary" onClick={this.saveTargetUpdateTechnician} loading={this.state.loading}>Salvar</Button>
+          <Button className='button' type="primary" onClick={this.saveTargetUpdateTechnician} loading={this.state.loading}>Atualizar</Button>
         </div>
       </div>
     )
