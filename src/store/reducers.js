@@ -2,14 +2,17 @@ import { combineReducers } from 'redux'
 
 import { login, auth } from '../pages/Login/LoginRedux/reduce'
 import { osUpdateValue } from '../pages/Gerenciar/Os/OsRedux/reduce'
-import { produtoUpdateValue } from '../pages/Gerenciar/Produto/ProdutoRedux/reduce'
+import { produtoUpdateValue, fornecedorUpdateValue, usuarioUpdateValue, tecnicoUpdateValue } from '../pages/Gerenciar/Produto/ProdutoRedux/reduce'
 
 
 const appReducer = combineReducers({
   login,
   auth,
   osUpdateValue,
-  produtoUpdateValue
+  produtoUpdateValue,
+  fornecedorUpdateValue,
+  usuarioUpdateValue,
+  tecnicoUpdateValue,
 })
 
 
