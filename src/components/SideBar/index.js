@@ -131,6 +131,8 @@ render() {
         return <Redirect to='/logged/relatorioML/dash' />
       case 'perfil_dash':
         return <Redirect to='/logged/perfil/dash' />
+      case 'gerenciarProdutos_dash':
+        return <Redirect to='/logged/gerenciarProdutos/dash' />
       case 'logout':
         return <Redirect to='/login' />
       default:
