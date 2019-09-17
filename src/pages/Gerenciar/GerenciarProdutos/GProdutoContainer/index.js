@@ -16,14 +16,14 @@ class GerenciarProdutos extends Component {
     marcaArray:[],
     messageSuccess: false,
     itemArray:[],
-    item: '',
-    categoria: 'Equipamento',
-    marca: "Não selecionado",
-    tipo: "Não selecionado",
-    fabricante: '',
-    descricao: '',
-    codigo: '',
-    quantMin: 1,
+    item: this.props.produtoUpdateValue.name,
+    categoria: this.props.produtoUpdateValue.category,
+    marca: this.props.produtoUpdateValue.mark,
+    tipo: this.props.produtoUpdateValue.type,
+    fabricante: this.props.produtoUpdateValue.manufacturer,
+    descricao: this.props.produtoUpdateValue.description,
+    codigo: this.props.produtoUpdateValue.sku,
+    quantMin: this.props.produtoUpdateValue.minimumStock,
     modalMarca: false,
     modalTipo: false,
     modalFabricante: false,
@@ -32,7 +32,7 @@ class GerenciarProdutos extends Component {
     newTipo: '',
     newDescricao: '',
     loading: false,
-    serial: false,
+    serial: this.props.produtoUpdateValue.serial,
     fieldFalha: {
       item: false,
       codigo: false,
@@ -648,7 +648,7 @@ class GerenciarProdutos extends Component {
         </div>
 
         <div className='linha-button-produtos'>
-          <Button className='button' type="primary" loading={this.state.loading} onClick={this.saveTargetNewProduto}>Salvar</Button>
+          <Button className='button' type="primary" loading={this.state.loading} onClick={this.saveTargetNewProduto}>Atualizar</Button>
         </div>
 
       </div>
@@ -659,6 +659,7 @@ class GerenciarProdutos extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    produtoUpdateValue: state.produtoUpdateValue
   }
 }
 
