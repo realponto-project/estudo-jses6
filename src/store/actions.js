@@ -7,5 +7,6 @@ export default {
 
   REDIRECT: {
     OS: 'INICIAL_STATE_REDIRECT_OS',
+    PRODUTO: 'INICIAL_STATE_REDIRECT_PRODUTO',
   }
 }
