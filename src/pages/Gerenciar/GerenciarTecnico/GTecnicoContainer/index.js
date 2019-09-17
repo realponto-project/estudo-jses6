@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Input, Button, Select, Modal, message, Switch } from 'antd'
 import { connect } from 'react-redux'
 import { validators, masks } from './validators'
-import { newTecnico, newCarro, getCarro } from '../../../../services/tecnico'
+import { updateTecnico, newCarro, getCarro } from '../../../../services/tecnico'
 
 
 const { Option } = Select;
@@ -109,28 +109,29 @@ class GerenciarTecnico extends Component{
     }
   }
 
-  saveTargetNewFornecedor= async () => {
+  saveTargetUpdateTechnician= async () => {
 
     this.setState({
       loading: true
     })
 
     const values = {
+      id: this.props.tecnicoUpdateValue.id,
       name: this.state.nome,
       CNH: this.state.cnh,
       plate: this.state.placa,
       external: this.state.externo
     }
 
-    const resposta = await newTecnico(values)
+    const resposta = await updateTecnico(values)
 
     if (resposta.status === 422) {
 
-      this.setState({
-        messageError: true,
-        fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message,
-      })
+      // this.setState({
+      //   messageError: true,
+      //   fieldFalha: resposta.data.fields[0].field,
+      //   message: resposta.data.fields[0].message,
+      // })
       await this.error()
       this.setState({
         loading:false,
@@ -138,14 +139,14 @@ class GerenciarTecnico extends Component{
       })
     } if (resposta.status === 200) {
 
-      this.setState({
-        nome: '',
-        cnh: '',
-        placa: 'Selecione o carro',
-        externo: false,
-        rodizio: '',
-        messageSuccess: true,
-      })
+      // this.setState({
+      //   nome: '',
+      //   cnh: '',
+      //   placa: 'Selecione o carro',
+      //   externo: false,
+      //   rodizio: '',
+      //   messageSuccess: true,
+      // })
       await this.success()
       this.setState({
         loading:false,
@@ -454,7 +455,7 @@ class GerenciarTecnico extends Component{
         </div>
 
         <div className='linha-button-tecnico'>
-          <Button className='button' type="primary" onClick={this.saveTargetNewFornecedor} loading={this.state.loading}>Atualizar</Button>
+          <Button className='button' type="primary" onClick={this.saveTargetUpdateTechnician} loading={this.state.loading}>Atualizar</Button>
         </div>
       </div>
     )

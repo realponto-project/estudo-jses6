@@ -3,7 +3,7 @@ import { Input, Button, message } from 'antd';
 import { validators, masks } from './validators'
 import * as R from 'ramda'
 import { connect } from 'react-redux'
-import { getAddressByZipCode, newFornecedor } from '../../../../services/fornecedores'
+import { getAddressByZipCode, updateFornecedor } from '../../../../services/fornecedores'
 
 class GerenciarFornecedor extends Component {
 
@@ -64,7 +64,7 @@ class GerenciarFornecedor extends Component {
     message.error('O cadastro desse fornecedor não foi efetuado');
   };
 
-  saveTargetNewFornecedor= async () => {
+  saveTargetUpdateFornecedor= async () => {
 
     this.setState({
       loading: true
@@ -85,10 +85,9 @@ class GerenciarFornecedor extends Component {
       nameContact: this.state.nameContact,
       complement: this.state.complemento,
       responsibleUser: 'modrp',
-      relation: 'fornecedor'
     }
 
-    const resposta = await newFornecedor(values)
+    const resposta = await updateFornecedor(values)
 
     if (resposta.status === 422) {
 
@@ -522,7 +521,7 @@ class GerenciarFornecedor extends Component {
         </div>
 
         <div className='linha-button-fornecedor'>
-          <Button type="primary" className='button' onClick={this.saveTargetNewFornecedor} loading={this.state.loading}>Atualizar</Button>
+          <Button type="primary" className='button' onClick={this.saveTargetUpdateFornecedor} loading={this.state.loading}>Salvar</Button>
         </div>
 
       </div>

@@ -371,7 +371,7 @@ class GerenciarProdutoDash extends Component {
               {line.typeName}
             </div>
             <div className='cel-customizado-cabecalho-GCadastros'>
-              {line.customired ? <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> : <Icon type="close-circle" theme="twoTone" twoToneColor="#f01b0c" />} 
+              {line.customized ? <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> : <Icon type="close-circle" theme="twoTone" twoToneColor="#f01b0c" />} 
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
               <Icon
@@ -502,7 +502,7 @@ class GerenciarProdutoDash extends Component {
       city: fornecedor.city,
       neighborhood: fornecedor.neighborhood,
       street: fornecedor.street,
-      number: fornecedor.minimumStock,
+      number: fornecedor.number,
       complement: fornecedor.complement,
       referencePoint: fornecedor.referencePoint,
       nameContact: fornecedor.nameContact,
@@ -523,6 +523,7 @@ class GerenciarProdutoDash extends Component {
       customized: usuario.customized,
       typeName: usuario.typeName,
       username: usuario.username,
+      resource: usuario.resource,
     }
 
     await this.props.redirectValueUsuario(value)
