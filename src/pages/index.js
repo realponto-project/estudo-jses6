@@ -44,7 +44,6 @@ class PagesRoute extends Component {
   hasToken = R.has('token')
 
   forceLogout = async () => {
-    console.log('teste')
     if (!this.hasAuth(this.props)) {
       await this.logout()
     } else if (!this.hasToken(this.props.auth)) {
