@@ -473,7 +473,7 @@ class GerenciarProdutos extends Component {
     return (
       <div className='div-card-produtos'>
         <div className='linhaTexto-produtos'>
-          <h1 className='h1-produtos'>Produtos</h1>
+          <h1 className='h1-produtos'>Atualizar produtos</h1>
         </div>
 
         <div className='linha1-produtos'>
