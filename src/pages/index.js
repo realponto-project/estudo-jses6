@@ -32,6 +32,7 @@ import uuidValidate from 'uuid-validate'
 import GerenciarFornecedorRoute from './Gerenciar/GerenciarFornecedores';
 import GerenciarUsuarioRoute from './Gerenciar/GerenciarUsuarios';
 import GerenciarTecnicoRoute from './Gerenciar/GerenciarTecnico';
+import GerenciarProdutosDashRoute from './Gerenciar/GerenciarProdutos';
 
 class PagesRoute extends Component {
 
@@ -105,8 +106,8 @@ class PagesRoute extends Component {
           <Route path='/logged/searchOs' component={SearchOsRoute} />
           <Route path='/logged/Os' component={OsDashRoute} />
           <Route path='/logged/perfil' component={PerfilDashRoute} />
-          <Route path='/logged/gerenciarProdutos' component={GerenciarProdutoRoute} />
-          <Route path='/logged/gerenciarFornecedores' component={GerenciarFornecedorRoute} />
+          <Route path='/logged/gerenciarProdutosDash' component={GerenciarProdutosDashRoute} />
+          <Route path='/logged/gerenciarFornecedor' component={GerenciarFornecedorRoute} />
           <Route path='/logged/gerenciarUsuario' component={GerenciarUsuarioRoute} />
           <Route path='/logged/gerenciarTecnico' component={GerenciarTecnicoRoute} />
         </Switch>
