@@ -169,12 +169,12 @@ class GerenciarEntrada extends Component {
 
     const values = {
       id: this.props.entradaUpdateValue.id,
-      // amountAdded: this.state.quant.toString(),
-      // stockBase: this.state.estoque,
-      // productId: this.state.productId,
-      // companyId: this.state.companyId,
-      // serialNumbers: this.state.numeroSerieTest.length > 0 ? this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ) : null,
-      // responsibleUser: 'modrp',
+      amountAdded: this.state.quant.toString(),
+      stockBase: this.state.estoque,
+      productId: this.state.productId,
+      companyId: this.state.companyId,
+      serialNumbers: this.state.numeroSerieTest.length > 0 ? this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ) : null,
+      responsibleUser: 'modrp',
     }
 
     const resposta = await updateEntrada(values)
@@ -446,13 +446,13 @@ class GerenciarEntrada extends Component {
             />
           </div>
           {this.state.nomeProduto !== 'Não selecionado' && this.state.fornecedor !== 'Não selecionado' ?
-            <Button className='button' type="primary" onClick={this.messagesError} loading={this.state.loading}>Salvar</Button> :
+            <Button className='button' type="primary" onClick={this.messagesError} loading={this.state.loading}>Atualizar</Button> :
           null}
           <this.modalConfirm />
         </div>:
         <div className='div-button-entrada1'>
           {this.state.nomeProduto !== 'Não selecionado' && this.state.fornecedor !== 'Não selecionado' ?
-            <Button className='button' type="primary" onClick={this.messagesError} loading={this.state.loading}>Salvar</Button> :
+            <Button className='button' type="primary" onClick={this.messagesError} loading={this.state.loading}>Atualizar</Button> :
           null}
           <this.modalConfirm />
         </div>}
