@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Input, Select, Card, Checkbox, Switch, Button, message } from 'antd'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { getTypeAccount, getResourcesByTypeAccount, updateUsuario } from '../../../../services/usuario'
@@ -10,7 +9,6 @@ const { Option } = Select;
 class GerenciarUsuario extends Component {
 
   state = {
-    redirect: false,
     user: this.props.usuarioUpdateValue.username,
     checkboxAble: this.props.usuarioUpdateValue.customized,
     permission: {
@@ -46,12 +44,6 @@ class GerenciarUsuario extends Component {
     message.error('Usuário não cadastrado');
   };
 
-  redirectReservaOs = () => {
-    this.setState({
-      redirect: true
-    })
-  }
-
   getAllTypeAccount = async () => {
     const query = {
       filters: {
@@ -71,12 +63,6 @@ class GerenciarUsuario extends Component {
 
   componentDidMount = async () => {
     await this.getAllTypeAccount()
-  }
-
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      return <Redirect to='/logged/novoTipoConta/add' />
-    }
   }
 
   onChange = (e) => {
@@ -241,8 +227,6 @@ class GerenciarUsuario extends Component {
                 <Option value={valor.typeName}>{valor.typeName}</Option>)}
               </Select> :
             <Select value='Nenhum tipo de conta cadastrado'></Select>}
-            {this.props.auth.addTypeAccount ? <Button className='buttonadd-marca-produtos' type="primary" name='modalTipo' icon="plus" onClick={this.redirectReservaOs}/> : null }
-            {this.renderRedirect()}
           </div>
         </div>
 

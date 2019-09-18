@@ -60,6 +60,7 @@ const INICIAL_STATE_REDIRECT_USUARIO ={
   typeName: '',
   username: '',
   resource: '',
+  redirect: '',
 }
 
 export function usuarioUpdateValue(state = INICIAL_STATE_REDIRECT_USUARIO, action) {

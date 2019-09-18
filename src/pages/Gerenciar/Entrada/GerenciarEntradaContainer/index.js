@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import './index.css'
-import { Spin, DatePicker, Button, Input } from 'antd'
+import { Spin, DatePicker, Button, Input, Tooltip, Icon } from 'antd'
 import { getEntrada } from '../../../../services/entrada';
 
 class GerenciarEntrada extends Component{
@@ -121,31 +122,42 @@ class GerenciarEntrada extends Component{
       return(
         this.state.entrada.rows.map((line) =>
         <div className='div-100-Gentrada'>
-        <div className='div-lines-Gentrada'
-         >
-        <div className='cel-produto-cabecalho-Gentrada'>
-        <label className='div-table-label-cel-Gentrada'>
-          {line.name}
-        </label>
+          <div className='div-lines-Gentrada'>
+            <div className='cel-produto-cabecalho-Gentrada'>
+              <label className='div-table-label-cel-Gentrada'>
+                {line.name}
+              </label>
+            </div>
+            <div className='cel-quant-cabecalho-Gentrada'>
+              <label className='div-table-label-cel-Gentrada'>
+                {line.amountAdded}
+              </label>
+            </div>
+            <div className='cel-usuario-cabecalho-Gentrada'>
+              <label className='div-table-label-cel-Gentrada'>
+                {line.responsibleUser}
+              </label>
+            </div>
+            <div className='cel-data-cabecalho-Gentrada'>
+            <label className='div-table-label-cel-Gentrada'>
+              {line.createdAt}
+            </label>
+            </div>
+            {this.props.auth.typeAccount === 'MOD' ?
+            <div className='cel-edit-cabecalho-Gentrada'>
+              <Tooltip placement="topLeft" title='Editar'>
+                <Icon
+                  type="edit"
+                  className='icon-edit'
+                  style={{ fontSize: '20px', color: '#08c'}}
+                  // onClick={() => this.redirectEntrada(line)}
+                  theme="outlined" />
+              </Tooltip>
+            </div>
+            : null}
+          </div>
+          <div className=' div-separate1-Gentrada'/>
         </div>
-        <div className='cel-quant-cabecalho-Gentrada'>
-        <label className='div-table-label-cel-Gentrada'>
-          {line.amountAdded}
-        </label>
-        </div>
-        <div className='cel-usuario-cabecalho-Gentrada'>
-        <label className='div-table-label-cel-Gentrada'>
-          {line.responsibleUser}
-        </label>
-        </div>
-        <div className='cel-data-cabecalho-Gentrada'>
-        <label className='div-table-label-cel-Gentrada'>
-          {line.createdAt}
-        </label>
-        </div>
-      </div>
-        <div className=' div-separate1-Gentrada'/>
-      </div>
       ))
     }else{
       return(
@@ -156,7 +168,6 @@ class GerenciarEntrada extends Component{
 
 
   render(){
-    console.log(this.state)
     return(
       <div className='div-card-Gentrada'>
         <div className='linhaTexto-Gentrada'>
@@ -223,9 +234,8 @@ class GerenciarEntrada extends Component{
           <div className='cel-data-cabecalho-Gentrada'>
             Data lançamento
           </div>
+          {this.props.auth.typeAccount === 'MOD' ? <div className='cel-edit-cabecalho-Gentrada'/> : null}
         </div>
-
-        
         <div className=' div-separate-Gentrada'/>
             {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
@@ -235,4 +245,10 @@ class GerenciarEntrada extends Component{
   }
 }
 
-export default GerenciarEntrada
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(GerenciarEntrada)
