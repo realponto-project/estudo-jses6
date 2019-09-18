@@ -3,7 +3,7 @@ import { Input, Select, Card, Checkbox, Switch, Button, message } from 'antd'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { getTypeAccount, getResourcesByTypeAccount, NovoUsuarioService } from '../../../../services/usuario'
+import { getTypeAccount, getResourcesByTypeAccount, updateUsuario } from '../../../../services/usuario'
 
 const { Option } = Select;
 
@@ -95,10 +95,14 @@ class GerenciarUsuario extends Component {
     })
   }
 
-  onChangeAble = () => {
-    this.setState({
+  onChangeAble = async() => {
+    await this.setState({
       checkboxAble: !this.state.checkboxAble
     })
+
+    if(!this.state.checkboxAble) {
+      await this.handleChange(this.state.typeName)
+    }
   }
 
   handleChange = async (value) => {
@@ -148,13 +152,14 @@ class GerenciarUsuario extends Component {
     }))
   }
 
-  saveTargetNewUser = async () => {
+  saveTargetUpdateUser = async () => {
 
     this.setState({
       loading: true
     })
 
     const values = {
+      id: this.props.usuarioUpdateValue.id,
       username:this.state.user,
       typeName: this.state.typeName,
       customized: this.state.checkboxAble,
@@ -186,7 +191,7 @@ class GerenciarUsuario extends Component {
       addAccessories: this.state.permission.addAccessories,
     }
 
-    const resposta = await NovoUsuarioService(values)
+    const resposta = await updateUsuario(values)
 
     if (resposta.status === 422) {
 
@@ -208,7 +213,6 @@ class GerenciarUsuario extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className='div-card-usuario'>
         <div className='linhaTexto-usuario'>
@@ -303,7 +307,7 @@ class GerenciarUsuario extends Component {
         </div>
 
         {this.state.user !== '' ? <div className='div-button-tipo'>
-              <Button type='primary' className='button' onClick={this.saveTargetNewUser} loading={this.state.loading}>Salvar</Button>
+              <Button type='primary' className='button' onClick={this.saveTargetUpdateUser} loading={this.state.loading}>Atualizar</Button>
         </div> : null}
       </div>
     )
