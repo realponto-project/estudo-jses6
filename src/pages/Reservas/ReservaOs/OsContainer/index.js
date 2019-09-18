@@ -88,6 +88,10 @@ class ReservaOs extends Component{
       const resp = await getSerial(teste[teste.length - 2])
 
       if (resp.data) {
+        if(resp.data.productBase.product.name !== this.state.nomeProduto){
+          mensagem = 'Este equipamento não contém esse número de série'
+          count ++
+        }
         if (resp.data.reserved) {
           count ++
           if (resp.data.deletedAt) {
@@ -104,6 +108,7 @@ class ReservaOs extends Component{
         mensagem = 'Este equipamento não consta na base de dados'
         count ++
       }
+
 
       if (count > 1) {
 
