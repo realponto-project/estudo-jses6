@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { Input, Button, message } from 'antd';
+import { Input, Button, message, Icon } from 'antd';
 import { validators, masks } from './validators'
 import * as R from 'ramda'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getAddressByZipCode, updateFornecedor } from '../../../../services/fornecedores'
 
 class GerenciarFornecedor extends Component {
 
   state = {
+    redirect: false,
     messageError: false,
     messageSuccess: false,
     cnpj: this.props.fornecedorUpdateValue.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5'),
@@ -53,6 +55,19 @@ class GerenciarFornecedor extends Component {
       nameContact: '',
       email: '',
       telphone: '',
+    }
+  }
+
+
+  redirectGerenciarCadastros = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/logged/gerenciarProduto/dash' />
     }
   }
 
@@ -211,11 +226,16 @@ class GerenciarFornecedor extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className='div-card-fornecedor'>
-        <div className='linhaTexto-fornecedor'>
-          <h1 className='h1-fornecedor'>Atualizar fornecedor</h1>
+       <div className='linhaTexto-GOs'>
+        <div className='div-nome-40'>
+        <div><Icon type="arrow-left" onClick={() => this.redirectGerenciarCadastros()} /></div>
+        {this.renderRedirect()}
+        </div>
+        <div className='div-nome-60'>
+          <h1 className='h1-Os'>Atualizar fornecedor</h1>
+        </div>
         </div>
 
         <div className='linha1-fornecedor'>
