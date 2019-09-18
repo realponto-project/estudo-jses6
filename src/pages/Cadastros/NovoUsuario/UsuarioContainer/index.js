@@ -104,7 +104,8 @@ class NovoUsuario extends Component {
 
   handleChange = async (value) => {
     await this.setState({
-      typeName: value
+      typeName: value,
+      checkboxAble: false,
     })
 
     const query = {
