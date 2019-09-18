@@ -3,13 +3,15 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import './index.css'
-import { Spin, DatePicker, Button, Input, Tooltip, Icon } from 'antd'
-import { getEntrada } from '../../../../services/entrada';
+import { Spin, DatePicker, Button, Input, Tooltip, Icon, Modal } from 'antd'
+import { getEntrada, deleteEntrada } from '../../../../services/entrada';
 import { redirectValueEntrada } from '../GerenciarEntradaRedux/action'
 
 class GerenciarEntrada extends Component{
  
   state={
+    idLine: '',
+    modalRemove: false,
     redirect: false,
     avancado: false,
     loading: false,
@@ -24,6 +26,13 @@ class GerenciarEntrada extends Component{
     count: 0,
     show: 0,
     valueDate: {start: '2019/01/01'}
+  }
+
+  removerLinha = (line) => {
+    this.setState({
+      modalRemove: true,
+      idLine: line
+    })
   }
 
   onChange = async (e) => {
@@ -186,6 +195,10 @@ class GerenciarEntrada extends Component{
                   onClick={() => this.redirectEntrada(line)}
                   theme="outlined" />
               </Tooltip>
+              <Tooltip placement="topLeft" title='Remover'>
+                <Icon type="delete" className='icon-lixo' onClick={() => this.removerLinha(line.id)}/>
+                <this.modalRemover/>
+              </Tooltip> 
             </div>
             : null}
           </div>
@@ -199,8 +212,43 @@ class GerenciarEntrada extends Component{
     }
   }
 
+  modalRemover = () => (
+    <Modal
+      title="Confirmação"
+      visible={this.state.modalRemove}
+      onOk={this.removeOs}
+      onCancel={this.handleOk}
+      okText='Continuar'
+      cancelText='Cancelar'
+    >
+      <div className='div-textProdutos-GOs'>Essa entrada será deletada, deseja continuar?</div>
+    </Modal>
+  )
+
+  removeOs = async () => {
+
+    const id =  this.state.idLine
+
+    await deleteEntrada(id)
+
+    await this.getAllEntrada()
+
+    await this.setState({
+      modalRemove: false, 
+      idLine: '',
+    })
+  }
+
+  handleOk = () => {
+    this.setState({
+      modalRemove: false,
+      idLine: ''
+    })
+  }
+
 
   render(){
+    console.log(this.state.idLine)
     return(
       <div className='div-card-Gentrada'>
         <div className='linhaTexto-Gentrada'>
