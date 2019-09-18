@@ -96,10 +96,14 @@ class NovoUsuario extends Component {
     })
   }
 
-  onChangeAble = () => {
-    this.setState({
+  onChangeAble = async () => {
+    await this.setState({
       checkboxAble: !this.state.checkboxAble
     })
+
+    if(!this.state.checkboxAble) {
+      await this.handleChange(this.state.typeName)
+    }
   }
 
   handleChange = async (value) => {
@@ -189,8 +193,6 @@ class NovoUsuario extends Component {
     }
 
     const resposta = await NovoUsuarioService(values)
-
-    console.log(values)
 
     if (resposta.status === 422) {
 

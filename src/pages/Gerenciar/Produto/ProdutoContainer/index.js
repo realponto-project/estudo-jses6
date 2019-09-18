@@ -340,6 +340,7 @@ class GerenciarProdutoDash extends Component {
                 {line.type}
               </div>
               <div className='cel-edit-cabecalho-GCadastros'>
+              {this.props.auth.addProd ?
                 <Tooltip placement="topLeft" title='Editar'>
                   <Icon
                     type="edit"
@@ -348,6 +349,7 @@ class GerenciarProdutoDash extends Component {
                     style={{ fontSize: '20px', color: '#08c'}}
                     theme="outlined" />
                 </Tooltip>
+                : null }
               </div>
             </div>
             <div className=' div-separate1-Gentrada' />
@@ -376,6 +378,7 @@ class GerenciarProdutoDash extends Component {
               {line.customized ? <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> : <Icon type="close-circle" theme="twoTone" twoToneColor="#f01b0c" />} 
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
+              {this.props.auth.addUser ?
               <Tooltip placement="topLeft" title='Editar'>
                 <Icon
                   type="edit"
@@ -384,6 +387,7 @@ class GerenciarProdutoDash extends Component {
                   onClick={() => this.redirectUsuario(line)}
                   theme="outlined" />
               </Tooltip>
+              : null }
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -416,6 +420,7 @@ class GerenciarProdutoDash extends Component {
               {line.CNH.replace(/(\d{2})(\d{2})(\d{4})/, '$1/$2/$3')}
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
+              {this.props.auth.addTec ?
               <Tooltip placement="topLeft" title='Editar'>
                 <Icon
                   type="edit"
@@ -424,6 +429,7 @@ class GerenciarProdutoDash extends Component {
                   onClick={() => this.redirectTecnico(line)}
                   theme="outlined" />
               </Tooltip>
+              : null }
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />
@@ -459,6 +465,7 @@ class GerenciarProdutoDash extends Component {
               {line.telphone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3')}
             </div>
             <div className='cel-edit-cabecalho-GCadastros'>
+              {this.props.auth.addFonr ?
               <Tooltip placement="topLeft" title='Editar'>
                 <Icon
                   type="edit"
@@ -467,6 +474,7 @@ class GerenciarProdutoDash extends Component {
                   onClick={() => this.redirectFornecedor(line)}
                   theme="outlined" />
               </Tooltip>
+              : null}
             </div>
           </div>
           <div className=' div-separate1-Gentrada' />

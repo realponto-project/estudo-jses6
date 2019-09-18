@@ -54,10 +54,17 @@
 .cel-usuario-cabecalho-Gentrada{
   align-items: center;
   display: flex;
-  width: 27%;
+  width: 24%;
   height:60px;
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-edit-cabecalho-Gentrada{
+  align-items: center;
+  display: flex;
+  width: 3%;
+  height:60px;
+  font-size: 1.0em ;
 }
 .cel-quant-cabecalho-Gentrada{
   align-items: center;
