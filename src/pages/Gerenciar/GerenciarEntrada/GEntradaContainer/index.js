@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Input, Select, InputNumber, Button, Modal, message } from 'antd'
 import { validators } from './validators'
-import { newEntrada } from '../../../../services/entrada'
-import { getItens } from '../../../../services/produto';
+import { updateEntrada } from '../../../../services/entrada'
+import { getItens, getEquips } from '../../../../services/produto';
 import { getFornecedor } from '../../../../services/fornecedores';
-import { getSerial } from '../../../../services/serialNumber';
-
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -14,16 +13,17 @@ const { TextArea } = Input;
 class GerenciarEntrada extends Component {
 
   state = {
+    serialNumberArray: [],
     fornecedorArray: [],
     itemArray:[],
-    serial: false,
+    serial: this.props.entradaUpdateValue.serial,
     numeroSerieTest: [],
     messageError: false,
     messageSucesso: false,
-    estoque: 'REALPONTO',
-    nomeProduto: 'Não selecionado',
-    fornecedor: 'Não selecionado',
-    quant: 1,
+    estoque: this.props.entradaUpdateValue.stockBase,
+    nomeProduto: this.props.entradaUpdateValue.name,
+    fornecedor: this.props.entradaUpdateValue.razaoSocial,
+    quant: this.props.entradaUpdateValue.amountAdded,
     modalConfirm: false,
     arrayProdutos: [],
     fieldFalha: {
@@ -34,14 +34,29 @@ class GerenciarEntrada extends Component {
       nomeProduto: '',
       fornecedor: '',
     },
-    productId: '',
-    companyId: '',
+    productId: this.props.entradaUpdateValue.productId,
+    companyId: this.props.entradaUpdateValue.companyId,
   }
 
   componentDidMount = async () => {
     await this.getAllItens()
 
     await this.getAllFornecedor()
+
+    await this.getEquipsByEntrance()
+  }
+
+  getEquipsByEntrance = async () => {
+
+    const query = {
+      createdAt: this.props.entradaUpdateValue.createdAt
+    }
+
+    await getEquips(query).then(
+      resposta => this.setState({
+        numeroSerieTest: resposta.data.map(item => item.serialNumber).toString().replace(/,/ig, '\n')
+      })
+    )
   }
 
   getAllFornecedor = async () => {
@@ -53,7 +68,18 @@ class GerenciarEntrada extends Component {
   }
 
   getAllItens = async () => {
-    await getItens().then(
+
+    const query = {
+      filters: {
+        product: {
+          specific: {
+            serial: this.props.entradaUpdateValue.serial,
+          },
+        },
+      },
+    }
+
+    await getItens(query).then(
       resposta => this.setState({
         itemArray: resposta.data,
       })
@@ -119,22 +145,23 @@ class GerenciarEntrada extends Component {
   }
  
 
-  saveTargetNewEntrada = async () => {
+  saveTargetAtualizacaoEntrada = async () => {
 
     this.setState({
       loading: true
     })
 
     const values = {
-      amountAdded: this.state.quant.toString(),
-      stockBase: this.state.estoque,
-      productId: this.state.productId,
-      companyId: this.state.companyId,
-      serialNumbers: this.state.numeroSerieTest.length > 0 ? this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ) : null,
-      responsibleUser: 'modrp',
+      id: this.props.entradaUpdateValue.id,
+      // amountAdded: this.state.quant.toString(),
+      // stockBase: this.state.estoque,
+      // productId: this.state.productId,
+      // companyId: this.state.companyId,
+      // serialNumbers: this.state.numeroSerieTest.length > 0 ? this.state.numeroSerieTest.split(/\n/).filter((item) => item ? item : null ) : null,
+      // responsibleUser: 'modrp',
     }
 
-    const resposta = await newEntrada(values)
+    const resposta = await updateEntrada(values)
 
     if (resposta.status === 422) {
 
@@ -170,41 +197,41 @@ class GerenciarEntrada extends Component {
     }
   }
 
-  filter = async (e) => {
+  // filter = async (e) => {
 
-    await this.setState({
-      numeroSerieTest: e.target.value
-    })
+  //   await this.setState({
+  //     numeroSerieTest: e.target.value
+  //   })
 
-    const teste = this.state.numeroSerieTest.split(/\n/)
+  //   const teste = this.state.numeroSerieTest.split(/\n/)
 
-    if (/\n/.test(this.state.numeroSerieTest[this.state.numeroSerieTest.length - 1])) {
+  //   if (/\n/.test(this.state.numeroSerieTest[this.state.numeroSerieTest.length - 1])) {
 
-      let count = 0
+  //     let count = 0
 
-      // eslint-disable-next-line array-callback-return
-      teste.map((valor) => {
-        if (valor === teste[teste.length - 2]) count++
-      })
+  //     // eslint-disable-next-line array-callback-return
+  //     teste.map((valor) => {
+  //       if (valor === teste[teste.length - 2]) count++
+  //     })
 
-      const resp = await getSerial(teste[teste.length - 2])
+  //     const resp = await getSerial(teste[teste.length - 2])
 
-      if (resp.data) count ++
+  //     if (resp.data) count ++
 
-      if (count > 1) {
+  //     if (count > 1) {
 
-        this.errorNumeroSerie()
+  //       this.errorNumeroSerie()
 
-        teste.splice(teste.length - 2, 1)
+  //       teste.splice(teste.length - 2, 1)
 
-        const testeArray = teste.toString()
+  //       const testeArray = teste.toString()
 
-        this.setState({
-          numeroSerieTest: testeArray.replace(/,/ig, '\n')
-        })
-      }
-    }
-  }
+  //       this.setState({
+  //         numeroSerieTest: testeArray.replace(/,/ig, '\n')
+  //       })
+  //     }
+  //   }
+  // }
 
   onChange = (e) => {
     this.setState({
@@ -264,7 +291,7 @@ class GerenciarEntrada extends Component {
     <Modal
       title="Confirmar produto"
       visible={this.state.modalConfirm}
-      onOk={this.saveTargetNewEntrada}
+      onOk={this.saveTargetAtualizacaoEntrada}
       okText='Confirmar'
       onCancel={this.handleCancel}
       cancelText='Cancelar'
@@ -300,10 +327,11 @@ class GerenciarEntrada extends Component {
   )
 
   render() {
+    console.log(this.state)
     return (
       <div className='div-card-entrada'>
         <div className='linhaTexto-entrada'>
-          <h1 className='h1-entrada'>Gerenciar entrada</h1>
+          <h1 className='h1-entrada'>Atualizar entrada</h1>
         </div>
 
         <div className='linha1-entrada'>
@@ -392,7 +420,8 @@ class GerenciarEntrada extends Component {
               rows={4}
               name='numeroSerie'
               value={this.state.numeroSerieTest}
-              onChange={this.filter}
+              // onChange={this.filter}
+              readOnly
             />
           </div>
           {this.state.nomeProduto !== 'Não selecionado' && this.state.fornecedor !== 'Não selecionado' ?
@@ -412,4 +441,11 @@ class GerenciarEntrada extends Component {
   }
 }
 
-export default GerenciarEntrada
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+    entradaUpdateValue: state.entradaUpdateValue
+  }
+}
+
+export default connect(mapStateToProps)(GerenciarEntrada)

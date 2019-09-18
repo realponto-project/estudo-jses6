@@ -26,7 +26,7 @@ export const getProdutos = async (query) => {
   return response
 } 
 
-export const getItens = async () => {
+export const getEquips = async (query) => {
   const storeObject = store.getState()
 
   const headers = {
@@ -36,7 +36,32 @@ export const getItens = async () => {
 
   let response = {}
 
-  await axios.get(`${BACKEND_URL}/api/product/getAllNames`, { headers: headers, params: { } }).then(
+  await axios.get(`${BACKEND_URL}/api/product/getEquipsByEntrance`, { headers: headers, params: { query } }).then(
+    resp => {
+      response = resp
+    }
+  ).catch((error) => {
+    if (error.response) {
+      response = error.response
+    } else {
+      console.log('Error', error.message);
+    }
+  })
+  return response
+} 
+
+
+export const getItens = async (query) => {
+  const storeObject = store.getState()
+
+  const headers = {
+    token: storeObject.auth.token,
+    username: storeObject.auth.username,
+  }
+
+  let response = {}
+
+  await axios.get(`${BACKEND_URL}/api/product/getAllNames`, { headers: headers, params: { query } }).then(
     resp => {
       response = resp
     }

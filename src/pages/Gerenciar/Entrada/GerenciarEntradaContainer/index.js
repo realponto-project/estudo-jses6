@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
 import './index.css'
 import { Spin, DatePicker, Button, Input, Tooltip, Icon } from 'antd'
 import { getEntrada } from '../../../../services/entrada';
+import { redirectValueEntrada } from '../GerenciarEntradaRedux/action'
 
 class GerenciarEntrada extends Component{
  
   state={
+    redirect: false,
     avancado: false,
     loading: false,
     usuario: '',
@@ -88,6 +92,35 @@ class GerenciarEntrada extends Component{
       loading: false
     })
   }
+  
+
+  redirectEntrada = async (entrada) => {
+    const value = {
+      id: entrada.id,
+      stockBase: entrada.stockBase,
+      amountAdded: entrada.amountAdded,
+      razaoSocial: entrada.razaoSocial,
+      name: entrada.name,
+      companyId: entrada.companyId,
+      productId: entrada.productId,
+      serial: entrada.serial,
+      createdAt: entrada.createdAtNotFormatted,
+    }
+
+    await this.props.redirectValueEntrada(value)
+
+    await this.setState({
+      redirect: true
+    })
+  }
+
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect exact path to='/logged/entradaDash/dash' />
+    }
+  }
+
 
   componentDidMount = async () => {
     await this.getAllEntrada()
@@ -150,7 +183,7 @@ class GerenciarEntrada extends Component{
                   type="edit"
                   className='icon-edit'
                   style={{ fontSize: '20px', color: '#08c'}}
-                  // onClick={() => this.redirectEntrada(line)}
+                  onClick={() => this.redirectEntrada(line)}
                   theme="outlined" />
               </Tooltip>
             </div>
@@ -236,13 +269,20 @@ class GerenciarEntrada extends Component{
           </div>
           {this.props.auth.typeAccount === 'MOD' ? <div className='cel-edit-cabecalho-Gentrada'/> : null}
         </div>
-        <div className=' div-separate-Gentrada'/>
-            {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
+        <div className=' div-separate-Gentrada'/>  
+        {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading} /></div> : this.test()}
 
-            <this.Pages/>
+        <this.Pages/>
+
+        {this.renderRedirect()}
+
       </div>
     )
   }
+}
+
+function mapDispacthToProps(dispach) {
+  return bindActionCreators({ redirectValueEntrada }, dispach)
 }
 
 function mapStateToProps(state) {
@@ -251,4 +291,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(GerenciarEntrada)
+export default connect(mapStateToProps, mapDispacthToProps)(GerenciarEntrada)

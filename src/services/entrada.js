@@ -27,6 +27,30 @@ export const newEntrada = async (values) => {
   return response
 }
 
+export const updateEntrada = async (values) => {
+  const storeObject = store.getState()
+
+  const headers = {
+    token: storeObject.auth.token,
+    username: storeObject.auth.username,
+  }
+
+  let response = {}
+
+  await axios.put(`${BACKEND_URL}/api/entrance`, values, { headers: headers }).then(
+    resp => {
+      response = resp
+    }
+  ).catch((error) => {
+    if (error.response) {
+      response = error.response
+    } else {
+      console.log('Error', error.message);
+    }
+  })
+  return response
+}
+
 export const getEntrada = async (query) => {
   const storeObject = store.getState()
 
