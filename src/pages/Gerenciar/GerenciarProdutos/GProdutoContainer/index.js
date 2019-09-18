@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Input, InputNumber, Select, Button, Modal, Switch, message } from 'antd'
+import { Input, InputNumber, Select, Button, Modal, Switch, message, Icon } from 'antd'
 import { connect } from 'react-redux'
 import { validators, masks } from './validators'
 import { newMarca, newTipo, updateProduto, getTipo, getMarca, getFabricante } from '../../../../services/produto'
-
+import { Redirect } from 'react-router-dom'
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -11,6 +11,7 @@ const { TextArea } = Input;
 class GerenciarProdutos extends Component {
 
   state = {
+    redirect: false,
     messageError: false,
     tipoArray: [],
     marcaArray:[],
@@ -43,6 +44,19 @@ class GerenciarProdutos extends Component {
       codigo: '',
       quantMin: '',
     },
+  }
+
+
+  redirectGerenciarCadastros = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/logged/gerenciarProduto/dash' />
+    }
   }
 
   onChangeQuantMin = (value) => {
@@ -429,8 +443,14 @@ class GerenciarProdutos extends Component {
   render() {
     return (
       <div className='div-card-produtos'>
-        <div className='linhaTexto-produtos'>
-          <h1 className='h1-produtos'>Atualizar produtos</h1>
+        <div className='linhaTexto-GOs'>
+        <div className='div-nome-40'>
+        <div><Icon type="arrow-left" onClick={() => this.redirectGerenciarCadastros()} /></div>
+        {this.renderRedirect()}
+        </div>
+        <div className='div-nome-60'>
+          <h1 className='h1-Os'>Atualizar produtos</h1>
+        </div>
         </div>
 
         <div className='linha1-produtos'>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Input, Select, InputNumber, Button, Modal, message } from 'antd'
+import { Input, Select, InputNumber, Button, Modal, message, Icon } from 'antd'
 import { validators } from './validators'
+import { Redirect } from 'react-router-dom'
 import { updateEntrada } from '../../../../services/entrada'
 import { getItens, getEquips } from '../../../../services/produto';
 import { getFornecedor } from '../../../../services/fornecedores';
@@ -13,6 +14,7 @@ const { TextArea } = Input;
 class GerenciarEntrada extends Component {
 
   state = {
+    redirect: false,
     serialNumberArray: [],
     fornecedorArray: [],
     itemArray:[],
@@ -36,6 +38,20 @@ class GerenciarEntrada extends Component {
     },
     productId: this.props.entradaUpdateValue.productId,
     companyId: this.props.entradaUpdateValue.companyId,
+  }
+
+
+
+  redirectGerenciarCadastros = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/logged/gerenciarProduto/dash' />
+    }
   }
 
   componentDidMount = async () => {
@@ -327,11 +343,16 @@ class GerenciarEntrada extends Component {
   )
 
   render() {
-    console.log(this.state)
     return (
       <div className='div-card-entrada'>
-        <div className='linhaTexto-entrada'>
-          <h1 className='h1-entrada'>Atualizar entrada</h1>
+        <div className='linhaTexto-GOs'>
+        <div className='div-nome-40'>
+        <div><Icon type="arrow-left" onClick={() => this.redirectGerenciarCadastros()} /></div>
+        {this.renderRedirect()}
+        </div>
+        <div className='div-nome-60'>
+          <h1 className='h1-Os'>Atualizar entrada</h1>
+        </div>
         </div>
 
         <div className='linha1-entrada'>

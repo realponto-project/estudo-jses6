@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Input, Button, Select, Modal, message, Switch } from 'antd'
+import { Input, Button, Select, Modal, message, Switch, Icon } from 'antd'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { validators, masks } from './validators'
 import { updateTecnico, newCarro, getCarro } from '../../../../services/tecnico'
@@ -10,6 +11,7 @@ const { Option } = Select;
 class GerenciarTecnico extends Component{
 
   state={
+    redirect: false,
     externo: this.props.tecnicoUpdateValue.external,
     carroArray:[],
     messageError: false,
@@ -32,6 +34,18 @@ class GerenciarTecnico extends Component{
       nome: '',
       cnh: '',
     },
+  }
+
+  redirectGerenciarCadastros = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/logged/gerenciarProduto/dash' />
+    }
   }
 
   onChangeExterno = () => {
@@ -355,8 +369,14 @@ class GerenciarTecnico extends Component{
   render(){
     return(
       <div className='div-card-tecnico'>
-        <div className='linhaTexto-tecnico'>
-          <h1 className='h1-tecnico'>Atualizar técnico</h1>
+        <div className='linhaTexto-GOs'>
+        <div className='div-nome-40'>
+        <div><Icon type="arrow-left" onClick={() => this.redirectGerenciarCadastros()} /></div>
+        {this.renderRedirect()}
+        </div>
+        <div className='div-nome-60'>
+          <h1 className='h1-Os'>Atualizar técnico</h1>
+        </div>
         </div>
 
         <div className='linha1-tecnico'>

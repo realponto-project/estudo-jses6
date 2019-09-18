@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Input, Select, Card, Checkbox, Switch, Button, message } from 'antd'
+import { Input, Select, Card, Checkbox, Switch, Button, message, Icon } from 'antd'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import { getTypeAccount, getResourcesByTypeAccount, updateUsuario } from '../../../../services/usuario'
 
@@ -9,6 +10,7 @@ const { Option } = Select;
 class GerenciarUsuario extends Component {
 
   state = {
+    redirect: false,
     user: this.props.usuarioUpdateValue.username,
     checkboxAble: this.props.usuarioUpdateValue.customized,
     permission: {
@@ -34,6 +36,18 @@ class GerenciarUsuario extends Component {
     },
     typeAccountArray: [],
     typeName: this.props.usuarioUpdateValue.typeName
+  }
+
+  redirectGerenciarCadastros = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/logged/gerenciarProduto/dash' />
+    }
   }
 
   success = () => {
@@ -202,8 +216,14 @@ class GerenciarUsuario extends Component {
   render() {
     return (
       <div className='div-card-usuario'>
-        <div className='linhaTexto-usuario'>
-          <h1 className='h1-usuario'>Atualizar usuário</h1>
+         <div className='linhaTexto-GOs'>
+        <div className='div-nome-40'>
+        <div><Icon type="arrow-left" onClick={() => this.redirectGerenciarCadastros()} /></div>
+        {this.renderRedirect()}
+        </div>
+        <div className='div-nome-60'>
+          <h1 className='h1-Os'>Atualizar usuário</h1>
+        </div>
         </div>
 
         <div className='linha-usuario'>

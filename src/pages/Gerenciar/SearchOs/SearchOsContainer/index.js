@@ -468,7 +468,6 @@ class SearchOsDash extends Component{
   }
 
   render(){
-    console.log(this.state)
     return(
       <div className='div-card-Os'>
         <div className='linhaTexto-GOs'>
