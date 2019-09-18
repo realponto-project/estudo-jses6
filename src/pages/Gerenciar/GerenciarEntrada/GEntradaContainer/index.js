@@ -387,7 +387,7 @@ class GerenciarEntrada extends Component {
             <div className='div-text-entrada'>Estoque:</div>
             <Select value={this.state.estoque} style={{ width: '100%' }} onChange={this.onChangeSelect} >
               <Option value='REALPONTO'>REALPONTO</Option>
-              <Option value='NOVA REALPONTO'>NOVA REALPONTO</Option>
+              <Option value='NOVAREAL'>NOVA REALPONTO</Option>
               <Option value='PONTOREAL'>PONTOREAL</Option>
             </Select>
           </div>
