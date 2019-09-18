@@ -138,6 +138,8 @@ render() {
         return <Redirect to='/logged/gerenciarUsuario/dash' />
       case 'gerenciarTecnico_dash':
         return <Redirect to='/logged/gerenciarTecnico/dash' />
+      case 'gerenciarEntrada_dash':
+        return <Redirect to='/logged/entradaDash/dash' />
       case 'logout':
         return <Redirect to='/login' />
       default:
