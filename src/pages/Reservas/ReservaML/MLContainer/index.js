@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Input, Button, InputNumber, Select, message } from 'antd'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { getAddressByZipCode } from '../../../../services/fornecedores'
 import * as R from 'ramda'
 
@@ -383,9 +385,17 @@ class ReservaML extends Component{
     })
   }
 
+  renderRedirect = () => {
+
+    if (!this.props.auth.addRML) {
+      return <Redirect to='/logged/dash' />
+    }
+  }
+
   render(){
     return(
       <div className='div-card-ML'>
+        {this.renderRedirect()}
         <div className='linhaTexto-ML'>
           <h1 className='h1-ML'>Reserva mercado-livre</h1>
         </div>
@@ -732,4 +742,10 @@ class ReservaML extends Component{
   }
 }
 
-export default ReservaML
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(ReservaML)

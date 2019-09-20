@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Input, Select, InputNumber, Button, Modal, message } from 'antd'
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { validators } from './validators'
 import { newEntrada } from '../../../../services/entrada'
 import { getItens } from '../../../../services/produto';
@@ -332,9 +334,18 @@ class NovaEntrada extends Component {
       });
     }
   }
+
+  renderRedirect = () => {
+
+    if (!this.props.auth.addEntr) {
+      return <Redirect to='/logged/dash' />
+    }
+  }
+
   render() {
     return (
       <div className='div-card-entrada'>
+        {this.renderRedirect()}
         <button onClick={this.notifyMe} >Notifique me!</button>
         <div className='linhaTexto-entrada'>
           <h1 className='h1-entrada'>Nova entrada</h1>
@@ -446,4 +457,10 @@ class NovaEntrada extends Component {
   }
 }
 
-export default NovaEntrada
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(NovaEntrada)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Icon, Input, Card, Checkbox, Button, message } from 'antd'
+import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { NovoTipoContaService } from '../../../../services/novoTipoConta' 
 
@@ -114,6 +115,11 @@ class NovoTipoConta extends Component {
   }
 
   renderRedirect = () => {
+
+    if (!this.props.auth.addTypeAccount) {
+      return <Redirect to='/logged/dash' />
+    }
+
     if (this.state.redirect) {
       return <Redirect push to='/logged/novoUsuario/add' />
     }
@@ -283,4 +289,10 @@ class NovoTipoConta extends Component {
   }
 }
 
-export default NovoTipoConta
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(NovoTipoConta)
