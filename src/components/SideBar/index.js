@@ -87,7 +87,6 @@ handleClick = e => {
 }
 
 render() {
-  console.log(this.props)
   if (this.state.redirect) {
     this.changeRedirectState()
     switch (this.state.current) {
@@ -96,6 +95,11 @@ render() {
           pathname: '/logged/novoUsuario/add',
           state: { from: this.props.location }
         }}/>
+      case 'notificacao_dash':
+      return <Redirect push to={{
+        pathname: '/logged/notificacao/dash',
+        state: { from: this.props.location }
+      }}/>
       case 'novoTipoConta_add':
         return <Redirect push to={{
           pathname: '/logged/novoTipoConta/add',
@@ -232,15 +236,15 @@ render() {
           />
         </Tooltip>
 
-        <Tooltip placement="bottom" title={'Nova entrada'} >
-          <Icon
-            className={this.props.auth.addEntr ? 'menuIcon-icon' : 'menuIcon-icon-notPermission'}
-            type="shopping-cart"
-            onClick={this.props.auth.addEntr ? () => this.handleClickCompany("entrada_add", "Entrada") : null} />
-        </Tooltip>
-
         <Tooltip placement="bottom" title={'Estoque'} >
           <Icon className='menuIcon-icon' type="stock" onClick={() => this.handleClickCompany("estoque_dash", "Entrada")} />
+        </Tooltip>
+
+        <Tooltip placement="bottom" title={'Notificações'} >
+          <Icon
+            className={this.props.auth.addEntr ? 'menuIcon-icon' : 'menuIcon-icon-notPermission'}
+            type="bell"
+            onClick={() => this.handleClickCompany("notificacao_dash")} />
         </Tooltip>
 
         <Tooltip placement="bottom" title={'Perfil'} >
