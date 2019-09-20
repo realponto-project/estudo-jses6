@@ -6,6 +6,12 @@
   overflow-y: auto;
 }
 
+.menuIcon-icon-ball{
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: red;
+}
 .menuIcon{
   background-color: #000C17;
   border-bottom: 1px solid rgb(90, 91, 92);
@@ -24,6 +30,19 @@
 }
 
 .menuIcon-icon-notPermission {
+  margin: 10px;
+  padding: 3px !important;
+  cursor: not-allowed;
+}
+
+.menuIcon-icon-notf {
+  margin: 10px;
+  padding: 3px !important;
+  cursor: pointer;
+  display: flex;
+}
+
+.menuIcon-icon-notPermission-notf {
   margin: 10px;
   padding: 3px !important;
   cursor: not-allowed;

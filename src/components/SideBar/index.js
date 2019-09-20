@@ -9,7 +9,7 @@ import * as R from 'ramda'
 import uuidValidate from 'uuid-validate'
 
 import { auth } from '../../services/auth'
-
+import { hasNotifications } from '../../services/notificacao'
 
 
 const SubMenu = Menu.SubMenu;
@@ -17,11 +17,20 @@ const SubMenu = Menu.SubMenu;
 class SideBar extends Component {
 
   state = {
+    notificacao: false,
     current: '0',
     redirect: false,
     open: [],
     auth: true
   };
+
+  hasNotifications = async () => {
+    await hasNotifications().then(
+      resp => this.setState({
+        notificacao: resp.data
+      })
+    )
+  }
 
   auth = async () => {
     const value = {
@@ -56,6 +65,8 @@ class SideBar extends Component {
 
   componentDidMount = async () => {
     await this.forceLogout()
+
+    await this.hasNotifications()
   }
 
 logout = async () => {
@@ -286,10 +297,12 @@ render() {
         </Tooltip>
 
         <Tooltip placement="bottom" title={'Notificações'} >
-          <Icon
-            className={this.props.auth.addEntr ? 'menuIcon-icon' : 'menuIcon-icon-notPermission'}
-            type="bell"
-            onClick={() => this.handleClickCompany("notificacao_dash")} />
+          <div className={this.props.auth.addEntr ? 'menuIcon-icon-notf' : 'menuIcon-icon-notPermission-notf'} >
+            <Icon
+              type="bell"
+              onClick={() => this.handleClickCompany("notificacao_dash")} />
+            {this.state.notificacao ? <div className='menuIcon-icon-ball' /> : null }
+          </div>
         </Tooltip>
 
         <Tooltip placement="bottom" title={'Perfil'} >
