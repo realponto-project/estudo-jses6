@@ -248,7 +248,6 @@ class GerenciarEntrada extends Component{
 
 
   render(){
-    console.log(this.state.idLine)
     return(
       <div className='div-card-Gentrada'>
         <div className='linhaTexto-Gentrada'>

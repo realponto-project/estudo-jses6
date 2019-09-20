@@ -265,7 +265,6 @@ class AddKit extends Component{
   }
 
   render(){
-    console.log(this.state)
     return(
       <div className='div-card-AddKit'>
         <div className='linhaTexto-AddKit'>

@@ -34,6 +34,7 @@ import GerenciarUsuarioRoute from './Gerenciar/GerenciarUsuarios';
 import GerenciarTecnicoRoute from './Gerenciar/GerenciarTecnico';
 import GerenciarProdutosDashRoute from './Gerenciar/GerenciarProdutos';
 import GerenciarEntradaDashRoute from './Gerenciar/GerenciarEntrada';
+import NotificacaoRoute from './Gerenciar/Notificacoes';
 
 class PagesRoute extends Component {
 
@@ -111,6 +112,7 @@ class PagesRoute extends Component {
           <Route path='/logged/gerenciarUsuario' component={GerenciarUsuarioRoute} />
           <Route path='/logged/gerenciarTecnico' component={GerenciarTecnicoRoute} />
           <Route path='/logged/entradaDash' component={GerenciarEntradaDashRoute} />
+          <Route path='/logged/notificacao' component={NotificacaoRoute} />
         </Switch>
       )
     } else {
