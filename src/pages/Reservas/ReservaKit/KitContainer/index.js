@@ -266,7 +266,7 @@ class ReservaKit extends Component {
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/logged/reservaKitAdd/add' />
+      return <Redirect push to='/logged/reservaKitAdd/add' />
     }
   }
 

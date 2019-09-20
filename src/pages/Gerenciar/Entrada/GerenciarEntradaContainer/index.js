@@ -126,7 +126,7 @@ class GerenciarEntrada extends Component{
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect exact path to='/logged/entradaDash/dash' />
+      return <Redirect exact push path to='/logged/entradaDash/dash' />
     }
   }
 

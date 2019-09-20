@@ -60,7 +60,7 @@ class SearchOsDash extends Component{
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/logged/Os/dash' />
+      return <Redirect push to='/logged/Os/dash' />
     }
   }
 

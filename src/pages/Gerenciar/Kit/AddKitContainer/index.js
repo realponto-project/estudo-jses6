@@ -35,7 +35,7 @@ class AddKit extends Component{
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/logged/reservaKit/dash' />
+      return <Redirect push to='/logged/reservaKit/dash' />
     }
   }
 

@@ -566,21 +566,22 @@ class GerenciarProdutoDash extends Component {
     })
   }
 
+  
 
   renderRedirect = () => {
     // eslint-disable-next-line default-case
     switch (this.state.redirect) {
       case 'produto': 
-        return <Redirect exact path to='/logged/gerenciarProdutosDash/dash' />
+        return <Redirect exact push path to='/logged/gerenciarProdutosDash/dash'/>
         // eslint-disable-next-line no-duplicate-case
         case 'fornecedor': 
-        return <Redirect exact path to='/logged/gerenciarFornecedor/dash'/>
+        return <Redirect exact push path to='/logged/gerenciarFornecedor/dash'/>
         // eslint-disable-next-line no-duplicate-case
         case 'usuario': 
-        return <Redirect exact path to='/logged/gerenciarUsuario/dash' />
+        return <Redirect exact push path to='/logged/gerenciarUsuario/dash' />
         // eslint-disable-next-line no-duplicate-case
         case 'tecnico': 
-        return <Redirect exact path to='/logged/gerenciarTecnico/dash' />
+        return <Redirect exact push path to='/logged/gerenciarTecnico/dash' />
     }
   }
 
@@ -932,6 +933,7 @@ class GerenciarProdutoDash extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className='div-card-Rtecnico'>
         <div className='linhaTexto-Rtecnico'>
