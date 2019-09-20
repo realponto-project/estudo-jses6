@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Input, Button, Select, Modal, message, Switch } from 'antd'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { validators, masks } from './validators'
 import { newTecnico, newCarro, getCarro } from '../../../../services/tecnico'
@@ -47,6 +48,13 @@ class NovoTecnico extends Component{
         carroArray: resposta.data,
       })
     )
+  }
+
+  renderRedirect = () => {
+
+    if (!this.props.auth.addTec) {
+      return <Redirect to='/logged/dash' />
+    }
   }
 
   success = () => {
@@ -358,6 +366,7 @@ class NovoTecnico extends Component{
   render(){
     return(
       <div className='div-card-tecnico'>
+        {this.renderRedirect()}
         <div className='linhaTexto-tecnico'>
           <h1 className='h1-tecnico'>Técnico</h1>
         </div>

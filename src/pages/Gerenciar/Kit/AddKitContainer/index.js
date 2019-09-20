@@ -3,6 +3,7 @@ import './index.css'
 import { Select, InputNumber, Button, message, Input, Icon } from 'antd'
 import { getProdutoByEstoque } from '../../../../services/produto';
 import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import { getTecnico } from '../../../../services/tecnico'
 import { NewKit, getKitDefaultValue } from '../../../../services/kit'
@@ -34,6 +35,10 @@ class AddKit extends Component{
   }
 
   renderRedirect = () => {
+    if (!this.props.auth.addKit) {
+      return <Redirect to='/logged/dash' />
+    }
+
     if (this.state.redirect) {
       return <Redirect push to='/logged/reservaKit/dash' />
     }
@@ -356,4 +361,10 @@ class AddKit extends Component{
   }
 }
 
-export default AddKit
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(AddKit)

@@ -63,6 +63,11 @@ class OsDash extends Component {
   }
 
   renderRedirect = () => {
+
+    if (!this.props.auth.gerROs) {
+      return <Redirect to='/logged/dash' />
+    }
+
     if (this.state.redirect) {
       return <Redirect exact push to='/logged/searchOs/dash' />
     }

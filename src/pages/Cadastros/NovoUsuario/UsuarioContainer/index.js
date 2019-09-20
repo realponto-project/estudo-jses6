@@ -75,6 +75,11 @@ class NovoUsuario extends Component {
   }
 
   renderRedirect = () => {
+
+    if (!this.props.auth.addUser) {
+      return <Redirect to='/logged/dash' />
+    }
+
     if (this.state.redirect) {
       return <Redirect push to='/logged/novoTipoConta/add' />
     }

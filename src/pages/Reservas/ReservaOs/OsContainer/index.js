@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './index.css'
 import { Input, DatePicker, InputNumber, Button, message, Select } from 'antd'
 import { connect } from 'react-redux'
-
+import { Redirect } from 'react-router-dom'
 import { validators, masks } from './validators'
 import { newReservaOs } from '../../../../services/reservaOs';
 import { getProdutoByEstoque } from '../../../../services/produto';
@@ -355,10 +355,17 @@ class ReservaOs extends Component{
     })
   }
 
+  renderRedirect = () => {
+
+    if (!this.props.auth.addROs) {
+      return <Redirect to='/logged/dash' />
+    }
+  }
 
   render(){
     return(
       <div className='div-card-Os'>
+        {this.renderRedirect()}
         <div className='linhaTexto-Os'>
           <h1 className='h1-Os'>Reserva Os</h1>
         </div>

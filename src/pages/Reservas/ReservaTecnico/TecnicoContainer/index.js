@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import './index.css'
 import { Button, Icon, Modal, Tooltip, Input, Spin, InputNumber, DatePicker, Select, message } from 'antd'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import { getTecnico } from '../../../../services/tecnico'
 import { getTodasOs, baixaReservaOs, removeReservaOs } from '../../../../services/reservaOs';
@@ -659,9 +660,17 @@ class ReservaTecnico extends Component {
     }
   }
 
+  renderRedirect = () => {
+
+    if (!this.props.auth.addOutPut) {
+      return <Redirect to='/logged/dash' />
+    }
+  }
+
   render() {
     return (
       <div className='div-card-Rtecnico'>
+        {this.renderRedirect()}
         <div className='linhaTexto-Rtecnico'>
           <h1 className='h1-Rtecnico'>Reservas técnico</h1>
         </div>

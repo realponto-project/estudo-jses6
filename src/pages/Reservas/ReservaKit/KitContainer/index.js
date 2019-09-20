@@ -265,6 +265,10 @@ class ReservaKit extends Component {
   }
 
   renderRedirect = () => {
+    if (!this.props.auth.addKitOut) {
+      return <Redirect to='/logged/dash' />
+    }
+
     if (this.state.redirect) {
       return <Redirect push to='/logged/reservaKitAdd/add' />
     }

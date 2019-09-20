@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './index.css'
 import { Input, Button, message } from 'antd';
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { validators, masks } from './validators'
 import * as R from 'ramda'
 import { getAddressByZipCode, newFornecedor } from '../../../../services/fornecedores'
@@ -223,9 +225,17 @@ class NovoFornecedor extends Component {
     }
   }
 
+  renderRedirect = () => {
+
+    if (!this.props.auth.addFonr) {
+      return <Redirect to='/logged/dash' />
+    }
+  }
+
   render() {
     return (
       <div className='div-card-fornecedor'>
+        {this.renderRedirect()}
         <div className='linhaTexto-fornecedor'>
           <h1 className='h1-fornecedor'>Novo fornecedor</h1>
         </div>
@@ -529,4 +539,10 @@ class NovoFornecedor extends Component {
   }
 }
 
-export default NovoFornecedor
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  }
+}
+
+export default connect(mapStateToProps)(NovoFornecedor)

@@ -59,6 +59,11 @@ class SearchOsDash extends Component{
   }
 
   renderRedirect = () => {
+
+    if (!this.props.auth.updateRos) {
+      return <Redirect to='/logged/dash' />
+    }
+
     if (this.state.redirect) {
       return <Redirect push to='/logged/Os/dash' />
     }
@@ -716,6 +721,7 @@ class SearchOsDash extends Component{
 function mapStateToProps(state) {
   return {
     osUpdateValue: state.osUpdateValue,
+    auth: state.auth,
   }
 }
 

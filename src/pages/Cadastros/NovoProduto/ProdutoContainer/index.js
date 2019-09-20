@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Input, InputNumber, Select, Button, Modal, Switch, message } from 'antd'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import './index.css'
 import { validators, masks } from './validators'
@@ -396,6 +397,12 @@ class NovoProduto extends Component {
     })
   }
 
+  renderRedirect = () => {
+
+    if (!this.props.auth.addProd) {
+      return <Redirect to='/logged/dash' />
+    }
+  }
 
   modalMarca = () => (
     <Modal
@@ -473,6 +480,7 @@ class NovoProduto extends Component {
   render() {
     return (
       <div className='div-card-produtos'>
+        {this.renderRedirect()}
         <div className='linhaTexto-produtos'>
           <h1 className='h1-produtos'>Produtos</h1>
         </div>
