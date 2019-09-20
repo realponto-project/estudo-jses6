@@ -24,4 +24,4 @@ export const stock = async (query) => {
       }
     })
     return response
-  } 
+  }
