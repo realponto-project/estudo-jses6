@@ -299,10 +299,43 @@ class NovaEntrada extends Component {
       </div>
     </Modal>
   )
+  notifyMe = () => {
+    // Verifica se o browser suporta notificações
+    const dts = Math.floor(Date.now());
 
+    const options = {
+      title: 'teste',
+      body: 'Do you like my body?',
+      timestamp: dts
+    }
+
+    if (!("Notification" in window)) {
+      alert("Este browser não suporta notificações de Desktop");
+    }
+
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      // If it's okay let's create a notification
+      new Notification("Hello word!", options);
+      // var notification = new Notification("Hello word!");
+    }
+  
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== 'denied') {
+      Notification.requestPermission(function (permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+
+          new Notification("Hello word!", options);
+          // var notification = new Notification("Hello word!");
+        }
+      });
+    }
+  }
   render() {
     return (
       <div className='div-card-entrada'>
+        <button onClick={this.notifyMe} >Notifique me!</button>
         <div className='linhaTexto-entrada'>
           <h1 className='h1-entrada'>Nova entrada</h1>
         </div>

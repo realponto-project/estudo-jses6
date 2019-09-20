@@ -87,59 +87,135 @@ handleClick = e => {
 }
 
 render() {
+  console.log(this.props)
   if (this.state.redirect) {
     this.changeRedirectState()
     switch (this.state.current) {
       case 'novoUsuario_add':
-        return <Redirect to='/logged/novoUsuario/add' />
+        return <Redirect push to={{
+          pathname: '/logged/novoUsuario/add',
+          state: { from: this.props.location }
+        }}/>
       case 'novoTipoConta_add':
-        return <Redirect to='/logged/novoTipoConta/add' />
+        return <Redirect push to={{
+          pathname: '/logged/novoTipoConta/add',
+          state: { from: this.props.location }
+        }} />
       case 'newTecnico_add':
-        return <Redirect to='/logged/novoTecnico/add' />
+        return <Redirect push to={{
+          pathname: '/logged/novoTecnico/add',
+          state: { from: this.props.location }
+        }} />
       case 'novoProduto_add':
-        return <Redirect to='/logged/novoProduto/add' />
+        return <Redirect push to={{
+          pathname: '/logged/novoProduto/add' ,
+          state: { from: this.props.location }
+        }} />
       case 'novoFornecedor_add':
-        return <Redirect to='/logged/novoFornecedor/add' />
+        return <Redirect push to={{
+          pathname: '/logged/novoFornecedor/add' ,
+          state: { from: this.props.location }
+        }} />
       case 'gerenciarProduto_dash':
-        return <Redirect to='/logged/gerenciarProduto/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/gerenciarProduto/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'entrada_add':
-        return <Redirect to='/logged/entrada/add' />
+        return <Redirect push to={{
+          pathname: '/logged/entrada/add' ,
+          state: { from: this.props.location }
+        }} />
       case 'entrada_dash':
-        return <Redirect to='/logged/gerenciarEntrada/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/gerenciarEntrada/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'estoque_dash':
-        return <Redirect to='/logged/estoque/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/estoque/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'reservaKit_dash':
-        return <Redirect to='/logged/reservaKit/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/reservaKit/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'reservaKit_add':
-        return <Redirect to='/logged/reservaKitAdd/add' />
+        return <Redirect push to={{
+          pathname: '/logged/reservaKitAdd/add' ,
+          state: { from: this.props.location }
+        }} />
       case 'reservaTecnico_dash':
-        return <Redirect to='/logged/reservaTecnico/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/reservaTecnico/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'reservaOs_dash':
-        return <Redirect to='/logged/reservaOs/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/reservaOs/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'Os_dash':
-        return <Redirect to='/logged/Os/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/Os/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'searchOs_dash':
-        return <Redirect to='/logged/searchOs/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/searchOs/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'reservaML_dash':
-        return <Redirect to='/logged/reservaML/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/reservaML/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'relatorioOs_dash':
-        return <Redirect to='/logged/relatorioOs/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/relatorioOs/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'relatorioPerda_dash':
-        return <Redirect to='/logged/relatorioPerda/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/relatorioPerda/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'relatorioML_dash':
-        return <Redirect to='/logged/relatorioML/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/relatorioML/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'perfil_dash':
-        return <Redirect to='/logged/perfil/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/perfil/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'gerenciarProdutosDash_dash':
-        return <Redirect to='/logged/gerenciarProdutosDash/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/gerenciarProdutosDash/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'gerenciarFornecedor_dash':
-        return <Redirect to='/logged/gerenciarFornecedor/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/gerenciarFornecedor/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'gerenciarUsuario_dash':
-        return <Redirect to='/logged/gerenciarUsuario/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/gerenciarUsuario/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'gerenciarTecnico_dash':
-        return <Redirect to='/logged/gerenciarTecnico/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/gerenciarTecnico/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'gerenciarEntrada_dash':
-        return <Redirect to='/logged/entradaDash/dash' />
+        return <Redirect push to={{
+          pathname: '/logged/entradaDash/dash' ,
+          state: { from: this.props.location }
+        }} />
       case 'logout':
         return <Redirect to='/login' />
       default:

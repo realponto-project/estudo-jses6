@@ -115,7 +115,7 @@ class NovoTipoConta extends Component {
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/logged/novoUsuario/add' />
+      return <Redirect push to='/logged/novoUsuario/add' />
     }
   }
 

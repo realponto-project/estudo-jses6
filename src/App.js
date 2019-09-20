@@ -22,8 +22,25 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducers)
 
+// const middlewares = [
+//   thunk,
+//   multi,
+//   promise,
+//   routerMiddleware(history)
+// ]
 
-export const store = applyMiddleware(thunk, multi, promise)(createStore)(persistedReducer, composeWithDevTools())
+
+// export const store = createStore(
+//   connectRouter(history)(persistedReducer, composeWithDevTools()),
+//   applyMiddleware(...middlewares)
+// )
+
+// export const store = applyMiddleware(...middlewares)(createStore)(connectRouter(history)(persistedReducer, composeWithDevTools()))
+
+export const store = applyMiddleware(thunk, multi, promise,)(createStore)(persistedReducer, composeWithDevTools())
+
+
+// export const store = applyMiddleware(thunk, multi, promise,)(createStore)(persistedReducer, composeWithDevTools())
 
 // const middlewarer = [
 //   thunk,

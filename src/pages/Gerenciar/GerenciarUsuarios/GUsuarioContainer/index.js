@@ -46,7 +46,7 @@ class GerenciarUsuario extends Component {
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/logged/gerenciarProduto/dash' />
+      return <Redirect push to='/logged/gerenciarProduto/dash' />
     }
   }
 
