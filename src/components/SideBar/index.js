@@ -8,6 +8,9 @@ import { bindActionCreators } from 'redux'
 import * as R from 'ramda'
 import uuidValidate from 'uuid-validate'
 
+import { auth } from '../../services/auth'
+
+
 
 const SubMenu = Menu.SubMenu;
 
@@ -17,8 +20,25 @@ class SideBar extends Component {
     current: '0',
     redirect: false,
     open: [],
+    auth: true
   };
 
+  auth = async () => {
+    const value = {
+      token: this.props.auth.token,
+      username: this.props.auth.username
+    }
+
+    let response = {}
+
+    response = await auth(value).then(
+      resp => this.setState({
+        auth: resp ? resp.data : false
+      })
+    )
+
+    return response
+  }
 
   hasAuth = R.has('auth')
   hasToken = R.has('token')
@@ -47,7 +67,14 @@ logout = async () => {
   })
 }
 
-handleClickCompany = (current, keyPath) => {
+handleClickCompany = async (current, keyPath) => {
+
+  await this.auth()
+  
+  if (!this.state.auth){
+    await this.logout()
+    return 
+  }
 
   this.setState({
     current,
@@ -65,7 +92,16 @@ changeRedirectState = () => {
 }
 
 
-handleClickAtalhos = (current, keyPath) => {
+handleClickAtalhos = async (current, keyPath) => {
+
+  
+  await this.auth()
+  
+  if (!this.state.auth){
+    await this.logout()
+    return 
+  }
+
   this.setState({
     current,
     redirect: true,
@@ -76,7 +112,16 @@ handleClickAtalhos = (current, keyPath) => {
 }
 
 
-handleClick = e => {
+handleClick = async e => {
+
+  
+  await this.auth()
+  
+  if (!this.state.auth){
+    await this.logout()
+    return 
+  }
+
   this.setState({
     current: e.key,
     redirect: true,
