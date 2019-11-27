@@ -1,168 +1,182 @@
-.div-card-entrada{
+.div-card-entrada {
   width: 96%;
   height: 95%;
   background-color: white;
   border-radius: 2px;
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   position: static;
 }
-.linhaTexto-entrada{
+.linhaTexto-entrada {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 25px;
 }
-.h1-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.h1-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 500;
-  font-size: 2.2em
+  font-size: 2.2em;
 }
-.linha1-entrada{
+.linha1-entrada {
   margin-top: 30px;
   width: 85%;
   display: flex;
   justify-content: space-between;
 }
-.div-text-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
-  font-size: 16px;
-  color: rgb(90, 90, 90);
-  margin-right: 5px
-}
-.div-textNome-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.div-text-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: rgb(90, 90, 90);
   margin-right: 5px;
-  width: 175px
 }
-.div-textSerial-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.div-textNome-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: rgb(90, 90, 90);
   margin-right: 5px;
-  width: 160px
+  width: 175px;
 }
-.div-descricao-entrada{
+.div-textSerial-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 160px;
+}
+.div-descricao-entrada {
   width: 63%;
   display: flex;
-  align-items: center
+  align-items: center;
 }
-.div-estoque-entrada{
+.div-estoque-entrada {
   width: 32%;
   display: flex;
-  align-items: center
+  align-items: center;
 }
-.div-separeteLine-entrada{
+.div-separeteLine-entrada {
   width: 90%;
   background-color: rgb(218, 214, 214);
   height: 1px;
-  margin-top: 30px
+  margin-top: 30px;
 }
-.div-nome-entrada{
+.div-nome-entrada {
   width: 67%;
   display: flex;
-  align-items: center
+  align-items: center;
 }
-.div-fornecedor-entrada{
+.div-fornecedor-entrada {
   width: 80%;
   display: flex;
-  align-items: center
+  align-items: center;
 }
-.div-quant-entrada{
+.div-quant-entrada {
   width: 17%;
   display: flex;
-  align-items: center
+  align-items: center;
 }
-.div-serial-entrada{
+.div-serial-entrada {
   width: 90%;
   display: flex;
-  align-items: center
+  align-items: center;
 }
-.h4-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.h4-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 350;
   font-size: 1.4em;
-  margin-top: 20px 
+  margin-top: 20px;
 }
-.h1-produtos-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.h1-produtos-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: bold;
   font-size: 1.2em;
-  width: 40%
+  width: 40%;
 }
-.h1-quant-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.h1-quant-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: bold;
   font-size: 1.2em;
-  width: 20%
+  width: 20%;
 }
-.h1-fornecedor-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.h1-fornecedor-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: bold;
   font-size: 1.2em;
-  width: 40%
+  width: 40%;
 }
-.linha-button-entrada{
+.linha-button-entrada {
   width: 85%;
   display: flex;
   justify-content: flex-end;
-  margin-top: 25px
+  margin-top: 25px;
 }
-.button-remove-entrada{
+.button-remove-entrada {
   background-color: red !important;
   border-color: red !important;
+  display: flex !important;
+  justify-content: center;
 }
-.button{
+.button {
   margin: 0 2px;
   background-color: #001529 !important;
   border-color: #001529 !important;
+  display: flex !important;
+  justify-content: center;
 }
-.button:hover{
+.button:hover {
   background-color: #1890ff !important;
   border-color: #1890ff !important;
 }
-.div-inputError{
+.div-inputError {
   border-radius: 4px;
   margin: 5px 0 2px 0;
   padding: 0 0 1px 5px;
   border: 1px solid #ff0000 !important;
   background-color: #ff6c6c3b !important;
 }
-.div-feedbackError{
+.div-feedbackError {
   color: #a80000;
   font-size: smaller;
   margin: 0 !important;
 }
-.div-inputs{
+.div-inputs {
   width: 100%;
   display: flex;
-  flex-direction: column
+  flex-direction: column;
 }
-.div-fornecedorModal-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.div-fornecedorModal-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: bold;
   font-size: 1.2em;
   width: 100%;
   display: flex;
   margin-bottom: 20px;
 }
-.label-entrada{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.label-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 500;
-  margin-left: 15px
+  margin-left: 15px;
 }
-.div-button-entrada{
+.div-button-entrada {
   margin-top: 30px;
   width: 85%;
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
 }
-.div-button-entrada1{
+.div-button-entrada1 {
   margin-top: 30px;
   width: 85%;
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
