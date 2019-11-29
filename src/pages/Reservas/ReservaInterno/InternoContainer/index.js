@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import "./index.css";
 import { Input, DatePicker, InputNumber, Button, message, Select } from "antd";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { validators, masks } from "./validators";
+// import { validators, masks } from "./validators";
 import { newReservaOs } from "../../../../services/reservaOs";
 import { getProdutoByEstoque } from "../../../../services/produto";
 import { getTecnico } from "../../../../services/tecnico";
@@ -13,7 +12,7 @@ import moment from "moment";
 const { TextArea } = Input;
 const { Option } = Select;
 
-class Rexterno extends Component {
+class Rinterno extends Component {
   state = {
     readOnly: false,
     serial: false,
@@ -25,7 +24,6 @@ class Rexterno extends Component {
     messageSuccess: false,
     Os: "",
     razaoSocial: "",
-    cnpj: "",
     data: "",
     tecnico: "Não selecionado",
     nomeProduto: "Não selecionado",
@@ -165,19 +163,19 @@ class Rexterno extends Component {
     });
   };
 
-  onBlurValidator = e => {
-    const { nome, valor, fieldFalha, message } = validators(
-      e.target.name,
-      e.target.value,
-      this.state
-    );
+  // onBlurValidator = e => {
+  //   const { nome, valor, fieldFalha, message } = validators(
+  //     e.target.name,
+  //     e.target.value,
+  //     this.state
+  //   );
 
-    this.setState({
-      [nome]: valor,
-      fieldFalha,
-      message
-    });
-  };
+  //   this.setState({
+  //     [nome]: valor,
+  //     fieldFalha,
+  //     message
+  //   });
+  // };
 
   onFocus = e => {
     this.setState({
@@ -212,7 +210,6 @@ class Rexterno extends Component {
 
     const values = {
       razaoSocial: this.state.razaoSocial,
-      cnpj: this.state.cnpj,
       date: this.state.data,
       technicianId: this.state.technicianId,
       osParts: this.state.carrinho,
@@ -236,7 +233,6 @@ class Rexterno extends Component {
     if (resposta.status === 200) {
       this.setState({
         razaoSocial: "",
-        cnpj: "",
         data: "",
         carrinho: [],
         serial: false,
@@ -284,13 +280,13 @@ class Rexterno extends Component {
     });
   };
 
-  onChange = e => {
-    const { nome, valor } = masks(e.target.name, e.target.value);
+  // onChange = e => {
+  //   const { nome, valor } = masks(e.target.name, e.target.value);
 
-    this.setState({
-      [nome]: valor
-    });
-  };
+  //   this.setState({
+  //     [nome]: valor
+  //   });
+  // };
 
   onChangeQuant = value => {
     this.setState({
@@ -367,7 +363,7 @@ class Rexterno extends Component {
       <div className="div-card-Os">
         {this.renderRedirect()}
         <div className="linhaTexto-Os">
-          <h1 className="h1-Os">Reserva Os</h1>
+          <h1 className="h1-Os">Baixa interna</h1>
         </div>
 
         <div className="div-linha-Os">
@@ -402,28 +398,6 @@ class Rexterno extends Component {
         </div>
 
         <div className="div-linha1-Os">
-          <div className="div-cnpj-Os">
-            <div className="div-text-Os">Cnpj:</div>
-            <div className="div-inputs">
-              <Input
-                readOnly={this.state.readOnly}
-                allowClear={!this.state.fieldFalha.cnpj && !this.state.readOnly}
-                className={
-                  this.state.fieldFalha.cnpj ? "div-inputError-OS" : "input-100"
-                }
-                style={{ width: "100%" }}
-                name="cnpj"
-                value={this.state.cnpj}
-                placeholder="Digite o cnpj"
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
-              />
-              {this.state.fieldFalha.cnpj ? (
-                <p className="div-feedbackError">{this.state.message.cnpj}</p>
-              ) : null}
-            </div>
-          </div>
 
           <div className="div-data-Os">
             <div className="div-textData-Os">Data do atendimento:</div>
@@ -632,4 +606,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Rexterno);
+export default connect(mapStateToProps)(Rinterno);

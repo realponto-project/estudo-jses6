@@ -211,11 +211,16 @@ render() {
           pathname: '/logged/reservaTecnico/dash' ,
           state: { from: this.props.location }
         }} />
-      case 'reservaOs_dash':
+      case 'Rexterno_dash':
         return <Redirect push to={{
-          pathname: '/logged/reservaOs/dash' ,
+          pathname: '/logged/Rexterno/dash' ,
           state: { from: this.props.location }
         }} />
+      case 'Rinterno_dash':
+      return <Redirect push to={{
+        pathname: '/logged/Rinterno/dash' ,
+        state: { from: this.props.location }
+      }} />
       case 'Os_dash':
         return <Redirect push to={{
           pathname: '/logged/Os/dash' ,
@@ -369,8 +374,9 @@ render() {
         >
           <Menu.Item disabled={!this.props.auth.addKitOut} key="reservaKit_dash"><Icon type="shopping" />Kit</Menu.Item>
           <Menu.Item disabled={!this.props.auth.addOutPut} key="reservaTecnico_dash"><Icon type="user" />Técnico</Menu.Item>
-          <Menu.Item disabled={!this.props.auth.addROs} key="reservaOs_dash"><Icon type="file-add" />Nova Os</Menu.Item>
-          <Menu.Item disabled={!this.props.auth.addRML} key="reservaML_dash"><Icon type="ie" />Mercado Livre</Menu.Item>
+          <Menu.Item disabled={!this.props.auth.addROs} key="Rexterno_dash"><Icon type="file-add" />Externo</Menu.Item>
+          <Menu.Item disabled={!this.props.auth.gerROs} key="Rinterno_dash"><Icon type="file-add" />Interno</Menu.Item>
+          <Menu.Item disabled={!this.props.auth.addRML} key="reservaML_dash"><Icon type="ie" />E-Commerce</Menu.Item>
           <Menu.Item disabled={!this.props.auth.gerROs} key="Os_dash"><Icon type="unordered-list" />Gerenciar Os</Menu.Item>
         </SubMenu>
 
@@ -385,7 +391,7 @@ render() {
         >
           <Menu.Item key="relatorioOs_dash"><Icon type="file-search" />Os</Menu.Item>
           <Menu.Item key="relatorioPerda_dash"><Icon type="alert" />Perda</Menu.Item>
-          <Menu.Item key="relatorioML_dash"><Icon type="ie" />Mercado Livre</Menu.Item>
+          <Menu.Item key="relatorioML_dash"><Icon type="ie" />E-Commerce</Menu.Item>
         </SubMenu>
       </Menu>
     </div>
