@@ -16,7 +16,7 @@ import ReservaKitRoute from './Reservas/ReservaKit';
 import NovoUsuarioRoute from './Cadastros/NovoUsuario';
 import GerenciarEntradaRoute from './Gerenciar/Entrada';
 import ReservaTecnicoRoute from './Reservas/ReservaTecnico';
-import ReservaOsRoute from './Reservas/ReservaOs';
+import ReservaExternoRoute from './Reservas/ReservaOs';
 import ReservaMLRoute from './Reservas/ReservaML';
 import RelatorioOsRoute from './Relatorios/RelatorioOs';
 import RelatorioPerdaRoute from './Relatorios/RelatorioPerda';
@@ -35,6 +35,7 @@ import GerenciarTecnicoRoute from './Gerenciar/GerenciarTecnico';
 import GerenciarProdutosDashRoute from './Gerenciar/GerenciarProdutos';
 import GerenciarEntradaDashRoute from './Gerenciar/GerenciarEntrada';
 import NotificacaoRoute from './Gerenciar/Notificacoes';
+import ReservaInternoRoute from './Reservas/ReservaInterno';
 
 class PagesRoute extends Component {
 
@@ -98,7 +99,8 @@ class PagesRoute extends Component {
           <Route path='/logged/estoque' component={EstoqueRoute} />
           <Route path='/logged/reservaKit' component={ReservaKitRoute} />
           <Route path='/logged/reservaTecnico' component={ReservaTecnicoRoute} />
-          <Route path='/logged/reservaOs' component={ReservaOsRoute} />
+          <Route path='/logged/Rexterno' component={ReservaExternoRoute} />
+          <Route path='/logged/Rinterno' component={ReservaInternoRoute} />
           <Route path='/logged/reservaKitAdd' component={AddKitRoute} />
           <Route path='/logged/reservaML' component={ReservaMLRoute} />
           <Route path='/logged/relatorioOs' component={RelatorioOsRoute} />

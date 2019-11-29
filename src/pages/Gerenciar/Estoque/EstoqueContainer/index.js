@@ -87,7 +87,7 @@ class Estoque extends Component {
         page: resposta.data.page,
         count: resposta.data.count,
         show: resposta.data.show,
-      })
+      },console.log(resposta))
     )
 
     this.setState({
@@ -179,10 +179,10 @@ class Estoque extends Component {
             Fabricante
           </div>
           <div className='cel-quant-cabecalho-estoque'>
-            Qnt.
+            Disp.
           </div>
           <div className='cel-quant-cabecalho-estoque'>
-            Disp.
+            Min.
           </div>
           <div className='cel-estoque-cabecalho-estoque'>
             Estoque
@@ -209,12 +209,12 @@ class Estoque extends Component {
                   </div>
                   <div className='cel-quant-cabecalho-estoque'>
                     <label className='div-table-label-cel-estoque'>
-                      {line.amount}
+                      {line.available}
                     </label>
                   </div>
                   <div className='cel-quant-cabecalho-estoque'>
                     <label className='div-table-label-cel-estoque'>
-                      {line.available}
+                      {line.minimumStock}
                     </label>
                   </div>
                   <div className='cel-estoque-cabecalho-estoque'>

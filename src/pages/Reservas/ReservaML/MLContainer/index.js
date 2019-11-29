@@ -29,41 +29,16 @@ class ReservaML extends Component {
     codigo: "",
     razaoSocial: "",
     cpfOuCnpj: "",
-    cep: "",
-    estado: "",
-    cidade: "",
-    bairro: "",
-    rua: "",
-    numero: "",
-    complemento: "",
-    pontoReferencia: "",
-    nomeContato: "",
     email: "",
     telefone: "",
     loading: false,
     fieldFalha: {
       cpfOuCnpj: false,
       razaoSocial: false,
-      cep: false,
-      estado: false,
-      cidade: false,
-      bairro: false,
-      rua: false,
-      numero: false,
-      complemento: false,
-      pontoReferencia: false
     },
     message: {
       cpfOuCnpj: "",
       razaoSocial: "",
-      cep: "",
-      estado: "",
-      cidade: "",
-      bairro: "",
-      rua: "",
-      numero: "",
-      complemento: "",
-      pontoReferencia: ""
     }
   };
 
@@ -250,16 +225,8 @@ class ReservaML extends Component {
     const values = {
       trackingCode: this.state.codigo,
       name: this.state.razaoSocial,
-      zipCode: this.state.cep,
-      state: this.state.estado,
-      city: this.state.cidade,
-      neighborhood: this.state.bairro,
-      street: this.state.rua,
-      number: this.state.numero,
       cnpjOrCpf: this.state.cpfOuCnpj,
       freeMarketParts: this.state.carrinho,
-      complement: this.state.complemento,
-      referencePoint: this.state.pontoReferencia
     };
 
     const resposta = await NewReservaML(values);
@@ -280,14 +247,6 @@ class ReservaML extends Component {
       this.setState({
         cpfOuCnpj: "",
         razaoSocial: "",
-        cep: "",
-        estado: "",
-        cidade: "",
-        bairro: "",
-        rua: "",
-        numero: "",
-        complemento: "",
-        pontoReferencia: "",
         carrinho: [],
         codigo: "",
         messageSuccess: true
@@ -458,176 +417,6 @@ class ReservaML extends Component {
         </div>
 
         <div className="div-linha-ML">
-          <div className="div-cep-ML">
-            <div className="div-text-ML">Cep:</div>
-            <div className="div-inputs">
-              <Input
-                className={
-                  this.state.fieldFalha.cep ? "div-inputError-ML" : "input-100"
-                }
-                placeholder="Digite o cep"
-                name="cep"
-                value={this.state.cep}
-                onChange={this.onChange}
-                onBlur={this.getAddress}
-                onFocus={this.onFocus}
-                // allowClear
-              />
-              {this.state.fieldFalha.cep ? (
-                <p className="div-feedbackError">{this.state.message.cep}</p>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="div-uf-ML">
-            <div className="div-text-ML">UF:</div>
-            <div className="div-inputs">
-              <Input
-                className={
-                  this.state.fieldFalha.estado
-                    ? "div-inputError-ML"
-                    : "input-100"
-                }
-                placeholder="EX"
-                name="estado"
-                value={this.state.estado}
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
-                // allowClear
-              />
-              {this.state.fieldFalha.estado ? (
-                <p className="div-feedbackError">{this.state.message.estado}</p>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="div-cidade-ML">
-            <div className="div-text-ML">Cidade:</div>
-            <div className="div-inputs">
-              <Input
-                className={
-                  this.state.fieldFalha.cidade
-                    ? "div-inputError-ML"
-                    : "input-100"
-                }
-                placeholder="Digite a cidade"
-                name="cidade"
-                value={this.state.cidade}
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
-                // allowClear
-              />
-              {this.state.fieldFalha.cidade ? (
-                <p className="div-feedbackError">{this.state.message.cidade}</p>
-              ) : null}
-            </div>
-          </div>
-        </div>
-
-        <div className="div-linha-ML">
-          <div className="div-bairro-ML">
-            <div className="div-text-ML">Bairro:</div>
-            <div className="div-inputs">
-              <Input
-                className={
-                  this.state.fieldFalha.bairro
-                    ? "div-inputError-ML"
-                    : "input-100"
-                }
-                placeholder="Digite o bairro"
-                name="bairro"
-                value={this.state.bairro}
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
-                // allowClear
-              />
-              {this.state.fieldFalha.bairro ? (
-                <p className="div-feedbackError">{this.state.message.bairro}</p>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="div-rua-ML">
-            <div className="div-text-ML">Rua:</div>
-            <div className="div-inputs">
-              <Input
-                className={
-                  this.state.fieldFalha.rua ? "div-inputError-ML" : "input-100"
-                }
-                placeholder="Digite a rua"
-                name="rua"
-                value={this.state.rua}
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
-                // allowClear
-              />
-              {this.state.fieldFalha.rua ? (
-                <p className="div-feedbackError">{this.state.message.rua}</p>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="div-n-ML">
-            <div className="div-text-ML">Nº:</div>
-            <div className="div-inputs">
-              <Input
-                className={
-                  this.state.fieldFalha.numero
-                    ? "div-inputError-ML"
-                    : "input-100"
-                }
-                placeholder="123456"
-                name="numero"
-                value={this.state.numero}
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
-                // allowClear
-              />
-              {this.state.fieldFalha.numero ? (
-                <p className="div-feedbackError">{this.state.message.numero}</p>
-              ) : null}
-            </div>
-          </div>
-        </div>
-
-        <div className="div-linha-ML">
-          <div className="div-comp-ML">
-            <div className="div-text-ML">Compl:</div>
-            <div className="div-inputs">
-              <Input
-                className="input-100"
-                placeholder="Digite o complemento"
-                name="complemento"
-                value={this.state.complemento}
-                onChange={this.onChange}
-                onBlur={this.onBlurValidator}
-                onFocus={this.onFocus}
-                // allowClear
-              />
-            </div>
-          </div>
-
-          <div className="div-ref-ML">
-            <div className="div-textRef-ML">Ponto de ref:</div>
-            <div className="div-inputs">
-              <Input
-                className="input-100"
-                placeholder="Digite a referência"
-                name="pontoReferencia"
-                value={this.state.pontoReferencia}
-                onChange={this.onChange}
-                allowClear
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="div-linha-ML">
           <div className="div-cpf-ML">
             <div className="div-textRef-ML">Cpf ou Cnpj:</div>
             <div className="div-inputs">
@@ -637,7 +426,7 @@ class ReservaML extends Component {
                     ? "div-inputError-ML"
                     : "input-100"
                 }
-                placeholder="Digite a referência"
+                placeholder="Digite o cpf/cnpj"
                 name="cpfOuCnpj"
                 value={this.state.cpfOuCnpj}
                 onChange={this.onChange}

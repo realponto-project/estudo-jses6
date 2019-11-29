@@ -191,7 +191,7 @@ class NovoProduto extends Component {
 
   saveTargetNewMarca = async () => {
     const values = {
-      manufacturer: this.state.newFabricante,
+      manufacturer: this.state.newMarca,
       mark: this.state.newMarca,
       responsibleUser: "modrp"
     };
@@ -227,7 +227,7 @@ class NovoProduto extends Component {
 
   saveTargetNewFabricante = async () => {
     const values = {
-      manufacturer: this.state.newFabricante
+      manufacturer: this.state.newMarca
     };
 
     const resposta = await newFabricante(values);
@@ -434,20 +434,6 @@ class NovoProduto extends Component {
           ) : null}
         </div>
       </div>
-
-      <div className="linhaModal-produtos">
-        <div className="div-fabricanteModal-produtos">
-          <div className="div-text-produtos">Fabricante:</div>
-          <Input
-            className="input-100"
-            placeholder="Digite o fabricante"
-            name="newFabricante"
-            value={this.state.newFabricante}
-            onChange={this.onChange}
-            allowClear
-          />
-        </div>
-      </div>
     </Modal>
   );
 
@@ -517,7 +503,7 @@ class NovoProduto extends Component {
             >
               <Option value="Equipamento">Equipamento</Option>
               <Option value="Peca">Peca</Option>
-              <Option value="Outros">Outros</Option>
+              <Option value="Acessorios">Acessórios</Option>
             </Select>
           </div>
 

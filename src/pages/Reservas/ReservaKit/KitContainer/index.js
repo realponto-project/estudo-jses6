@@ -501,7 +501,7 @@ class ReservaKit extends Component {
             onChange={this.onChangeOs}
             value={this.state.os}
             name="os"
-            placeholder="Nº Os"
+            placeholder="Razão social"
             onBlur={this.getOs}
           />
         </div>
