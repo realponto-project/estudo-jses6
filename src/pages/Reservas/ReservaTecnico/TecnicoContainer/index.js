@@ -17,7 +17,7 @@ import {
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import { getTecnico } from "../../../../services/tecnico";
+import { getTecnico, createPDF } from "../../../../services/tecnico";
 import {
   getTodasOs,
   baixaReservaOs,
@@ -49,7 +49,7 @@ class ReservaTecnico extends Component {
     modalDetalhes: false,
     modalRemove: false,
     Os: "",
-    tecnicos: '',
+    tecnicos: "",
     razaoSocial: "",
     cnpj: "",
     data: "",
@@ -70,14 +70,14 @@ class ReservaTecnico extends Component {
   buttonImprimir = () => {
     this.setState({
       buttonImprimir: !this.state.buttonImprimir
-    })
-  }
-  
-  onChangeTecnicoImprimir = (value) => {
+    });
+  };
+
+  onChangeTecnicoImprimir = value => {
     this.setState({
       tecnicos: value
-    })
-  }
+    });
+  };
 
   filter = async e => {
     await this.setState({
@@ -522,8 +522,8 @@ class ReservaTecnico extends Component {
   handleOkImprimir = () => {
     this.setState({
       buttonImprimir: false
-    })
-  }
+    });
+  };
 
   handleOkModalPeca = async () => {
     await this.setState({
@@ -708,10 +708,14 @@ class ReservaTecnico extends Component {
       okText="Confirmar"
       cancelText="Cancelar"
     >
-    <div className='div-body-modalImprimir'>
-      <Checkbox onChange={this.onChangeTecnicoImprimir} value='oi'>Checkbox</Checkbox>
-      <Checkbox onChange={this.onChangeTecnicoImprimir} value='oii'>Checkbox</Checkbox>
-    </div>
+      <div className="div-body-modalImprimir">
+        <Checkbox onChange={this.onChangeTecnicoImprimir} value="oi">
+          Checkbox
+        </Checkbox>
+        <Checkbox onChange={this.onChangeTecnicoImprimir} value="oii">
+          Checkbox
+        </Checkbox>
+      </div>
     </Modal>
   );
 
@@ -903,6 +907,43 @@ class ReservaTecnico extends Component {
     }
   };
 
+  createPDF = async value => {
+    const tecnicos = await getTecnico();
+
+    const tecnicosFormatted = Promise.all(
+      tecnicos.data.map(async item => {
+        const query = {
+          filters: {
+            technician: {
+              specific: {
+                name: item.name
+              }
+            },
+            os: {
+              specific: {
+                date: this.state.valueDate
+              }
+            }
+          },
+          required: true,
+          paranoid: true
+        };
+
+        const rows = await getTodasOs(query);
+
+        item = {
+          ...item,
+          rows: rows.data.rows
+        };
+
+        return item;
+      })
+    );
+
+    console.log(await tecnicosFormatted);
+    createPDF(await tecnicosFormatted);
+  };
+
   render() {
     return (
       <div className="div-card-Rtecnico">
@@ -910,7 +951,7 @@ class ReservaTecnico extends Component {
         <div className="linhaTexto-Rtecnico">
           <h1 className="h1-Rtecnico">Reservas técnico</h1>
         </div>
-        {console.log(this.state)}
+        <Icon onClick={() => this.createPDF()} type="printer" />
         {this.state.avancado ? (
           <div className="div-linha-avancado-Rtecnico">
             <div className="div-ocultar-Rtecnico">
@@ -995,10 +1036,14 @@ class ReservaTecnico extends Component {
           </div>
         ) : (
           <div className="div-avancado-Rtecnico-imprimir">
-            <Button type="primary" className="button" onClick={this.buttonImprimir}>
+            <Button
+              type="primary"
+              className="button"
+              onClick={this.buttonImprimir}
+            >
               Imprimir
             </Button>
-            <this.modalImprimir/>
+            <this.modalImprimir />
 
             <Button type="primary" className="button" onClick={this.avancado}>
               Avançado
