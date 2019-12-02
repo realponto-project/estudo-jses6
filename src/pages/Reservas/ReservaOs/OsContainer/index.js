@@ -58,6 +58,7 @@ class Rexterno extends Component {
     );
   };
 
+
   errorNumeroSerie = value => {
     message.error(value, 10);
   };

@@ -8,6 +8,7 @@ import {
   Tooltip,
   Input,
   Spin,
+  Checkbox,
   InputNumber,
   DatePicker,
   Select,
@@ -29,6 +30,7 @@ const { Option } = Select;
 
 class ReservaTecnico extends Component {
   state = {
+    buttonImprimir: false,
     idLine: "",
     numeroSerieTest: "",
     valueDate: { start: "2019/01/01" },
@@ -47,6 +49,7 @@ class ReservaTecnico extends Component {
     modalDetalhes: false,
     modalRemove: false,
     Os: "",
+    tecnicos: '',
     razaoSocial: "",
     cnpj: "",
     data: "",
@@ -63,6 +66,18 @@ class ReservaTecnico extends Component {
   errorNumeroSerie = value => {
     message.error(value, 10);
   };
+
+  buttonImprimir = () => {
+    this.setState({
+      buttonImprimir: !this.state.buttonImprimir
+    })
+  }
+  
+  onChangeTecnicoImprimir = (value) => {
+    this.setState({
+      tecnicos: value
+    })
+  }
 
   filter = async e => {
     await this.setState({
@@ -504,6 +519,12 @@ class ReservaTecnico extends Component {
     );
   };
 
+  handleOkImprimir = () => {
+    this.setState({
+      buttonImprimir: false
+    })
+  }
+
   handleOkModalPeca = async () => {
     await this.setState({
       modalDetalhes: false,
@@ -675,6 +696,22 @@ class ReservaTecnico extends Component {
       <div className="div-textProdutos-Rtecnico">
         Todos as reservas voltarão para o estoque, deseja continuar?
       </div>
+    </Modal>
+  );
+
+  modalImprimir = () => (
+    <Modal
+      title="IMPRIMIR DIA DE HOJE"
+      visible={this.state.buttonImprimir}
+      onOk={this.handleOkImprimir}
+      onCancel={this.handleOkImprimir}
+      okText="Confirmar"
+      cancelText="Cancelar"
+    >
+    <div className='div-body-modalImprimir'>
+      <Checkbox onChange={this.onChangeTecnicoImprimir} value='oi'>Checkbox</Checkbox>
+      <Checkbox onChange={this.onChangeTecnicoImprimir} value='oii'>Checkbox</Checkbox>
+    </div>
     </Modal>
   );
 
@@ -873,7 +910,7 @@ class ReservaTecnico extends Component {
         <div className="linhaTexto-Rtecnico">
           <h1 className="h1-Rtecnico">Reservas técnico</h1>
         </div>
-
+        {console.log(this.state)}
         {this.state.avancado ? (
           <div className="div-linha-avancado-Rtecnico">
             <div className="div-ocultar-Rtecnico">
@@ -957,7 +994,12 @@ class ReservaTecnico extends Component {
             </div>
           </div>
         ) : (
-          <div className="div-avancado-Rtecnico">
+          <div className="div-avancado-Rtecnico-imprimir">
+            <Button type="primary" className="button" onClick={this.buttonImprimir}>
+              Imprimir
+            </Button>
+            <this.modalImprimir/>
+
             <Button type="primary" className="button" onClick={this.avancado}>
               Avançado
             </Button>
