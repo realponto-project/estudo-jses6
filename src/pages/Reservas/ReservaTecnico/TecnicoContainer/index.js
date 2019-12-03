@@ -30,6 +30,7 @@ const { Option } = Select;
 
 class ReservaTecnico extends Component {
   state = {
+    tecnicosArray: [],
     buttonImprimir: false,
     idLine: "",
     numeroSerieTest: "",
@@ -82,9 +83,15 @@ class ReservaTecnico extends Component {
     } else {
       tecnicos.splice(index, 1);
     }
+    
+    const tecnicosArray = R.innerJoin((tecnicoArray, tecnico) => tecnicoArray.name ===  tecnico,
+    this.state.tecnicoArray,
+    tecnicos,
+    )
 
     this.setState({
-      tecnicos: tecnicos
+      tecnicos: tecnicos,
+      tecnicosArray
     });
   };
 
@@ -915,7 +922,7 @@ class ReservaTecnico extends Component {
   };
 
   handleOkImprimir = () => {
-    this.createPDF(this.state.tecnicos);
+    this.createPDF(this.state.tecnicosArray);
 
     this.setState({
       buttonImprimir: false
@@ -929,7 +936,7 @@ class ReservaTecnico extends Component {
           filters: {
             technician: {
               specific: {
-                name: item
+                name: item.name,
               }
             },
             os: {
@@ -945,7 +952,8 @@ class ReservaTecnico extends Component {
         const rows = await getTodasOs(query);
 
         item = {
-          name: item,
+          name: item.name,
+          plate: item.cars[0].plate,
           rows: rows.data.rows
         };
 

@@ -3,7 +3,7 @@ import { BACKEND_URL } from "./var";
 import { store } from "../App";
 import jsPDF from "jspdf";
 import * as R from "ramda";
-import moment from "moment";
+import moment from "moment/min/moment-with-locales";
 
 export const getCarro = async () => {
   const storeObject = store.getState();
@@ -246,8 +246,8 @@ function addWrappedText({
         .text(
           xPosition + textWidth / 2,
           cursorY +
-            (rows - 1) +
-            2.5 * (rows - doc.splitTextToSize(text, textWidth).length),
+          (rows - 1) +
+          2.5 * (rows - doc.splitTextToSize(text, textWidth).length),
           lineText,
           "center"
         )
@@ -259,6 +259,31 @@ function addWrappedText({
   }
 }
 
+function getRodizio(plate) {
+  if (plate[plate.length - 1] === '1') {
+    return 'SEGUNDA'
+  } else if (plate[plate.length - 1] === '2') {
+    return 'SEGUNDA'
+  } else if (plate[plate.length - 1] === '3') {
+    return 'TERÇA'
+  } else if (plate[plate.length - 1] === '4') {
+    return 'TERÇA'
+  } else if (plate[plate.length - 1] === '5') {
+    return 'QUARTA'
+  } else if (plate[plate.length - 1] === '6') {
+    return 'QUARTA'
+  } else if (plate[plate.length - 1] === '7') {
+    return 'QUINTA'
+  } else if (plate[plate.length - 1] === '8') {
+    return 'QUINTA'
+  } else if (plate[plate.length - 1] === '9') {
+    return 'SEXTA'
+  }
+  else if (plate[plate.length - 1] === '0') {
+    return 'SEXTA'
+  }
+}
+
 export const createPDF = technician => {
   var doc = new jsPDF({
     orientation: "l",
@@ -267,22 +292,24 @@ export const createPDF = technician => {
     hotfixes: [] // an array of hotfix strings to enable
   });
 
+  moment.locale('pt')
+
   technician.map((tecnico, i) => {
     doc.setLineWidth(1).line(3, 3, 3, 18);
     doc
       .setFontSize(20)
-      .text(5, 13, "02/12/2019")
+      .text(5, 13, moment().format('L'))
       .text(50, 13, tecnico.name);
 
     doc.setLineWidth(0.1).line(150, 12, 280, 12);
     doc.setFontSize(12).text(150, 17, "Assinatura");
 
-    doc.setFontSize(20).text(3, 28, "ACB-1234-Roizio: terça-feira");
+    doc.setFontSize(20).text(3, 28, `${tecnico.plate} Rodízio: ${getRodizio(tecnico.plate)}`);
 
     doc
       .setFontSize(14)
       .text(100, 28, "Horário saída:")
-      .text(190, 28, "Horário Retorno:");
+      .text(190, 28, "Horário retorno:");
     doc
       .setLineWidth(0.1)
       .line(132, 28, 182, 28)
