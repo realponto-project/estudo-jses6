@@ -267,6 +267,7 @@ class Estoque extends Component {
           </div>
         ) : (
           <div className="div-separate-estoque">
+          {console.log(this.state)}
             {this.state.estoque.rows.length !== 0 ? (
               this.state.estoque.rows.map(line => (
                 <div className="div-100-estoque">
@@ -276,10 +277,10 @@ class Estoque extends Component {
                         className="div-table-label-cel-estoque"
                         style={
                           line.minimumStock > line.available
-                            ? { color: "red" }
-                            : null
+                          ? { color: "red" }
+                          : null
                         }
-                      >
+                        >
                         {line.name}
                       </label>
                     </div>
