@@ -49,7 +49,7 @@ class ReservaTecnico extends Component {
     modalDetalhes: false,
     modalRemove: false,
     Os: "",
-    tecnicos: "",
+    tecnicos: [],
     razaoSocial: "",
     cnpj: "",
     data: "",
@@ -73,9 +73,18 @@ class ReservaTecnico extends Component {
     });
   };
 
-  onChangeTecnicoImprimir = value => {
+  onChangeTecnicoImprimir = e => {
+    const tecnicos = this.state.tecnicos;
+    const index = tecnicos.indexOf(e.target.value);
+
+    if (index === -1) {
+      tecnicos.push(e.target.value);
+    } else {
+      tecnicos.splice(index, 1);
+    }
+
     this.setState({
-      tecnicos: value
+      tecnicos: tecnicos
     });
   };
 
@@ -195,14 +204,14 @@ class ReservaTecnico extends Component {
               )
             }
           }
-        },
-        console.log(
-          acessorio,
-          this.state.produtoSelecionado.products.serialNumbers,
-          this.state.produtoSelecionado.products.serialNumbers.filter(
-            serial => serial.serialNumber !== acessorio.toString()
-          )
-        )
+        }
+        // console.log(
+        //   acessorio,
+        //   this.state.produtoSelecionado.products.serialNumbers,
+        //   this.state.produtoSelecionado.products.serialNumbers.filter(
+        //     serial => serial.serialNumber !== acessorio.toString()
+        //   )
+        // )
       );
     }
   };
@@ -519,12 +528,6 @@ class ReservaTecnico extends Component {
     );
   };
 
-  handleOkImprimir = () => {
-    this.setState({
-      buttonImprimir: false
-    });
-  };
-
   handleOkModalPeca = async () => {
     await this.setState({
       modalDetalhes: false,
@@ -704,17 +707,21 @@ class ReservaTecnico extends Component {
       title="IMPRIMIR DIA DE HOJE"
       visible={this.state.buttonImprimir}
       onOk={this.handleOkImprimir}
-      onCancel={this.handleOkImprimir}
+      onCancel={() => this.setState({ buttonImprimir: false })}
       okText="Confirmar"
       cancelText="Cancelar"
     >
       <div className="div-body-modalImprimir">
-        <Checkbox onChange={this.onChangeTecnicoImprimir} value="oi">
-          Checkbox
-        </Checkbox>
-        <Checkbox onChange={this.onChangeTecnicoImprimir} value="oii">
-          Checkbox
-        </Checkbox>
+        {this.state.tecnicoArray.map(tecnico => {
+          return (
+            <Checkbox
+              onChange={this.onChangeTecnicoImprimir}
+              value={tecnico.name}
+            >
+              {tecnico.name}
+            </Checkbox>
+          );
+        })}
       </div>
     </Modal>
   );
@@ -907,21 +914,27 @@ class ReservaTecnico extends Component {
     }
   };
 
-  createPDF = async value => {
-    const tecnicos = await getTecnico();
+  handleOkImprimir = () => {
+    this.createPDF(this.state.tecnicos);
 
+    this.setState({
+      buttonImprimir: false
+    });
+  };
+
+  createPDF = async value => {
     const tecnicosFormatted = Promise.all(
-      tecnicos.data.map(async item => {
+      value.map(async item => {
         const query = {
           filters: {
             technician: {
               specific: {
-                name: item.name
+                name: item
               }
             },
             os: {
               specific: {
-                date: this.state.valueDate
+                date: { start: new Date(), end: new Date() }
               }
             }
           },
@@ -932,7 +945,7 @@ class ReservaTecnico extends Component {
         const rows = await getTodasOs(query);
 
         item = {
-          ...item,
+          name: item,
           rows: rows.data.rows
         };
 
@@ -940,7 +953,6 @@ class ReservaTecnico extends Component {
       })
     );
 
-    console.log(await tecnicosFormatted);
     createPDF(await tecnicosFormatted);
   };
 
@@ -951,7 +963,6 @@ class ReservaTecnico extends Component {
         <div className="linhaTexto-Rtecnico">
           <h1 className="h1-Rtecnico">Reservas técnico</h1>
         </div>
-        <Icon onClick={() => this.createPDF()} type="printer" />
         {this.state.avancado ? (
           <div className="div-linha-avancado-Rtecnico">
             <div className="div-ocultar-Rtecnico">
@@ -1036,13 +1047,19 @@ class ReservaTecnico extends Component {
           </div>
         ) : (
           <div className="div-avancado-Rtecnico-imprimir">
-            <Button
+            {/* <Button
               type="primary"
               className="button"
               onClick={this.buttonImprimir}
             >
               Imprimir
-            </Button>
+            </Button> */}
+            <Icon
+              id="imprimir"
+              style={{ fontSize: "32px" }}
+              onClick={() => this.buttonImprimir()}
+              type="printer"
+            />
             <this.modalImprimir />
 
             <Button type="primary" className="button" onClick={this.avancado}>

@@ -3,6 +3,7 @@ import { BACKEND_URL } from "./var";
 import { store } from "../App";
 import jsPDF from "jspdf";
 import * as R from "ramda";
+import moment from "moment";
 
 export const getCarro = async () => {
   const storeObject = store.getState();
@@ -362,15 +363,21 @@ export const createPDF = technician => {
           }
 
           index = index + rows;
+          // eslint-disable-next-line array-callback-return
+          return;
         });
+        // eslint-disable-next-line array-callback-return
+        return;
       });
 
     i < technician.length - 1 && doc.addPage();
+    // eslint-disable-next-line array-callback-return
+    return;
   });
 
   console.log(doc);
   doc.autoPrint();
   // window.print();
 
-  doc.save("test.pdf");
+  doc.save(`${moment().format("L")}.pdf`);
 };

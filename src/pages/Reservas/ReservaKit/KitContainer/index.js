@@ -78,7 +78,7 @@ class ReservaKit extends Component {
   };
 
   messageErrorKit = () => {
-    message.error("É necessário ter um número de os");
+    message.error("É necessário informar a Razão Social");
   };
 
   getAllKit = async () => {
