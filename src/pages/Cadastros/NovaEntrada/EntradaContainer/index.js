@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 import { Input, Select, InputNumber, Button, Modal, message } from "antd";
+
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { validators } from "./validators";

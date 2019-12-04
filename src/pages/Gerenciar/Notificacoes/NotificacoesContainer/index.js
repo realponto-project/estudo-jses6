@@ -31,7 +31,7 @@ class NotificacaoDash extends Component{
   }
 
   componentDidMount = async () => {
-    await this.getNotificacoes()
+    // await this.getNotificacoes()
   }
 
   test = () => {

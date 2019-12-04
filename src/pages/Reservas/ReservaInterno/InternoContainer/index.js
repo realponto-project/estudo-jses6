@@ -3,7 +3,7 @@ import { Input, DatePicker, InputNumber, Button, message, Select } from "antd";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 // import { validators, masks } from "./validators";
-import { newReservaOs } from "../../../../services/reservaOs";
+import { newReservaTecInt } from "../../../../services/reservaOs";
 import { getProdutoByEstoque } from "../../../../services/produto";
 import { getTecnico } from "../../../../services/tecnico";
 import { getSerial } from "../../../../services/serialNumber";
@@ -212,11 +212,10 @@ class Rinterno extends Component {
       razaoSocial: this.state.razaoSocial,
       date: this.state.data,
       technicianId: this.state.technicianId,
-      osParts: this.state.carrinho,
-      responsibleUser: "modrp"
+      technicianReserveParts: this.state.carrinho,
     };
 
-    const resposta = await newReservaOs(values);
+    const resposta = await newReservaTecInt(values);
 
     if (resposta.status === 422) {
       this.setState({
@@ -293,6 +292,15 @@ class Rinterno extends Component {
       quant: value
     });
   };
+
+  onChange = e => {
+    const { name: nome, value: valor } = e.target
+
+    this.setState({
+      [nome]: valor
+    });
+  };
+
 
   errorSelecionado = value => {
     message.error(value);
