@@ -103,11 +103,6 @@ class ReservaTecnico extends Component {
     tecnicos,
     )
 
-    const tecnicosArray = R.innerJoin((tecnicoArray, tecnico) => tecnicoArray.name ===  tecnico,
-    this.state.tecnicoArray,
-    tecnicos,
-    )
-
     this.setState({
       tecnicos: tecnicos,
       tecnicosArray,
