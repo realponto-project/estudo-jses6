@@ -304,7 +304,7 @@ export const createPDF = technician => {
     doc.setLineWidth(0.1).line(150, 12, 280, 12);
     doc.setFontSize(12).text(150, 17, "Assinatura");
 
-    doc.setFontSize(20).text(3, 28, `${tecnico.plate} Rodízio: ${getRodizio(tecnico.plate)}`);
+    doc.setFontSize(18).text(3, 28, `${tecnico.plate} Rodízio: ${getRodizio(tecnico.plate)}`);
 
     doc
       .setFontSize(14)
