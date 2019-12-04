@@ -370,3 +370,23 @@
 #imprimir:hover {
   color: #08c;
 }
+
+#car{
+  margin: 10px 0 0 5px;
+}
+#car:hover {
+  color: #08c;
+}
+
+#car-update{
+  margin: 10px 0 0 5px;
+  color: rgb(25, 204, 8);
+}
+
+
+.div-row-modal-imprimir{
+  display: flex;
+  flex-direction: row;
+  /* justify-items: center; */
+  align-items: center;
+}

@@ -17,7 +17,7 @@ import {
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
-import { getTecnico, createPDF } from "../../../../services/tecnico";
+import { getTecnico, createPDF, getCarro } from "../../../../services/tecnico";
 import {
   getTodasOs,
   baixaReservaOs,
@@ -31,13 +31,24 @@ const { Option } = Select;
 
 class ReservaTecnico extends Component {
   state = {
-    tecnicosArray: [],
+    avancado: false,
     buttonImprimir: false,
+    loading: false,
+    modalDetalhes: false,
+    modalRemove: false,
+    carroArray:[],
+    tecnicoArray: [],
+    tecnicos: [],
+    tecnicosArray: [],
+    cnpj: "",
+    data: "",
     idLine: "",
     numeroSerieTest: "",
+    Os: "",
+    razaoSocial: "",
+    tecnico: "Não selecionado",
+    tecnicoName: "",
     valueDate: { start: "2019/01/01" },
-    avancado: false,
-    loading: false,
     OsArray: {
       rows: []
     },
@@ -45,25 +56,24 @@ class ReservaTecnico extends Component {
       products: {}
     },
     mais: {},
-    quantModal: NaN,
-    teste: NaN,
-    tecnicoArray: [],
-    modalDetalhes: false,
-    modalRemove: false,
-    Os: "",
-    tecnicos: [],
-    razaoSocial: "",
-    cnpj: "",
-    data: "",
     lineSelected: {
       rows: []
     },
-    tecnico: "Não selecionado",
+    quantModal: NaN,
+    teste: NaN,
     page: 1,
     total: 10,
     count: 0,
     show: 0
   };
+
+  getAllCarro = async () => {
+    await getCarro().then(
+    resposta => this.setState({
+      carroArray: resposta.data,
+    })
+  )
+}
 
   errorNumeroSerie = value => {
     message.error(value, 10);
@@ -79,6 +89,7 @@ class ReservaTecnico extends Component {
 
   onChangeTecnicoImprimir = e => {
     const tecnicos = this.state.tecnicos;
+
     const index = tecnicos.indexOf(e.target.value);
 
     if (index === -1) {
@@ -92,10 +103,16 @@ class ReservaTecnico extends Component {
     tecnicos,
     )
 
+    const tecnicosArray = R.innerJoin((tecnicoArray, tecnico) => tecnicoArray.name ===  tecnico,
+    this.state.tecnicoArray,
+    tecnicos,
+    )
+
     this.setState({
       tecnicos: tecnicos,
-      tecnicosArray
+      tecnicosArray,
     });
+
   };
 
   filter = async e => {
@@ -215,13 +232,6 @@ class ReservaTecnico extends Component {
             }
           }
         }
-        // console.log(
-        //   acessorio,
-        //   this.state.produtoSelecionado.products.serialNumbers,
-        //   this.state.produtoSelecionado.products.serialNumbers.filter(
-        //     serial => serial.serialNumber !== acessorio.toString()
-        //   )
-        // )
       );
     }
   };
@@ -521,6 +531,8 @@ class ReservaTecnico extends Component {
     });
 
     await this.getAllOs();
+
+    await this.getAllCarro()
   };
 
   onChangeSelect = async value => {
@@ -722,14 +734,52 @@ class ReservaTecnico extends Component {
       cancelText="Cancelar"
     >
       <div className="div-body-modalImprimir">
-        {this.state.tecnicoArray.map(tecnico => {
+        {this.state.tecnicoArray.map((tecnico, index) => {
           return (
-            <Checkbox
-              onChange={this.onChangeTecnicoImprimir}
-              value={tecnico.name}
-            >
-              {tecnico.name}
-            </Checkbox>
+            <div className='div-row-modal-imprimir'>
+              <div className='div-row-modal-imprimir' style={{ width: "90%" }}>
+              <Checkbox
+                onChange={this.onChangeTecnicoImprimir}
+                value={tecnico.name}
+                style={{ width: "70%"}}
+              >
+                {tecnico.name}
+              </Checkbox>
+              {tecnico.name!== this.state.tecnicoName
+              ?
+              <label style={{ width: "30%", margin: '10px 15px 0 5px' }}>{tecnico.cars[0].plate}</label>
+              :
+              <Select
+              value={tecnico.cars[0].plate}
+              style={{ width: "30%", margin: '10px 15px 0 5px' }}
+              onChange={(plate) => {
+                const tecnicoArray = this.state.tecnicoArray
+
+                tecnicoArray[index].cars.push({ plate: tecnicoArray[index].cars[0].plate})
+                tecnicoArray[index].cars[0].plate = plate
+
+                this.setState({
+                  tecnicoArray,
+                })
+              }}
+              >
+              {this.state.carroArray.map((valor) => 
+                <Option value={valor.plate}>{valor.plate}</Option>)}
+              </Select>
+              }
+            </div>
+            <Icon
+              id={tecnico.cars.length > 1
+                ?
+                "car-update"
+                :
+                "car"
+              }
+              style={{ fontSize: "16px", }}
+              onClick={() => this.onClikIconCar(tecnico.name)}
+              type="car"
+            />  
+          </div>
           );
         })}
       </div>
@@ -924,7 +974,7 @@ class ReservaTecnico extends Component {
     }
   };
 
-  handleOkImprimir = async () => {
+  handleOkImprimir = async() => {
     await this.createPDF(this.state.tecnicosArray);
 
     await this.setState({
@@ -940,7 +990,7 @@ class ReservaTecnico extends Component {
           filters: {
             technician: {
               specific: {
-                name: item.name,
+                name: item.name
               }
             },
             os: {
@@ -970,6 +1020,14 @@ class ReservaTecnico extends Component {
     await this.setState({
       tecnicoArray: []
     })
+  };
+
+  onClikIconCar = tecnicoName => {
+    tecnicoName = tecnicoName === this.state.tecnicoName ? '' : tecnicoName
+
+    this.setState({
+      tecnicoName
+    });
   };
 
   render() {
