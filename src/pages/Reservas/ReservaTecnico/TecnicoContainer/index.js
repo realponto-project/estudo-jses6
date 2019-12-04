@@ -24,6 +24,7 @@ import {
   removeReservaOs
 } from "../../../../services/reservaOs";
 import { getSerial } from "../../../../services/serialNumber";
+import { get } from "https";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -976,7 +977,7 @@ class ReservaTecnico extends Component {
       <div className="div-card-Rtecnico">
         {this.renderRedirect()}
         <div className="linhaTexto-Rtecnico">
-          <h1 className="h1-Rtecnico">Reservas técnico</h1>
+          <h1 className="h1-Rtecnico">Reservas técnicos externos</h1>
         </div>
         {this.state.avancado ? (
           <div className="div-linha-avancado-Rtecnico">

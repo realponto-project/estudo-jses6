@@ -424,22 +424,12 @@ class SideBar extends Component {
             />
           </Tooltip>
 
-          <Tooltip placement="bottom" title={"Notificações"}>
-            <div
-              className={
-                this.props.auth.addEntr
-                  ? "menuIcon-icon-notf"
-                  : "menuIcon-icon-notPermission-notf"
-              }
-            >
-              <Icon
-                type="bell"
-                onClick={() => this.handleClickCompany("notificacao_dash")}
-              />
-              {this.state.notificacao ? (
-                <div className="menuIcon-icon-ball" />
-              ) : null}
-            </div>
+          <Tooltip placement="bottom" title={"Entrada"}>
+            <Icon
+              className="menuIcon-icon"
+              type="shop"
+              onClick={() => this.handleClickCompany("entrada_add")}
+            />
           </Tooltip>
 
           <Tooltip placement="bottom" title={"Perfil"}>

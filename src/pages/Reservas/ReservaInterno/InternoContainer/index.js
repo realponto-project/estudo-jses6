@@ -363,7 +363,7 @@ class Rinterno extends Component {
       <div className="div-card-Os">
         {this.renderRedirect()}
         <div className="linhaTexto-Os">
-          <h1 className="h1-Os">Baixa interna</h1>
+          <h1 className="h1-Os">Reserva técnicos internos</h1>
         </div>
 
         <div className="div-linha-Os">
