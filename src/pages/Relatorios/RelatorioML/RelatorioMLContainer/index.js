@@ -7,7 +7,6 @@ class GerenciarEntrada extends Component {
   state = {
     codigo: "",
     produto: "",
-    cep: "",
     data: "",
     avancado: false,
     lineSelected: {
@@ -46,7 +45,6 @@ class GerenciarEntrada extends Component {
           specific: {
             createdAt: this.state.valueDate,
             name: this.state.produto,
-            zipCode: this.state.cep,
             trackingCode: this.state.codigo
           }
         }
@@ -279,19 +277,6 @@ class GerenciarEntrada extends Component {
             </div>
 
             <div className="div-linha-avancado-RML">
-              <div className="div-cep-ROs">
-                <div className="div-text-Os">Cep:</div>
-                <Input
-                  className="input-100"
-                  style={{ width: "100%" }}
-                  name="cep"
-                  value={this.state.cep}
-                  placeholder="Digite o cep"
-                  onChange={this.onChange}
-                  allowClear
-                />
-              </div>
-
               <div className="div-data-ROs">
                 <div className="div-text-Rtecnico">Data:</div>
                 <DatePicker.RangePicker
@@ -316,7 +301,6 @@ class GerenciarEntrada extends Component {
           <div className="cel-mais-cabecalho-Rtecnico"></div>
           <div className="cel-codigo-cabecalho-RML">Código</div>
           <div className="cel-nome-cabecalho-RML">Nome</div>
-          <div className="cel-cep-cabecalho-RML">Cep</div>
           <div className="cel-data-cabecalho-RML">Data lançamento</div>
         </div>
 
