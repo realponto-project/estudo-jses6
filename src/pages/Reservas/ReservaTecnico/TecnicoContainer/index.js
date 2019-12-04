@@ -68,8 +68,10 @@ class ReservaTecnico extends Component {
     message.error(value, 10);
   };
 
-  buttonImprimir = () => {
-    this.setState({
+  buttonImprimir = async () => {
+    await this.getAllTecnico();
+
+    await this.setState({
       buttonImprimir: !this.state.buttonImprimir
     });
   };
@@ -714,7 +716,7 @@ class ReservaTecnico extends Component {
       title="IMPRIMIR DIA DE HOJE"
       visible={this.state.buttonImprimir}
       onOk={this.handleOkImprimir}
-      onCancel={() => this.setState({ buttonImprimir: false })}
+      onCancel={() => this.setState({ buttonImprimir: false, tecnicos: [] })}
       okText="Confirmar"
       cancelText="Cancelar"
     >
@@ -921,11 +923,12 @@ class ReservaTecnico extends Component {
     }
   };
 
-  handleOkImprimir = () => {
-    this.createPDF(this.state.tecnicosArray);
+  handleOkImprimir = async () => {
+    await this.createPDF(this.state.tecnicosArray);
 
-    this.setState({
-      buttonImprimir: false
+    await this.setState({
+      buttonImprimir: false,
+      tecnicos: [],
     });
   };
 
@@ -962,6 +965,10 @@ class ReservaTecnico extends Component {
     );
 
     createPDF(await tecnicosFormatted);
+
+    await this.setState({
+      tecnicoArray: []
+    })
   };
 
   render() {
