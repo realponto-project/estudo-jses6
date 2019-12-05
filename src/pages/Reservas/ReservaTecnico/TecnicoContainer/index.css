@@ -390,3 +390,35 @@
   /* justify-items: center; */
   align-items: center;
 }
+
+.div-title-modal-update-car{
+  display: flex;
+  flex-direction: row;
+  margin:  0 5px;
+}
+
+.div-datePicker-modal-row{
+  width: 45%;
+  display: flex;
+  flex-direction: row
+}
+
+.div-datePicker-modal-row-reverse{
+  width: 45%;
+  display: flex;
+  flex-direction: row-reverse;
+  -webkit-animation-name: div; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes div {
+  from {flex-direction: row;}
+  to {flex-direction: row-reverse;}
+}
+
+/* Standard syntax */
+@keyframes div {
+  from {flex-direction: row;}
+  to {flex-direction: row-reverse;}
+}

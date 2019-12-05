@@ -17,6 +17,8 @@ import {
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
+import locale from "antd/es/date-picker/locale/pt_BR";
+
 import { getTecnico, createPDF, getCarro } from "../../../../services/tecnico";
 import {
   getTodasOs,
@@ -24,6 +26,7 @@ import {
   removeReservaOs
 } from "../../../../services/reservaOs";
 import { getSerial } from "../../../../services/serialNumber";
+import moment from "moment";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -35,12 +38,14 @@ class ReservaTecnico extends Component {
     loading: false,
     modalDetalhes: false,
     modalRemove: false,
-    carroArray:[],
+    focusDatePicker: false,
+    carroArray: [],
     tecnicoArray: [],
     tecnicos: [],
     tecnicosArray: [],
     cnpj: "",
     data: "",
+    dataModal: Date.now(),
     idLine: "",
     numeroSerieTest: "",
     Os: "",
@@ -67,12 +72,12 @@ class ReservaTecnico extends Component {
   };
 
   getAllCarro = async () => {
-    await getCarro().then(
-    resposta => this.setState({
-      carroArray: resposta.data,
-    })
-  )
-}
+    await getCarro().then(resposta =>
+      this.setState({
+        carroArray: resposta.data
+      })
+    );
+  };
 
   errorNumeroSerie = value => {
     message.error(value, 10);
@@ -96,17 +101,17 @@ class ReservaTecnico extends Component {
     } else {
       tecnicos.splice(index, 1);
     }
-    
-    const tecnicosArray = R.innerJoin((tecnicoArray, tecnico) => tecnicoArray.name ===  tecnico,
-    this.state.tecnicoArray,
-    tecnicos,
-    )
+
+    const tecnicosArray = R.innerJoin(
+      (tecnicoArray, tecnico) => tecnicoArray.name === tecnico,
+      this.state.tecnicoArray,
+      tecnicos
+    );
 
     this.setState({
       tecnicos: tecnicos,
-      tecnicosArray,
+      tecnicosArray
     });
-
   };
 
   filter = async e => {
@@ -215,18 +220,16 @@ class ReservaTecnico extends Component {
         teste: teste.length
       });
     } else {
-      await this.setState(
-        {
-          produtoSelecionado: {
-            products: {
-              ...this.state.produtoSelecionado.products,
-              serialNumbers: this.state.produtoSelecionado.products.serialNumbers.filter(
-                serial => serial.serialNumber !== acessorio.toString()
-              )
-            }
+      await this.setState({
+        produtoSelecionado: {
+          products: {
+            ...this.state.produtoSelecionado.products,
+            serialNumbers: this.state.produtoSelecionado.products.serialNumbers.filter(
+              serial => serial.serialNumber !== acessorio.toString()
+            )
           }
         }
-      );
+      });
     }
   };
 
@@ -526,7 +529,7 @@ class ReservaTecnico extends Component {
 
     await this.getAllOs();
 
-    await this.getAllCarro()
+    await this.getAllCarro();
   };
 
   onChangeSelect = async value => {
@@ -720,60 +723,91 @@ class ReservaTecnico extends Component {
 
   modalImprimir = () => (
     <Modal
-      title="IMPRIMIR DIA DE HOJE"
       visible={this.state.buttonImprimir}
       onOk={this.handleOkImprimir}
       onCancel={() => this.setState({ buttonImprimir: false, tecnicos: [] })}
       okText="Confirmar"
       cancelText="Cancelar"
+      closable={false}
     >
       <div className="div-body-modalImprimir">
+        <div className="div-title-modal-update-car">
+          <h3
+            style={{ width: "55%" }}
+            // className={this.state.focusDatePicker ? 'w-55-pc' : 'w-80-pc'}
+          >{`Romaneio dia ${moment(this.state.dataModal).format("L")}`}</h3>
+          <div
+            className={
+              this.state.focusDatePicker
+                ? "div-datePicker-modal-row"
+                : "div-datePicker-modal-row-reverse"
+            }
+          >
+            <DatePicker
+              autoFocus={true}
+              onOpenChange={() =>
+                this.setState({ focusDatePicker: !this.state.focusDatePicker })
+              }
+              locale={locale}
+              style={{ width: "150px", margin: "0 0 20px" }}
+              onChange={e => this.setState({ dataModal: e && e._d })}
+            />
+          </div>
+        </div>
+        <div
+          style={{
+            background: "rgba(99, 99, 99, 0.4)",
+            width: "100%",
+            height: "0.5px"
+          }}
+        />
+
         {this.state.tecnicoArray.map((tecnico, index) => {
           return (
-            <div className='div-row-modal-imprimir'>
-              <div className='div-row-modal-imprimir' style={{ width: "90%" }}>
-              <Checkbox
-                onChange={this.onChangeTecnicoImprimir}
-                value={tecnico.name}
-                style={{ width: "70%"}}
-              >
-                {tecnico.name}
-              </Checkbox>
-              {tecnico.name!== this.state.tecnicoName
-              ?
-              <label style={{ width: "30%", margin: '10px 15px 0 5px' }}>{tecnico.cars[0].plate}</label>
-              :
-              <Select
-              value={tecnico.cars[0].plate}
-              style={{ width: "30%", margin: '10px 15px 0 5px' }}
-              onChange={(plate) => {
-                const tecnicoArray = this.state.tecnicoArray
+            <div className="div-row-modal-imprimir">
+              <div className="div-row-modal-imprimir" style={{ width: "90%" }}>
+                <Checkbox
+                  onChange={this.onChangeTecnicoImprimir}
+                  value={tecnico.name}
+                  style={{ width: "70%" }}
+                >
+                  {tecnico.name}
+                </Checkbox>
+                {tecnico.name !== this.state.tecnicoName ? (
+                  <label style={{ width: "30%", margin: "10px 15px 0 5px" }}>
+                    {tecnico.cars[0].plate}
+                  </label>
+                ) : (
+                  <Select
+                    value={tecnico.cars[0].plate}
+                    style={{ width: "30%", margin: "10px 15px 0 5px" }}
+                    onChange={plate => {
+                      const tecnicoArray = this.state.tecnicoArray;
 
-                tecnicoArray[index].cars.push({ plate: tecnicoArray[index].cars[0].plate})
-                tecnicoArray[index].cars[0].plate = plate
+                      tecnicoArray[index].cars.push({
+                        plate: tecnicoArray[index].cars[0].plate
+                      });
+                      tecnicoArray[index].cars[0].plate = plate;
 
-                this.setState({
-                  tecnicoArray,
-                })
-              }}
-              >
-              {this.state.carroArray.map((valor) => 
-                <Option value={valor.plate}>{valor.plate}</Option>)}
-              </Select>
-              }
+                      this.setState({
+                        tecnicoName: "",
+                        tecnicoArray
+                      });
+                    }}
+                  >
+                    {this.state.carroArray.map(valor => (
+                      <Option value={valor.plate}>{valor.plate}</Option>
+                    ))}
+                  </Select>
+                )}
+              </div>
+              <Icon
+                id={tecnico.cars.length > 1 ? "car-update" : "car"}
+                style={{ fontSize: "16px" }}
+                onClick={() => this.onClikIconCar(tecnico.name)}
+                type="car"
+              />
             </div>
-            <Icon
-              id={tecnico.cars.length > 1
-                ?
-                "car-update"
-                :
-                "car"
-              }
-              style={{ fontSize: "16px", }}
-              onClick={() => this.onClikIconCar(tecnico.name)}
-              type="car"
-            />  
-          </div>
           );
         })}
       </div>
@@ -968,12 +1002,12 @@ class ReservaTecnico extends Component {
     }
   };
 
-  handleOkImprimir = async() => {
+  handleOkImprimir = async () => {
     await this.createPDF(this.state.tecnicosArray);
 
     await this.setState({
       buttonImprimir: false,
-      tecnicos: [],
+      tecnicos: []
     });
   };
 
@@ -989,7 +1023,7 @@ class ReservaTecnico extends Component {
             },
             os: {
               specific: {
-                date: { start: new Date(), end: new Date() }
+                date: { start: this.state.dataModal, end: this.state.dataModal }
               }
             }
           },
@@ -1009,15 +1043,15 @@ class ReservaTecnico extends Component {
       })
     );
 
-    createPDF(await tecnicosFormatted);
+    createPDF(await tecnicosFormatted, this.state.dataModal);
 
     await this.setState({
       tecnicoArray: []
-    })
+    });
   };
 
   onClikIconCar = tecnicoName => {
-    tecnicoName = tecnicoName === this.state.tecnicoName ? '' : tecnicoName
+    tecnicoName = tecnicoName === this.state.tecnicoName ? "" : tecnicoName;
 
     this.setState({
       tecnicoName
@@ -1115,13 +1149,6 @@ class ReservaTecnico extends Component {
           </div>
         ) : (
           <div className="div-avancado-Rtecnico-imprimir">
-            {/* <Button
-              type="primary"
-              className="button"
-              onClick={this.buttonImprimir}
-            >
-              Imprimir
-            </Button> */}
             <Icon
               id="imprimir"
               style={{ fontSize: "32px" }}
