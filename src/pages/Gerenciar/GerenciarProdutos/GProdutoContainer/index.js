@@ -72,25 +72,10 @@ class GerenciarProdutos extends Component {
   }
 
   handleChangeMarca = async (value) => {
-
-    // const {
-    //   nome,
-    //   valor,
-    //   fieldFalha,
-    //   message
-    // } = validators('mark', value, this.state)
-
-    // this.setState({
-    //   [nome]: valor,
-    //   fieldFalha,
-    //   message
-    // })
-
     await this.setState({
       marca: value,
+      fabricante: value,
     })
-
-    await this.getAllFabricante()
   }
 
   success = () => {
@@ -123,16 +108,6 @@ class GerenciarProdutos extends Component {
     await getMarca().then(
       resposta => this.setState({
         marcaArray: resposta.data,
-      })
-    )
-  }
-
-  getAllFabricante = async () => {
-
-    const peca =  this.state.marca
-    await getFabricante( peca ).then(
-      resposta => this.setState({
-        fabricante: resposta.data,
       })
     )
   }
@@ -220,6 +195,16 @@ class GerenciarProdutos extends Component {
 
     await this.getAllMarca()
   }
+  
+  onChangeMarcaAndFabricante = async (e) => {
+    await this.setState({
+      newMarca: e.target.value,
+    })
+
+    await this.setState({
+      newFabricante: this.state.newMarca
+    })
+  }
 
   saveTargetNewTipo = async () => {
 
@@ -286,13 +271,12 @@ class GerenciarProdutos extends Component {
   handleChange = (value) => {
     this.setState({
       categoria: value,
+      marca: 'Não selecionado',
       fabricante: '',
       tipo: 'Não selecionado'
     })
 
     this.getAllMarca()
-
-    if (this.state.marca !== 'Não selecionado') this.getAllFabricante()
   }
 
   onChange = (e) => {
@@ -388,7 +372,7 @@ class GerenciarProdutos extends Component {
             placeholder="Digite a marca"
             name='newMarca'
             value={this.state.newMarca}
-            onChange={this.onChange}
+            onChange={this.onChangeMarcaAndFabricante}
             onBlur={this.onBlurValidator}
             onFocus={this.onFocus} 
           />
@@ -396,20 +380,6 @@ class GerenciarProdutos extends Component {
             <p className='div-feedbackError'>
               {this.state.message.newMarca}
             </p> : null}
-        </div>
-      </div>
-
-      <div className='linhaModal-produtos'>
-        <div className='div-fabricanteModal-produtos'>
-          <div className='div-text-produtos'>Fabricante:</div>
-          <Input
-            className='input-100'
-            placeholder="Digite o fabricante"
-            name='newFabricante'
-            value={this.state.newFabricante}
-            onChange={this.onChange}
-            allowClear
-          />
         </div>
       </div>
     </Modal>
@@ -482,7 +452,7 @@ class GerenciarProdutos extends Component {
             <Select value={this.state.categoria} style={{ width: '100%' }} onChange={this.handleChange}>
               <Option value='Equipamento'>Equipamento</Option>
               <Option value='Peca'>Peca</Option>
-              <Option value='Outros'>Outros</Option>
+              <Option value='Acessorios'>Acessórios</Option>
             </Select>
           </div>
 
