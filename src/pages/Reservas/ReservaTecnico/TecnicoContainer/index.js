@@ -24,7 +24,6 @@ import {
   removeReservaOs
 } from "../../../../services/reservaOs";
 import { getSerial } from "../../../../services/serialNumber";
-import { get } from "https";
 
 const { TextArea } = Input;
 const { Option } = Select;
