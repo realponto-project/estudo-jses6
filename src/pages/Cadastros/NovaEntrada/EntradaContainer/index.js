@@ -134,7 +134,7 @@ class NovaEntrada extends Component {
               .split(/\n/)
               .filter(item => (item ? item : null))
           : null,
-      responsibleUser: "modrp"
+      responsibleUser: this.props.auth.username
     };
 
     const resposta = await newEntrada(values);
