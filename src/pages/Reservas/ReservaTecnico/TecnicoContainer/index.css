@@ -168,6 +168,7 @@
   display: flex;
   align-items: center;
 }
+
 .div-tecnico-Rtec {
   width: 40%;
   display: flex;
@@ -199,6 +200,9 @@
 .button-icon-remove {
   background-color: red !important;
   border-color: red !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .div-body-modal {
