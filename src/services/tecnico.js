@@ -246,8 +246,8 @@ function addWrappedText({
         .text(
           xPosition + textWidth / 2,
           cursorY +
-          (rows - 1) +
-          2.5 * (rows - doc.splitTextToSize(text, textWidth).length),
+            (rows - 1) +
+            2.5 * (rows - doc.splitTextToSize(text, textWidth).length),
           lineText,
           "center"
         )
@@ -260,31 +260,30 @@ function addWrappedText({
 }
 
 function getRodizio(plate) {
-  if (plate[plate.length - 1] === '1') {
-    return 'SEGUNDA'
-  } else if (plate[plate.length - 1] === '2') {
-    return 'SEGUNDA'
-  } else if (plate[plate.length - 1] === '3') {
-    return 'TERÇA'
-  } else if (plate[plate.length - 1] === '4') {
-    return 'TERÇA'
-  } else if (plate[plate.length - 1] === '5') {
-    return 'QUARTA'
-  } else if (plate[plate.length - 1] === '6') {
-    return 'QUARTA'
-  } else if (plate[plate.length - 1] === '7') {
-    return 'QUINTA'
-  } else if (plate[plate.length - 1] === '8') {
-    return 'QUINTA'
-  } else if (plate[plate.length - 1] === '9') {
-    return 'SEXTA'
-  }
-  else if (plate[plate.length - 1] === '0') {
-    return 'SEXTA'
+  if (plate[plate.length - 1] === "1") {
+    return "SEGUNDA";
+  } else if (plate[plate.length - 1] === "2") {
+    return "SEGUNDA";
+  } else if (plate[plate.length - 1] === "3") {
+    return "TERÇA";
+  } else if (plate[plate.length - 1] === "4") {
+    return "TERÇA";
+  } else if (plate[plate.length - 1] === "5") {
+    return "QUARTA";
+  } else if (plate[plate.length - 1] === "6") {
+    return "QUARTA";
+  } else if (plate[plate.length - 1] === "7") {
+    return "QUINTA";
+  } else if (plate[plate.length - 1] === "8") {
+    return "QUINTA";
+  } else if (plate[plate.length - 1] === "9") {
+    return "SEXTA";
+  } else if (plate[plate.length - 1] === "0") {
+    return "SEXTA";
   }
 }
 
-export const createPDF = technician => {
+export const createPDF = (technician, data) => {
   var doc = new jsPDF({
     orientation: "l",
     unit: "mm",
@@ -292,19 +291,21 @@ export const createPDF = technician => {
     hotfixes: [] // an array of hotfix strings to enable
   });
 
-  moment.locale('pt')
+  moment.locale("pt");
 
   technician.map((tecnico, i) => {
     doc.setLineWidth(1).line(3, 3, 3, 18);
     doc
       .setFontSize(20)
-      .text(5, 13, moment().format('L'))
+      .text(5, 13, moment().format("L"))
       .text(50, 13, tecnico.name);
 
     doc.setLineWidth(0.1).line(150, 12, 280, 12);
     doc.setFontSize(12).text(150, 17, "Assinatura");
 
-    doc.setFontSize(18).text(3, 28, `${tecnico.plate} Rodízio: ${getRodizio(tecnico.plate)}`);
+    doc
+      .setFontSize(18)
+      .text(3, 28, `${tecnico.plate} Rodízio: ${getRodizio(tecnico.plate)}`);
 
     doc
       .setFontSize(14)
@@ -322,13 +323,20 @@ export const createPDF = technician => {
     tecnico.rows &&
       tecnico.rows.map(item => {
         item.products.map(product => {
-          console.log("test");
-          console.log(item);
           console.log(product);
+
+          const textEquip = `${product.amount} - ${product.name} ${
+            product.serial
+              ? `Nº (${product.serialNumbers.map((equip, index) =>
+                  index > 0 ? ` ${equip.serialNumber}` : equip.serialNumber
+                )})`
+              : ""
+          }`;
+
           const rows = R.max(
             doc.splitTextToSize(item.razaoSocial, 95).length,
             doc.splitTextToSize("item.venda", 35).length,
-            doc.splitTextToSize(product.name, 100).length
+            doc.splitTextToSize(textEquip, 100).length
           );
 
           if (index + rows < 22) {
@@ -361,7 +369,7 @@ export const createPDF = technician => {
             });
 
             addWrappedText({
-              text: product.name, // Put a really long string here
+              text: textEquip, // Put a really long string here
               textWidth: 100,
               doc,
               fontSize: "12",
@@ -406,5 +414,7 @@ export const createPDF = technician => {
   doc.autoPrint();
   // window.print();
 
-  doc.save(`${moment().format("L")}.pdf`);
+  console.log(technician);
+
+  doc.save(`${moment(data).format("L")}.pdf`);
 };
