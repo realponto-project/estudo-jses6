@@ -725,7 +725,13 @@ class ReservaTecnico extends Component {
     <Modal
       visible={this.state.buttonImprimir}
       onOk={this.handleOkImprimir}
-      onCancel={() => this.setState({ buttonImprimir: false, tecnicos: [] })}
+      onCancel={() =>
+        this.setState({
+          buttonImprimir: false,
+          tecnicos: [],
+          dataModal: Date.now()
+        })
+      }
       okText="Confirmar"
       cancelText="Cancelar"
       closable={false}
@@ -745,6 +751,7 @@ class ReservaTecnico extends Component {
           >
             <DatePicker
               autoFocus={true}
+              value={moment(this.state.dataModal)}
               onOpenChange={() =>
                 this.setState({ focusDatePicker: !this.state.focusDatePicker })
               }
@@ -1007,7 +1014,8 @@ class ReservaTecnico extends Component {
 
     await this.setState({
       buttonImprimir: false,
-      tecnicos: []
+      tecnicos: [],
+      dataModal: Date.now()
     });
   };
 
