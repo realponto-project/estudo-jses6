@@ -140,6 +140,7 @@ class NovaEntrada extends Component {
     const resposta = await newEntrada(values);
 
     if (resposta.status === 422) {
+      console.log(resposta.data);
       this.setState({
         messageError: true,
         fieldFalha: resposta.data.fields[0].field,

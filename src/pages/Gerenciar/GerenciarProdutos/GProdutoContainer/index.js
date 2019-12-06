@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Input, InputNumber, Select, Button, Modal, Switch, message, Icon } from 'antd'
 import { connect } from 'react-redux'
 import { validators, masks } from './validators'
-import { newMarca, newTipo, updateProduto, getTipo, getMarca, getFabricante } from '../../../../services/produto'
+import { newMarca, newTipo, updateProduto, getTipo, getMarca } from '../../../../services/produto'
 import { Redirect } from 'react-router-dom'
 
 const { Option } = Select;
