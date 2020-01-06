@@ -238,7 +238,6 @@ class GerenciarProdutoDash extends Component {
     };
 
     await getAllTecnico(query).then(resposta => {
-      console.log(resposta);
       this.setState({
         tecnicoArray: resposta.data,
         count: resposta.data.count,

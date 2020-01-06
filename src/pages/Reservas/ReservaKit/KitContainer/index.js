@@ -135,12 +135,6 @@ class ReservaKit extends Component {
   };
 
   saveTargetNewKitOut = async () => {
-    console.log(this.state.liberados);
-    console.log(this.state.liberados.toString() !== "0");
-    console.log(
-      this.state.os === "" && this.state.liberados.toString() !== "0"
-    );
-
     if (!(this.state.os === "" && this.state.liberados.toString() !== "0")) {
       const values = {
         reposicao: this.state.incluidos.toString(),

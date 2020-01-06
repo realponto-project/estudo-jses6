@@ -322,7 +322,6 @@ class SearchOsDash extends Component {
       loading: true
     });
 
-    console.log(value);
 
     const resposta = await updateReservaOs(value);
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./index.css";
-import { Spin, Button, Input, DatePicker } from "antd";
+import { Spin, Button, Input, DatePicker, Dropdown, Icon, Menu } from "antd";
 import { getRelatorioML } from "../../../../services/relatorioML";
 
 class GerenciarEntrada extends Component {
@@ -95,6 +95,17 @@ class GerenciarEntrada extends Component {
     await this.getRelatorio();
   };
 
+  changePages = pages => {
+    this.setState(
+      {
+        page: pages
+      },
+      () => {
+        this.getRelatorio();
+      }
+    );
+  };
+
   test = () => {
     if (this.state.relatorioArray.rows.length !== 0) {
       return this.state.relatorioArray.rows.map(line => (
@@ -113,8 +124,14 @@ class GerenciarEntrada extends Component {
             <div className="div-100-Rtecnico">
               <div className="div-mais-Rtecnico">
                 <div className="div-normal-mais">
-                  <div className="div-produtos-mais">Produtos</div>
-                  <div className="div-quant-mais">Quantidade</div>
+                  <div className="div-produtos-mais-ML ">Produtos</div>
+                  <div className="div-serialnumbers-mais-ML" />
+                  <div
+                    className="div-quant-mais-ML"
+                    style={{ "align-items": "center" }}
+                  >
+                    Quantidade
+                  </div>
                 </div>
               </div>
               {this.state.loading ? (
@@ -124,14 +141,44 @@ class GerenciarEntrada extends Component {
               ) : (
                 this.state.lineSelected.rows.map(line => (
                   <div className="div-branco-mais">
-                    <div className="div-produtos-mais">
+                    <div className="div-produtos-mais-ML ">
                       {line.products.map(valor => (
                         <div className="div-peca">{valor.name}</div>
                       ))}
                     </div>
-                    <div className="div-quant-mais">
+                    <div className="div-serialnumbers-mais-ML">
+                      {line.products.map(valor => {
+                        return valor.serialNumbers ? (
+                          <div className="div-serialnumbers">
+                            <Dropdown
+                              overlay={
+                                <Menu>
+                                  {valor.serialNumbers.map(serialnumber => {
+                                    return (
+                                      <Menu.Item>{serialnumber}</Menu.Item>
+                                    );
+                                  })}
+                                </Menu>
+                              }
+                              placement="bottomCenter"
+                            >
+                              <Button>Números de série</Button>
+                            </Dropdown>
+                          </div>
+                        ) : (
+                          <div className="div-serialnumbers" />
+                        );
+                      })}
+                    </div>
+
+                    <div className="div-quant-mais-ML">
                       {line.products.map(valor => (
-                        <div className="div-peca">{valor.amount}</div>
+                        <div
+                          className="div-peca"
+                          style={{ "justify-content": "center" }}
+                        >
+                          {valor.amount}
+                        </div>
                       ))}
                     </div>
                   </div>

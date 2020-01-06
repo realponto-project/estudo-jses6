@@ -88,7 +88,6 @@ class Estoque extends Component {
           count: resposta.data.count,
           show: resposta.data.show
         },
-        console.log(resposta)
       )
     );
 
@@ -267,7 +266,6 @@ class Estoque extends Component {
           </div>
         ) : (
           <div className="div-separate-estoque">
-          {console.log(this.state)}
             {this.state.estoque.rows.length !== 0 ? (
               this.state.estoque.rows.map(line => (
                 <div className="div-100-estoque">

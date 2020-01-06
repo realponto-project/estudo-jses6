@@ -15,11 +15,9 @@ import { validators, masks } from "./validators";
 import {
   newMarca,
   newTipo,
-  newFabricante,
   newProduto,
   getTipo,
-  getMarca,
-  getFabricante
+  getMarca
 } from "../../../../services/produto";
 
 const { Option } = Select;
@@ -36,15 +34,12 @@ class NovoProduto extends Component {
     categoria: "Equipamento",
     marca: "Não selecionado",
     tipo: "Não selecionado",
-    fabricante: "",
     descricao: "",
     codigo: "",
     quantMin: 1,
     modalMarca: false,
     modalTipo: false,
-    modalFabricante: false,
     newMarca: "",
-    newFabricante: "",
     newTipo: "",
     newDescricao: "",
     loading: false,
@@ -90,8 +85,6 @@ class NovoProduto extends Component {
     await this.setState({
       marca: value
     });
-
-    await this.getAllFabricante();
   };
 
   success = () => {
@@ -124,15 +117,6 @@ class NovoProduto extends Component {
     await getMarca().then(resposta =>
       this.setState({
         marcaArray: resposta.data
-      })
-    );
-  };
-
-  getAllFabricante = async () => {
-    const peca = this.state.marca;
-    await getFabricante(peca).then(resposta =>
-      this.setState({
-        fabricante: resposta.data
       })
     );
   };
@@ -174,7 +158,6 @@ class NovoProduto extends Component {
         categoria: "Equipamento",
         marca: "Não selecionado",
         tipo: "Não selecionado",
-        fabricante: "",
         descricao: "",
         codigo: "",
         quantMin: 1,
@@ -212,7 +195,6 @@ class NovoProduto extends Component {
     if (resposta.status === 200) {
       this.setState({
         newMarca: "",
-        newFabricante: "",
         messageSuccess: true
       });
       await this.success();
@@ -223,39 +205,6 @@ class NovoProduto extends Component {
     }
 
     await this.getAllMarca();
-  };
-
-  saveTargetNewFabricante = async () => {
-    const values = {
-      manufacturer: this.state.newMarca
-    };
-
-    const resposta = await newFabricante(values);
-
-    if (resposta.status === 422) {
-      this.setState({
-        messageError: true,
-        fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message
-      });
-      await this.error();
-      this.setState({
-        messageError: false
-      });
-    }
-    if (resposta.status === 200) {
-      this.setState({
-        newFabricante: "",
-        messageSuccess: true
-      });
-      await this.success();
-      this.setState({
-        messageSuccess: false,
-        modalFabricante: false
-      });
-    }
-
-    await this.getAllFabricante();
   };
 
   saveTargetNewTipo = async () => {
@@ -301,7 +250,6 @@ class NovoProduto extends Component {
   handleOk = () => {
     this.setState({
       modalMarca: false,
-      modalFabricante: false,
       modalTipo: false
     });
   };
@@ -321,13 +269,10 @@ class NovoProduto extends Component {
   handleChange = value => {
     this.setState({
       categoria: value,
-      fabricante: "",
       tipo: "Não selecionado"
     });
 
     this.getAllMarca();
-
-    if (this.state.marca !== "Não selecionado") this.getAllFabricante();
   };
 
   onChange = e => {
@@ -601,17 +546,6 @@ class NovoProduto extends Component {
                 />
               ) : null}
               <this.modalTipo />
-            </div>
-
-            <div className="div-modelo-produtos">
-              <div className="div-text-produtos">Fabricante:</div>
-              <Input
-                readOnly
-                placeholder="Selecione a marca"
-                className="input-100"
-                name="fabricante"
-                value={this.state.fabricante}
-              />
             </div>
           </div>
         ) : null}

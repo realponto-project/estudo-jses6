@@ -226,7 +226,6 @@ class GerenciarUsuario extends Component {
   };
 
   render() {
-    console.log(this.state, this.props.usuarioUpdateValue.resource);
     return (
       <div className="div-card-usuario">
         <div className="linhaTexto-GOs">
