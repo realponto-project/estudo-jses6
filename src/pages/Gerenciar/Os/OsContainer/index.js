@@ -57,7 +57,6 @@ class OsDash extends Component {
       date: this.state.lineSelected.rows[0].date,
       products: this.state.lineSelected.rows[0].products
     };
-    console.log(this.state.lineSelected.rows[0]);
     await this.props.redirectValueOs(value);
 
     await this.setState({
