@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./index.css";
-import { Spin, Button, Input, DatePicker, Dropdown, Icon, Menu } from "antd";
+import { Spin, Button, Input, DatePicker, Dropdown, Menu } from "antd";
 import { getRelatorioML } from "../../../../services/relatorioML";
 
 class GerenciarEntrada extends Component {

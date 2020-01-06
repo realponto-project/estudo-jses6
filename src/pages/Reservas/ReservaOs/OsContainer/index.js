@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./index.css";
-import { Input, DatePicker, InputNumber, Button, message, Select } from "antd";
+import { Input, DatePicker, InputNumber, Button, message, Select, Modal } from "antd";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { validators, masks } from "./validators";
@@ -18,6 +18,7 @@ class Rexterno extends Component {
     readOnly: false,
     serial: false,
     disp: 1,
+    modalAddStatus: false,
     numeroSerieTest: "",
     tecnicoArray: [],
     itemArray: [],
@@ -27,6 +28,7 @@ class Rexterno extends Component {
     razaoSocial: "",
     cnpj: "",
     data: "",
+    status: "Não selecionado",
     tecnico: "Não selecionado",
     nomeProduto: "Não selecionado",
     productBaseId: "",
@@ -217,7 +219,8 @@ class Rexterno extends Component {
       date: this.state.data,
       technicianId: this.state.technicianId,
       osParts: this.state.carrinho,
-      responsibleUser: "modrp"
+      responsibleUser: "modrp",
+      status: this.state.status,
     };
 
     const resposta = await newReservaOs(values);
@@ -244,7 +247,8 @@ class Rexterno extends Component {
         numeroSerieTest: "",
         nomeProduto: "Não selecionado",
         tecnico: "Não selecionado",
-        messageSuccess: true
+        messageSuccess: true,
+        status: 'Não selecionado'
       });
       await this.success();
       this.setState({
@@ -270,6 +274,12 @@ class Rexterno extends Component {
     });
 
     await this.getAllItens();
+  };
+
+  onChangeStatus = async valor => {
+    await this.setState({
+      status: valor,
+    });
   };
 
   onChangeTecnico = value => {
@@ -301,6 +311,12 @@ class Rexterno extends Component {
 
   errorSelecionado = value => {
     message.error(value);
+  };
+
+  openModais = e => {
+    this.setState({
+      modalAddStatus: true
+    });
   };
 
   addCarrinho = () => {
@@ -362,6 +378,46 @@ class Rexterno extends Component {
       return <Redirect to="/logged/dash" />;
     }
   };
+
+  handleOk = () => {
+    this.setState({
+      modalAddStatus: false,
+    });
+  };
+
+  modalStatus = () => (
+    <Modal
+      title="Adicionar status"
+      visible={this.state.modalAddStatus}
+      onOk={this.handleOk}
+      okText="Salvar"
+      onCancel={this.handleOk}
+      cancelText="Cancelar"
+    >
+      <div className="linhaModal-produtos">
+        <div className="div-marcaModal-produtos">
+          <div className="div-text-produtos">Status:</div>
+          <Input
+            allowClear={!this.state.fieldFalha.newMarca}
+            className={
+              this.state.fieldFalha.newMarca
+                ? "div-inputError-tecnico"
+                : "input-100"
+            }
+            placeholder="Digite o status"
+            name="newMarca"
+            value={this.state.newMarca}
+            onChange={this.onChange}
+            onBlur={this.onBlurValidator}
+            onFocus={this.onFocus}
+          />
+          {this.state.fieldFalha.newMarca ? (
+            <p className="div-feedbackError">{this.state.message.newMarca}</p>
+          ) : null}
+        </div>
+      </div>
+    </Modal>
+  );
 
   render() {
     return (
@@ -463,34 +519,34 @@ class Rexterno extends Component {
                   style={{ width: "100%" }}
                 ></Select>
               ) : (
-                <Select
-                  className={
-                    this.state.fieldFalha.technician
-                      ? "div-inputError-OS"
-                      : "input-100"
-                  }
-                  defaultValue="Não selecionado"
-                  style={{ width: "100%" }}
-                  onChange={this.onChangeSelect}
-                  showSearch
-                  placeholder="Nenhum tecnicos cadastrado"
-                  optionFilterProp="children"
-                  value={this.state.tecnico}
-                  name="technician"
-                  onFocus={this.onFocusTecnico}
-                  filterOption={(input, option) =>
-                    option.props.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {this.state.tecnicoArray.map(valor => (
-                    <Option props={valor} value={valor.name}>
-                      {valor.name}
-                    </Option>
-                  ))}
-                </Select>
-              )}
+                  <Select
+                    className={
+                      this.state.fieldFalha.technician
+                        ? "div-inputError-OS"
+                        : "input-100"
+                    }
+                    defaultValue="Não selecionado"
+                    style={{ width: "100%" }}
+                    onChange={this.onChangeSelect}
+                    showSearch
+                    placeholder="Nenhum tecnicos cadastrado"
+                    optionFilterProp="children"
+                    value={this.state.tecnico}
+                    name="technician"
+                    onFocus={this.onFocusTecnico}
+                    filterOption={(input, option) =>
+                      option.props.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                  >
+                    {this.state.tecnicoArray.map(valor => (
+                      <Option props={valor} value={valor.name}>
+                        {valor.name}
+                      </Option>
+                    ))}
+                  </Select>
+                )}
               {this.state.fieldFalha.technician ? (
                 <p className="div-feedbackError">
                   {this.state.message.technician}
@@ -528,11 +584,11 @@ class Rexterno extends Component {
                 ))}
               </Select>
             ) : (
-              <Select
-                style={{ width: "100%" }}
-                value="Nenhum produto cadastrado"
-              ></Select>
-            )}
+                <Select
+                  style={{ width: "100%" }}
+                  value="Nenhum produto cadastrado"
+                ></Select>
+              )}
           </div>
 
           <div className="div-quant-Os">
@@ -561,7 +617,36 @@ class Rexterno extends Component {
             </Select>
           </div>
 
+          <div className="div-status-Os">
+            <div className="div-text-Os">Status:</div>
+            <div style={{ 'display': 'flex', width: '100%' }}>
+              <Select
+                value={this.state.status}
+                style={{ width: "100%" }}
+                onChange={this.onChangeStatus}
+              >
+                <Option value="REALPONTO">REALPONTO</Option>
+                <Option value="NOVAREAL">NOVA REALPONTO</Option>
+                <Option value="PONTOREAL">PONTOREAL</Option>
+              </Select>
+              <this.modalStatus />
+              {this.props.auth.addMark ? (
+                <Button
+                  className="buttonadd-marca-produtos"
+                  type="primary"
+                  icon="plus"
+                  name="modalMarca"
+                  onClick={this.openModais}
+                />
+              ) : null}
+            </div>
+          </div>
+        </div>
+
+        
+
           {this.state.serial ? (
+            <div className="div-linha-Os">
             <div className="div-serial-AddKit">
               <div className="div-textSerial-AddKit">Número de série:</div>
               <TextArea
@@ -574,12 +659,15 @@ class Rexterno extends Component {
                 onChange={this.filter}
               />
             </div>
-          ) : null}
-
+            <Button className="button" type="primary" onClick={this.addCarrinho}>
+            Adicionar
+          </Button>
+          </div> ): <div className="div-button-add-reservaOs">
           <Button className="button" type="primary" onClick={this.addCarrinho}>
             Adicionar
           </Button>
-        </div>
+          </div>}
+
 
         <div className="div-linhaSeparete-Os"></div>
 
