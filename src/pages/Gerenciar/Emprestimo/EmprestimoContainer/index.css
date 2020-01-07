@@ -1,14 +1,17 @@
-.div-select-emprestimo{
+.div-select-emprestimo {
   display: flex;
+  /* flex-direction: row; */
   width: 90%;
   margin-top: 40px;
-  justify-content: space-between
+  justify-content: space-between;
 }
-.cel-razaosocial-cabecalho-emprestimo{
+
+.cel-razaosocial-cabecalho-emprestimo {
   align-items: center;
   display: flex;
   width: 55%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }

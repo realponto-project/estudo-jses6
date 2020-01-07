@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-
 import { Button, Select, Input, Modal, message } from "antd";
 
+import "./index.css";
 import { addEquip, getAllEquipsService } from "../../../../services/equip";
 import { getItens } from "../../../../services/produto";
 import { getSerial } from "../../../../services/serialNumber";
@@ -197,51 +197,69 @@ class EmprestimoContainer extends Component {
         <div className="div-card-Gentrada">
           <div className="linhaTexto-Gentrada">
             <h1 className="h1-Gentrada">Gerenciar empréstimos</h1>
-            <Button onClick={() => this.setState({ visible: true })}>
-              open Modal
+          </div>
+          <div className="div-select-emprestimo">
+            <Select
+              value={this.state.select}
+              style={{ width: "20%" }}
+              onChange={this.onChangeSelect}
+            >
+              <Option value="disponiveis">DISPONÍVEIS</Option>
+              <Option value="reservados">RESERVADOS</Option>
+            </Select>
+            <Button
+              type="primary"
+              className="button"
+              onClick={() => this.setState({ visible: true })}
+            >
+              Adicionar
             </Button>
           </div>
-        </div>
 
-        <div className="div-select-emprestimo">
-          <Select
-            value={this.state.select}
-            style={{ width: "20%" }}
-            onChange={this.onChangeSelect}
-          >
-            <Option value="disponiveis">DISPONÍVEIS</Option>
-            <Option value="reservados">RESERVADOS</Option>
-          </Select>
-
-          <Button
-            type="primary"
-            className="button"
-            onClick={this.onClickAdicionar}
-          >
-            Adicionar
-          </Button>
-          <this.ModalAdicionar />
-        </div>
-
-        {this.state.select === "disponiveis" ? (
-          <div className="div-cabecalho-estoque">
-            <div className="cel-produto-cabecalho-estoque">Produto</div>
-            <div className="cel-fabricante-cabecalho-estoque">Fabricante</div>
-            <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
-            <div className="cel-estoque-cabecalho-estoque">Estoque</div>
-          </div>
-        ) : (
-          <div className="div-cabecalho-estoque">
-            <div className="cel-produto-cabecalho-estoque">Produto</div>
-            <div className="cel-razaosocial-cabecalho-emprestimo">
-              Razão social
+          {this.state.select === "disponiveis" ? (
+            <div className="div-cabecalho-estoque">
+              <div className="cel-produto-cabecalho-estoque">Produto</div>
+              <div className="cel-fabricante-cabecalho-estoque">Fabricante</div>
+              <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+              <div className="cel-estoque-cabecalho-estoque">Estoque</div>
             </div>
-            <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
-          </div>
-        )}
+          ) : (
+            <div className="div-cabecalho-estoque">
+              <div className="cel-produto-cabecalho-estoque">Produto</div>
+              <div className="cel-razaosocial-cabecalho-emprestimo">
+                Razão social
+              </div>
+              <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+            </div>
+          )}
+        </div>
       </>
     );
   }
+
+  // render() {
+  //   return (
+  //     <>
+
+  //       {this.state.select === "disponiveis" ? (
+  //         <div className="div-cabecalho-estoque">
+  //           <div className="cel-produto-cabecalho-estoque">Produto</div>
+  //           <div className="cel-fabricante-cabecalho-estoque">Fabricante</div>
+  //           <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+  //           <div className="cel-estoque-cabecalho-estoque">Estoque</div>
+  //         </div>
+  //       ) : (
+  //         <div className="div-cabecalho-estoque">
+  //           <div className="cel-produto-cabecalho-estoque">Produto</div>
+  //           <div className="cel-razaosocial-cabecalho-emprestimo">
+  //             Razão social
+  //           </div>
+  //           <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+  //         </div>
+  //       )}
+  //     </>
+  //   );
+  // }
 }
 
 export default EmprestimoContainer;
