@@ -291,14 +291,28 @@ export const createPDF = (technician, data) => {
     hotfixes: [] // an array of hotfix strings to enable
   });
 
+  console.log(technician)
+
   moment.locale("pt");
 
   technician.map((tecnico, i) => {
     doc.setLineWidth(1).line(3, 3, 3, 18);
+    doc.setFontSize(20)
+    if(doc.splitTextToSize(tecnico.name, 100).length > 1){
+      doc.setFontSize(18)
+      if(doc.splitTextToSize(tecnico.name, 100).length > 1){
+        doc.setFontSize(16)
+        if(doc.splitTextToSize(tecnico.name, 100).length > 1){
+          doc.setFontSize(14)
+        }
+      }
+    }
     doc
-      .setFontSize(20)
       .text(5, 13, moment().format("L"))
       .text(50, 13, tecnico.name);
+
+  // console.log(doc.splitTextToSize(tecnico.name, 100).length)
+
 
     doc.setLineWidth(0.1).line(150, 12, 280, 12);
     doc.setFontSize(12).text(150, 17, "Assinatura");
@@ -320,10 +334,10 @@ export const createPDF = (technician, data) => {
 
     title(doc);
 
+
     tecnico.rows &&
       tecnico.rows.map(item => {
         item.products.map(product => {
-          console.log(product);
 
           const textEquip = `${product.amount} - ${product.name} ${
             product.serial
@@ -333,9 +347,10 @@ export const createPDF = (technician, data) => {
               : ""
           }`;
 
+          console.log(item)
           const rows = R.max(
             doc.splitTextToSize(item.razaoSocial, 95).length,
-            doc.splitTextToSize("item.venda", 35).length,
+            doc.splitTextToSize(product.status, 35).length,
             doc.splitTextToSize(textEquip, 100).length
           );
 
@@ -355,7 +370,7 @@ export const createPDF = (technician, data) => {
             });
 
             addWrappedText({
-              text: "item.venda", // Put a really long string here
+              text: product.status, // Put a really long string here
               textWidth: 35,
               doc,
               fontSize: "12",
@@ -410,11 +425,10 @@ export const createPDF = (technician, data) => {
     return;
   });
 
-  console.log(doc);
   doc.autoPrint();
   // window.print();
 
-  console.log(technician);
+  // console.log(technician);
 
   doc.save(`${moment(data).format("L")}.pdf`);
 };

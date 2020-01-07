@@ -398,6 +398,16 @@ class SideBar extends Component {
               }}
             />
           );
+        case "emprestimo_dash":
+          return (
+            <Redirect
+              push
+              to={{
+                pathname: "/logged/emprestimo/dash",
+                state: { from: this.props.location }
+              }}
+            />
+          );
         case "logout":
           return <Redirect to="/login" />;
         default:
@@ -551,6 +561,10 @@ class SideBar extends Component {
             <Menu.Item disabled={!this.props.auth.gerROs} key="Rinterno_dash">
               <Icon type="file-add" />
               Interno
+            </Menu.Item>
+            <Menu.Item disabled={false} key="emprestimo_dash">
+              <Icon type="retweet" />
+              Empréstimo
             </Menu.Item>
             <Menu.Item disabled={!this.props.auth.addRML} key="reservaML_dash">
               <Icon type="ie" />
