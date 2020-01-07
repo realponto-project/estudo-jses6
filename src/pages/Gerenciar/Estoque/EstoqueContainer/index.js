@@ -6,6 +6,7 @@ import { stock } from "../../../../services/estoque";
 const { Option } = Select;
 
 class Estoque extends Component {
+  
   state = {
     numeroSerie: "",
     produto: "",

@@ -598,13 +598,13 @@ class SideBar extends Component {
             key="Emprestimo"
             title={
               <span>
-                <Icon type="area-chart" />
+                <Icon type="retweet" />
                 <span>Empréstimo</span>
               </span>
             }
           >
           <Menu.Item key="emprestimo_dash">
-              <Icon type="alert" />
+          <Icon type="unordered-list" />
               Gerenciar
             </Menu.Item>
           </SubMenu>
