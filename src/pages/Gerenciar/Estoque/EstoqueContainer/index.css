@@ -109,6 +109,14 @@
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
+.cel-numSerie-cabecalho-estoque{
+  align-items: center;
+  display: flex;
+  width: 20%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
 .cel-estoque-cabecalho-estoque{
   align-items: center;
   display: flex;

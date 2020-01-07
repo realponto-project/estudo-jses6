@@ -1,0 +1,14 @@
+.div-select-emprestimo{
+  display: flex;
+  width: 90%;
+  margin-top: 40px;
+  justify-content: space-between
+}
+.cel-razaosocial-cabecalho-emprestimo{
+  align-items: center;
+  display: flex;
+  width: 55%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
