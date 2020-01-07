@@ -647,6 +647,7 @@ class Rexterno extends Component {
               <Option value="REALPONTO">REALPONTO</Option>
               <Option value="NOVAREAL">NOVA REALPONTO</Option>
               <Option value="PONTOREAL">PONTOREAL</Option>
+              <Option value="EMPRESTIMO">EMPRESTIMO</Option>
             </Select>
           </div>
           <div className="div-status-Os">
