@@ -562,10 +562,6 @@ class SideBar extends Component {
               <Icon type="file-add" />
               Interno
             </Menu.Item>
-            <Menu.Item disabled={false} key="emprestimo_dash">
-              <Icon type="retweet" />
-              Empréstimo
-            </Menu.Item>
             <Menu.Item disabled={!this.props.auth.addRML} key="reservaML_dash">
               <Icon type="ie" />
               E-Commerce
@@ -596,6 +592,20 @@ class SideBar extends Component {
             <Menu.Item key="relatorioML_dash">
               <Icon type="ie" />
               E-Commerce
+            </Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="Emprestimo"
+            title={
+              <span>
+                <Icon type="area-chart" />
+                <span>Empréstimo</span>
+              </span>
+            }
+          >
+          <Menu.Item key="emprestimo_dash">
+              <Icon type="alert" />
+              Gerenciar
             </Menu.Item>
           </SubMenu>
         </Menu>

@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import React, { Component } from 'react'
+import { Switch, Route } from 'react-router-dom'
 
-import EmprestimoContainer from "./EmprestimoContainer";
+import EmprestimoContainer from './EmprestimoContainer'
 
-export default class EmprestimoRoute extends Component {
+class EmprestimoRoute extends Component{
+
   render() {
-    return (
-      <Switch>
-        <Route
-          exact
-          path="/logged/notificacao/dash"
-          component={EmprestimoContainer}
-        />
-      </Switch>
-    );
+    return(
+        <Switch>
+          <Route exact path='/logged/emprestimo/dash' component={EmprestimoContainer}/>  
+        </Switch>
+    )
   }
 }
+
+
+export default EmprestimoRoute

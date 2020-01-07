@@ -144,9 +144,11 @@ class PagesRoute extends Component {
             path="/logged/entradaDash"
             component={GerenciarEntradaDashRoute}
           />
+          <Route
+            path="/logged/emprestimo"
+            component={EmprestimoRoute}
+          />
           <Route path="/logged/notificacao" component={NotificacaoRoute} />
-
-          <Route path="/logged/emprestimo" component={EmprestimoRoute} />
         </Switch>
       );
     } else {
