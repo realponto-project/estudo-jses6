@@ -573,6 +573,21 @@ class SideBar extends Component {
           </SubMenu>
 
           <SubMenu
+            key="Emprestimo"
+            title={
+              <span>
+                <Icon type="retweet" />
+                <span>Empréstimo</span>
+              </span>
+            }
+          >
+          <Menu.Item key="emprestimo_dash">
+          <Icon type="unordered-list" />
+              Gerenciar
+            </Menu.Item>
+          </SubMenu>
+          
+          <SubMenu
             key="Relatorios"
             title={
               <span>
@@ -592,20 +607,6 @@ class SideBar extends Component {
             <Menu.Item key="relatorioML_dash">
               <Icon type="ie" />
               E-Commerce
-            </Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="Emprestimo"
-            title={
-              <span>
-                <Icon type="retweet" />
-                <span>Empréstimo</span>
-              </span>
-            }
-          >
-          <Menu.Item key="emprestimo_dash">
-          <Icon type="unordered-list" />
-              Gerenciar
             </Menu.Item>
           </SubMenu>
         </Menu>
