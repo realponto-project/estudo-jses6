@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Button, Select, Input, Modal, message, Icon, DatePicker } from "antd";
+import {
+  Button,
+  Select,
+  Input,
+  Modal,
+  message,
+  Icon,
+  DatePicker,
+  Spin
+} from "antd";
 
 import "./index.css";
 import { addEquip, getAllEquipsService } from "../../../../services/equip";
@@ -11,6 +20,7 @@ const { Option } = Select;
 
 class EmprestimoContainer extends Component {
   state = {
+    loading: false,
     tecnicoArray: [],
     modalReservados: false,
     modalDisp: false,
@@ -25,7 +35,8 @@ class EmprestimoContainer extends Component {
     disponivel: [],
     page: 1,
     count: 1,
-    show: 1
+    show: 1,
+    total: 10
   };
 
   onChangeSelect = value => {
@@ -83,6 +94,10 @@ class EmprestimoContainer extends Component {
   };
 
   getAllEquips = async () => {
+    await this.setState({
+      loading: true
+    });
+
     const query = {
       filters: {
         equip: {
@@ -100,6 +115,20 @@ class EmprestimoContainer extends Component {
         disponivel: data.rows
       });
     }
+    this.setState({
+      loading: false
+    });
+  };
+
+  changePages = pages => {
+    this.setState(
+      {
+        page: pages
+      },
+      () => {
+        this.getAllEquips();
+      }
+    );
   };
 
   getAllItens = async () => {
@@ -333,6 +362,118 @@ class EmprestimoContainer extends Component {
     </Modal>
   );
 
+  test = () => {
+    if (this.state.disponivel.length !== 0) {
+      return this.state.disponivel.map(item => {
+        return (
+          <div className="div-100-Gentrada">
+            <div className="div-lines-RPerda">
+              <div className="cel-produto-cabecalho-emprestimo">
+                {item.name}
+              </div>
+              <div className="cel-fabricante-cabecalho-estoque">
+                {item.mark}
+              </div>
+              <div className="cel-numSerie-cabecalho-estoque">
+                {item.serialNumber}
+              </div>
+            </div>
+            <div className=" div-separate1-Gentrada" />
+          </div>
+        );
+      });
+    } else {
+      return (
+        <div className="div-naotemnada">
+          Não há nenhum empréstimo até o momento
+        </div>
+      );
+    }
+  };
+
+  Pages = () => (
+    <div className="footer-Gentrada100-button">
+      {Math.ceil(this.state.count / this.state.total) >= 5 &&
+      Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page - 4)}
+        >
+          {this.state.page - 4}
+        </Button>
+      ) : null}
+      {Math.ceil(this.state.count / this.state.total) >= 4 &&
+      Math.ceil(this.state.count / this.state.total) - this.state.page < 2 &&
+      this.state.page > 3 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page - 3)}
+        >
+          {this.state.page - 3}
+        </Button>
+      ) : null}
+      {this.state.page >= 3 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page - 2)}
+        >
+          {this.state.page - 2}
+        </Button>
+      ) : null}
+      {this.state.page >= 2 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page - 1)}
+        >
+          {this.state.page - 1}
+        </Button>
+      ) : null}
+      <div className="div-teste">{this.state.page}</div>
+      {this.state.page < this.state.count / this.state.total ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page + 1)}
+        >
+          {this.state.page + 1}
+        </Button>
+      ) : null}
+      {this.state.page + 1 < this.state.count / this.state.total ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page + 2)}
+        >
+          {this.state.page + 2}
+        </Button>
+      ) : null}
+      {this.state.page + 2 < this.state.count / this.state.total &&
+      this.state.page < 3 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page + 3)}
+        >
+          {this.state.page + 3}
+        </Button>
+      ) : null}
+      {this.state.page + 3 < this.state.count / this.state.total &&
+      this.state.page < 2 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page + 4)}
+        >
+          {this.state.page + 4}
+        </Button>
+      ) : null}
+    </div>
+  );
+
   render() {
     return (
       <>
@@ -381,39 +522,39 @@ class EmprestimoContainer extends Component {
           )}
 
           {this.state.select === "disponiveis" ? (
-            <div className="div-cabecalho-estoque">
-              <div className="cel-produto-cabecalho-emprestimo">Produto</div>
-              <div className="cel-fabricante-cabecalho-estoque">Fabricante</div>
-              <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
-              <div className="cel-estoque-cabecalho-estoque">Estoque</div>
-              {this.state.disponivel.map(item => {
-                console.log(item);
-                return (
-                  <>
-                    <div className="cel-produto-cabecalho-estoque">
-                      {item.name}
-                    </div>
-                    <div className="cel-fabricante-cabecalho-estoque">
-                      {item.mark}
-                    </div>
-                    <div className="cel-numSerie-cabecalho-estoque">
-                      {item.serialNumber}
-                    </div>
-                    <div className="cel-estoque-cabecalho-estoque">
-                      EMPRESTIMO
-                    </div>
-                  </>
-                );
-              })}
+            <div className="div-main-emprestimo">
+              <div className="div-cabecalho-estoque">
+                <div className="cel-produto-cabecalho-emprestimo">Produto</div>
+                <div className="cel-fabricante-cabecalho-estoque">
+                  Fabricante
+                </div>
+                <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+              </div>
+              <div className=" div-separate-Gentrada" />
+              {this.state.loading ? (
+                <div className="spin">
+                  <Spin spinning={this.state.loading} />
+                </div>
+              ) : (
+                this.test()
+              )}
+              <div className="footer-ROs">
+                <this.Pages />
+              </div>
             </div>
           ) : (
-            <div className="div-cabecalho-estoque">
-              <div className="cel-produto-cabecalho-estoque">Produto</div>
-              <div className="cel-razaosocial-cabecalho-emprestimo">
-                Razão social
+            <>
+              <div className="div-cabecalho-estoque">
+                <div className="cel-produto-cabecalho-estoque">Produto</div>
+                <div className="cel-razaosocial-cabecalho-emprestimo">
+                  Razão social
+                </div>
+                <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
               </div>
-              <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
-            </div>
+              <div className="footer-ROs">
+                <this.Pages />
+              </div>
+            </>
           )}
         </div>
       </>
