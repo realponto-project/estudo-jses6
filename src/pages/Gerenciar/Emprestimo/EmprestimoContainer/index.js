@@ -10,7 +10,6 @@ import { getTecnico } from "../../../../services/tecnico";
 const { Option } = Select;
 
 class EmprestimoContainer extends Component {
-  
   state = {
     tecnicoArray: [],
     modalReservados: false,
@@ -22,7 +21,11 @@ class EmprestimoContainer extends Component {
     visible: false,
     itemArray: [],
     select: "disponiveis",
-    modalAdicionar: false
+    modalAdicionar: false,
+    disponivel: [],
+    page: 1,
+    count: 1,
+    show: 1
   };
 
   onChangeSelect = value => {
@@ -84,15 +87,19 @@ class EmprestimoContainer extends Component {
       filters: {
         equip: {
           specific: {
-            imprestimo: true
+            loan: true
           }
         }
       }
     };
 
-    const response = await getAllEquipsService(query);
+    const { status, data } = await getAllEquipsService(query);
 
-    console.log(response);
+    if (status === 200) {
+      this.setState({
+        disponivel: data.rows
+      });
+    }
   };
 
   getAllItens = async () => {
@@ -165,8 +172,8 @@ class EmprestimoContainer extends Component {
       visible={this.state.modalDisp}
       onOk={this.handleCancel}
       onCancel={this.handleCancel}
-      okText='Salvar'
-      cancelText='Cancelar'
+      okText="Salvar"
+      cancelText="Cancelar"
     >
       <div className="div-rs1-Os">
         <div className="div-textRs-Os">Razão social:</div>
@@ -212,7 +219,6 @@ class EmprestimoContainer extends Component {
         </div>
       </div>
 
-
       <div className="div-linha1-emprestimo">
         <div className="div-tecnico-emprestimo">
           <div className="div-text-Os">Técnico:</div>
@@ -226,30 +232,30 @@ class EmprestimoContainer extends Component {
                 style={{ width: "100%" }}
               ></Select>
             ) : (
-                <Select
-                  className="input-100"
-                  defaultValue="Não selecionado"
-                  style={{ width: "100%" }}
-                  // onChange={this.onChangeSelect}
-                  showSearch
-                  placeholder="Nenhum tecnicos cadastrado"
-                  optionFilterProp="children"
-                  value={this.state.tecnico}
-                  name="technician"
-                  onFocus={this.onFocusTecnico}
-                  filterOption={(input, option) =>
-                    option.props.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {this.state.tecnicoArray.map(valor => (
-                    <Option props={valor} value={valor.name}>
-                      {valor.name}
-                    </Option>
-                  ))}
-                </Select>
-              )}
+              <Select
+                className="input-100"
+                defaultValue="Não selecionado"
+                style={{ width: "100%" }}
+                // onChange={this.onChangeSelect}
+                showSearch
+                placeholder="Nenhum tecnicos cadastrado"
+                optionFilterProp="children"
+                value={this.state.tecnico}
+                name="technician"
+                onFocus={this.onFocusTecnico}
+                filterOption={(input, option) =>
+                  option.props.children
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
+                }
+              >
+                {this.state.tecnicoArray.map(valor => (
+                  <Option props={valor} value={valor.name}>
+                    {valor.name}
+                  </Option>
+                ))}
+              </Select>
+            )}
           </div>
         </div>
       </div>
@@ -262,8 +268,8 @@ class EmprestimoContainer extends Component {
       visible={this.state.modalReservados}
       onOk={this.handleCancel}
       onCancel={this.handleCancel}
-      okText='Retornar'
-      cancelText='Cancelar'
+      okText="Retornar"
+      cancelText="Cancelar"
     >
       <div className="div-rs1-Os">
         <div className="div-textRs-Os">Razão social:</div>
@@ -280,21 +286,21 @@ class EmprestimoContainer extends Component {
       </div>
 
       <div className="div-rs1-emprestimo">
-      <div className="div-cnpj-emprestimo">
-            <div className="div-text-Os">Cnpj:</div>
-            <div className="div-inputs">
-              <Input
-                readOnly
-                className="input-100"
-                style={{ width: "100%" }}
-                name="cnpj"
-                value={this.state.cnpj}
-                onChange={this.onChange}
-              />
-            </div>
+        <div className="div-cnpj-emprestimo">
+          <div className="div-text-Os">Cnpj:</div>
+          <div className="div-inputs">
+            <Input
+              readOnly
+              className="input-100"
+              style={{ width: "100%" }}
+              name="cnpj"
+              value={this.state.cnpj}
+              onChange={this.onChange}
+            />
           </div>
+        </div>
 
-          <div className="div-dataSolici-emprestimo">
+        <div className="div-dataSolici-emprestimo">
           <div className="div-textSolici-imprestimo">Data solicitação:</div>
           <div className="div-inputs">
             <Input
@@ -336,23 +342,7 @@ class EmprestimoContainer extends Component {
           <div className="linhaTexto-Gentrada">
             <h1 className="h1-Gentrada">Gerenciar empréstimos</h1>
           </div>
-          {this.state.select === 'disponiveis' ? <div className="div-select-emprestimo">
-            <Select
-              value={this.state.select}
-              style={{ width: "20%" }}
-              onChange={this.onChangeSelect}
-            >
-              <Option value="disponiveis">DISPONÍVEIS</Option>
-              <Option value="reservados">RESERVADOS</Option>
-            </Select>
-            <Button
-              type="primary"
-              className='button'
-              onClick={() => this.setState({ modalDisp: true })}
-            >
-              <Icon type="plus" />
-            </Button>
-          </div> :
+          {this.state.select === "disponiveis" ? (
             <div className="div-select-emprestimo">
               <Select
                 value={this.state.select}
@@ -364,27 +354,67 @@ class EmprestimoContainer extends Component {
               </Select>
               <Button
                 type="primary"
-                className='button'
+                className="button"
+                onClick={() => this.setState({ modalDisp: true })}
+              >
+                <Icon type="plus" />
+              </Button>
+            </div>
+          ) : (
+            <div className="div-select-emprestimo">
+              <Select
+                value={this.state.select}
+                style={{ width: "20%" }}
+                onChange={this.onChangeSelect}
+              >
+                <Option value="disponiveis">DISPONÍVEIS</Option>
+                <Option value="reservados">RESERVADOS</Option>
+              </Select>
+              <Button
+                type="primary"
+                className="button"
                 onClick={() => this.setState({ modalReservados: true })}
               >
                 <Icon type="rollback" />
               </Button>
-            </div>}
-
+            </div>
+          )}
 
           {this.state.select === "disponiveis" ? (
             <div className="div-cabecalho-estoque">
               <div className="cel-produto-cabecalho-emprestimo">Produto</div>
               <div className="cel-fabricante-cabecalho-estoque">Fabricante</div>
               <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+              <div className="cel-estoque-cabecalho-estoque">Estoque</div>
+              {this.state.disponivel.map(item => {
+                console.log(item);
+                return (
+                  <>
+                    <div className="cel-produto-cabecalho-estoque">
+                      {item.name}
+                    </div>
+                    <div className="cel-fabricante-cabecalho-estoque">
+                      {item.mark}
+                    </div>
+                    <div className="cel-numSerie-cabecalho-estoque">
+                      {item.serialNumber}
+                    </div>
+                    <div className="cel-estoque-cabecalho-estoque">
+                      EMPRESTIMO
+                    </div>
+                  </>
+                );
+              })}
             </div>
           ) : (
-              <div className="div-cabecalho-estoque">
-                <div className="cel-produto-cabecalho-estoque">Produto</div>
-                <div className="cel-razaosocial-cabecalho-emprestimo">Razão social</div>
-                <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+            <div className="div-cabecalho-estoque">
+              <div className="cel-produto-cabecalho-estoque">Produto</div>
+              <div className="cel-razaosocial-cabecalho-emprestimo">
+                Razão social
               </div>
-            )}
+              <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+            </div>
+          )}
         </div>
       </>
     );
