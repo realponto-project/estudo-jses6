@@ -213,42 +213,6 @@ class GerenciarEntrada extends Component {
     }
   }
 
-  // filter = async (e) => {
-
-  //   await this.setState({
-  //     numeroSerieTest: e.target.value
-  //   })
-
-  //   const teste = this.state.numeroSerieTest.split(/\n/)
-
-  //   if (/\n/.test(this.state.numeroSerieTest[this.state.numeroSerieTest.length - 1])) {
-
-  //     let count = 0
-
-  //     // eslint-disable-next-line array-callback-return
-  //     teste.map((valor) => {
-  //       if (valor === teste[teste.length - 2]) count++
-  //     })
-
-  //     const resp = await getSerial(teste[teste.length - 2])
-
-  //     if (resp.data) count ++
-
-  //     if (count > 1) {
-
-  //       this.errorNumeroSerie()
-
-  //       teste.splice(teste.length - 2, 1)
-
-  //       const testeArray = teste.toString()
-
-  //       this.setState({
-  //         numeroSerieTest: testeArray.replace(/,/ig, '\n')
-  //       })
-  //     }
-  //   }
-  // }
-
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value

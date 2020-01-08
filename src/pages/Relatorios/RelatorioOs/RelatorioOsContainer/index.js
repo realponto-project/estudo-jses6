@@ -394,7 +394,7 @@ class GerenciarEntrada extends Component {
           <div className="cel-data-cabecalho-ROs">Data atendimento</div>
         </div>
 
-        <div className=" div-separate-ROs"></div>
+        <div className=" div-separate-ROs" />
         {this.state.loading ? (
           <div className="spin">
             <Spin spinning={this.state.loading} />
