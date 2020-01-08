@@ -53,8 +53,8 @@ class NovaEntrada extends Component {
     );
   };
 
-  getAllItens = async () => {
-    await getItens().then(resposta =>
+  getAllItens = async query => {
+    await getItens(query).then(resposta =>
       this.setState({
         itemArray: resposta.data
       })
@@ -112,7 +112,20 @@ class NovaEntrada extends Component {
     }
   };
 
-  onChangeSelect = value => {
+  onChangeSelect = async value => {
+    if (value === "EMPRESTIMO") {
+      const query = {
+        filters: {
+          product: {
+            specific: {
+              serial: true
+            }
+          }
+        }
+      };
+      await this.getAllItens(query);
+      this.setState({ nomeProduto: "" });
+    }
     this.setState({
       estoque: value
     });
