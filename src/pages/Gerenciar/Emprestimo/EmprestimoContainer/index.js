@@ -10,6 +10,7 @@ import { getTecnico } from "../../../../services/tecnico";
 const { Option } = Select;
 
 class EmprestimoContainer extends Component {
+  
   state = {
     tecnicoArray: [],
     modalReservados: false,
@@ -373,10 +374,9 @@ class EmprestimoContainer extends Component {
 
           {this.state.select === "disponiveis" ? (
             <div className="div-cabecalho-estoque">
-              <div className="cel-produto-cabecalho-estoque">Produto</div>
+              <div className="cel-produto-cabecalho-emprestimo">Produto</div>
               <div className="cel-fabricante-cabecalho-estoque">Fabricante</div>
               <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
-              <div className="cel-estoque-cabecalho-estoque">Estoque</div>
             </div>
           ) : (
               <div className="div-cabecalho-estoque">

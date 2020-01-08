@@ -125,7 +125,7 @@ class GerenciarEntrada extends Component {
       return(
         this.state.relatorioArray.rows.map((line) =>
           <div className='div-100-Gentrada'>
-            <div className=' div-separate-RPerda'></div>
+            <div className=' div-separate-RPerda'/>
             <div className='div-lines-RPerda'>
               <div className='cel-produto-cabecalho-RPerda'>
                 {line.name}
@@ -140,7 +140,6 @@ class GerenciarEntrada extends Component {
                 {line.createdAt}
               </div>
             </div>
-        <div className=' div-separate-Gentrada'></div>
           </div>
       ))
     }else{
@@ -230,7 +229,6 @@ class GerenciarEntrada extends Component {
             Data lançamento
           </div>
         </div>
-        <div className=' div-separate-Gentrada'></div>
         
         {this.state.loading ? <div className='spin'><Spin spinning={this.state.loading}/></div> : this.test()}
 

@@ -37,6 +37,7 @@ import GerenciarEntradaDashRoute from "./Gerenciar/GerenciarEntrada";
 import NotificacaoRoute from "./Gerenciar/Notificacoes";
 import EmprestimoRoute from "./Gerenciar/Emprestimo";
 import ReservaInternoRoute from "./Reservas/ReservaInterno";
+import RelatorioEmprestimoRoute from "./Relatorios/RelatorioEmprestimo";
 
 class PagesRoute extends Component {
   state = {
@@ -116,6 +117,7 @@ class PagesRoute extends Component {
           <Route path="/logged/reservaKitAdd" component={AddKitRoute} />
           <Route path="/logged/reservaML" component={ReservaMLRoute} />
           <Route path="/logged/relatorioOs" component={RelatorioOsRoute} />
+          <Route path="/logged/relatorioEmprestimo" component={RelatorioEmprestimoRoute} />
           <Route
             path="/logged/relatorioPerda"
             component={RelatorioPerdaRoute}
