@@ -11,7 +11,11 @@ import {
 } from "antd";
 
 import "./index.css";
-import { addEquip, getAllEquipsService } from "../../../../services/equip";
+import { getAllEquipsService } from "../../../../services/equip";
+import {
+  addEprestimo,
+  getEprestimoService
+} from "../../../../services/emprestimo";
 import { getItens } from "../../../../services/produto";
 import { getSerial } from "../../../../services/serialNumber";
 import { getTecnico } from "../../../../services/tecnico";
@@ -27,48 +31,31 @@ class EmprestimoContainer extends Component {
     razaoSocial: "",
     nomeProduto: "",
     productId: "",
+    technicianId: "",
     textArea: "",
+    serialNumber: "",
     visible: false,
     itemArray: [],
     select: "disponiveis",
     modalAdicionar: false,
-    disponivel: [],
+    disponiveis: [],
+    reservados: [],
     page: 1,
     count: 1,
     show: 1,
     total: 10
   };
 
-  onChangeSelect = value => {
+  onChangeTechnician = (value, props) => {
     this.setState({
-      select: value
+      tecnico: value,
+      technicianId: props.props.props.id
     });
   };
 
   showModal = () => {
     this.setState({
       visible: true
-    });
-  };
-
-  handleOk = async () => {
-    const { productId, textArea } = this.state;
-
-    const serialnNumbers = textArea
-      .split(/\n/)
-      .filter(item => (item ? item : null));
-
-    console.log(productId, textArea, serialnNumbers);
-
-    const value = {
-      productId,
-      serialnNumbers
-    };
-
-    await addEquip(value);
-
-    this.setState({
-      visible: false
     });
   };
 
@@ -91,6 +78,18 @@ class EmprestimoContainer extends Component {
     await this.getAllItens();
     await this.getAllTecnico();
     await this.getAllEquips();
+
+    await this.getEprestimo();
+  };
+
+  getEprestimo = async () => {
+    const { status, data } = await getEprestimoService();
+
+    if (status === 200) {
+      this.setState({
+        reservados: data.rows
+      });
+    }
   };
 
   getAllEquips = async () => {
@@ -112,7 +111,7 @@ class EmprestimoContainer extends Component {
 
     if (status === 200) {
       this.setState({
-        disponivel: data.rows
+        disponiveis: data.rows
       });
     }
     this.setState({
@@ -195,11 +194,36 @@ class EmprestimoContainer extends Component {
     }
   };
 
+  onChangeTecnico = async value => {
+    await this.setState({
+      tecnico: value
+    });
+  };
+
+  newEprestimo = () => {
+    const {
+      razaoSocial,
+      cnpj,
+      data: dateExpedition,
+      serialNumber
+    } = this.state;
+
+    const value = {
+      cnpj,
+      razaoSocial,
+      dateExpedition,
+      serialNumber,
+      technicianId: ""
+    };
+
+    addEprestimo(value);
+  };
+
   ModalDisponiveis = () => (
     <Modal
       title="Reservar equipamento"
       visible={this.state.modalDisp}
-      onOk={this.handleCancel}
+      onOk={this.newEprestimo}
       onCancel={this.handleCancel}
       okText="Salvar"
       cancelText="Cancelar"
@@ -265,7 +289,7 @@ class EmprestimoContainer extends Component {
                 className="input-100"
                 defaultValue="Não selecionado"
                 style={{ width: "100%" }}
-                // onChange={this.onChangeSelect}
+                onChange={this.onChangeTechnician}
                 showSearch
                 placeholder="Nenhum tecnicos cadastrado"
                 optionFilterProp="children"
@@ -363,8 +387,8 @@ class EmprestimoContainer extends Component {
   );
 
   test = () => {
-    if (this.state.disponivel.length !== 0) {
-      return this.state.disponivel.map(item => {
+    if (this.state.disponiveis.length !== 0) {
+      return this.state.disponiveis.map(item => {
         return (
           <div className="div-100-Gentrada">
             <div className="div-lines-RPerda">
@@ -474,6 +498,12 @@ class EmprestimoContainer extends Component {
     </div>
   );
 
+  onChangeSelect = value => {
+    this.setState({
+      select: value
+    });
+  };
+
   render() {
     return (
       <>
@@ -551,6 +581,23 @@ class EmprestimoContainer extends Component {
                 </div>
                 <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
               </div>
+              {this.state.reservados.map(item => {
+                return (
+                  <>
+                    <div className="div-cabecalho-estoque">
+                      <div className="cel-produto-cabecalho-estoque">
+                        {item.name}
+                      </div>
+                      <div className="cel-razaosocial-cabecalho-emprestimo">
+                        {item.razaoSocial}
+                      </div>
+                      <div className="cel-numSerie-cabecalho-estoque">
+                        {item.serialNumber}
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
               <div className="footer-ROs">
                 <this.Pages />
               </div>
