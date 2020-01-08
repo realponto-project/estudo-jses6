@@ -386,7 +386,7 @@ class EmprestimoContainer extends Component {
     </Modal>
   );
 
-  test = () => {
+  testDisponivel = () => {
     if (this.state.disponiveis.length !== 0) {
       return this.state.disponiveis.map(item => {
         return (
@@ -397,6 +397,33 @@ class EmprestimoContainer extends Component {
               </div>
               <div className="cel-fabricante-cabecalho-estoque">
                 {item.mark}
+              </div>
+              <div className="cel-numSerie-cabecalho-estoque">
+                {item.serialNumber}
+              </div>
+            </div>
+            <div className=" div-separate1-Gentrada" />
+          </div>
+        );
+      });
+    } else {
+      return (
+        <div className="div-naotemnada">
+          Não há nenhum empréstimo até o momento
+        </div>
+      );
+    }
+  };
+
+  testReservados = () => {
+    if (this.state.reservados.length !== 0) {
+      return this.state.reservados.map(item => {
+        return (
+          <div className="div-100-Gentrada">
+            <div className="div-lines-RPerda">
+              <div className="cel-produto-cabecalho-estoque">{item.name}</div>
+              <div className="cel-razaosocial-cabecalho-emprestimo">
+                {item.razaoSocial}
               </div>
               <div className="cel-numSerie-cabecalho-estoque">
                 {item.serialNumber}
@@ -498,10 +525,13 @@ class EmprestimoContainer extends Component {
     </div>
   );
 
-  onChangeSelect = value => {
-    this.setState({
-      select: value
+  onChangeSelect = async value => {
+    await this.setState({
+      select: value,
+      loading: true
     });
+
+    await this.getAllEquips();
   };
 
   render() {
@@ -566,14 +596,14 @@ class EmprestimoContainer extends Component {
                   <Spin spinning={this.state.loading} />
                 </div>
               ) : (
-                this.test()
+                this.testDisponivel()
               )}
               <div className="footer-ROs">
                 <this.Pages />
               </div>
             </div>
           ) : (
-            <>
+            <div className="div-main-emprestimo">
               <div className="div-cabecalho-estoque">
                 <div className="cel-produto-cabecalho-estoque">Produto</div>
                 <div className="cel-razaosocial-cabecalho-emprestimo">
@@ -581,27 +611,18 @@ class EmprestimoContainer extends Component {
                 </div>
                 <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
               </div>
-              {this.state.reservados.map(item => {
-                return (
-                  <>
-                    <div className="div-cabecalho-estoque">
-                      <div className="cel-produto-cabecalho-estoque">
-                        {item.name}
-                      </div>
-                      <div className="cel-razaosocial-cabecalho-emprestimo">
-                        {item.razaoSocial}
-                      </div>
-                      <div className="cel-numSerie-cabecalho-estoque">
-                        {item.serialNumber}
-                      </div>
-                    </div>
-                  </>
-                );
-              })}
+              <div className=" div-separate-Gentrada" />
+              {this.state.loading ? (
+                <div className="spin">
+                  <Spin spinning={this.state.loading} />
+                </div>
+              ) : (
+                this.testReservados()
+              )}
               <div className="footer-ROs">
                 <this.Pages />
               </div>
-            </>
+            </div>
           )}
         </div>
       </>
