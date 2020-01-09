@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { validators, masks } from "./validators";
 import { newReservaOs } from "../../../../services/reservaOs";
-import { getProdutoByEstoque } from "../../../../services/produto";
+import { getProdutoByEstoque, getProdutos } from "../../../../services/produto";
 import { getTecnico } from "../../../../services/tecnico";
 import { getSerial } from "../../../../services/serialNumber";
 import {
@@ -75,6 +75,21 @@ class Rexterno extends Component {
         tecnicoArray: resposta.data
       })
     );
+  };
+
+  getAllProducts = async () => {
+    await getProdutos().then(resposta =>
+      this.setState({
+        itemArray: resposta.data.rows.map(item => {
+          const resp = { name: item.name, productId: item.id };
+          return resp;
+        })
+      })
+    );
+  };
+
+  errorStatus = () => {
+    message.error("Por favor selecione um status");
   };
 
   errorNumeroSerie = value => {
@@ -308,6 +323,10 @@ class Rexterno extends Component {
     await this.setState({
       status: valor
     });
+
+    if (this.state.status === "CONSERTO") {
+      this.getAllProducts();
+    }
   };
 
   onChangeTecnico = value => {
@@ -640,7 +659,7 @@ class Rexterno extends Component {
         </div>
 
         <div className="div-linha-Os">
-          <div className="div-estoque-Os">
+          <div className="div-numeroSerie-Os">
             {this.state.status !== "CONSERTO" ? (
               <>
                 <div className="div-text-Os">Estoque:</div>
@@ -656,7 +675,7 @@ class Rexterno extends Component {
               </>
             ) : (
               <>
-                <div className="div-text-Os">Número de série:</div>
+                <div className="div-serial-Os">Número de série:</div>
                 <Input
                   allowClear={!this.state.fieldFalha.serialNumber}
                   className={
@@ -664,7 +683,7 @@ class Rexterno extends Component {
                       ? "div-inputError-tecnico"
                       : "input-100"
                   }
-                  placeholder="Digite o status"
+                  placeholder="Digite o número"
                   name="serialNumber"
                   value={this.state.serialNumber}
                   onChange={this.onChange}
@@ -700,6 +719,23 @@ class Rexterno extends Component {
           </div>
         </div>
 
+        {this.state.status === "CONSERTO" ? (
+          <div className="linha1-produtos">
+            <div className="div-descricao-produtos">
+              <div className="div-text-produtos">Observação:</div>
+              <TextArea
+                className="input-100"
+                placeholder="Digite a observação"
+                autosize={{ minRows: 2, maxRows: 4 }}
+                rows={4}
+                name="descricao"
+                value={this.state.descricao}
+                onChange={this.onChange}
+              />
+            </div>
+          </div>
+        ) : null}
+
         {this.state.serial && this.state.status !== "CONSERTO" ? (
           <div className="div-linha-Os">
             <div className="div-serial-AddKit">
@@ -717,7 +753,11 @@ class Rexterno extends Component {
             <Button
               className="button"
               type="primary"
-              onClick={this.addCarrinho}
+              onClick={
+                this.state.status === "Não selecionado"
+                  ? this.errorStatus
+                  : this.addCarrinho
+              }
             >
               Adicionar
             </Button>
