@@ -291,28 +291,25 @@ export const createPDF = (technician, data) => {
     hotfixes: [] // an array of hotfix strings to enable
   });
 
-  console.log(technician)
+  console.log(technician);
 
   moment.locale("pt");
 
   technician.map((tecnico, i) => {
     doc.setLineWidth(1).line(3, 3, 3, 18);
-    doc.setFontSize(20)
-    if(doc.splitTextToSize(tecnico.name, 100).length > 1){
-      doc.setFontSize(18)
-      if(doc.splitTextToSize(tecnico.name, 100).length > 1){
-        doc.setFontSize(16)
-        if(doc.splitTextToSize(tecnico.name, 100).length > 1){
-          doc.setFontSize(14)
+    doc.setFontSize(20);
+    if (doc.splitTextToSize(tecnico.name, 100).length > 1) {
+      doc.setFontSize(18);
+      if (doc.splitTextToSize(tecnico.name, 100).length > 1) {
+        doc.setFontSize(16);
+        if (doc.splitTextToSize(tecnico.name, 100).length > 1) {
+          doc.setFontSize(14);
         }
       }
     }
-    doc
-      .text(5, 13, moment().format("L"))
-      .text(50, 13, tecnico.name);
+    doc.text(5, 13, moment(data).format("L")).text(50, 13, tecnico.name);
 
-  // console.log(doc.splitTextToSize(tecnico.name, 100).length)
-
+    // console.log(doc.splitTextToSize(tecnico.name, 100).length)
 
     doc.setLineWidth(0.1).line(150, 12, 280, 12);
     doc.setFontSize(12).text(150, 17, "Assinatura");
@@ -334,24 +331,92 @@ export const createPDF = (technician, data) => {
 
     title(doc);
 
-
     tecnico.rows &&
       tecnico.rows.map(item => {
-        item.products.map(product => {
+        if (R.has("products", item)) {
+          item.products.map(product => {
+            const textEquip = `${product.amount} - ${product.name} ${
+              product.serial
+                ? `Nº (${product.serialNumbers.map((equip, index) =>
+                    index > 0 ? ` ${equip.serialNumber}` : equip.serialNumber
+                  )})`
+                : ""
+            }`;
 
-          const textEquip = `${product.amount} - ${product.name} ${
-            product.serial
-              ? `Nº (${product.serialNumbers.map((equip, index) =>
-                  index > 0 ? ` ${equip.serialNumber}` : equip.serialNumber
-                )})`
-              : ""
-          }`;
+            const rows = R.max(
+              doc.splitTextToSize(item.razaoSocial, 95).length,
+              doc.splitTextToSize(product.status.toUpperCase(), 35).length,
+              doc.splitTextToSize(textEquip, 100).length
+            );
 
-          console.log(item)
+            if (index + rows < 22) {
+              addWrappedText({
+                text: item.razaoSocial, // Put a really long string here
+                textWidth: 95,
+                doc,
+                fontSize: "12",
+                fontType: "normal",
+                lineSpacing: 5, // Space between lines
+                xPosition: 5, // Text offset from left of document
+                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+                index,
+                rows
+              });
+
+              addWrappedText({
+                text: product.status.toUpperCase(), // Put a really long string here
+                textWidth: 35,
+                doc,
+                fontSize: "12",
+                fontType: "normal",
+                lineSpacing: 5, // Space between lines
+                xPosition: 100, // Text offset from left of document
+                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+                index,
+                rows
+              });
+
+              addWrappedText({
+                text: textEquip, // Put a really long string here
+                textWidth: 100,
+                doc,
+                fontSize: "12",
+                fontType: "normal",
+                lineSpacing: 5, // Space between lines
+                xPosition: 135, // Text offset from left of document
+                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+                index,
+                rows
+              });
+
+              addWrappedText({
+                text: "", // Put a really long string here
+                textWidth: 50,
+                doc,
+                fontSize: "12",
+                fontType: "normal",
+                lineSpacing: 5, // Space between lines
+                xPosition: 235, // Text offset from left of document
+                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+                index,
+                rows
+              });
+            }
+
+            index = index + rows;
+            // eslint-disable-next-line array-callback-return
+            return;
+          });
+        } else {
           const rows = R.max(
             doc.splitTextToSize(item.razaoSocial, 95).length,
-            doc.splitTextToSize(product.status, 35).length,
-            doc.splitTextToSize(textEquip, 100).length
+            doc.splitTextToSize("EMPRÉSTIMO", 35).length,
+            doc.splitTextToSize(`1 - ${item.name} Nº ${item.serialNumber}`, 100)
+              .length
           );
 
           if (index + rows < 22) {
@@ -370,7 +435,7 @@ export const createPDF = (technician, data) => {
             });
 
             addWrappedText({
-              text: product.status, // Put a really long string here
+              text: "EMPRESTIMO", // Put a really long string here
               textWidth: 35,
               doc,
               fontSize: "12",
@@ -384,7 +449,7 @@ export const createPDF = (technician, data) => {
             });
 
             addWrappedText({
-              text: textEquip, // Put a really long string here
+              text: `1 - ${item.name}  Nº ${item.serialNumber}`, // Put a really long string here
               textWidth: 100,
               doc,
               fontSize: "12",
@@ -413,9 +478,7 @@ export const createPDF = (technician, data) => {
           }
 
           index = index + rows;
-          // eslint-disable-next-line array-callback-return
-          return;
-        });
+        }
         // eslint-disable-next-line array-callback-return
         return;
       });
