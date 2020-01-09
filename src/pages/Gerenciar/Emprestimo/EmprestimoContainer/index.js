@@ -9,41 +9,49 @@ import {
   DatePicker,
   Spin
 } from "antd";
+import moment from "moment";
 
 import "./index.css";
 import { getAllEquipsService } from "../../../../services/equip";
 import {
   addEprestimo,
-  getEprestimoService
+  getEprestimoService,
+  deleteEmprestimoService
 } from "../../../../services/emprestimo";
 import { getItens } from "../../../../services/produto";
 import { getSerial } from "../../../../services/serialNumber";
 import { getTecnico } from "../../../../services/tecnico";
+import { validator, masks } from "./validator";
 
 const { Option } = Select;
 
 class EmprestimoContainer extends Component {
   state = {
-    loading: false,
     tecnicoArray: [],
+    itemArray: [],
+    disponiveis: [],
+    reservados: [],
+    loading: false,
     modalReservados: false,
     modalDisp: false,
+    modalAdicionar: false,
+    visible: false,
+    page: 1,
+    count: 1,
+    show: 1,
+    total: 10,
+    retorno: {},
+    fieldFalha: {
+      cnpj: false
+    },
     razaoSocial: "",
     nomeProduto: "",
     productId: "",
     technicianId: "",
     textArea: "",
     serialNumber: "",
-    visible: false,
-    itemArray: [],
-    select: "disponiveis",
-    modalAdicionar: false,
-    disponiveis: [],
-    reservados: [],
-    page: 1,
-    count: 1,
-    show: 1,
-    total: 10
+    emprestimoId: "",
+    select: "disponiveis"
   };
 
   onChangeTechnician = (value, props) => {
@@ -62,7 +70,13 @@ class EmprestimoContainer extends Component {
   handleCancel = e => {
     this.setState({
       modalDisp: false,
-      modalReservados: false
+      modalReservados: false,
+      cnpj: "",
+      razaoSocial: "",
+      serialNumber: "",
+      data: "",
+      tecnico: "",
+      retorno: {}
     });
   };
 
@@ -101,7 +115,8 @@ class EmprestimoContainer extends Component {
       filters: {
         equip: {
           specific: {
-            loan: true
+            loan: true,
+            inClient: false
           }
         }
       }
@@ -200,12 +215,13 @@ class EmprestimoContainer extends Component {
     });
   };
 
-  newEprestimo = () => {
+  newEprestimo = async () => {
     const {
       razaoSocial,
       cnpj,
       data: dateExpedition,
-      serialNumber
+      serialNumber,
+      technicianId
     } = this.state;
 
     const value = {
@@ -213,10 +229,61 @@ class EmprestimoContainer extends Component {
       razaoSocial,
       dateExpedition,
       serialNumber,
-      technicianId: ""
+      technicianId
     };
 
-    addEprestimo(value);
+    const { status, data } = await addEprestimo(value);
+
+    if (status === 200) {
+      this.setState({
+        modalDisp: false,
+        cnpj: "",
+        razaoSocial: "",
+        dateExpedition: "",
+        serialNumber: "",
+        technicianId: ""
+      });
+      await this.getAllEquips();
+
+      await this.getEprestimo();
+    }
+  };
+
+  onChange = async e => {
+    const { name, value } = masks(e.target.name, e.target.value);
+
+    await this.setState({
+      [name]: value
+    });
+  };
+
+  onBlur = e => {
+    const { fieldFalha } = validator(e.target.name, e.target.value, this.state);
+
+    this.setState({
+      fieldFalha
+    });
+  };
+
+  onFocus = e => {
+    const { name } = e.target;
+    const { fieldFalha } = this.state;
+
+    fieldFalha[name] = false;
+
+    this.setState({
+      fieldFalha
+    });
+  };
+
+  onChangeData = date => {
+    this.setState({
+      data: date
+    });
+  };
+
+  disabledDate = current => {
+    return current && current < moment().subtract(1, "day");
   };
 
   ModalDisponiveis = () => (
@@ -238,6 +305,8 @@ class EmprestimoContainer extends Component {
             value={this.state.razaoSocial}
             placeholder="Digite a razão social"
             onChange={this.onChange}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
           />
         </div>
       </div>
@@ -247,12 +316,15 @@ class EmprestimoContainer extends Component {
           <div className="div-text-Os">Cnpj:</div>
           <div className="div-inputs">
             <Input
-              className="input-100"
+              className={`input-100 ${this.state.fieldFalha.cnpj &&
+                "div-inputError"}`}
               style={{ width: "100%" }}
               name="cnpj"
               value={this.state.cnpj}
               placeholder="Digite o cnpj"
               onChange={this.onChange}
+              onBlur={this.onBlur}
+              onFocus={this.onFocus}
             />
           </div>
         </div>
@@ -267,6 +339,7 @@ class EmprestimoContainer extends Component {
               format="DD/MM/YYYY"
               value={this.state.data}
               placeholder="Selecione uma data"
+              disabledDate={this.disabledDate}
             />
           </div>
         </div>
@@ -315,11 +388,25 @@ class EmprestimoContainer extends Component {
     </Modal>
   );
 
+  deleteEmprestimo = async () => {
+    console.log(this.state.retorno.id);
+
+    const { id } = this.state.retorno;
+
+    const { status, data } = await deleteEmprestimoService(id);
+
+    if (status === 200 && data === "sucesso") {
+      await this.getAllEquips();
+
+      await this.getEprestimo();
+    }
+  };
+
   ModalReservados = () => (
     <Modal
       title="Retorno ao estoque"
       visible={this.state.modalReservados}
-      onOk={this.handleCancel}
+      onOk={this.deleteEmprestimo}
       onCancel={this.handleCancel}
       okText="Retornar"
       cancelText="Cancelar"
@@ -332,7 +419,7 @@ class EmprestimoContainer extends Component {
             className="input-100"
             style={{ width: "100%" }}
             name="razaoSocial"
-            value={this.state.razaoSocial}
+            value={this.state.retorno.razaoSocial}
             onChange={this.onChange}
           />
         </div>
@@ -347,7 +434,7 @@ class EmprestimoContainer extends Component {
               className="input-100"
               style={{ width: "100%" }}
               name="cnpj"
-              value={this.state.cnpj}
+              value={this.state.retorno.cnpj}
               onChange={this.onChange}
             />
           </div>
@@ -361,7 +448,7 @@ class EmprestimoContainer extends Component {
               className="input-100"
               style={{ width: "100%" }}
               name="razaoSocial"
-              value={this.state.razaoSocial}
+              value={this.state.retorno.createdAt}
               onChange={this.onChange}
             />
           </div>
@@ -377,7 +464,7 @@ class EmprestimoContainer extends Component {
               className="input-100"
               style={{ width: "100%" }}
               name="razaoSocial"
-              value={this.state.razaoSocial}
+              value={this.state.retorno.dateExpedition}
               onChange={this.onChange}
             />
           </div>
@@ -401,6 +488,18 @@ class EmprestimoContainer extends Component {
               <div className="cel-numSerie-cabecalho-estoque">
                 {item.serialNumber}
               </div>
+              <Button
+                type="primary"
+                className="button"
+                onClick={() =>
+                  this.setState({
+                    modalDisp: true,
+                    serialNumber: item.serialNumber
+                  })
+                }
+              >
+                <Icon type="plus" />
+              </Button>
             </div>
             <div className=" div-separate1-Gentrada" />
           </div>
@@ -419,8 +518,8 @@ class EmprestimoContainer extends Component {
     if (this.state.reservados.length !== 0) {
       return this.state.reservados.map(item => {
         return (
-          <div className="div-100-Gentrada">
-            <div className="div-lines-RPerda">
+          <>
+            <div className="div-cabecalho-estoque">
               <div className="cel-produto-cabecalho-estoque">{item.name}</div>
               <div className="cel-razaosocial-cabecalho-emprestimo">
                 {item.razaoSocial}
@@ -428,9 +527,15 @@ class EmprestimoContainer extends Component {
               <div className="cel-numSerie-cabecalho-estoque">
                 {item.serialNumber}
               </div>
+              <Button
+                type="primary"
+                className="button"
+                onClick={() => this.retorno(item)}
+              >
+                <Icon type="rollback" />
+              </Button>
             </div>
-            <div className=" div-separate1-Gentrada" />
-          </div>
+          </>
         );
       });
     } else {
@@ -532,6 +637,24 @@ class EmprestimoContainer extends Component {
     });
 
     await this.getAllEquips();
+  };
+
+  retorno = item => {
+    console.log(item);
+    const { razaoSocial, cnpj, createdAt, dateExpedition, id } = item;
+
+    const { name, value } = masks("cnpj", cnpj);
+
+    this.setState({
+      modalReservados: true,
+      retorno: {
+        razaoSocial,
+        createdAt,
+        dateExpedition,
+        [name]: value,
+        id
+      }
+    });
   };
 
   render() {
