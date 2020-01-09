@@ -677,29 +677,16 @@ class EmprestimoContainer extends Component {
           <div className="linhaTexto-Gentrada">
             <h1 className="h1-Gentrada">Gerenciar empréstimos</h1>
           </div>
-          {this.state.select === "disponiveis" ? (
-            <div className="div-select-emprestimo">
-              <Select
-                value={this.state.select}
-                style={{ width: "20%" }}
-                onChange={this.onChangeSelect}
-              >
-                <Option value="disponiveis">DISPONÍVEIS</Option>
-                <Option value="reservados">RESERVADOS</Option>
-              </Select>
-            </div>
-          ) : (
-            <div className="div-select-emprestimo">
-              <Select
-                value={this.state.select}
-                style={{ width: "20%" }}
-                onChange={this.onChangeSelect}
-              >
-                <Option value="disponiveis">DISPONÍVEIS</Option>
-                <Option value="reservados">RESERVADOS</Option>
-              </Select>
-            </div>
-          )}
+          <div className="div-select-emprestimo">
+            <Select
+              value={this.state.select}
+              style={{ width: "20%" }}
+              onChange={this.onChangeSelect}
+            >
+              <Option value="disponiveis">DISPONÍVEIS</Option>
+              <Option value="reservados">RESERVADOS</Option>
+            </Select>
+          </div>
 
           {this.state.select === "disponiveis" ? (
             <div className="div-main-emprestimo">

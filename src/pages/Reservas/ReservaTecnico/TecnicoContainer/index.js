@@ -19,6 +19,7 @@ import { Redirect } from "react-router-dom";
 
 import locale from "antd/es/date-picker/locale/pt_BR";
 
+import { getEprestimoService } from "../../../../services/emprestimo";
 import { getTecnico, createPDF, getCarro } from "../../../../services/tecnico";
 import {
   getTodasOs,
@@ -1041,6 +1042,30 @@ class ReservaTecnico extends Component {
 
         const rows = await getTodasOs(query);
 
+        const queryEprestimo = {
+          filters: {
+            technician: {
+              specific: {
+                name: item.name
+              }
+            },
+            emprestimo: {
+              specific: {
+                dateExpedition: {
+                  start: this.state.dataModal,
+                  end: this.state.dataModal
+                }
+              }
+            }
+          }
+        };
+
+        const { status, data } = await getEprestimoService(queryEprestimo);
+
+        if (status === 200) {
+          Array.prototype.push.apply(rows.data.rows, data.rows);
+        }
+
         item = {
           name: item.name,
           plate: item.cars[0].plate,
@@ -1050,6 +1075,8 @@ class ReservaTecnico extends Component {
         return item;
       })
     );
+
+    console.log(await tecnicosFormatted);
 
     createPDF(await tecnicosFormatted, this.state.dataModal);
 
