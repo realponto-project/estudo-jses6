@@ -44,6 +44,7 @@ class EmprestimoContainer extends Component {
     fieldFalha: {
       cnpj: false
     },
+    tecnico: "Não selecionado",
     razaoSocial: "",
     nomeProduto: "",
     productId: "",
@@ -75,7 +76,7 @@ class EmprestimoContainer extends Component {
       razaoSocial: "",
       serialNumber: "",
       data: "",
-      tecnico: "",
+      tecnico: "Não  selecionado",
       retorno: {}
     });
   };
@@ -232,6 +233,7 @@ class EmprestimoContainer extends Component {
       technicianId
     };
 
+    // eslint-disable-next-line no-unused-vars
     const { status, data } = await addEprestimo(value);
 
     if (status === 200) {
@@ -457,7 +459,7 @@ class EmprestimoContainer extends Component {
 
       <div className="div-linha-emprestimo">
         <div className="div-data-emprestimo">
-          <div className="div-textData1-imprestimo">Data atendimento:</div>
+          <div className="div-textData1-emprestimo">Data atendimento:</div>
           <div className="div-inputs">
             <Input
               readOnly
@@ -488,18 +490,20 @@ class EmprestimoContainer extends Component {
               <div className="cel-numSerie-cabecalho-estoque">
                 {item.serialNumber}
               </div>
-              <Button
-                type="primary"
-                className="button"
-                onClick={() =>
-                  this.setState({
-                    modalDisp: true,
-                    serialNumber: item.serialNumber
-                  })
-                }
-              >
-                <Icon type="plus" />
-              </Button>
+              <div className="cel-acao-cabecalho-emprestimo">
+                <Button
+                  type="primary"
+                  className="button"
+                  onClick={() =>
+                    this.setState({
+                      modalDisp: true,
+                      serialNumber: item.serialNumber
+                    })
+                  }
+                >
+                  <Icon type="plus" />
+                </Button>
+              </div>
             </div>
             <div className=" div-separate1-Gentrada" />
           </div>
@@ -518,8 +522,8 @@ class EmprestimoContainer extends Component {
     if (this.state.reservados.length !== 0) {
       return this.state.reservados.map(item => {
         return (
-          <>
-            <div className="div-cabecalho-estoque">
+          <div className="div-100-Gentrada">
+            <div className="div-lines-RPerda">
               <div className="cel-produto-cabecalho-estoque">{item.name}</div>
               <div className="cel-razaosocial-cabecalho-emprestimo">
                 {item.razaoSocial}
@@ -527,15 +531,18 @@ class EmprestimoContainer extends Component {
               <div className="cel-numSerie-cabecalho-estoque">
                 {item.serialNumber}
               </div>
-              <Button
-                type="primary"
-                className="button"
-                onClick={() => this.retorno(item)}
-              >
-                <Icon type="rollback" />
-              </Button>
+              <div className="cel-acao-cabecalho-emprestimo">
+                <Button
+                  type="primary"
+                  className="button"
+                  onClick={() => this.retorno(item)}
+                >
+                  <Icon type="rollback" />
+                </Button>
+              </div>
             </div>
-          </>
+            <div className=" div-separate1-Gentrada" />
+          </div>
         );
       });
     } else {
@@ -633,7 +640,11 @@ class EmprestimoContainer extends Component {
   onChangeSelect = async value => {
     await this.setState({
       select: value,
-      loading: true
+      loading: true,
+      page: 1,
+      count: 1,
+      show: 1,
+      total: 10
     });
 
     await this.getAllEquips();
@@ -676,13 +687,6 @@ class EmprestimoContainer extends Component {
                 <Option value="disponiveis">DISPONÍVEIS</Option>
                 <Option value="reservados">RESERVADOS</Option>
               </Select>
-              <Button
-                type="primary"
-                className="button"
-                onClick={() => this.setState({ modalDisp: true })}
-              >
-                <Icon type="plus" />
-              </Button>
             </div>
           ) : (
             <div className="div-select-emprestimo">
@@ -694,13 +698,6 @@ class EmprestimoContainer extends Component {
                 <Option value="disponiveis">DISPONÍVEIS</Option>
                 <Option value="reservados">RESERVADOS</Option>
               </Select>
-              <Button
-                type="primary"
-                className="button"
-                onClick={() => this.setState({ modalReservados: true })}
-              >
-                <Icon type="rollback" />
-              </Button>
             </div>
           )}
 
@@ -712,6 +709,7 @@ class EmprestimoContainer extends Component {
                   Fabricante
                 </div>
                 <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+                <div className="cel-acao-cabecalho-emprestimo" />
               </div>
               <div className=" div-separate-Gentrada" />
               {this.state.loading ? (
@@ -733,6 +731,7 @@ class EmprestimoContainer extends Component {
                   Razão social
                 </div>
                 <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
+                <div className="cel-acao-cabecalho-emprestimo" />
               </div>
               <div className=" div-separate-Gentrada" />
               {this.state.loading ? (

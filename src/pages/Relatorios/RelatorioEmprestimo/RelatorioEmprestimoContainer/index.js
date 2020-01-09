@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import "./index.css";
 
-import { Spin } from "antd";
+import { Spin, Button } from "antd";
 
 import { getEprestimoService } from "../../../../services/emprestimo";
 
 class RelatorioEmprestimoContainer extends Component {
   state = {
     rows: [],
-
     loading: false,
-
     page: 1,
     total: 10,
     count: 0,
@@ -33,8 +31,101 @@ class RelatorioEmprestimoContainer extends Component {
     }
   };
 
+  changePages = pages => {
+    this.setState(
+      {
+        page: pages
+      },
+      () => {
+        this.getEprestimo();
+      }
+    );
+  };
+
+  Pages = () => (
+    <div className="footer-Gentrada100-button">
+      {Math.ceil(this.state.count / this.state.total) >= 5 &&
+      Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page - 4)}
+        >
+          {this.state.page - 4}
+        </Button>
+      ) : null}
+      {Math.ceil(this.state.count / this.state.total) >= 4 &&
+      Math.ceil(this.state.count / this.state.total) - this.state.page < 2 &&
+      this.state.page > 3 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page - 3)}
+        >
+          {this.state.page - 3}
+        </Button>
+      ) : null}
+      {this.state.page >= 3 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page - 2)}
+        >
+          {this.state.page - 2}
+        </Button>
+      ) : null}
+      {this.state.page >= 2 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page - 1)}
+        >
+          {this.state.page - 1}
+        </Button>
+      ) : null}
+      <div className="div-teste">{this.state.page}</div>
+      {this.state.page < this.state.count / this.state.total ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page + 1)}
+        >
+          {this.state.page + 1}
+        </Button>
+      ) : null}
+      {this.state.page + 1 < this.state.count / this.state.total ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page + 2)}
+        >
+          {this.state.page + 2}
+        </Button>
+      ) : null}
+      {this.state.page + 2 < this.state.count / this.state.total &&
+      this.state.page < 3 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page + 3)}
+        >
+          {this.state.page + 3}
+        </Button>
+      ) : null}
+      {this.state.page + 3 < this.state.count / this.state.total &&
+      this.state.page < 2 ? (
+        <Button
+          className="button"
+          type="primary"
+          onClick={() => this.changePages(this.state.page + 4)}
+        >
+          {this.state.page + 4}
+        </Button>
+      ) : null}
+    </div>
+  );
+
   rows = () => {
-    console.log(this.state.rows);
     return this.state.rows.map(row => (
       <div className="div-100-emprestimo-report">
         <div className="div-lines-emprestimo-report">
@@ -54,6 +145,7 @@ class RelatorioEmprestimoContainer extends Component {
             <label>{row.deletedAt ? row.deletedAt : "-"}</label>
           </div>
         </div>
+        <div className=" div-separate1-Gentrada" />
       </div>
     ));
   };
@@ -92,6 +184,9 @@ class RelatorioEmprestimoContainer extends Component {
             ) : (
               this.rows()
             )}
+          </div>
+          <div className="footer-ROs">
+            <this.Pages />
           </div>
         </div>
       </>
