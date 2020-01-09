@@ -3,23 +3,23 @@
   width: 90%;
   margin-top: 40px;
 }
-.div-data-emprestimo{
+.div-data-emprestimo {
   width: 48%;
   display: flex;
   align-items: center;
-  justify-content: space-between
+  justify-content: space-between;
 }
-.div-dataSolici-emprestimo{
+.div-dataSolici-emprestimo {
   width: 60%;
   display: flex;
   align-items: center;
-  justify-content: space-between
+  justify-content: space-between;
 }
-.div-data1-emprestimo{
+.div-data1-emprestimo {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between
+  justify-content: space-between;
 }
 .cel-razaosocial-cabecalho-emprestimo {
   align-items: center;
@@ -30,80 +30,87 @@
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.div-linha-emprestimo{
+.div-linha-emprestimo {
   margin-top: 30px;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-.div-linha-emprestimo{
-  width: 90%;
-  display: flex;
-  margin: 0;
-  height: 50px;
-  align-items: center
-}
-.div-main-emprestimo{
+.div-main-emprestimo {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
-.div-linha1-emprestimo{
+.div-linha1-emprestimo {
   margin-top: 30px;
   width: 100%;
   display: flex;
 }
-.div-cnpj-imprestimo{
+.div-cnpj-imprestimo {
   width: 60%;
   display: flex;
   align-items: center;
   margin-right: 30px;
 }
-.cel-produto-cabecalho-emprestimo{
+.cel-produto-cabecalho-emprestimo {
   align-items: center;
   cursor: pointer;
   display: flex;
-  width: 70%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  width: 62%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.div-textData-imprestimo{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.cel-acao-cabecalho-emprestimo {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  width: 8%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+.div-textData-imprestimo {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: rgb(90, 90, 90);
   margin-right: 5px;
   width: 80%;
 }
-.div-textData1-imprestimo{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.div-textData1-emprestimo {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: rgb(90, 90, 90);
   margin-right: 5px;
   width: 90%;
 }
-.div-textSolici-imprestimo{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.div-textSolici-imprestimo {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: rgb(90, 90, 90);
   margin-right: 5px;
   width: 55%;
 }
-.div-tecnico-emprestimo{
+.div-tecnico-emprestimo {
   width: 50%;
   display: flex;
   align-items: center;
   margin-left: 10px;
 }
 
-.div-rs1-emprestimo{
+.div-rs1-emprestimo {
   width: 100%;
   display: flex;
   align-items: center;
   margin-top: 30px;
 }
-.div-cnpj-emprestimo{
+.div-cnpj-emprestimo {
   width: 40%;
   display: flex;
   align-items: center;
