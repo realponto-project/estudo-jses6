@@ -38,6 +38,7 @@ class Rexterno extends Component {
     messageError: false,
     messageSuccess: false,
     Os: "",
+    observacao: "",
     razaoSocial: "",
     cnpj: "",
     data: "",
@@ -366,7 +367,7 @@ class Rexterno extends Component {
     });
   };
 
-  addCarrinho = () => {
+  addCarrinho = async () => {
     if (this.state.nomeProduto !== "Não selecionado" || "") {
       const array = this.state.carrinho.map(value => value.nomeProdutoCarrinho);
 
@@ -390,7 +391,7 @@ class Rexterno extends Component {
         return;
       }
 
-      this.setState({
+      await this.setState({
         carrinho: [
           {
             status: this.state.status,
@@ -407,7 +408,11 @@ class Rexterno extends Component {
         nomeProduto: "Não selecionado",
         quant: 1,
         serial: false,
-        numeroSerieTest: ""
+        numeroSerieTest: "",
+        serialNumber: "",
+        estoque: "REALPONTO",
+        status: "Não selecionado",
+        observacao: ""
       });
     } else this.errorProduto();
   };
@@ -661,7 +666,7 @@ class Rexterno extends Component {
         <div className="div-linha-Os">
           <div className="div-numeroSerie-Os">
             {this.state.status !== "CONSERTO" ? (
-              <>
+              <div className="div-estoqueConserto-Os">
                 <div className="div-text-Os">Estoque:</div>
                 <Select
                   value={this.state.estoque}
@@ -672,7 +677,7 @@ class Rexterno extends Component {
                   <Option value="NOVAREAL">NOVA REALPONTO</Option>
                   <Option value="PONTOREAL">PONTOREAL</Option>
                 </Select>
-              </>
+              </div>
             ) : (
               <>
                 <div className="div-serial-Os">Número de série:</div>
@@ -728,8 +733,8 @@ class Rexterno extends Component {
                 placeholder="Digite a observação"
                 autosize={{ minRows: 2, maxRows: 4 }}
                 rows={4}
-                name="descricao"
-                value={this.state.descricao}
+                name="observacao"
+                value={this.state.observacao}
                 onChange={this.onChange}
               />
             </div>
