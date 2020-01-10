@@ -733,7 +733,7 @@ class Rexterno extends Component {
                 })}
               </Select>
               <this.modalStatus />
-              {this.props.auth.addMark ? (
+              {this.props.auth.addStatus ? (
                 <Button
                   className="buttonadd-marca-produtos"
                   type="primary"
