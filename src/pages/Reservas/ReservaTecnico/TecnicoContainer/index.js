@@ -1076,8 +1076,6 @@ class ReservaTecnico extends Component {
       })
     );
 
-    console.log(await tecnicosFormatted);
-
     createPDF(await tecnicosFormatted, this.state.dataModal);
 
     await this.setState({

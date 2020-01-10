@@ -166,6 +166,7 @@ class GerenciarEntrada extends Component {
               <div className="div-mais-ROs">
                 <div className="div-normal-mais-ROs">
                   <div className="div-produtos-mais-ROs">Produtos</div>
+                  <div className="div-produtos-mais-ROs">Status</div>
                   <div className="div-amount-mais-ROs">Reservado</div>
                   <div className="div-missOut-mais-ROs">Perca</div>
                   <div className="div-output-mais-ROs">Saída</div>
@@ -182,6 +183,11 @@ class GerenciarEntrada extends Component {
                     <div className="div-produtos-mais-ROs">
                       {line.products.map(valor => (
                         <div className="div-peca">{valor.name}</div>
+                      ))}
+                    </div>
+                    <div className="div-produtos-mais-ROs">
+                      {line.products.map(valor => (
+                        <div className="div-peca">{valor.status}</div>
                       ))}
                     </div>
                     <div className="div-amount-mais-ROs">

@@ -391,7 +391,6 @@ class EmprestimoContainer extends Component {
   );
 
   deleteEmprestimo = async () => {
-    console.log(this.state.retorno.id);
 
     const { id } = this.state.retorno;
 
@@ -651,7 +650,6 @@ class EmprestimoContainer extends Component {
   };
 
   retorno = item => {
-    console.log(item);
     const { razaoSocial, cnpj, createdAt, dateExpedition, id } = item;
 
     const { name, value } = masks("cnpj", cnpj);
