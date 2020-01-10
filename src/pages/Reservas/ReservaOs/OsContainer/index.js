@@ -380,7 +380,7 @@ class Rexterno extends Component {
       }
 
       if (
-        this.state.serial &&
+        this.state.serialNumber &&
         this.state.numeroSerieTest
           .split(/\n/)
           .filter(item => (item ? item : null)).length !== this.state.quant
@@ -655,7 +655,7 @@ class Rexterno extends Component {
             <div className="div-text-Os">Quant:</div>
             <InputNumber
               min={1}
-              max={this.state.disp}
+              max={this.state.status === "CONSERTO" ? 1 : this.state.disp}
               defaultValue={this.state.quant}
               value={this.state.quant}
               onChange={this.onChangeQuant}

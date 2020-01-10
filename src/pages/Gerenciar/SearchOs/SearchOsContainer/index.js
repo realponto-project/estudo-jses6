@@ -322,7 +322,6 @@ class SearchOsDash extends Component {
       loading: true
     });
 
-
     const resposta = await updateReservaOs(value);
 
     if (resposta.status === 422) {
