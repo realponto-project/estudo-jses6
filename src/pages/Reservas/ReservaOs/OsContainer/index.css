@@ -225,3 +225,9 @@
   border: 1px solid #ff0000 !important;
   background-color: #ff6c6c3b !important;
 }
+
+.div-estoqueConserto-Os {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}

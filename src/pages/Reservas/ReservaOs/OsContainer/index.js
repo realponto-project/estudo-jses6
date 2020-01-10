@@ -79,10 +79,20 @@ class Rexterno extends Component {
   };
 
   getAllProducts = async () => {
-    await getProdutos().then(resposta =>
+    const query = {
+      filters: {
+        product: {
+          specific: {
+            serial: true
+          }
+        }
+      }
+    };
+
+    await getProdutos(query).then(resposta =>
       this.setState({
         itemArray: resposta.data.rows.map(item => {
-          const resp = { name: item.name, productId: item.id };
+          const resp = { name: item.name, id: item.id };
           return resp;
         })
       })
@@ -391,20 +401,32 @@ class Rexterno extends Component {
         return;
       }
 
-      await this.setState({
-        carrinho: [
-          {
-            status: this.state.status,
-            nomeProdutoCarrinho: this.state.nomeProduto,
-            productBaseId: this.state.productBaseId,
-            amount: this.state.quant.toString(),
-            stockBase: this.state.estoque,
-            serialNumberArray: this.state.numeroSerieTest
-              .split(/\n/)
-              .filter(item => (item ? item : null))
-          },
-          ...this.state.carrinho
-        ],
+      let itemAdd = null;
+
+      if (this.state.status === "CONSERTO") {
+        itemAdd = {
+          status: this.state.status,
+          productId: this.state.productBaseId,
+          serialNumber: this.state.serialNumber,
+          description: this.state.observacao
+        };
+      } else {
+        itemAdd = {
+          status: this.state.status,
+          nomeProdutoCarrinho: this.state.nomeProduto,
+          productBaseId: this.state.productBaseId,
+          amount: this.state.quant.toString(),
+          stockBase: this.state.estoque,
+          serialNumberArray: this.state.numeroSerieTest
+            .split(/\n/)
+            .filter(item => (item ? item : null))
+        };
+      }
+
+      console.log(itemAdd);
+
+      this.setState({
+        carrinho: [itemAdd, ...this.state.carrinho],
         nomeProduto: "Não selecionado",
         quant: 1,
         serial: false,
