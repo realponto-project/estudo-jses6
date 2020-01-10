@@ -277,8 +277,6 @@ class Rexterno extends Component {
 
     const resposta = await newReservaOs(values);
 
-    console.log(resposta);
-
     if (resposta.status === 422) {
       this.setState({
         messageError: true,
@@ -332,6 +330,7 @@ class Rexterno extends Component {
 
   onChangeStatus = async valor => {
     await this.setState({
+      serialNumber: "",
       status: valor
     });
 
@@ -390,7 +389,7 @@ class Rexterno extends Component {
       }
 
       if (
-        this.state.serialNumber &&
+        !this.state.serialNumber &&
         this.state.numeroSerieTest
           .split(/\n/)
           .filter(item => (item ? item : null)).length !== this.state.quant
@@ -422,8 +421,6 @@ class Rexterno extends Component {
             .filter(item => (item ? item : null))
         };
       }
-
-      console.log(itemAdd);
 
       this.setState({
         carrinho: [itemAdd, ...this.state.carrinho],

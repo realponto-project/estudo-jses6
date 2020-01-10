@@ -291,8 +291,6 @@ export const createPDF = (technician, data) => {
     hotfixes: [] // an array of hotfix strings to enable
   });
 
-  console.log(technician);
-
   moment.locale("pt");
 
   technician.map((tecnico, i) => {
