@@ -102,6 +102,7 @@ export const newTecnico = async values => {
       response = resp;
     })
     .catch(error => {
+      console.log(error.response);
       if (error.response) {
         response = error.response;
       } else {

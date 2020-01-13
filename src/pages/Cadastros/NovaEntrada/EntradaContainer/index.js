@@ -375,7 +375,7 @@ class NovaEntrada extends Component {
               onChange={this.onChangeSelect}
             >
               <Option value="REALPONTO">REALPONTO</Option>
-              <Option value="NOVA REALPONTO">NOVA REALPONTO</Option>
+              <Option value="NOVAREAL">NOVA REALPONTO</Option>
               <Option value="PONTOREAL">PONTOREAL</Option>
               <Option value="EMPRESTIMO">EMPRESTIMO</Option>
             </Select>

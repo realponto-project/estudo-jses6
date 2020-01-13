@@ -480,6 +480,9 @@ class ReservaTecnico extends Component {
           : null
     };
 
+    if (this.state.produtoSelecionado.products.status === "CONSERTO") {
+    }
+
     const resposta = await baixaReservaOs(value);
 
     if (resposta.status === 200) {
@@ -654,6 +657,7 @@ class ReservaTecnico extends Component {
             </Tooltip>
           </div>
         </div>
+        {console.log(this.state)}
         {this.state.produtoSelecionado.products.serial ? (
           <div className="div-text-modal">
             <div className="div-numSerie-modal">
