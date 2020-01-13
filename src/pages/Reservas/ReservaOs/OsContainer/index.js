@@ -331,6 +331,15 @@ class Rexterno extends Component {
   };
 
   onChangeStatus = async valor => {
+    if (this.state.status === "CONSERTO" || valor === "CONSERTO") {
+      await this.setState({
+        serialNumber: "",
+        numeroSerieTest: "",
+        productBaseId: "",
+        nomeProduto: "Não selecionado"
+      });
+    }
+
     await this.setState({
       serialNumber: "",
       status: valor,
@@ -340,11 +349,6 @@ class Rexterno extends Component {
 
     if (valor === "CONSERTO") {
       this.getAllProducts();
-      this.setState({
-        numeroSerieTest: "",
-        productBaseId: "",
-        nomeProduto: "Não selecionado"
-      });
     } else {
       await this.getAllItens();
     }
