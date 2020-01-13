@@ -6,7 +6,6 @@ import { stock } from "../../../../services/estoque";
 const { Option } = Select;
 
 class Estoque extends Component {
-  
   state = {
     numeroSerie: "",
     produto: "",
@@ -82,14 +81,12 @@ class Estoque extends Component {
     };
 
     await stock(query).then(resposta =>
-      this.setState(
-        {
-          estoque: resposta.data,
-          page: resposta.data.page,
-          count: resposta.data.count,
-          show: resposta.data.show
-        },
-      )
+      this.setState({
+        estoque: resposta.data,
+        page: resposta.data.page,
+        count: resposta.data.count,
+        show: resposta.data.show
+      })
     );
 
     this.setState({
@@ -275,11 +272,13 @@ class Estoque extends Component {
                       <label
                         className="div-table-label-cel-estoque"
                         style={
-                          line.minimumStock > line.available
-                          ? { color: "red" }
-                          : null
+                          parseInt(line.minimumStock, 10) >
+                          parseInt(line.available, 10)
+                            ? { color: "red" }
+                            : null
                         }
-                        >
+                      >
+                        {console.log(line)}
                         {line.name}
                       </label>
                     </div>
@@ -287,7 +286,8 @@ class Estoque extends Component {
                       <label
                         className="div-table-label-cel-estoque"
                         style={
-                          line.minimumStock > line.available
+                          parseInt(line.minimumStock, 10) >
+                          parseInt(line.available, 10)
                             ? { color: "red" }
                             : null
                         }
@@ -299,7 +299,8 @@ class Estoque extends Component {
                       <label
                         className="div-table-label-cel-estoque"
                         style={
-                          line.minimumStock > line.available
+                          parseInt(line.minimumStock, 10) >
+                          parseInt(line.available, 10)
                             ? { color: "red" }
                             : null
                         }
@@ -312,7 +313,8 @@ class Estoque extends Component {
                       <label
                         className="div-table-label-cel-estoque"
                         style={
-                          line.minimumStock > line.available
+                          parseInt(line.minimumStock, 10) >
+                          parseInt(line.available, 10)
                             ? { color: "red" }
                             : null
                         }
@@ -324,7 +326,8 @@ class Estoque extends Component {
                       <label
                         className="div-table-label-cel-estoque"
                         style={
-                          line.minimumStock > line.available
+                          parseInt(line.minimumStock, 10) >
+                          parseInt(line.available, 10)
                             ? { color: "red" }
                             : null
                         }

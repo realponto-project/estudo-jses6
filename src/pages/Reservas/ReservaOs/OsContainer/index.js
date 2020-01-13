@@ -171,7 +171,9 @@ class Rexterno extends Component {
 
     if (status === 200) {
       this.setState({
-        allStatus: data.map(item => item.status)
+        allStatus: data
+          .map(item => item.status)
+          .filter(item => item !== "EMPRESTIMO")
       });
     }
   };
@@ -331,11 +333,19 @@ class Rexterno extends Component {
   onChangeStatus = async valor => {
     await this.setState({
       serialNumber: "",
-      status: valor
+      status: valor,
+      nomeProduto: "Não selecionado"
     });
 
-    if (this.state.status === "CONSERTO") {
+    if (valor === "CONSERTO") {
       this.getAllProducts();
+      this.setState({
+        numeroSerieTest: "",
+        productBaseId: "",
+        nomeProduto: "Não selecionado"
+      });
+    } else {
+      await this.getAllItens();
     }
   };
 
@@ -389,6 +399,7 @@ class Rexterno extends Component {
       }
 
       if (
+        this.state.serial &&
         !this.state.serialNumber &&
         this.state.numeroSerieTest
           .split(/\n/)
@@ -405,6 +416,7 @@ class Rexterno extends Component {
       if (this.state.status === "CONSERTO") {
         itemAdd = {
           status: this.state.status,
+          nomeProdutoCarrinho: this.state.nomeProduto,
           productId: this.state.productBaseId,
           serialNumber: this.state.serialNumber,
           description: this.state.observacao,
@@ -436,6 +448,8 @@ class Rexterno extends Component {
         observacao: ""
       });
     } else this.errorProduto();
+
+    await this.getAllItens();
   };
 
   remove = value => {
