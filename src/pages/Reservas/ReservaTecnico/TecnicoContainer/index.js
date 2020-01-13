@@ -467,20 +467,28 @@ class ReservaTecnico extends Component {
       }
     });
 
-    const value = {
-      osPartsId: this.state.produtoSelecionado.products.id,
-      add: {
-        output: this.state.teste
-      },
-      serialNumberArray:
-        this.state.numeroSerieTest.length > 0
-          ? this.state.numeroSerieTest
-              .split(/\n/)
-              .filter(item => (item ? item : null))
-          : null
-    };
+    let value = null;
 
-    if (this.state.produtoSelecionado.products.status === "CONSERTO") {
+    if (this.state.produtoSelecionado.products.status !== "CONSERTO") {
+      value = {
+        osPartsId: this.state.produtoSelecionado.products.id,
+        add: {
+          output: this.state.teste
+        },
+        serialNumberArray:
+          this.state.numeroSerieTest.length > 0
+            ? this.state.numeroSerieTest
+                .split(/\n/)
+                .filter(item => (item ? item : null))
+            : null
+      };
+    } else {
+      value = {
+        osPartsId: this.state.produtoSelecionado.products.osPartsId,
+        add: {
+          output: this.state.teste
+        }
+      };
     }
 
     const resposta = await baixaReservaOs(value);
