@@ -124,7 +124,9 @@ class NovaEntrada extends Component {
         }
       };
       await this.getAllItens(query);
-      this.setState({ nomeProduto: "" });
+      this.setState({ nomeProduto: "Não selecionado" });
+    } else {
+      await this.getAllItens();
     }
     this.setState({
       estoque: value

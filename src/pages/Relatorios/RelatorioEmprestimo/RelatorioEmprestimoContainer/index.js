@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 
-import { Spin, Button } from "antd";
+import { Spin, Button, Input, DatePicker } from "antd";
 
 import { getEprestimoService } from "../../../../services/emprestimo";
 
@@ -12,11 +12,18 @@ class RelatorioEmprestimoContainer extends Component {
     page: 1,
     total: 10,
     count: 0,
-    show: 0
+    show: 0,
+    avancado: false
   };
 
   componentDidMount = async () => {
     await this.getEprestimo();
+  };
+
+  avancado = () => {
+    this.setState({
+      avancado: !this.state.avancado
+    });
   };
 
   getEprestimo = async () => {
@@ -157,10 +164,68 @@ class RelatorioEmprestimoContainer extends Component {
           <div className="title-emprestimo-report">
             <h1 className="h1-Gentrada">Emprestimo</h1>
           </div>
+
+          {this.state.avancado ? (
+            <div className="div-linha-avancado-Rtecnico">
+              <div className="div-ocultar-Rtecnico">
+                <Button
+                  type="primary"
+                  className="button"
+                  onClick={this.avancado}
+                >
+                  Ocultar
+                </Button>
+              </div>
+              <div className="div-linha1-avancado-Rtecnico">
+                <div className="div-rs-report">
+                  <div className="div-textRs-report">Razão social:</div>
+                  <Input
+                    className="input-100"
+                    style={{ width: "100%" }}
+                    name="rs"
+                    value={this.state.rs}
+                    placeholder="Digite o razão social"
+                    onChange={this.onChange}
+                    allowClear
+                  />
+                </div>
+
+                <div className="div-Os-report">
+                  <div className="div-text-Rtecnico">Série:</div>
+                  <Input
+                    className="input-100"
+                    style={{ width: "100%" }}
+                    name="os"
+                    value={this.state.os}
+                    placeholder="Número de série"
+                    onChange={this.onChange}
+                    allowClear
+                  />
+                </div>
+
+                <div className="div-data-RPerda">
+                  <div className="div-text-Rtecnico">Data:</div>
+                  <DatePicker
+                    placeholder="Digite a data"
+                    format="DD/MM/YYYY"
+                    dropdownClassName="poucas"
+                    onChange={this.searchDate}
+                    onOk={this.searchDate}
+                  />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="div-avancado-Rtecnico">
+              <Button type="primary" className="button" onClick={this.avancado}>
+                Avançado
+              </Button>
+            </div>
+          )}
           <div className="div-main-emprestimo">
             <div className="div-emprestimo-report">
               <div className="cel-razaoSocial-cabecalho-emprestimo-report">
-                RazaoSocial
+                Razão social
               </div>
               <div className="cel-serialNumber-cabecalho-emprestimo-report">
                 Número de série

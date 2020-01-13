@@ -334,7 +334,8 @@ class Rexterno extends Component {
     await this.setState({
       serialNumber: "",
       status: valor,
-      nomeProduto: "Não selecionado"
+      nomeProduto: "Não selecionado",
+      serial: false
     });
 
     if (valor === "CONSERTO") {
@@ -393,7 +394,10 @@ class Rexterno extends Component {
       if (array.filter(value => value === this.state.nomeProduto).length > 0) {
         this.errorSelecionado("Este item já foi selecionado");
         this.setState({
-          nomeProduto: ""
+          nomeProduto: "Não selecionado",
+          serialNumber: "",
+          observacao: "",
+          status: "Não selecionado"
         });
         return;
       }
@@ -420,7 +424,6 @@ class Rexterno extends Component {
           productId: this.state.productBaseId,
           serialNumber: this.state.serialNumber,
           description: this.state.observacao,
-          nomeProdutoCarrinho: this.state.nomeProduto,
           amount: this.state.quant
         };
       } else {
@@ -515,7 +518,7 @@ class Rexterno extends Component {
   );
 
   render() {
-    console.log(this.state.status);
+    console.log(this.state);
     return (
       <div className="div-card-Os">
         {this.renderRedirect()}
@@ -717,25 +720,21 @@ class Rexterno extends Component {
               </div>
             ) : (
               <>
-                {this.state.serial ? (
-                  <>
-                    <div className="div-serial-Os">Número de série:</div>
-                    <Input
-                      allowClear={!this.state.fieldFalha.serialNumber}
-                      className={
-                        this.state.fieldFalha.serialNumber
-                          ? "div-inputError-tecnico"
-                          : "input-100"
-                      }
-                      placeholder="Digite o número"
-                      name="serialNumber"
-                      value={this.state.serialNumber}
-                      onChange={this.onChange}
-                      onBlur={this.onBlurValidator}
-                      onFocus={this.onFocus}
-                    />
-                  </>
-                ) : null}
+                <div className="div-serial-Os">Número de série:</div>
+                <Input
+                  allowClear={!this.state.fieldFalha.serialNumber}
+                  className={
+                    this.state.fieldFalha.serialNumber
+                      ? "div-inputError-tecnico"
+                      : "input-100"
+                  }
+                  placeholder="Digite o número"
+                  name="serialNumber"
+                  value={this.state.serialNumber}
+                  onChange={this.onChange}
+                  onBlur={this.onBlurValidator}
+                  onFocus={this.onFocus}
+                />
               </>
             )}
           </div>
