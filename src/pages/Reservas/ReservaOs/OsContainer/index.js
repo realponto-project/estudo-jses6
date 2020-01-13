@@ -420,7 +420,8 @@ class Rexterno extends Component {
           productId: this.state.productBaseId,
           serialNumber: this.state.serialNumber,
           description: this.state.observacao,
-          amount: "1"
+          nomeProdutoCarrinho: this.state.nomeProduto,
+          amount: this.state.quant
         };
       } else {
         itemAdd = {
@@ -514,6 +515,7 @@ class Rexterno extends Component {
   );
 
   render() {
+    console.log(this.state.status);
     return (
       <div className="div-card-Os">
         {this.renderRedirect()}
@@ -693,6 +695,7 @@ class Rexterno extends Component {
               defaultValue={this.state.quant}
               value={this.state.quant}
               onChange={this.onChangeQuant}
+              onBlur={this.onBlurValidator}
             />
           </div>
         </div>
@@ -714,21 +717,25 @@ class Rexterno extends Component {
               </div>
             ) : (
               <>
-                <div className="div-serial-Os">Número de série:</div>
-                <Input
-                  allowClear={!this.state.fieldFalha.serialNumber}
-                  className={
-                    this.state.fieldFalha.serialNumber
-                      ? "div-inputError-tecnico"
-                      : "input-100"
-                  }
-                  placeholder="Digite o número"
-                  name="serialNumber"
-                  value={this.state.serialNumber}
-                  onChange={this.onChange}
-                  onBlur={this.onBlurValidator}
-                  onFocus={this.onFocus}
-                />
+                {this.state.serial ? (
+                  <>
+                    <div className="div-serial-Os">Número de série:</div>
+                    <Input
+                      allowClear={!this.state.fieldFalha.serialNumber}
+                      className={
+                        this.state.fieldFalha.serialNumber
+                          ? "div-inputError-tecnico"
+                          : "input-100"
+                      }
+                      placeholder="Digite o número"
+                      name="serialNumber"
+                      value={this.state.serialNumber}
+                      onChange={this.onChange}
+                      onBlur={this.onBlurValidator}
+                      onFocus={this.onFocus}
+                    />
+                  </>
+                ) : null}
               </>
             )}
           </div>

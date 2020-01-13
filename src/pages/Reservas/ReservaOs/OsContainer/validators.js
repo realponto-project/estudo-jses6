@@ -35,6 +35,14 @@ export const masks = (nome, valor) => {
       nome,
       valor: value
     };
+  } else if (nome === "quant") {
+    let value = valor;
+    value = value.replace(/\D/gi, "");
+
+    return {
+      nome,
+      valor: value
+    };
   } else if (nome === "Os") {
     let value = valor;
     value = value.replace(/\D/gi, "");
