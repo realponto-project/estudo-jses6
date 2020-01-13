@@ -13,10 +13,35 @@ class RelatorioEmprestimoContainer extends Component {
     total: 10,
     count: 0,
     show: 0,
-    avancado: false
+    avancado: false,
+    serialNumber: "",
+    razaoSocial: "",
+    valueDate: { start: "2019/01/01" }
   };
 
   componentDidMount = async () => {
+    await this.getEprestimo();
+  };
+
+  searchDate = async e => {
+    if (!e[0] || !e[1]) return;
+    await this.setState({
+      valueDate: { start: e[0]._d, end: e[1]._d }
+    });
+    await this.getEprestimo();
+  };
+
+  onChange = async e => {
+    let { name, value } = e.target;
+
+    if (name === "serialNumber") {
+      value = value.replace(/\D/gi, "");
+    }
+
+    await this.setState({
+      [name]: value
+    });
+
     await this.getEprestimo();
   };
 
@@ -28,13 +53,28 @@ class RelatorioEmprestimoContainer extends Component {
 
   getEprestimo = async () => {
     const query = {
+      filters: {
+        emprestimo: {
+          specific: {
+            razaoSocial: this.state.razaoSocial,
+            createdAt: this.state.valueDate
+          }
+        },
+        equip: {
+          specific: {
+            serialNumber: this.state.serialNumber
+          }
+        }
+      },
+      page: this.state.page,
+      total: this.state.total,
       paranoid: false
     };
     const { status, data } = await getEprestimoService(query);
 
     if (status === 200) {
-      const { page, total, count, show, rows } = data;
-      this.setState({ page, total, count, show, rows });
+      const { page, count, show, rows } = data;
+      this.setState({ page, count, show, rows });
     }
   };
 
@@ -158,6 +198,7 @@ class RelatorioEmprestimoContainer extends Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <>
         <div className="div-card-emprestimo-report">
@@ -182,8 +223,8 @@ class RelatorioEmprestimoContainer extends Component {
                   <Input
                     className="input-100"
                     style={{ width: "100%" }}
-                    name="rs"
-                    value={this.state.rs}
+                    name="razaoSocial"
+                    value={this.state.razaoSocial}
                     placeholder="Digite o razão social"
                     onChange={this.onChange}
                     allowClear
@@ -195,8 +236,8 @@ class RelatorioEmprestimoContainer extends Component {
                   <Input
                     className="input-100"
                     style={{ width: "100%" }}
-                    name="os"
-                    value={this.state.os}
+                    name="serialNumber"
+                    value={this.state.serialNumber}
                     placeholder="Número de série"
                     onChange={this.onChange}
                     allowClear
@@ -205,7 +246,7 @@ class RelatorioEmprestimoContainer extends Component {
 
                 <div className="div-data-RPerda">
                   <div className="div-text-Rtecnico">Data:</div>
-                  <DatePicker
+                  <DatePicker.RangePicker
                     placeholder="Digite a data"
                     format="DD/MM/YYYY"
                     dropdownClassName="poucas"
