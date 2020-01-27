@@ -318,7 +318,7 @@ class SideBar extends Component {
               }}
             />
           );
-          case "relatorioEmprestimo_dash":
+        case "relatorioEmprestimo_dash":
           return (
             <Redirect
               push
@@ -562,7 +562,7 @@ class SideBar extends Component {
               key="reservaTecnico_dash"
             >
               <Icon type="user" />
-              Técnico
+              Romaneio
             </Menu.Item>
             <Menu.Item disabled={!this.props.auth.addROs} key="Rexterno_dash">
               <Icon type="file-add" />
@@ -591,12 +591,12 @@ class SideBar extends Component {
               </span>
             }
           >
-          <Menu.Item key="emprestimo_dash">
-          <Icon type="unordered-list" />
+            <Menu.Item key="emprestimo_dash">
+              <Icon type="unordered-list" />
               Gerenciar
             </Menu.Item>
           </SubMenu>
-          
+
           <SubMenu
             key="Relatorios"
             title={
@@ -611,7 +611,7 @@ class SideBar extends Component {
               Os
             </Menu.Item>
             <Menu.Item key="relatorioEmprestimo_dash">
-            <Icon type="retweet" />
+              <Icon type="retweet" />
               Empréstimo
             </Menu.Item>
             <Menu.Item key="relatorioPerda_dash">
