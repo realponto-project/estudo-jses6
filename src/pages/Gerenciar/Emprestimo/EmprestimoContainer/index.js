@@ -538,7 +538,6 @@ class EmprestimoContainer extends Component {
       cancelText="Cancelar"
     >
       <div className="div-rs1-Os">
-        {console.log(this.state.atualizar)}
         <div className="div-textRs-Os">Razão social:</div>
         <div className="div-inputs">
           <Input
@@ -555,7 +554,7 @@ class EmprestimoContainer extends Component {
       <div className="div-rs1-emprestimo">
         <div className="div-data-emprestimo">
           <div className="div-textData1-emprestimo">Data solicitação:</div>
-          <div className="div-inputs">
+          <div className="div-inputs" style={{ marginRight: "15px" }}>
             <Input
               readOnly
               className="input-100"
@@ -567,16 +566,21 @@ class EmprestimoContainer extends Component {
           </div>
         </div>
 
-        <div className="div-data-emprestimo">
+        <div className="div-data-emprestimo" style={{ width: "52%" }}>
           <div className="div-textData1-emprestimo">Data atendimento:</div>
           <div className="div-inputs">
-            <Input
-              readOnly
+            <DatePicker
               className="input-100"
-              style={{ width: "100%" }}
-              name="razaoSocial"
+              onChange={data =>
+                this.setState({
+                  atualizar: { ...this.state.atualizar, dateExpedition: data }
+                })
+              }
+              format="DD/MM/YYYY"
               value={this.state.atualizar.dateExpedition}
-              onChange={this.onChange}
+              defaultValue={this.state.atualizar.dateExpedition}
+              placeholder="Selecione uma data"
+              disabledDate={this.disabledDate}
             />
           </div>
         </div>
@@ -685,11 +689,8 @@ class EmprestimoContainer extends Component {
   handleUpdate = async () => {
     const { atualizar, technicianId } = this.state;
 
-    const { dateExpedition } = atualizar;
-
     await updateEprestimo({
       ...atualizar,
-      dateExpedition: moment(dateExpedition.replace(/\D/gi, ""), "DDMMYYYY"),
       technicianId
     });
 
@@ -729,7 +730,7 @@ class EmprestimoContainer extends Component {
       atualizar: {
         razaoSocial,
         createdAt,
-        dateExpedition,
+        dateExpedition: moment(dateExpedition.replace(/\D/gi, ""), "DDMMYYYY"),
         [name]: value,
         id
       },
@@ -951,6 +952,7 @@ class EmprestimoContainer extends Component {
   };
 
   render() {
+    console.log(this.state.atualizar);
     return (
       <>
         <this.ModalDisponiveis />
