@@ -744,14 +744,16 @@ class EmprestimoContainer extends Component {
         return (
           <div className="div-100-Gentrada">
             <div className="div-lines-RPerda">
-              <div className="cel-produto-cabecalho-estoque">{item.name}</div>
-              <div className="cel-razaosocial-cabecalho-emprestimo">
+              <div className="cel-produto-cabecalho-emprestimo">
+                {item.name}
+              </div>
+              <div className="cel-razaosocial-cabecalho-emprestimo-reservados">
                 {item.razaoSocial}
               </div>
               <div className="cel-numSerie-cabecalho-estoque">
                 {item.serialNumber}
               </div>
-              <div className="cel-acao-cabecalho-emprestimo">
+              <div className="cel-acao-cabecalho-emprestimo-reservados">
                 <Button
                   type="primary"
                   className="button"
@@ -997,12 +999,12 @@ class EmprestimoContainer extends Component {
           {this.state.select === "reservados" && (
             <div className="div-main-emprestimo">
               <div className="div-cabecalho-estoque">
-                <div className="cel-produto-cabecalho-estoque">Produto</div>
-                <div className="cel-razaosocial-cabecalho-emprestimo">
+                <div className="cel-produto-cabecalho-emprestimo">Produto</div>
+                <div className="cel-razaosocial-cabecalho-emprestimo-reservados">
                   Razão social
                 </div>
                 <div className="cel-numSerie-cabecalho-estoque">Num. Serie</div>
-                <div className="cel-acao-cabecalho-emprestimo" />
+                <div className="cel-acao-cabecalho-emprestimo-reservados" />
               </div>
               <div className=" div-separate-Gentrada" />
               {this.state.loading ? (
