@@ -27,6 +27,31 @@ export const addEprestimo = async value => {
   return response;
 };
 
+export const updateEprestimo = async value => {
+  const storeObject = store.getState();
+
+  const headers = {
+    token: storeObject.auth.token,
+    username: storeObject.auth.username
+  };
+
+  let response = {};
+
+  await axios
+    .put(`${BACKEND_URL}/api/emprestimo`, value, { headers: headers })
+    .then(resp => {
+      response = resp;
+    })
+    .catch(error => {
+      if (error.response) {
+        response = error.response;
+      } else {
+        console.log("Error", error.message);
+      }
+    });
+  return response;
+};
+
 export const getEprestimoService = async query => {
   const storeObject = store.getState();
 
@@ -55,7 +80,7 @@ export const getEprestimoService = async query => {
   return response;
 };
 
-export const deleteEmprestimoService = async id => {
+export const deleteEmprestimoService = async value => {
   const storeObject = store.getState();
 
   const headers = {
@@ -68,7 +93,7 @@ export const deleteEmprestimoService = async id => {
   await axios
     .delete(`${BACKEND_URL}/api/emprestimo`, {
       headers: headers,
-      params: { id }
+      params: value
     })
     .then(resp => {
       response = resp;
