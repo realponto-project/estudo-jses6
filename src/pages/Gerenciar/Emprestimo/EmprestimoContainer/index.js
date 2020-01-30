@@ -570,13 +570,33 @@ class EmprestimoContainer extends Component {
         <div className="div-data-emprestimo">
           <div className="div-textData1-emprestimo">Data atendimento:</div>
           <div className="div-inputs">
-            <Input
+            {/* <Input
               readOnly
               className="input-100"
               style={{ width: "100%" }}
               name="razaoSocial"
               value={this.state.atualizar.dateExpedition}
               onChange={this.onChange}
+            /> */}
+            <DatePicker
+              className="input-100"
+              onChange={data =>
+                this.setState({
+                  atualizar: { ...this.state.atualizar, dateExpedition: data }
+                })
+              }
+              format="DD/MM/YYYY"
+              value={this.state.atualizar.dateExpedition}
+              defaultValue={this.state.atualizar.dateExpedition}
+              // value={
+              //   this.state.atualizar &&
+              //   moment(
+              //     this.state.atualizar.dateExpedition.replace(/\D/gi, ""),
+              //     "DDMMYYYY"
+              //   )
+              // }
+              placeholder="Selecione uma data"
+              disabledDate={this.disabledDate}
             />
           </div>
         </div>
@@ -685,11 +705,8 @@ class EmprestimoContainer extends Component {
   handleUpdate = async () => {
     const { atualizar, technicianId } = this.state;
 
-    const { dateExpedition } = atualizar;
-
     await updateEprestimo({
       ...atualizar,
-      dateExpedition: moment(dateExpedition.replace(/\D/gi, ""), "DDMMYYYY"),
       technicianId
     });
 
@@ -729,7 +746,7 @@ class EmprestimoContainer extends Component {
       atualizar: {
         razaoSocial,
         createdAt,
-        dateExpedition,
+        dateExpedition: moment(dateExpedition.replace(/\D/gi, ""), "DDMMYYYY"),
         [name]: value,
         id
       },
@@ -951,6 +968,7 @@ class EmprestimoContainer extends Component {
   };
 
   render() {
+    console.log(this.state.atualizar);
     return (
       <>
         <this.ModalDisponiveis />
