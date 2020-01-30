@@ -1108,7 +1108,7 @@ class ReservaTecnico extends Component {
       <div className="div-card-Rtecnico">
         {this.renderRedirect()}
         <div className="linhaTexto-Rtecnico">
-          <h1 className="h1-Rtecnico">Reservas técnicos externos</h1>
+          <h1 className="h1-Rtecnico">Romaneio técnico</h1>
         </div>
         {this.state.avancado ? (
           <div className="div-linha-avancado-Rtecnico">
