@@ -116,3 +116,10 @@
   align-items: center;
   margin-right: 30px;
 }
+
+.div-tecnico-update-emprestimo {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  /* margin-right: 30px; */
+}
