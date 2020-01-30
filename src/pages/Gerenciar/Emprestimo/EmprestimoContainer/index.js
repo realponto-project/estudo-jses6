@@ -538,7 +538,6 @@ class EmprestimoContainer extends Component {
       cancelText="Cancelar"
     >
       <div className="div-rs1-Os">
-        {console.log(this.state.atualizar)}
         <div className="div-textRs-Os">Razão social:</div>
         <div className="div-inputs">
           <Input
@@ -555,7 +554,7 @@ class EmprestimoContainer extends Component {
       <div className="div-rs1-emprestimo">
         <div className="div-data-emprestimo">
           <div className="div-textData1-emprestimo">Data solicitação:</div>
-          <div className="div-inputs">
+          <div className="div-inputs" style={{ marginRight: "15px" }}>
             <Input
               readOnly
               className="input-100"
@@ -567,17 +566,9 @@ class EmprestimoContainer extends Component {
           </div>
         </div>
 
-        <div className="div-data-emprestimo">
+        <div className="div-data-emprestimo" style={{ width: "52%" }}>
           <div className="div-textData1-emprestimo">Data atendimento:</div>
           <div className="div-inputs">
-            {/* <Input
-              readOnly
-              className="input-100"
-              style={{ width: "100%" }}
-              name="razaoSocial"
-              value={this.state.atualizar.dateExpedition}
-              onChange={this.onChange}
-            /> */}
             <DatePicker
               className="input-100"
               onChange={data =>
@@ -588,13 +579,6 @@ class EmprestimoContainer extends Component {
               format="DD/MM/YYYY"
               value={this.state.atualizar.dateExpedition}
               defaultValue={this.state.atualizar.dateExpedition}
-              // value={
-              //   this.state.atualizar &&
-              //   moment(
-              //     this.state.atualizar.dateExpedition.replace(/\D/gi, ""),
-              //     "DDMMYYYY"
-              //   )
-              // }
               placeholder="Selecione uma data"
               disabledDate={this.disabledDate}
             />
