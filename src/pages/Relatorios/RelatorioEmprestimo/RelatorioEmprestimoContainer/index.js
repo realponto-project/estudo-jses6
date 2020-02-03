@@ -198,7 +198,6 @@ class RelatorioEmprestimoContainer extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <>
         <div className="div-card-emprestimo-report">

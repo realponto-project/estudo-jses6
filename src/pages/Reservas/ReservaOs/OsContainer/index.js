@@ -522,7 +522,6 @@ class Rexterno extends Component {
   );
 
   render() {
-    console.log(this.state);
     return (
       <div className="div-card-Os">
         {this.renderRedirect()}
