@@ -308,8 +308,6 @@ export const createPDF = (technician, data) => {
     }
     doc.text(5, 13, moment(data).format("L")).text(50, 13, tecnico.name);
 
-    // console.log(doc.splitTextToSize(tecnico.name, 100).length)
-
     doc.setLineWidth(0.1).line(150, 12, 280, 12);
     doc.setFontSize(12).text(150, 17, "Assinatura");
 
@@ -489,8 +487,6 @@ export const createPDF = (technician, data) => {
 
   doc.autoPrint();
   // window.print();
-
-  // console.log(technician);
 
   doc.save(`${moment(data).format("L")}.pdf`);
 };

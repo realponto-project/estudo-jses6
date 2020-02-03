@@ -952,7 +952,6 @@ class EmprestimoContainer extends Component {
   };
 
   render() {
-    console.log(this.state.atualizar);
     return (
       <>
         <this.ModalDisponiveis />

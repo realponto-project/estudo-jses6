@@ -665,7 +665,6 @@ class ReservaTecnico extends Component {
             </Tooltip>
           </div>
         </div>
-        {console.log(this.state)}
         {this.state.produtoSelecionado.products.serial ? (
           <div className="div-text-modal">
             <div className="div-numSerie-modal">

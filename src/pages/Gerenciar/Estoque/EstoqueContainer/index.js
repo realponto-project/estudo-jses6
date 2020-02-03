@@ -278,7 +278,6 @@ class Estoque extends Component {
                             : null
                         }
                       >
-                        {console.log(line)}
                         {line.name}
                       </label>
                     </div>
