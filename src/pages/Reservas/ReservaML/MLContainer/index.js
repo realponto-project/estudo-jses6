@@ -34,11 +34,11 @@ class ReservaML extends Component {
     loading: false,
     fieldFalha: {
       cpfOuCnpj: false,
-      razaoSocial: false,
+      razaoSocial: false
     },
     message: {
       cpfOuCnpj: "",
-      razaoSocial: "",
+      razaoSocial: ""
     }
   };
 
@@ -118,9 +118,20 @@ class ReservaML extends Component {
     await this.getAllItens();
   };
 
-  getAllItens = async () => {
+  getAllItens = async name => {
     const query = {
-      stockBase: this.state.estoque
+      filters: {
+        product: {
+          specific: {
+            name
+          }
+        },
+        stockBase: {
+          specific: {
+            stockBase: this.state.estoque
+          }
+        }
+      }
     };
 
     await getProdutoByEstoque(query).then(resposta =>
@@ -226,7 +237,7 @@ class ReservaML extends Component {
       trackingCode: this.state.codigo,
       name: this.state.razaoSocial,
       cnpjOrCpf: this.state.cpfOuCnpj,
-      freeMarketParts: this.state.carrinho,
+      freeMarketParts: this.state.carrinho
     };
 
     const resposta = await NewReservaML(values);
@@ -452,32 +463,26 @@ class ReservaML extends Component {
         <div className="div-linha-ML">
           <div className="div-nome-ML">
             <div className="div-textNomeProduto-ML">Nome do produto:</div>
-            {this.state.itemArray.length !== 0 ? (
-              <Select
-                showSearch
-                style={{ width: "100%" }}
-                placeholder="Selecione o produto"
-                optionFilterProp="children"
-                value={this.state.nomeProduto}
-                onChange={this.onChangeItem}
-                filterOption={(input, option) =>
-                  option.props.children
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {this.state.itemArray.map(value => (
-                  <Option product={value} value={value.name}>
-                    {value.name}
-                  </Option>
-                ))}
-              </Select>
-            ) : (
-              <Select
-                style={{ width: "100%" }}
-                value="Nenhum produto cadastrado"
-              ></Select>
-            )}
+            <Select
+              showSearch
+              onSearch={name => this.getAllItens(name)}
+              style={{ width: "100%" }}
+              placeholder="Selecione o produto"
+              optionFilterProp="children"
+              value={this.state.nomeProduto}
+              onChange={this.onChangeItem}
+              filterOption={(input, option) =>
+                option.props.children
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {this.state.itemArray.map(value => (
+                <Option product={value} value={value.name}>
+                  {value.name}
+                </Option>
+              ))}
+            </Select>
           </div>
 
           <div className="div-quant-ML">

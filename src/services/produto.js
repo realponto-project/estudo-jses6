@@ -83,7 +83,7 @@ export const getItens = async query => {
   return response;
 };
 
-export const getMarca = async () => {
+export const getMarca = async query => {
   const storeObject = store.getState();
 
   const headers = {
@@ -94,7 +94,7 @@ export const getMarca = async () => {
   let response = {};
 
   await axios
-    .get(`${BACKEND_URL}/api/mark`, { headers: headers })
+    .get(`${BACKEND_URL}/api/mark`, { headers: headers, params: { query } })
     .then(resp => {
       response = resp;
     })

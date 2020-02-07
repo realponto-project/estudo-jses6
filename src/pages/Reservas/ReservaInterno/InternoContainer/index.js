@@ -48,8 +48,17 @@ class Rinterno extends Component {
     }
   };
 
-  getAllTecnico = async () => {
-    await getTecnico().then(resposta =>
+  getAllTecnico = async name => {
+    const query = {
+      filters: {
+        technician: {
+          specific: {
+            name
+          }
+        }
+      }
+    };
+    await getTecnico(query).then(resposta =>
       this.setState({
         tecnicoArray: resposta.data
       })
@@ -124,9 +133,20 @@ class Rinterno extends Component {
     await this.getAllTecnico();
   };
 
-  getAllItens = async () => {
+  getAllItens = async name => {
     const query = {
-      stockBase: this.state.estoque
+      filters: {
+        product: {
+          specific: {
+            name
+          }
+        },
+        stockBase: {
+          specific: {
+            stockBase: this.state.estoque
+          }
+        }
+      }
     };
 
     await getProdutoByEstoque(query).then(resposta =>
@@ -212,7 +232,7 @@ class Rinterno extends Component {
       razaoSocial: this.state.razaoSocial,
       date: this.state.data,
       technicianId: this.state.technicianId,
-      technicianReserveParts: this.state.carrinho,
+      technicianReserveParts: this.state.carrinho
     };
 
     const resposta = await newReservaTecInt(values);
@@ -294,13 +314,12 @@ class Rinterno extends Component {
   };
 
   onChange = e => {
-    const { name: nome, value: valor } = e.target
+    const { name: nome, value: valor } = e.target;
 
     this.setState({
       [nome]: valor
     });
   };
-
 
   errorSelecionado = value => {
     message.error(value);
@@ -406,7 +425,6 @@ class Rinterno extends Component {
         </div>
 
         <div className="div-linha1-Os">
-
           <div className="div-data-Os">
             <div className="div-textData-Os">Data do atendimento:</div>
             <div className="div-inputs">
@@ -431,52 +449,34 @@ class Rinterno extends Component {
           <div className="div-tecnico-Os">
             <div className="div-text-Os">Técnico:</div>
             <div className="div-inputs">
-              {this.state.tecnicoArray.length === 0 ? (
-                <Select
-                  className={
-                    this.state.fieldFalha.technician
-                      ? "div-inputError-OS"
-                      : "input-100"
-                  }
-                  value="Nenhum tecnicos cadastrado"
-                  name="technician"
-                  onFocus={this.onFocusTecnico}
-                  style={{ width: "100%" }}
-                ></Select>
-              ) : (
-                <Select
-                  className={
-                    this.state.fieldFalha.technician
-                      ? "div-inputError-OS"
-                      : "input-100"
-                  }
-                  defaultValue="Não selecionado"
-                  style={{ width: "100%" }}
-                  onChange={this.onChangeSelect}
-                  showSearch
-                  placeholder="Nenhum tecnicos cadastrado"
-                  optionFilterProp="children"
-                  value={this.state.tecnico}
-                  name="technician"
-                  onFocus={this.onFocusTecnico}
-                  filterOption={(input, option) =>
-                    option.props.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {this.state.tecnicoArray.map(valor => (
-                    <Option props={valor} value={valor.name}>
-                      {valor.name}
-                    </Option>
-                  ))}
-                </Select>
-              )}
-              {this.state.fieldFalha.technician ? (
-                <p className="div-feedbackError">
-                  {this.state.message.technician}
-                </p>
-              ) : null}
+              <Select
+                className={
+                  this.state.fieldFalha.technician
+                    ? "div-inputError-OS"
+                    : "input-100"
+                }
+                defaultValue="Não selecionado"
+                style={{ width: "100%" }}
+                onChange={this.onChangeSelect}
+                showSearch
+                onSearch={name => this.getAllTecnico(name)}
+                placeholder="Nenhum tecnicos cadastrado"
+                optionFilterProp="children"
+                value={this.state.tecnico}
+                name="technician"
+                onFocus={this.onFocusTecnico}
+                filterOption={(input, option) =>
+                  option.props.children
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
+                }
+              >
+                {this.state.tecnicoArray.map(valor => (
+                  <Option props={valor} value={valor.name}>
+                    {valor.name}
+                  </Option>
+                ))}
+              </Select>
             </div>
           </div>
         </div>
@@ -488,32 +488,26 @@ class Rinterno extends Component {
         <div className="div-linha-Os">
           <div className="div-nome-Os">
             <div className="div-textNome-Os">Nome do produto:</div>
-            {this.state.itemArray.length !== 0 ? (
-              <Select
-                showSearch
-                style={{ width: "100%" }}
-                placeholder="Selecione o produto"
-                optionFilterProp="children"
-                value={this.state.nomeProduto}
-                onChange={this.onChangeItem}
-                filterOption={(input, option) =>
-                  option.props.children
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {this.state.itemArray.map(value => (
-                  <Option props={value} value={value.name}>
-                    {value.name}
-                  </Option>
-                ))}
-              </Select>
-            ) : (
-              <Select
-                style={{ width: "100%" }}
-                value="Nenhum produto cadastrado"
-              ></Select>
-            )}
+            <Select
+              showSearch
+              onSearch={name => this.getAllItens(name)}
+              style={{ width: "100%" }}
+              placeholder="Selecione o produto"
+              optionFilterProp="children"
+              value={this.state.nomeProduto}
+              onChange={this.onChangeItem}
+              filterOption={(input, option) =>
+                option.props.children
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {this.state.itemArray.map(value => (
+                <Option props={value} value={value.name}>
+                  {value.name}
+                </Option>
+              ))}
+            </Select>
           </div>
 
           <div className="div-quant-Os">

@@ -75,8 +75,17 @@ class SearchOsDash extends Component {
     }
   };
 
-  getAllTecnico = async () => {
-    await getTecnico().then(resposta =>
+  getAllTecnico = async name => {
+    const query = {
+      filters: {
+        technician: {
+          specific: {
+            name
+          }
+        }
+      }
+    };
+    await getTecnico(query).then(resposta =>
       this.setState({
         tecnicoArray: resposta.data
       })
@@ -180,9 +189,20 @@ class SearchOsDash extends Component {
     });
   };
 
-  getAllItens = async () => {
+  getAllItens = async name => {
     const query = {
-      stockBase: this.state.estoque
+      filters: {
+        product: {
+          specific: {
+            name
+          }
+        },
+        stockBase: {
+          specific: {
+            stockBase: this.state.estoque
+          }
+        }
+      }
     };
 
     await getProdutoByEstoque(query).then(resposta =>
@@ -606,6 +626,7 @@ class SearchOsDash extends Component {
                   style={{ width: "100%" }}
                   onChange={this.onChangeSelect}
                   showSearch
+                  onSearch={name => this.getAllTecnico(name)}
                   placeholder="Nenhum tecnicos cadastrado"
                   optionFilterProp="children"
                   value={this.state.tecnico}
@@ -643,6 +664,7 @@ class SearchOsDash extends Component {
             {this.state.itemArray.length !== 0 ? (
               <Select
                 showSearch
+                onSearch={name => this.getAllItens(name)}
                 style={{ width: "100%" }}
                 placeholder="Selecione o produto"
                 optionFilterProp="children"

@@ -86,8 +86,18 @@ class EmprestimoContainer extends Component {
     });
   };
 
-  getAllTecnico = async () => {
-    await getTecnico().then(resposta =>
+  getAllTecnico = async name => {
+    const query = {
+      filters: {
+        technician: {
+          specific: {
+            name
+          }
+        }
+      }
+    };
+
+    await getTecnico(query).then(resposta =>
       this.setState({
         tecnicoArray: resposta.data
       })
@@ -388,39 +398,30 @@ class EmprestimoContainer extends Component {
         <div className="div-tecnico-emprestimo">
           <div className="div-text-Os">Técnico:</div>
           <div className="div-inputs">
-            {this.state.tecnicoArray.length === 0 ? (
-              <Select
-                className="input-100"
-                value="Nenhum tecnicos cadastrado"
-                name="technician"
-                // onFocus={this.onFocusTecnico}
-                style={{ width: "100%" }}
-              ></Select>
-            ) : (
-              <Select
-                className="input-100"
-                defaultValue="Não selecionado"
-                style={{ width: "100%" }}
-                onChange={this.onChangeTechnician}
-                showSearch
-                placeholder="Nenhum tecnicos cadastrado"
-                optionFilterProp="children"
-                value={this.state.tecnico}
-                name="technician"
-                onFocus={this.onFocusTecnico}
-                filterOption={(input, option) =>
-                  option.props.children
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {this.state.tecnicoArray.map(valor => (
-                  <Option props={valor} value={valor.name}>
-                    {valor.name}
-                  </Option>
-                ))}
-              </Select>
-            )}
+            <Select
+              className="input-100"
+              defaultValue="Não selecionado"
+              style={{ width: "100%" }}
+              onChange={this.onChangeTechnician}
+              showSearch
+              onSearch={name => this.getAllTecnico(name)}
+              placeholder="Nenhum tecnicos cadastrado"
+              optionFilterProp="children"
+              value={this.state.tecnico}
+              name="technician"
+              onFocus={this.onFocusTecnico}
+              filterOption={(input, option) =>
+                option.props.children
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {this.state.tecnicoArray.map(valor => (
+                <Option props={valor} value={valor.name}>
+                  {valor.name}
+                </Option>
+              ))}
+            </Select>
           </div>
         </div>
       </div>
@@ -604,39 +605,30 @@ class EmprestimoContainer extends Component {
         <div className="div-tecnico-update-emprestimo">
           <div>Técnico:</div>
           <div className="div-inputs">
-            {this.state.tecnicoArray.length === 0 ? (
-              <Select
-                className="input-100"
-                value="Nenhum tecnicos cadastrado"
-                name="technician"
-                // onFocus={this.onFocusTecnico}
-                style={{ width: "100%" }}
-              ></Select>
-            ) : (
-              <Select
-                className="input-100"
-                defaultValue="Não selecionado"
-                style={{ width: "100%" }}
-                onChange={this.onChangeTechnician}
-                showSearch
-                placeholder="Nenhum tecnicos cadastrado"
-                optionFilterProp="children"
-                value={this.state.tecnico}
-                name="technician"
-                onFocus={this.onFocusTecnico}
-                filterOption={(input, option) =>
-                  option.props.children
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {this.state.tecnicoArray.map(valor => (
-                  <Option props={valor} value={valor.name}>
-                    {valor.name}
-                  </Option>
-                ))}
-              </Select>
-            )}
+            <Select
+              className="input-100"
+              defaultValue="Não selecionado"
+              style={{ width: "100%" }}
+              onChange={this.onChangeTechnician}
+              showSearch
+              onSearch={name => this.getAllTecnico(name)}
+              placeholder="Nenhum tecnicos cadastrado"
+              optionFilterProp="children"
+              value={this.state.tecnico}
+              name="technician"
+              onFocus={this.onFocusTecnico}
+              filterOption={(input, option) =>
+                option.props.children
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {this.state.tecnicoArray.map(valor => (
+                <Option props={valor} value={valor.name}>
+                  {valor.name}
+                </Option>
+              ))}
+            </Select>
           </div>
         </div>
       </div>
