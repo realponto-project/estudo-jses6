@@ -137,9 +137,13 @@ class AddKit extends Component {
           specific: {
             name
           }
+        },
+        stockBase: {
+          specific: {
+            stockBase: this.state.estoque
+          }
         }
       },
-      stockBase: this.state.estoque,
       kit: true
     };
 
