@@ -33,7 +33,7 @@ export const getAllFornecedor = async query => {
   return response;
 };
 
-export const getFornecedor = async () => {
+export const getFornecedor = async query => {
   const storeObject = store.getState();
 
   const headers = {
@@ -46,7 +46,7 @@ export const getFornecedor = async () => {
   await axios
     .get(`${BACKEND_URL}/api/company/getAllFornecedor`, {
       headers: headers,
-      params: {}
+      params: { query }
     })
     .then(resp => {
       response = resp;

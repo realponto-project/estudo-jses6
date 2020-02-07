@@ -45,8 +45,17 @@ class NovaEntrada extends Component {
     await this.getAllFornecedor();
   };
 
-  getAllFornecedor = async () => {
-    await getFornecedor().then(resposta =>
+  getAllFornecedor = async razaoSocial => {
+    const query = {
+      filters: {
+        company: {
+          specific: {
+            razaoSocial
+          }
+        }
+      }
+    };
+    await getFornecedor(query).then(resposta =>
       this.setState({
         fornecedorArray: resposta.data
       })
@@ -338,29 +347,37 @@ class NovaEntrada extends Component {
           <div className="div-nome-entrada">
             <div className="div-textNome-entrada">Nome do produto:</div>
             <div className="div-inputs">
-              {this.state.itemArray.length !== 0 ? (
-                <Select
-                  showSearch
-                  style={{ width: "100%" }}
-                  placeholder="Selecione o produto"
-                  optionFilterProp="children"
-                  value={this.state.nomeProduto}
-                  onChange={this.onChangeItem}
-                  filterOption={(input, option) =>
-                    option.props.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {this.state.itemArray.map(value => (
-                    <Option product={value} value={value.name}>
-                      {value.name}
-                    </Option>
-                  ))}
-                </Select>
-              ) : (
-                <Select value="Nenhum produto cadastrado"></Select>
-              )}
+              <Select
+                showSearch
+                style={{ width: "100%" }}
+                placeholder="Selecione o produto"
+                optionFilterProp="children"
+                value={this.state.nomeProduto}
+                onChange={this.onChangeItem}
+                onSearch={async name => {
+                  const query = {
+                    filters: {
+                      product: {
+                        specific: {
+                          name
+                        }
+                      }
+                    }
+                  };
+                  await this.getAllItens(query);
+                }}
+                filterOption={(input, option) =>
+                  option.props.children
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
+                }
+              >
+                {this.state.itemArray.map(value => (
+                  <Option product={value} value={value.name}>
+                    {value.name}
+                  </Option>
+                ))}
+              </Select>
               {this.state.fieldFalha.nomeProduto ? (
                 <p className="div-feedbackError">
                   {this.state.message.nomeProduto}
@@ -388,29 +405,25 @@ class NovaEntrada extends Component {
           <div className="div-fornecedor-entrada">
             <div className="div-text-entrada">Fornecedor:</div>
             <div className="div-inputs">
-              {this.state.fornecedorArray.length !== 0 ? (
-                <Select
-                  showSearch
-                  style={{ width: "100%" }}
-                  optionFilterProp="children"
-                  value={this.state.fornecedor}
-                  onChange={this.onChangeForn}
-                  filterOption={(input, option) =>
-                    option.props.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {this.state.fornecedorArray.map(value => (
-                    <Option company={value} value={value.razaoSocial}>
-                      {value.razaoSocial}
-                    </Option>
-                  ))}
-                </Select>
-              ) : (
-                <Select value="Nenhum fornecedor cadastrado"></Select>
-              )}
-
+              <Select
+                showSearch
+                onSearch={razaoSocial => this.getAllFornecedor(razaoSocial)}
+                style={{ width: "100%" }}
+                optionFilterProp="children"
+                value={this.state.fornecedor}
+                onChange={this.onChangeForn}
+                filterOption={(input, option) =>
+                  option.props.children
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
+                }
+              >
+                {this.state.fornecedorArray.map(value => (
+                  <Option company={value} value={value.razaoSocial}>
+                    {value.razaoSocial}
+                  </Option>
+                ))}
+              </Select>
               {this.state.fieldFalha.fornecedor ? (
                 <p className="div-feedbackError">
                   {this.state.message.fornecedor}

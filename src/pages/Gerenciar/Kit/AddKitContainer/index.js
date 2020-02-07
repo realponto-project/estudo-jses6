@@ -130,8 +130,15 @@ class AddKit extends Component {
     await this.getKitDefault();
   };
 
-  getAllItens = async () => {
+  getAllItens = async name => {
     const query = {
+      filters: {
+        product: {
+          specific: {
+            name
+          }
+        }
+      },
       stockBase: this.state.estoque,
       kit: true
     };
@@ -291,6 +298,7 @@ class AddKit extends Component {
               optionFilterProp="children"
               value={this.state.item}
               onChange={this.onChangeItem}
+              onSearch={name => this.getAllItens(name)}
               filterOption={(input, option) =>
                 option.props.children
                   .toLowerCase()

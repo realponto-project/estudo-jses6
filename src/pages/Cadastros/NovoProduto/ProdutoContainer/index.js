@@ -113,8 +113,18 @@ class NovoProduto extends Component {
     );
   };
 
-  getAllMarca = async () => {
-    await getMarca().then(resposta =>
+  getAllMarca = async mark => {
+    const query = {
+      filters: {
+        mark: {
+          specific: {
+            mark
+          }
+        }
+      }
+    };
+
+    await getMarca(query).then(resposta =>
       this.setState({
         marcaArray: resposta.data
       })
@@ -455,37 +465,31 @@ class NovoProduto extends Component {
           <div className="div-marca-produtos">
             <div className="div-text-produtos">Marca:</div>
             <div className="div-inputs">
-              {this.state.marcaArray.length !== 0 ? (
-                <Select
-                  showSearch
-                  placeholder="Selecione o produto"
-                  optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    option.props.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                  name="mark"
-                  value={this.state.marca}
-                  style={{ width: "100%" }}
-                  onChange={this.handleChangeMarca}
-                  onFocus={this.onFocusMark}
-                  className={
-                    this.state.fieldFalha.mark
-                      ? "div-inputError-produtos"
-                      : "input-100"
-                  }
-                >
-                  {this.state.marcaArray.map(valor => (
-                    <Option value={valor.mark}>{valor.mark}</Option>
-                  ))}
-                </Select>
-              ) : (
-                <Select
-                  value="Nenhuma marca cadastrada"
-                  style={{ width: "100%" }}
-                ></Select>
-              )}
+              <Select
+                showSearch
+                placeholder="Selecione o produto"
+                optionFilterProp="children"
+                filterOption={(input, option) =>
+                  option.props.children
+                    .toLowerCase()
+                    .indexOf(input.toLowerCase()) >= 0
+                }
+                name="mark"
+                value={this.state.marca}
+                style={{ width: "100%" }}
+                onChange={this.handleChangeMarca}
+                onSearch={mark => this.getAllMarca(mark)}
+                onFocus={this.onFocusMark}
+                className={
+                  this.state.fieldFalha.mark
+                    ? "div-inputError-produtos"
+                    : "input-100"
+                }
+              >
+                {this.state.marcaArray.map(valor => (
+                  <Option value={valor.mark}>{valor.mark}</Option>
+                ))}
+              </Select>
 
               {this.state.fieldFalha.mark ? (
                 <p className="div-feedbackError">{this.state.message.mark}</p>
