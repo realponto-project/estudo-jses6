@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./index.css";
-import { Spin, Button, Input, Select } from "antd";
+import { Spin, Button, Input, Select, Modal } from "antd";
 import { stock } from "../../../../services/estoque";
+
+import { getAllEquipsService } from "../../../../services/equip";
 
 const { Option } = Select;
 
@@ -19,7 +21,9 @@ class Estoque extends Component {
     page: 1,
     total: 10,
     count: 0,
-    show: 0
+    show: 0,
+    serialNumbers: [],
+    serialNumber: ""
   };
 
   changePages = pages => {
@@ -187,6 +191,66 @@ class Estoque extends Component {
     </div>
   );
 
+  ModalSerialNumbers = () => (
+    <Modal
+      // title="Basic Modal"
+      visible={this.state.visible}
+      onOk={() => this.setState({ visible: false })}
+      onCancel={() => this.setState({ visible: false })}
+    >
+      <div>
+        <Input
+          style={{ width: "80%" }}
+          placeholder="número de série"
+          value={this.state.serialNumber}
+          onChange={async e => {
+            await this.setState({ serialNumber: e.target.value });
+            this.getAllEquips();
+          }}
+        />
+        {this.state.serialNumbers.map(item => (
+          <p style={item.reserved ? { color: "red" } : null}>
+            {item.serialNumber}
+          </p>
+        ))}
+      </div>
+    </Modal>
+  );
+
+  getAllEquips = () => {
+    const query = {
+      filters: {
+        equip: {
+          specific: {
+            serialNumber: this.state.serialNumber
+          }
+        },
+        stockBase: {
+          specific: {
+            stockBase: this.state.line.stockBase
+          }
+        },
+        product: {
+          specific: {
+            name: this.state.line.name
+          }
+        }
+      },
+      total: 7,
+      page: 1
+    };
+    getAllEquipsService(query).then(resp =>
+      this.setState({ serialNumbers: resp.data.rows })
+    );
+  };
+
+  showModal = async line => {
+    await this.setState({ line });
+    this.setState({ visible: true });
+
+    this.getAllEquips();
+  };
+
   render() {
     return (
       <div className="div-card-estoque">
@@ -270,6 +334,9 @@ class Estoque extends Component {
                   <div className="div-lines-estoque">
                     <div className="cel-produto-cabecalho-estoque">
                       <label
+                        onClick={
+                          line.serial ? () => this.showModal(line) : null
+                        }
                         className="div-table-label-cel-estoque"
                         style={
                           parseInt(line.minimumStock, 10) >
@@ -344,6 +411,7 @@ class Estoque extends Component {
             <this.Pages />
           </div>
         )}
+        <this.ModalSerialNumbers />
       </div>
     );
   }
