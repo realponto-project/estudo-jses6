@@ -193,14 +193,15 @@ class Estoque extends Component {
 
   ModalSerialNumbers = () => (
     <Modal
-      // title="Basic Modal"
+      width={300}
+      title="Números de série"
       visible={this.state.visible}
       onOk={() => this.setState({ visible: false })}
       onCancel={() => this.setState({ visible: false })}
     >
       <div>
         <Input
-          style={{ width: "80%" }}
+          style={{ width: "100%" }}
           placeholder="número de série"
           value={this.state.serialNumber}
           onChange={async e => {
@@ -208,11 +209,20 @@ class Estoque extends Component {
             this.getAllEquips();
           }}
         />
-        {this.state.serialNumbers.map(item => (
-          <p style={item.reserved ? { color: "red" } : null}>
-            {item.serialNumber}
-          </p>
-        ))}
+        <div
+          style={{
+            marginTop: "15px",
+            height: "250px",
+            overflow: "auto",
+            scrollbarColor: "red"
+          }}
+        >
+          {this.state.serialNumbers.map(item => (
+            <p style={item.reserved ? { color: "red" } : null}>
+              {item.serialNumber}
+            </p>
+          ))}
+        </div>
       </div>
     </Modal>
   );
@@ -236,7 +246,7 @@ class Estoque extends Component {
           }
         }
       },
-      total: 7,
+      total: 100,
       page: 1
     };
     getAllEquipsService(query).then(resp =>

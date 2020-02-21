@@ -611,6 +611,7 @@ class ReservaTecnico extends Component {
   modalDetalhesLinha = () => (
     <Modal
       title="Detalhes do atendimento"
+      width={650}
       visible={this.state.modalDetalhes}
       onOk={this.handleOkModalPeca}
       onCancel={this.handleOkModalPeca}
