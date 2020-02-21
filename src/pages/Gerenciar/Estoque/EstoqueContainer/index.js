@@ -249,9 +249,13 @@ class Estoque extends Component {
       total: 100,
       page: 1
     };
-    getAllEquipsService(query).then(resp =>
-      this.setState({ serialNumbers: resp.data.rows })
-    );
+    console.log(query);
+    getAllEquipsService(query)
+      .then(resp => {
+        console.log(resp);
+        this.setState({ serialNumbers: resp.data.rows });
+      })
+      .catch(error => console.log(error));
   };
 
   showModal = async line => {
