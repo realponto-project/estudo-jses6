@@ -242,18 +242,14 @@ class Estoque extends Component {
         },
         product: {
           specific: {
-            name: this.state.line.name
+            id: this.state.line.productId
           }
         }
-      },
-      total: 100,
-      page: 1
+      }
     };
-    console.log(query);
     getAllEquipsService(query)
       .then(resp => {
-        console.log(resp);
-        this.setState({ serialNumbers: resp.data.rows });
+        this.setState({ serialNumbers: resp.data });
       })
       .catch(error => console.log(error));
   };
