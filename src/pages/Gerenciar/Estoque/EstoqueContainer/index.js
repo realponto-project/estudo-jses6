@@ -217,11 +217,14 @@ class Estoque extends Component {
             scrollbarColor: "red"
           }}
         >
-          {this.state.serialNumbers.map(item => (
-            <p style={item.reserved ? { color: "red" } : null}>
-              {item.serialNumber}
-            </p>
-          ))}
+          {this.state.serialNumbers.map(item => {
+            console.log(item);
+            return (
+              <p style={item.reserved ? { color: "red" } : null}>
+                {item.serialNumber}
+              </p>
+            );
+          })}
         </div>
       </div>
     </Modal>
@@ -245,11 +248,12 @@ class Estoque extends Component {
             id: this.state.line.productId
           }
         }
-      }
+      },
+      limit: 5000
     };
     getAllEquipsService(query)
       .then(resp => {
-        this.setState({ serialNumbers: resp.data });
+        this.setState({ serialNumbers: resp.data.rows });
       })
       .catch(error => console.log(error));
   };
