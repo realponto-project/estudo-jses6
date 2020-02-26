@@ -29,6 +29,8 @@ const { Option } = Select;
 
 class SearchOsDash extends Component {
   state = {
+    observacao: "",
+    serialNumber: "",
     redirect: false,
     newStatus: "",
     modalAddStatus: false,
@@ -267,12 +269,13 @@ class SearchOsDash extends Component {
     });
   };
 
-  getAllProducts = async () => {
+  getAllProducts = async name => {
     const query = {
       filters: {
         product: {
           specific: {
-            serial: true
+            serial: true,
+            name
           }
         }
       }
@@ -579,16 +582,16 @@ class SearchOsDash extends Component {
 
       let itemAdd = {
         status: this.state.status,
-        nome: this.state.nomeProduto
+        name: this.state.nomeProduto
       };
 
       if (this.state.status === "CONSERTO") {
         itemAdd = {
           ...itemAdd,
           productId: this.state.productBaseId,
-          serialNumber: this.state.serialNumber
-          // description: this.state.observacao,
-          // amount: this.state.quant
+          serialNumber: this.state.serialNumber,
+          description: this.state.observacao,
+          amount: 1
         };
       } else {
         itemAdd = {
@@ -603,6 +606,7 @@ class SearchOsDash extends Component {
         };
       }
 
+      console.log(itemAdd);
       this.setState({
         quantObj: {
           ...this.state.quantObj,
@@ -803,7 +807,11 @@ class SearchOsDash extends Component {
             {this.state.itemArray.length !== 0 ? (
               <Select
                 showSearch
-                onSearch={name => this.getAllItens(name)}
+                onSearch={
+                  this.state.status === "CONSERTO"
+                    ? name => this.getAllProducts(name)
+                    : name => this.getAllItens(name)
+                }
                 style={{ width: "100%" }}
                 placeholder="Selecione o produto"
                 optionFilterProp="children"
@@ -833,7 +841,7 @@ class SearchOsDash extends Component {
             <div className="div-text-Os">Quant:</div>
             <InputNumber
               min={1}
-              max={this.state.disp}
+              max={this.state.status === "CONSERTO" ? 1 : this.state.disp}
               defaultValue={this.state.quant}
               value={this.state.quant}
               onChange={this.onChangeQuant}

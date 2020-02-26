@@ -105,31 +105,7 @@ class OsDash extends Component {
       loading: true
     });
 
-    const query = {
-      filters: {
-        os: {
-          specific: {
-            os: this.state.Os,
-            razaoSocial: this.state.razaoSocial,
-            cnpj: this.state.cnpj,
-            date: this.state.valueDate
-          }
-        }
-      },
-      page: this.state.page,
-      total: this.state.total,
-      required: true,
-      paranoid: true
-    };
-
-    await getTodasOs(query).then(resposta =>
-      this.setState({
-        OsArray: resposta.data,
-        page: resposta.data.page,
-        count: resposta.data.count,
-        show: resposta.data.show
-      })
-    );
+    this.getAllOsSemLoading();
 
     this.setState({
       loading: false
@@ -145,6 +121,8 @@ class OsDash extends Component {
 
     await this.getAllOsSemLoading();
 
+    // getAllOs
+
     await this.setState({
       modalRemove: false,
       idLine: ""
@@ -153,8 +131,20 @@ class OsDash extends Component {
 
   getAllOsSemLoading = async () => {
     const query = {
+      filters: {
+        os: {
+          specific: {
+            os: this.state.Os,
+            razaoSocial: this.state.razaoSocial,
+            cnpj: this.state.cnpj,
+            date: this.state.valueDate
+          }
+        }
+      },
       page: this.state.page,
-      total: this.state.total
+      total: this.state.total,
+      required: true,
+      paranoid: true
     };
 
     await getTodasOs(query).then(resposta =>
