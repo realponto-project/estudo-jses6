@@ -78,7 +78,7 @@ class ReservaKit extends Component {
   };
 
   messageErrorKit = () => {
-    message.error("É necessário informar a Razão Social");
+    message.error("É necessário informar a Os");
   };
 
   getAllKit = async () => {
@@ -495,7 +495,7 @@ class ReservaKit extends Component {
             onChange={this.onChangeOs}
             value={this.state.os}
             name="os"
-            placeholder="Razão social"
+            placeholder="Os"
             onBlur={this.getOs}
           />
         </div>

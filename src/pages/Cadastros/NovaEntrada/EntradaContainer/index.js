@@ -143,10 +143,6 @@ class NovaEntrada extends Component {
   };
 
   saveTargetNewEntrada = async () => {
-    this.setState({
-      loading: true
-    });
-
     const values = {
       amountAdded: this.state.quant.toString(),
       stockBase: this.state.estoque,
@@ -176,7 +172,6 @@ class NovaEntrada extends Component {
           : "A entrada não foi efetuada"
       );
       this.setState({
-        loading: false,
         messageError: false,
         modalConfirm: false
       });
@@ -189,14 +184,10 @@ class NovaEntrada extends Component {
         quant: 1,
         numeroSerieTest: [],
         messageSuccess: true,
-        serial: false
-      });
-      await this.success();
-      this.setState({
-        loading: false,
-        messageSuccess: false,
+        serial: false,
         modalConfirm: false
       });
+      await this.success();
     }
   };
 

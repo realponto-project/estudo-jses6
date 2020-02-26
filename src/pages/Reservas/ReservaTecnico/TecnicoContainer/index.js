@@ -748,6 +748,7 @@ class ReservaTecnico extends Component {
       okText="Confirmar"
       cancelText="Cancelar"
       closable={false}
+      width={650}
     >
       <div className="div-body-modalImprimir">
         <div className="div-title-modal-update-car">

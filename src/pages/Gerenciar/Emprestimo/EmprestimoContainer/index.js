@@ -343,6 +343,7 @@ class EmprestimoContainer extends Component {
       onCancel={this.handleCancel}
       okText="Salvar"
       cancelText="Cancelar"
+      width={650}
     >
       <div className="div-rs1-Os">
         <div className="div-textRs-Os">Razão social:</div>
@@ -537,6 +538,7 @@ class EmprestimoContainer extends Component {
       onCancel={this.handleCancel}
       okText="Retornar"
       cancelText="Cancelar"
+      width={650}
     >
       <div className="div-rs1-Os">
         <div className="div-textRs-Os">Razão social:</div>
