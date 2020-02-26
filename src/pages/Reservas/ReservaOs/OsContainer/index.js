@@ -306,7 +306,7 @@ class Rexterno extends Component {
         fieldFalha: resposta.data.fields[0].field,
         message: resposta.data.fields[0].message
       });
-      await this.error();
+      message.error(this.state.message.message);
       this.setState({
         loading: false,
         messageError: false
@@ -543,6 +543,7 @@ class Rexterno extends Component {
   );
 
   render() {
+    console.log(this.state);
     return (
       <div className="div-card-Os">
         {this.renderRedirect()}
