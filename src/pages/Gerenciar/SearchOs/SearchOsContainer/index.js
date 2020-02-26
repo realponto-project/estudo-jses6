@@ -11,11 +11,16 @@ import {
   Button,
   message,
   Select,
-  Icon
+  Icon,
+  Modal
 } from "antd";
 import { validators, masks } from "./validators";
 import { getOsByOs, updateReservaOs } from "../../../../services/reservaOs";
-import { getProdutoByEstoque } from "../../../../services/produto";
+import {
+  getAllStatusExpedition,
+  addStatusExpedition
+} from "../../../../services/statusExpedition";
+import { getProdutoByEstoque, getProdutos } from "../../../../services/produto";
 import { getTecnico } from "../../../../services/tecnico";
 import { getSerial } from "../../../../services/serialNumber";
 
@@ -25,11 +30,15 @@ const { Option } = Select;
 class SearchOsDash extends Component {
   state = {
     redirect: false,
+    newStatus: "",
+    modalAddStatus: false,
     readOnly: false,
     serial: false,
     numeroSerieTest: "",
     tecnicoArray: [],
     itemArray: [],
+    status: "Não selecionado",
+    allStatus: [],
     messageError: false,
     messageSuccess: false,
     // data: this.props.osUpdateValue.date,
@@ -62,6 +71,12 @@ class SearchOsDash extends Component {
   redirectGerenciarOs = () => {
     this.setState({
       redirect: true
+    });
+  };
+
+  openModais = e => {
+    this.setState({
+      modalAddStatus: true
     });
   };
 
@@ -155,9 +170,22 @@ class SearchOsDash extends Component {
     }
   };
 
+  getAllStatusExpedition = async () => {
+    const { status, data } = await getAllStatusExpedition();
+
+    if (status === 200) {
+      this.setState({
+        allStatus: data
+          .map(item => item.status)
+          .filter(item => item !== "EMPRESTIMO")
+      });
+    }
+  };
+
   componentDidMount = async () => {
     await this.getAllItens();
     await this.getAllTecnico();
+    await this.getAllStatusExpedition();
 
     // eslint-disable-next-line array-callback-return
     await this.state.carrinho.map(item => {
@@ -230,13 +258,58 @@ class SearchOsDash extends Component {
   };
 
   errorProduto = () => {
-    message.error("O produto é obrigatório para essa ação ser realizada");
+    message.error("Verifique se todos os campos estão selecionados");
   };
 
   onChangeData = date => {
     this.setState({
       data: date
     });
+  };
+
+  getAllProducts = async () => {
+    const query = {
+      filters: {
+        product: {
+          specific: {
+            serial: true
+          }
+        }
+      }
+    };
+
+    await getProdutos(query).then(resposta =>
+      this.setState({
+        itemArray: resposta.data.rows.map(item => {
+          const resp = { name: item.name, id: item.id };
+          return resp;
+        })
+      })
+    );
+  };
+
+  onChangeStatus = async valor => {
+    if (this.state.status === "CONSERTO" || valor === "CONSERTO") {
+      await this.setState({
+        serialNumber: "",
+        numeroSerieTest: "",
+        productBaseId: "",
+        nomeProduto: "Não selecionado"
+      });
+    }
+
+    await this.setState({
+      serialNumber: "",
+      status: valor,
+      nomeProduto: "Não selecionado",
+      serial: false
+    });
+
+    if (valor === "CONSERTO") {
+      this.getAllProducts();
+    } else {
+      await this.getAllItens();
+    }
   };
 
   getOs = async () => {
@@ -429,14 +502,65 @@ class SearchOsDash extends Component {
     message.error(value);
   };
 
+  modalStatus = () => (
+    <Modal
+      title="Adicionar status"
+      visible={this.state.modalAddStatus}
+      onOk={this.handleOk}
+      okText="Salvar"
+      onCancel={this.handleOk}
+      cancelText="Cancelar"
+    >
+      <div className="linhaModal-produtos">
+        <div className="div-marcaModal-produtos">
+          <div className="div-text-produtos">Status:</div>
+          <Input
+            allowClear={!this.state.fieldFalha.newStatus}
+            className={
+              this.state.fieldFalha.newStatus
+                ? "div-inputError-tecnico"
+                : "input-100"
+            }
+            placeholder="Digite o status"
+            name="newStatus"
+            value={this.state.newStatus}
+            onChange={this.onChange}
+            onBlur={this.onBlurValidator}
+            onFocus={this.onFocus}
+          />
+          {this.state.fieldFalha.newStatus ? (
+            <p className="div-feedbackError">{this.state.message.status}</p>
+          ) : null}
+        </div>
+      </div>
+    </Modal>
+  );
+
+  handleOk = async () => {
+    const value = {
+      status: this.state.newStatus
+    };
+
+    await addStatusExpedition(value);
+    this.setState({
+      modalAddStatus: false
+    });
+
+    await this.getAllStatusExpedition();
+  };
+
   addCarrinho = () => {
-    if (this.state.nomeProduto !== "Não selecionado" || "") {
+    if (
+      this.state.nomeProduto !== "Não selecionado" &&
+      this.state.status !== "Não selecionado"
+    ) {
       const array = this.state.carrinho.map(value => value.name);
 
       if (array.filter(value => value === this.state.nomeProduto).length > 0) {
         this.errorSelecionado("Este item já foi selecionado");
         this.setState({
-          nomeProduto: ""
+          nomeProduto: "Não selecionado",
+          status: "Não selecionado"
         });
         return;
       }
@@ -472,6 +596,7 @@ class SearchOsDash extends Component {
           ...this.state.carrinho
         ],
         nomeProduto: "Não selecionado",
+        status: "Não selecionado",
         quant: 1,
         estoque: "REALPONTO",
         serial: false,
@@ -716,9 +841,36 @@ class SearchOsDash extends Component {
             </Select>
           </div>
 
+          <div className="div-status-Os">
+            <div className="div-text-Os">Status:</div>
+            <div style={{ display: "flex", width: "100%" }}>
+              <Select
+                value={this.state.status}
+                style={{ width: "100%" }}
+                onChange={this.onChangeStatus}
+              >
+                {this.state.allStatus.map(item => {
+                  return <Option value={item}>{item.toUpperCase()}</Option>;
+                })}
+              </Select>
+              <this.modalStatus />
+              {this.props.auth.addStatus ? (
+                <Button
+                  className="buttonadd-marca-produtos"
+                  type="primary"
+                  icon="plus"
+                  name="modalMarca"
+                  onClick={this.openModais}
+                />
+              ) : null}
+            </div>
+          </div>
+        </div>
+
+        <div className="div-linha-SearchOs">
           {this.state.serial ? (
-            <div className="div-serial-AddKit">
-              <div className="div-textSerial-AddKit">Número de série:</div>
+            <div className="div-serial-SearchOs">
+              <div className="div-textSerial-SearchOs">Número de série:</div>
               <TextArea
                 className="input-100"
                 placeholder="Digite o número de série"
@@ -746,7 +898,6 @@ class SearchOsDash extends Component {
             <div className="div-linha1-Os">
               <label className="label-produto-Os">Produto</label>
               <label className="label-quant-SearchOs">Quantidade</label>
-              {/* {this.state.carrinho.filter((teste) => teste.serial === true).length > 0 ? <label className='label-serial-SearchOs'>Nº Série</label> : null } */}
             </div>
             <div className="div-linhaSepareteProdutos-Os"></div>
             {this.state.carrinho.map(valor => (
@@ -763,20 +914,6 @@ class SearchOsDash extends Component {
                   />
                   UN
                 </label>
-
-                {/* {valor.serial ? <label className='label-serial-SearchOs'>
-              <TextArea
-                style={{width: '90%'}}
-                placeholder="Digite o número de série"
-                autosize={{ minRows: 2, maxRows: 4 }}
-                rows={4}
-                name={valor.id}
-                value={this.state.textArea ? this.state.textArea[valor.id]
-                  // .replace(/,/ig, '\n' )
-                  : null }
-                onChange={this.onChangeTextArea}
-              />
-              </label> : null} */}
                 <Button
                   type="primary"
                   className="button-remove-Os"

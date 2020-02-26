@@ -561,7 +561,7 @@ class SideBar extends Component {
               disabled={!this.props.auth.addOutPut}
               key="reservaTecnico_dash"
             >
-              <Icon type="user" />
+              <Icon type="file-pdf" />
               Romaneio
             </Menu.Item>
             <Menu.Item disabled={!this.props.auth.addROs} key="Rexterno_dash">
@@ -639,4 +639,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispacthToProps)(SideBar);
+export default connect(
+  mapStateToProps,
+  mapDispacthToProps
+)(SideBar);

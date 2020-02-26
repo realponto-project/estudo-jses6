@@ -173,28 +173,36 @@ class RelatorioEmprestimoContainer extends Component {
   );
 
   rows = () => {
-    return this.state.rows.map(row => (
-      <div className="div-100-emprestimo-report">
-        <div className="div-lines-emprestimo-report">
-          <div className="cel-razaoSocial-cabecalho-emprestimo-report">
-            <label>{row.razaoSocial}</label>
+    if (this.state.rows.length !== 0) {
+      return this.state.rows.map(row => (
+        <div className="div-100-emprestimo-report">
+          <div className="div-lines-emprestimo-report">
+            <div className="cel-razaoSocial-cabecalho-emprestimo-report">
+              <label>{row.razaoSocial}</label>
+            </div>
+            <div className="cel-serialNumber-cabecalho-emprestimo-report">
+              <label>{row.serialNumber}</label>
+            </div>
+            <div className="cel-solicitacao-cabecalho-emprestimo-report">
+              <label>{row.createdAt}</label>
+            </div>
+            <div className="cel-atendimento-cabecalho-emprestimo-report">
+              <label>{row.dateExpedition}</label>
+            </div>
+            <div className="cel-retorno-cabecalho-emprestimo-report">
+              <label>{row.deletedAt ? row.deletedAt : "-"}</label>
+            </div>
           </div>
-          <div className="cel-serialNumber-cabecalho-emprestimo-report">
-            <label>{row.serialNumber}</label>
-          </div>
-          <div className="cel-solicitacao-cabecalho-emprestimo-report">
-            <label>{row.createdAt}</label>
-          </div>
-          <div className="cel-atendimento-cabecalho-emprestimo-report">
-            <label>{row.dateExpedition}</label>
-          </div>
-          <div className="cel-retorno-cabecalho-emprestimo-report">
-            <label>{row.deletedAt ? row.deletedAt : "-"}</label>
-          </div>
+          <div className=" div-separate1-Gentrada" />
         </div>
-        <div className=" div-separate1-Gentrada" />
-      </div>
-    ));
+      ));
+    } else {
+      return (
+        <div className="div-naotemnada">
+          Não há nenhum empréstimo até o momento
+        </div>
+      );
+    }
   };
 
   render() {
@@ -202,7 +210,7 @@ class RelatorioEmprestimoContainer extends Component {
       <>
         <div className="div-card-emprestimo-report">
           <div className="title-emprestimo-report">
-            <h1 className="h1-Gentrada">Emprestimo</h1>
+            <h1 className="h1-Gentrada">Empréstimo</h1>
           </div>
 
           {this.state.avancado ? (
