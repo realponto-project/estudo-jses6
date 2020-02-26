@@ -484,7 +484,7 @@ class ReservaTecnico extends Component {
       };
     } else {
       value = {
-        osPartsId: this.state.produtoSelecionado.products.osPartsId,
+        osPartsId: this.state.produtoSelecionado.products.id,
         add: {
           output: this.state.teste
         }

@@ -88,12 +88,13 @@ class Rexterno extends Component {
     );
   };
 
-  getAllProducts = async () => {
+  getAllProducts = async name => {
     const query = {
       filters: {
         product: {
           specific: {
-            serial: true
+            serial: true,
+            name
           }
         }
       }
@@ -440,12 +441,14 @@ class Rexterno extends Component {
         return;
       }
 
-      let itemAdd = null;
+      let itemAdd = {
+        status: this.state.status,
+        nomeProdutoCarrinho: this.state.nomeProduto
+      };
 
       if (this.state.status === "CONSERTO") {
         itemAdd = {
-          status: this.state.status,
-          nomeProdutoCarrinho: this.state.nomeProduto,
+          ...itemAdd,
           productId: this.state.productBaseId,
           serialNumber: this.state.serialNumber,
           description: this.state.observacao,
@@ -453,8 +456,7 @@ class Rexterno extends Component {
         };
       } else {
         itemAdd = {
-          status: this.state.status,
-          nomeProdutoCarrinho: this.state.nomeProduto,
+          ...itemAdd,
           productBaseId: this.state.productBaseId,
           amount: this.state.quant.toString(),
           stockBase: this.state.estoque,
@@ -671,7 +673,11 @@ class Rexterno extends Component {
             <div className="div-textNome-Os">Nome do produto:</div>
             <Select
               showSearch
-              onSearch={name => this.getAllItens(name)}
+              onSearch={
+                this.state.status === "CONSERTO"
+                  ? name => this.getAllProducts(name)
+                  : name => this.getAllItens(name)
+              }
               style={{ width: "100%" }}
               placeholder="Selecione o produto"
               optionFilterProp="children"
