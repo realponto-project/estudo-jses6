@@ -5,13 +5,24 @@
   border-radius: 2px;
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
+  position: static;
 }
 .linhaTexto-kit{
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 25px;
+}
+.div-space-modal{
+  display: flex;
+  justify-content: space-between
+}
+.div-os-modal{
+  width: 100%;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-weight: bold;
+  font-size: 1.5em
 }
 .h1-kit{
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
@@ -28,7 +39,7 @@
 .cel-produto-cabecalho-kit{
   align-items: center;
   display: flex;
-  width: 58%;
+  width: 60%;
   height:30px;
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
@@ -39,16 +50,43 @@
   color: rgb(90, 90, 90);
   margin-right: 5px;
 }
+.div-produtos-modal-kit{
+  width: 70%;
+  font-size: 1.3em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin-top: 25px;
+}
+.div-acoes-modal-kit{
+  width: 16%;
+  display: flex;
+  font-size: 1.3em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin-top: 25px;
+  justify-content: space-between
+}
+.div-acoes-modalMais-kit{
+  width: 16%;
+  display: flex;
+  font-size: 1.3em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin-top: 25px;
+}
 .div-tecnico-kit{
   width: 45%;
   display: flex;
   align-items: center;
   margin-right: 30px;
 }
+.div-tecnico1-kit{
+  width: 35%;
+  display: flex;
+  align-items: center;
+}
 .cel-acoes-cabecalho-kit{
+  justify-content: space-between;
   align-items: center;
   display: flex;
-  width: 12%;
+  width: 8%;
   height:30px;
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
@@ -64,7 +102,7 @@
 .cel-data-cabecalho-kit{
   align-items: center;
   display: flex;
-  width: 20%;
+  width: 22%;
   height:30px;
   font-size: 1.0em ;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
@@ -75,8 +113,19 @@
   height: 50px;
   align-items: center
 }
+.div-lines1-kit{
+  width: 100%;
+  display: flex;
+  height: 50px;
+  align-items: center
+}
 .div-separate-kit{
   width: 90%;
+  background-color: rgb(221, 219, 219);
+  height: 1px;
+}
+.div-separate1-kit{
+  width: 100%;
   background-color: rgb(221, 219, 219);
   height: 1px;
 }
@@ -103,7 +152,24 @@
   justify-content: space-between
 }
 .div-button-kit{
-  width: 22%;
+  width: 100%;
   display: flex;
   justify-content: space-between
+}
+.div-avancado-buttons-kit{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.div-button-avancado-kit{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px
+}
+.div-data-kit{
+  width: 22%;
+  display: flex;
+  align-items: center
 }

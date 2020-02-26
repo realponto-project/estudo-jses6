@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import ReservaOs from './OsContainer'
+import Rexterno from './OsContainer'
 
-class ReservaOsRoute extends Component{
+class ReservaExternoRoute extends Component{
 
   render() {
     return(
         <Switch>
-          <Route exact path='/logged/reservaOs/dash' component={ReservaOs}/>  
+          <Route exact path='/logged/Rexterno/dash' component={Rexterno}/>  
         </Switch>
     )
   }
 }
 
 
-export default ReservaOsRoute
+export default ReservaExternoRoute

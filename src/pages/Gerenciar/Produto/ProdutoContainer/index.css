@@ -1,0 +1,237 @@
+.div-cabecalho-GCadastros{
+  width: 90%;
+  background-color: #FAFAFA;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px
+}
+.cel-os-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 13%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.div-ocultar-GCadastros{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end
+}
+.div-tables-GCadastros{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+.div-avancado-GCadastros{
+  width: 90%;
+  display: flex;
+  justify-content: space-between
+}
+.cel-usuario-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 35%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-tipoConta-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 60%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-customizado-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 15%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-uf-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 5%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-nome-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 27%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-telefone-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 15%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-tecnico-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 40%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-externo-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 15%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-carro-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 15%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-cnh-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 30%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-rs-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 30%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-cnpj-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 23%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-acoes-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 12%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-edit-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 5%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.cel-data-cabecalho-GCadastros{
+  align-items: center;
+  display: flex;
+  width: 20%;
+  height:30px;
+  font-size: 1.0em ;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+}
+.div-cnpj-GCadastros{
+  width: 27%;
+  display: flex;
+  align-items: center;
+}
+.div-rs-GCadastros{
+  width: 70%;
+  display: flex;
+  align-items: center;
+}
+.div-uf-GCadastros{
+  width: 15%;
+  display: flex;
+  align-items: center;
+}
+.div-nome-GCadastros{
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+.div-textTipo-GCadastros{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 40%
+}
+.div-linha1-avancado-GCadastros{
+  width: 100%;
+  margin: 10px 0 10px 0;
+  display: flex;
+}
+.div-categoria-GCadastros{
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-marca-GCadastros{
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-tipo-GCadastros{
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-tel-GCadastros{
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-tecnico-GCadastros{
+  width: 40%;
+  display: flex;
+  align-items: center;
+}
+.div-carro-GCadastros{
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-cnh-GCadastros{
+  width: 25%;
+  display: flex;
+  align-items: center;
+}
+.div-usuario-GCadastros{
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+.div-tipoConta-GCadastros{
+  margin-left: 25px;
+  width: 40%;
+  display: flex;
+  align-items: center;
+}
+.icon-edit{
+  /* margin-left: 25px; */
+  /* width: 5em; */
+  /* display: flex;
+  align-items: center; */
+  cursor: pointer;
+}

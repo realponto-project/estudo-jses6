@@ -1,42 +1,57 @@
-import axios from 'axios'
-import { BACKEND_URL } from './var'
+import axios from "axios";
+import { BACKEND_URL } from "./var";
 
-import { store } from '../App'
+import { store } from "../App";
 
-export const authentic = (values) => {
-  return axios.post(`${BACKEND_URL}/oapi/login`, values)
-}
+export const authentic = async values => {
+  let response = {};
+  await axios
+    .post(`${BACKEND_URL}/oapi/login`, values)
+    .then(resp => {
+      response = resp;
+    })
+    .catch(error => {
+      if (error.response) {
+        response = error.response;
+      } else {
+        console.log("Error", error.message);
+      }
+    });
 
-export const logout = async (token) => {
-  const storeObject = store.getState()
+  return response;
+};
+
+export const logout = async token => {
+  const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username,
-  }
+    username: storeObject.auth.username
+  };
 
-  await axios.delete(`${BACKEND_URL}/oapi/logout`, { params: { token }, headers: headers })
-  
-  return true
-} 
+  await axios.delete(`${BACKEND_URL}/oapi/logout`, {
+    params: { token },
+    headers: headers
+  });
 
-export const auth = async(value) => {
- 
-let response = null
+  return true;
+};
 
-  await axios.get(`${BACKEND_URL}/oapi/auth`, { params: value }).then(
-    resp => {
-      response = resp
-    }
-  ).catch((error) => {
-    if (error.response) {
-      response = error.response
-    } else {
-      console.log('Error', error.message);
-    }
-  })
+export const auth = async value => {
+  let response = null;
 
-  return response
+  await axios
+    .get(`${BACKEND_URL}/oapi/auth`, { params: value })
+    .then(resp => {
+      response = resp;
+    })
+    .catch(error => {
+      if (error.response) {
+        response = error.response;
+      } else {
+        console.log("Error", error.message);
+      }
+    });
 
-}
-
+  return response;
+};

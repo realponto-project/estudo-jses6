@@ -1,0 +1,110 @@
+.div-card-emprestimo-report {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: static;
+}
+
+.title-emprestimo-report {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+.div-rs-report {
+  width: 45%;
+  display: flex;
+  align-items: center;
+}
+.div-emprestimo-report {
+  margin-top: 10px;
+  width: 90%;
+  background-color: #fafafa;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+.div-textRs-report {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 30%;
+}
+.div-Os-report {
+  width: 25%;
+  display: flex;
+  align-items: center;
+}
+.cel-razaoSocial-cabecalho-emprestimo-report {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  width: 35%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.cel-serialNumber-cabecalho-emprestimo-report {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  width: 20%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.cel-solicitacao-cabecalho-emprestimo-report {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  width: 15%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.cel-atendimento-cabecalho-emprestimo-report {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  width: 15%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.cel-retorno-cabecalho-emprestimo-report {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  width: 15%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.div-100-emprestimo-report {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.div-lines-emprestimo-report {
+  width: 100%;
+  display: flex;
+  height: 50px;
+  align-items: center;
+}

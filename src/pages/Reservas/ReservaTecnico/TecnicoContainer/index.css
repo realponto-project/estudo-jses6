@@ -1,123 +1,437 @@
-.div-card-Rtecnico{
+.div-card-Rtecnico {
   width: 96%;
   height: 95%;
   background-color: white;
   border-radius: 2px;
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
+  position: static;
 }
-.linhaTexto-Rtecnico{
+.linhaTexto-Rtecnico {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 25px;
 }
-.h1-Rtecnico{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.h1-Rtecnico {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 500;
-  font-size: 2.2em
+  font-size: 2.2em;
 }
-.div-cabecalho-Rtecnico{
+.div-cabecalho-Rtecnico {
   width: 90%;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   height: 60px;
   display: flex;
-  align-items: center
+  align-items: center;
+  margin-top: 10px;
 }
-.cel-os-cabecalho-Rtecnico{
+.div-serie-modal {
+  width: 40%;
+  display: flex;
+  font-size: 1.3em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin-top: 25px;
+}
+.div-linha-avancado-Rtecnico {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+.cel-mais-cabecalho-Rtecnico {
+  /* justify-content: center */
+  align-items: center;
+  display: flex;
+  width: 7%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+.cel-os-cabecalho-Rtecnico {
   align-items: center;
   display: flex;
   width: 12%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.cel-rs-cabecalho-Rtecnico{
+.cel-rs-cabecalho-Rtecnico {
   align-items: center;
   display: flex;
   width: 42%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.cel-cnpj-cabecalho-Rtecnico{
+.cel-cnpj-cabecalho-Rtecnico {
   align-items: center;
   display: flex;
   width: 23%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.cel-acoes-cabecalho-Rtecnico{
+
+.cel-acoes-cabecalho-Rtecnico {
   align-items: center;
   display: flex;
-  width: 14%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  width: 7%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.cel-data-cabecalho-Rtecnico{
+.cel-data-cabecalho-Rtecnico {
   align-items: center;
   display: flex;
   width: 20%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.div-lines-Rtecnico{
-  width: 90%;
+.div-lines-Rtecnico {
+  width: 100%;
   display: flex;
   height: 50px;
-  align-items: center
+  align-items: center;
 }
-.div-separate-Rtecnico{
+.div-separate-Rtecnico {
   width: 90%;
   background-color: rgb(221, 219, 219);
   height: 1px;
 }
-.footer-Rtecnico{
+.footer-Rtecnico {
   margin-top: 10px;
   width: 90%;
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
-
-.div-text-Rtecnico{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.div-ocultar-Rtecnico {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.div-text-Rtecnico {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-size: 16px;
   color: rgb(90, 90, 90);
   margin-right: 5px;
 }
-.div-tecnico-Rtecnico{
-  width: 45%;
+.div-textRs-Rtecnico {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
+  width: 15%;
+}
+.div-body-modalImprimir {
+  display: flex;
+  flex-direction: column;
+}
+.div-avancado-Rtecnico {
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
+}
+.div-avancado-Rtecnico-imprimir {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+.div-Os-Rtecnico {
+  width: 18%;
   display: flex;
   align-items: center;
-  margin-right: 30px;
 }
-.div-linha-Rtecnico{
+.div-rs-Rtecnico {
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+.div-cnpj-Rtecnico {
+  width: 25%;
+  display: flex;
+  align-items: center;
+}
+.div-data-Rtecnico {
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+
+.div-tecnico-Rtec {
+  width: 40%;
+  display: flex;
+  align-items: center;
+}
+.div-linha-Rtecnico {
   width: 90%;
   margin: 50px 0 10px 0;
 }
-.div-textProdutos-Rtecnico{
+.div-textProdutos-Rtecnico {
   width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 20px;
-  font-weight: bold
+  font-weight: bold;
 }
-.ant-modal-content{
-  width: 650px
-}
-.button-icon{
+/* .ant-modal-content {
+  width: 650px;
+} */
+
+.button-icon {
   background-color: #001529 !important;
   border-color: #001529 !important;
-  margin-right: 5px
+  margin-right: 5px;
 }
-.button-icon:hover{
+.button-icon:hover {
   background-color: #1890ff !important;
   border-color: #1890ff !important;
 }
-.button-icon-remove{
+.button-icon-remove {
   background-color: red !important;
   border-color: red !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.div-body-modal {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.div-text-modal {
+  width: 100%;
+  display: flex;
+}
+.div-produtos-modal {
+  width: 60%;
+  font-size: 1.3em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin-top: 25px;
+}
+.div-numSerie-modal {
+  width: 60%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin-top: 25px;
+  border: 0.1px solid black;
+  padding: 5px;
+}
+.div-quant-modal {
+  width: 15%;
+  display: flex;
+  font-size: 1.3em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin-top: 25px;
+}
+.div-acoes-modal {
+  width: 25%;
+  display: flex;
+  font-size: 1.3em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin-top: 25px;
+  justify-content: space-between;
+}
+.div-separate-modal {
+  width: 100%;
+  background-color: rgb(126, 125, 125);
+  height: 1px;
+}
+.button-liberar {
+  background-color: rgb(31, 190, 71) !important;
+  border-color: rgb(31, 190, 71) !important;
+  display: flex !important;
+  justify-content: center;
+}
+.button-mais {
+  width: 30% !important;
+  height: 50% !important;
+  display: flex !important;
+  justify-content: center !important;
+  background-color: #000c17 !important;
+  border: #000c17 !important;
+  align-items: center;
+  color: white;
+}
+.button-mais:hover {
+  background-color: #1790ff !important;
+  border: #1790ff !important;
+  cursor: pointer;
+}
+.div-100-Rtecnico {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+}
+.div-mais-Rtecnico {
+  width: 100%;
+  background-color: #fafafa;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.div-produtos-mais {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 80%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1em;
+}
+.div-quant-mais {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 20%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1em;
+}
+.div-naotemnada {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 50px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1.3em;
+}
+.div-peca {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  height: 40px;
+}
+.div-lines-mais-Rtecnico {
+  width: 100%;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-around;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1.2em;
+}
+.div-branco-mais {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  display: flex;
+  background-color: white;
+}
+.div-normal-mais {
+  width: 90%;
+  display: flex;
+}
+.div-total-modal {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1.2em;
+}
+.div-total-modal2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1.2em;
+}
+.div-baixo {
+  width: 24%;
+}
+.div-baixo2 {
+  width: 24%;
+  display: flex;
+  padding: 10px;
+}
+
+#imprimir:hover {
+  color: #08c;
+}
+
+#car {
+  margin: 10px 0 0 5px;
+}
+#car:hover {
+  color: #08c;
+}
+
+#car-update {
+  margin: 10px 0 0 5px;
+  color: rgb(25, 204, 8);
+}
+
+.div-row-modal-imprimir {
+  display: flex;
+  flex-direction: row;
+  /* justify-items: center; */
+  align-items: center;
+}
+
+.div-title-modal-update-car {
+  display: flex;
+  flex-direction: row;
+  margin: 0 5px;
+}
+
+.div-datePicker-modal-row {
+  width: 45%;
+  display: flex;
+  flex-direction: row;
+}
+
+.div-datePicker-modal-row-reverse {
+  width: 45%;
+  display: flex;
+  flex-direction: row-reverse;
+  -webkit-animation-name: div; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 0.5s; /* Safari 4.0 - 8.0 */
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes div {
+  from {
+    flex-direction: row;
+  }
+  to {
+    flex-direction: row-reverse;
+  }
+}
+
+/* Standard syntax */
+@keyframes div {
+  from {
+    flex-direction: row;
+  }
+  to {
+    flex-direction: row-reverse;
+  }
 }
