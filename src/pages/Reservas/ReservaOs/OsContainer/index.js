@@ -441,12 +441,14 @@ class Rexterno extends Component {
         return;
       }
 
-      let itemAdd = null;
+      let itemAdd = {
+        status: this.state.status,
+        nomeProdutoCarrinho: this.state.nomeProduto
+      };
 
       if (this.state.status === "CONSERTO") {
         itemAdd = {
-          status: this.state.status,
-          nomeProdutoCarrinho: this.state.nomeProduto,
+          ...itemAdd,
           productId: this.state.productBaseId,
           serialNumber: this.state.serialNumber,
           description: this.state.observacao,
@@ -454,8 +456,7 @@ class Rexterno extends Component {
         };
       } else {
         itemAdd = {
-          status: this.state.status,
-          nomeProdutoCarrinho: this.state.nomeProduto,
+          ...itemAdd,
           productBaseId: this.state.productBaseId,
           amount: this.state.quant.toString(),
           stockBase: this.state.estoque,

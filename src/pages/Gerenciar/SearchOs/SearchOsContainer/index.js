@@ -577,24 +577,38 @@ class SearchOsDash extends Component {
         return;
       }
 
+      let itemAdd = {
+        status: this.state.status,
+        nome: this.state.nomeProduto
+      };
+
+      if (this.state.status === "CONSERTO") {
+        itemAdd = {
+          ...itemAdd,
+          productId: this.state.productBaseId,
+          serialNumber: this.state.serialNumber
+          // description: this.state.observacao,
+          // amount: this.state.quant
+        };
+      } else {
+        itemAdd = {
+          ...itemAdd,
+          productBaseId: this.state.productBaseId,
+          amount: this.state.quant.toString(),
+          stockBase: this.state.estoque,
+          serialNumberArray: this.state.numeroSerieTest
+            .split(/\n/)
+            .filter(item => (item ? item : null)),
+          serial: this.state.serial
+        };
+      }
+
       this.setState({
         quantObj: {
           ...this.state.quantObj,
           [`quant${this.state.nomeProduto}`]: this.state.quant
         },
-        carrinho: [
-          {
-            name: this.state.nomeProduto,
-            productBaseId: this.state.productBaseId,
-            amount: this.state.quant.toString(),
-            stockBase: this.state.estoque,
-            serialNumberArray: this.state.numeroSerieTest
-              .split(/\n/)
-              .filter(item => (item ? item : null)),
-            serial: this.state.serial
-          },
-          ...this.state.carrinho
-        ],
+        carrinho: [itemAdd, ...this.state.carrinho],
         nomeProduto: "Não selecionado",
         status: "Não selecionado",
         quant: 1,
