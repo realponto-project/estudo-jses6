@@ -828,40 +828,19 @@ class SearchOsDash extends Component {
         </div>
 
         <div className="div-linha-Os">
-          <div className="div-numeroSerie-Os">
-            {this.state.status !== "CONSERTO" ? (
-              <div className="div-estoqueConserto-Os">
-                <div className="div-text-Os">Estoque:</div>
-                <Select
-                  value={this.state.estoque}
-                  style={{ width: "100%" }}
-                  onChange={this.onChangeEstoque}
-                >
-                  <Option value="REALPONTO">REALPONTO</Option>
-                  <Option value="NOVAREAL">NOVA REALPONTO</Option>
-                  <Option value="PONTOREAL">PONTOREAL</Option>
-                </Select>
-              </div>
-            ) : (
-              <>
-                <div className="div-serial-Os">Número de série:</div>
-                <Input
-                  allowClear={!this.state.fieldFalha.serialNumber}
-                  className={
-                    this.state.fieldFalha.serialNumber
-                      ? "div-inputError-tecnico"
-                      : "input-100"
-                  }
-                  placeholder="Digite o número"
-                  name="serialNumber"
-                  value={this.state.serialNumber}
-                  onChange={this.onChange}
-                  onBlur={this.onBlurValidator}
-                  onFocus={this.onFocus}
-                />
-              </>
-            )}
+          <div className="div-estoque-Os">
+            <div className="div-text-Os">Estoque:</div>
+            <Select
+              value={this.state.estoque}
+              style={{ width: "100%" }}
+              onChange={this.onChangeEstoque}
+            >
+              <Option value="REALPONTO">REALPONTO</Option>
+              <Option value="NOVAREAL">NOVA REALPONTO</Option>
+              <Option value="PONTOREAL">PONTOREAL</Option>
+            </Select>
           </div>
+
           <div className="div-status-Os">
             <div className="div-text-Os">Status:</div>
             <div style={{ display: "flex", width: "100%" }}>
@@ -888,27 +867,10 @@ class SearchOsDash extends Component {
           </div>
         </div>
 
-        {this.state.status === "CONSERTO" ? (
-          <div className="linha1-produtos">
-            <div className="div-descricao-produtos">
-              <div className="div-text-produtos">Observação:</div>
-              <TextArea
-                className="input-100"
-                placeholder="Digite a observação"
-                autosize={{ minRows: 2, maxRows: 4 }}
-                rows={4}
-                name="observacao"
-                value={this.state.observacao}
-                onChange={this.onChange}
-              />
-            </div>
-          </div>
-        ) : null}
-
-        {this.state.serial && this.state.status !== "CONSERTO" ? (
-          <div className="div-linha-Os">
-            <div className="div-serial-AddKit">
-              <div className="div-textSerial-AddKit">Número de série:</div>
+        <div className="div-linha-SearchOs">
+          {this.state.serial ? (
+            <div className="div-serial-SearchOs">
+              <div className="div-textSerial-SearchOs">Número de série:</div>
               <TextArea
                 className="input-100"
                 placeholder="Digite o número de série"
@@ -919,29 +881,12 @@ class SearchOsDash extends Component {
                 onChange={this.filter}
               />
             </div>
-            <Button
-              className="button"
-              type="primary"
-              onClick={
-                this.state.status === "Não selecionado"
-                  ? this.errorStatus
-                  : this.addCarrinho
-              }
-            >
-              Adicionar
-            </Button>
-          </div>
-        ) : (
-          <div className="div-button-add-reservaOs">
-            <Button
-              className="button"
-              type="primary"
-              onClick={this.addCarrinho}
-            >
-              Adicionar
-            </Button>
-          </div>
-        )}
+          ) : null}
+
+          <Button className="button" type="primary" onClick={this.addCarrinho}>
+            Adicionar
+          </Button>
+        </div>
 
         <div className="div-linhaSeparete-Os"></div>
 
