@@ -525,7 +525,7 @@ class EmprestimoContainer extends Component {
       okText="Confirmar"
       cancelText="Cancelar"
     >
-      <h3>Aperte em "Confirmar" se deseja excluir a solicitação</h3>
+      <h4>Aperte em "Confirmar" se deseja excluir a solicitação</h4>
     </Modal>
   );
 
@@ -702,6 +702,7 @@ class EmprestimoContainer extends Component {
 
     await deleteEmprestimoService(value);
     await this.getEprestimo();
+    await this.getAllEquips();
   };
 
   update = async item => {
