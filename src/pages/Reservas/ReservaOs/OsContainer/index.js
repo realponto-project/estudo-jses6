@@ -88,12 +88,13 @@ class Rexterno extends Component {
     );
   };
 
-  getAllProducts = async () => {
+  getAllProducts = async name => {
     const query = {
       filters: {
         product: {
           specific: {
-            serial: true
+            serial: true,
+            name
           }
         }
       }
@@ -671,7 +672,11 @@ class Rexterno extends Component {
             <div className="div-textNome-Os">Nome do produto:</div>
             <Select
               showSearch
-              onSearch={name => this.getAllItens(name)}
+              onSearch={
+                this.state.status === "CONSERTO"
+                  ? name => this.getAllProducts(name)
+                  : name => this.getAllItens(name)
+              }
               style={{ width: "100%" }}
               placeholder="Selecione o produto"
               optionFilterProp="children"
