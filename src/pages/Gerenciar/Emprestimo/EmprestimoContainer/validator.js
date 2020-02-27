@@ -49,6 +49,13 @@ export const masks = (name, valor) => {
         name,
         value
       };
+    case "serialNumberSearch":
+      value = value.replace(/\W/gi, "");
+      return {
+        name,
+        value
+      };
+
     default:
       return {
         name,
