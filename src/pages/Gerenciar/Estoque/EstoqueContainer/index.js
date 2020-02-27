@@ -249,7 +249,7 @@ class Estoque extends Component {
           }
         }
       },
-      limit: 5000
+      total: 5000
     };
     getAllEquipsService(query)
       .then(resp => {
