@@ -1,12 +1,24 @@
 import React, { Component } from "react";
-import { Input, DatePicker, InputNumber, Button, message, Select } from "antd";
+import {
+  Input,
+  DatePicker,
+  InputNumber,
+  Button,
+  Modal,
+  message,
+  Select
+} from "antd";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 // import { validators, masks } from "./validators";
 import { newReservaTecInt } from "../../../../services/reservaOs";
-import { getProdutoByEstoque } from "../../../../services/produto";
+import { getProdutoByEstoque, getProdutos } from "../../../../services/produto";
 import { getTecnico } from "../../../../services/tecnico";
 import { getSerial } from "../../../../services/serialNumber";
+import {
+  addStatusExpedition,
+  getAllStatusExpedition
+} from "../../../../services/statusExpedition";
 import moment from "moment";
 
 const { TextArea } = Input;
@@ -15,19 +27,24 @@ const { Option } = Select;
 class Rinterno extends Component {
   state = {
     readOnly: false,
+    observacao: "",
     serial: false,
     disp: 1,
     numeroSerieTest: "",
     tecnicoArray: [],
+    allStatus: [],
+    status: "Não selecionado",
     itemArray: [],
     messageError: false,
     messageSuccess: false,
     Os: "",
+    modalAddStatus: false,
     razaoSocial: "",
     data: "",
     tecnico: "Não selecionado",
     nomeProduto: "Não selecionado",
     productBaseId: "",
+    serialNumber: "",
     tecnicoId: "",
     quant: 1,
     carrinho: [],
@@ -37,15 +54,68 @@ class Rinterno extends Component {
       razaoSocial: false,
       cnpj: false,
       data: false,
-      technician: false
+      technician: false,
+      serialNumber: false
     },
     message: {
       Os: "",
       razaoSocial: "",
       cnpj: "",
       data: "",
-      technician: ""
+      technician: "",
+      serialNumber: ""
     }
+  };
+
+  getAllProducts = async () => {
+    const query = {
+      filters: {
+        product: {
+          specific: {
+            serial: true
+          }
+        }
+      }
+    };
+
+    await getProdutos(query).then(resposta =>
+      this.setState({
+        itemArray: resposta.data.rows.map(item => {
+          const resp = { name: item.name, id: item.id };
+          return resp;
+        })
+      })
+    );
+  };
+
+  onChangeStatus = async valor => {
+    if (this.state.status === "CONSERTO" || valor === "CONSERTO") {
+      await this.setState({
+        serialNumber: "",
+        numeroSerieTest: "",
+        productBaseId: "",
+        nomeProduto: "Não selecionado"
+      });
+    }
+
+    await this.setState({
+      serialNumber: "",
+      status: valor,
+      nomeProduto: "Não selecionado",
+      serial: false
+    });
+
+    if (valor === "CONSERTO") {
+      this.getAllProducts();
+    } else {
+      await this.getAllItens();
+    }
+  };
+
+  openModais = e => {
+    this.setState({
+      modalAddStatus: true
+    });
   };
 
   getAllTecnico = async name => {
@@ -131,6 +201,7 @@ class Rinterno extends Component {
   componentDidMount = async () => {
     await this.getAllItens();
     await this.getAllTecnico();
+    await this.getAllStatusExpedition();
   };
 
   getAllItens = async name => {
@@ -299,13 +370,52 @@ class Rinterno extends Component {
     });
   };
 
-  // onChange = e => {
-  //   const { nome, valor } = masks(e.target.name, e.target.value);
+  modalStatus = () => (
+    <Modal
+      title="Adicionar status"
+      visible={this.state.modalAddStatus}
+      onOk={this.handleOk}
+      okText="Salvar"
+      onCancel={this.handleOk}
+      cancelText="Cancelar"
+    >
+      <div className="linhaModal-produtos">
+        <div className="div-marcaModal-produtos">
+          <div className="div-text-produtos">Status:</div>
+          <Input
+            allowClear={!this.state.fieldFalha.newStatus}
+            className={
+              this.state.fieldFalha.newStatus
+                ? "div-inputError-tecnico"
+                : "input-100"
+            }
+            placeholder="Digite o status"
+            name="newStatus"
+            value={this.state.newStatus}
+            onChange={this.onChange}
+            onBlur={this.onBlurValidator}
+            onFocus={this.onFocus}
+          />
+          {this.state.fieldFalha.newStatus ? (
+            <p className="div-feedbackError">{this.state.message.status}</p>
+          ) : null}
+        </div>
+      </div>
+    </Modal>
+  );
 
-  //   this.setState({
-  //     [nome]: valor
-  //   });
-  // };
+  handleOk = async () => {
+    const value = {
+      status: this.state.newStatus
+    };
+
+    await addStatusExpedition(value);
+    this.setState({
+      modalAddStatus: false
+    });
+
+    await this.getAllStatusExpedition();
+  };
 
   onChangeQuant = value => {
     this.setState({
@@ -323,6 +433,18 @@ class Rinterno extends Component {
 
   errorSelecionado = value => {
     message.error(value);
+  };
+
+  getAllStatusExpedition = async () => {
+    const { status, data } = await getAllStatusExpedition();
+
+    if (status === 200) {
+      this.setState({
+        allStatus: data
+          .map(item => item.status)
+          .filter(item => item !== "EMPRESTIMO")
+      });
+    }
   };
 
   addCarrinho = () => {
@@ -523,20 +645,85 @@ class Rinterno extends Component {
         </div>
 
         <div className="div-linha-Os">
-          <div className="div-estoque-Os">
-            <div className="div-text-Os">Estoque:</div>
-            <Select
-              value={this.state.estoque}
-              style={{ width: "100%" }}
-              onChange={this.onChangeEstoque}
-            >
-              <Option value="REALPONTO">REALPONTO</Option>
-              <Option value="NOVAREAL">NOVA REALPONTO</Option>
-              <Option value="PONTOREAL">PONTOREAL</Option>
-            </Select>
+          <div className="div-numeroSerie-Os">
+            {this.state.status !== "CONSERTO" ? (
+              <div className="div-estoqueConserto-Os">
+                <div className="div-text-Os">Estoque:</div>
+                <Select
+                  value={this.state.estoque}
+                  style={{ width: "100%" }}
+                  onChange={this.onChangeEstoque}
+                >
+                  <Option value="REALPONTO">REALPONTO</Option>
+                  <Option value="NOVAREAL">NOVA REALPONTO</Option>
+                  <Option value="PONTOREAL">PONTOREAL</Option>
+                </Select>
+              </div>
+            ) : (
+              <>
+                <div className="div-serial-Os">Número de série:</div>
+                <Input
+                  allowClear={!this.state.fieldFalha.serialNumber}
+                  className={
+                    this.state.fieldFalha.serialNumber
+                      ? "div-inputError-tecnico"
+                      : "input-100"
+                  }
+                  placeholder="Digite o número"
+                  name="serialNumber"
+                  value={this.state.serialNumber}
+                  onChange={this.onChange}
+                  onBlur={this.onBlurValidator}
+                  onFocus={this.onFocus}
+                />
+              </>
+            )}
           </div>
+          <div className="div-status-Os">
+            <div className="div-text-Os">Status:</div>
+            <div style={{ display: "flex", width: "100%" }}>
+              <Select
+                value={this.state.status}
+                style={{ width: "100%" }}
+                onChange={this.onChangeStatus}
+              >
+                {this.state.allStatus.map(item => {
+                  return <Option value={item}>{item.toUpperCase()}</Option>;
+                })}
+              </Select>
+              <this.modalStatus />
+              {this.props.auth.addStatus ? (
+                <Button
+                  className="buttonadd-marca-produtos"
+                  type="primary"
+                  icon="plus"
+                  name="modalMarca"
+                  onClick={this.openModais}
+                />
+              ) : null}
+            </div>
+          </div>
+        </div>
 
-          {this.state.serial ? (
+        {this.state.status === "CONSERTO" ? (
+          <div className="linha1-produtos">
+            <div className="div-descricao-produtos">
+              <div className="div-text-produtos">Observação:</div>
+              <TextArea
+                className="input-100"
+                placeholder="Digite a observação"
+                autosize={{ minRows: 2, maxRows: 4 }}
+                rows={4}
+                name="observacao"
+                value={this.state.observacao}
+                onChange={this.onChange}
+              />
+            </div>
+          </div>
+        ) : null}
+
+        {this.state.serial && this.state.status !== "CONSERTO" ? (
+          <div className="div-linha-Os">
             <div className="div-serial-AddKit">
               <div className="div-textSerial-AddKit">Número de série:</div>
               <TextArea
@@ -549,12 +736,29 @@ class Rinterno extends Component {
                 onChange={this.filter}
               />
             </div>
-          ) : null}
-
-          <Button className="button" type="primary" onClick={this.addCarrinho}>
-            Adicionar
-          </Button>
-        </div>
+            <Button
+              className="button"
+              type="primary"
+              onClick={
+                this.state.status === "Não selecionado"
+                  ? this.errorStatus
+                  : this.addCarrinho
+              }
+            >
+              Adicionar
+            </Button>
+          </div>
+        ) : (
+          <div className="div-button-add-reservaOs">
+            <Button
+              className="button"
+              type="primary"
+              onClick={this.addCarrinho}
+            >
+              Adicionar
+            </Button>
+          </div>
+        )}
 
         <div className="div-linhaSeparete-Os"></div>
 
