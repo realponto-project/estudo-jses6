@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import { Input, DatePicker, InputNumber, Button, message, Select } from "antd";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-// import { validators, masks } from "./validators";
 import { newReservaTecInt } from "../../../../services/reservaOs";
 import { getProdutoByEstoque } from "../../../../services/produto";
 import { getTecnico } from "../../../../services/tecnico";
 import { getSerial } from "../../../../services/serialNumber";
 import moment from "moment";
 
-const { TextArea } = Input;
 const { Option } = Select;
+// const { TextArea } = Input;
 
 class Rinterno extends Component {
   state = {
@@ -19,6 +18,8 @@ class Rinterno extends Component {
     disp: 1,
     numeroSerieTest: "",
     tecnicoArray: [],
+    allStatus: [],
+    status: "Não selecionado",
     itemArray: [],
     messageError: false,
     messageSuccess: false,
@@ -37,14 +38,16 @@ class Rinterno extends Component {
       razaoSocial: false,
       cnpj: false,
       data: false,
-      technician: false
+      technician: false,
+      serialNumber: false
     },
     message: {
       Os: "",
       razaoSocial: "",
       cnpj: "",
       data: "",
-      technician: ""
+      technician: "",
+      serialNumber: ""
     }
   };
 
@@ -299,14 +302,6 @@ class Rinterno extends Component {
     });
   };
 
-  // onChange = e => {
-  //   const { nome, valor } = masks(e.target.name, e.target.value);
-
-  //   this.setState({
-  //     [nome]: valor
-  //   });
-  // };
-
   onChangeQuant = value => {
     this.setState({
       quant: value
@@ -523,7 +518,7 @@ class Rinterno extends Component {
         </div>
 
         <div className="div-linha-Os">
-          <div className="div-estoque-Os">
+          <div className="div-estoqueConserto-Rinterno">
             <div className="div-text-Os">Estoque:</div>
             <Select
               value={this.state.estoque}
@@ -536,9 +531,9 @@ class Rinterno extends Component {
             </Select>
           </div>
 
-          {this.state.serial ? (
-            <div className="div-serial-AddKit">
-              <div className="div-textSerial-AddKit">Número de série:</div>
+          {/* {this.state.serial ? (
+            <div className="div-serial-Rinterno">
+              <div className="div-textSerial-Rinterno">Número de série:</div>
               <TextArea
                 className="input-100"
                 placeholder="Digite o número de série"
@@ -549,7 +544,7 @@ class Rinterno extends Component {
                 onChange={this.filter}
               />
             </div>
-          ) : null}
+          ) : null} */}
 
           <Button className="button" type="primary" onClick={this.addCarrinho}>
             Adicionar

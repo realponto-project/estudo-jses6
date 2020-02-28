@@ -1,4 +1,4 @@
-.div-card-RPerda{
+.div-card-RPerda {
   width: 96%;
   height: 95%;
   background-color: white;
@@ -8,94 +8,109 @@
   align-items: center;
   position: static;
 }
-.linhaTexto-RPerda{
+.linhaTexto-RPerda {
   width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 25px;
 }
-.h1-RPerda{
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+.h1-RPerda {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   font-weight: 500;
-  font-size: 2.2em
+  font-size: 2.2em;
 }
-.div-produto-RPerda{
+.div-produto-RPerda {
   width: 35%;
   display: flex;
   align-items: center;
 }
-.div-data-RPerda{
+.div-data-RPerda {
   width: 27%;
   display: flex;
   align-items: center;
 }
-.div-tecnico-RPerda{
+.div-tecnico-RPerda {
   width: 35%;
   display: flex;
   align-items: center;
 }
-.div-cabecalho-RPerda{
+.div-cabecalho-RPerda {
   margin-top: 10px;
   width: 90%;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   height: 60px;
   display: flex;
-  align-items: center
+  align-items: center;
 }
-.cel-produto-cabecalho-RPerda{
+.cel-produto-cabecalho-RPerda {
   align-items: center;
   display: flex;
-  width: 40%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  width: 35%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.cel-usuario-cabecalho-RPerda{
+.cel-usuario-cabecalho-RPerda {
   align-items: center;
   display: flex;
   width: 25%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.cel-quant-cabecalho-RPerda{
+.cel-quant-cabecalho-RPerda {
   align-items: center;
   display: flex;
   width: 15%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.cel-RPerda-cabecalho-RPerda{
+.cel-RPerda-cabecalho-RPerda {
   align-items: center;
   display: flex;
   width: 20%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.cel-data-cabecalho-RPerda{
+.cel-data-cabecalho-RPerda {
   align-items: center;
   display: flex;
-  width: 15%;
-  height:30px;
-  font-size: 1.0em ;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  width: 10%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-.div-lines-RPerda{
+.cel-os-cabecalho-RPerda {
+  align-items: center;
+  display: flex;
+  width: 10%;
+  height: 30px;
+  font-size: 1em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+.div-lines-RPerda {
   width: 100%;
   display: flex;
   height: 50px;
-  align-items: center
+  align-items: center;
 }
-.div-separate-RPerda{
+.div-separate-RPerda {
   width: 100%;
   background-color: rgb(221, 219, 219);
   height: 1px;
 }
-.footer-RPerda{
+.footer-RPerda {
   margin-top: 10px;
   width: 90%;
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
 }

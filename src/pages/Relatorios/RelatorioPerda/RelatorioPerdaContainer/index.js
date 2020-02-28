@@ -133,6 +133,7 @@ class GerenciarEntrada extends Component {
               {line.technician}
             </div>
             <div className="cel-data-cabecalho-Gentrada">{line.createdAt}</div>
+            <div className="cel-os-cabecalho-Gentrada">{line.os}</div>
           </div>
           <div className=" div-separate1-Gentrada" />
         </div>
@@ -300,7 +301,8 @@ class GerenciarEntrada extends Component {
           <div className="cel-produto-cabecalho-RPerda">Produto</div>
           <div className="cel-quant-cabecalho-RPerda">Qnt.</div>
           <div className="cel-usuario-cabecalho-RPerda">Técnico</div>
-          <div className="cel-data-cabecalho-RPerda">Data lançamento</div>
+          <div className="cel-data-cabecalho-RPerda">Data lanç</div>
+          <div className="cel-os-cabecalho-RPerda">Os</div>
         </div>
 
         <div className=" div-separate-ROs" />

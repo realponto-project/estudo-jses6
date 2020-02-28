@@ -32,6 +32,7 @@ class EmprestimoContainer extends Component {
     itemArray: [],
     disponiveis: [],
     reservados: [],
+    avancado: true,
     loading: false,
     modalInClient: false,
     modalReservados: false,
@@ -1011,104 +1012,108 @@ class EmprestimoContainer extends Component {
       nomeProdutoSearch,
       serialNumberSearch
     } = this.state;
+
     switch (this.state.select) {
       case "emCliente":
         return (
-          <div className="div-cabecalho-estoque">
-            <div className="cel-produto-cabecalho-estoque">
-              <Input
-                placeholder="nome do produto"
-                name="nomeProdutoSearch"
-                style={{ width: "90%" }}
-                value={nomeProdutoSearch}
-                onChange={this.onChange}
-              />
+          <div className="div-linha-avancado-Rtecnico">
+            <div className="div-linha1-avancado-Rtecnico">
+              <div className="cel-produto-cabecalho-emprestimo-search">
+                <Input
+                  placeholder="Nome do produto"
+                  name="nomeProdutoSearch"
+                  style={{ width: "100%" }}
+                  value={nomeProdutoSearch}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="cel-razaosocial-cabecalho-emprestimo-reservados-search">
+                <Input
+                  placeholder="Razão social"
+                  name="razaoSocialSearch"
+                  style={{ width: "100%" }}
+                  value={razaoSocialSearch}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="cel-numSerie-cabecalho-estoque-search">
+                <Input
+                  placeholder="Número de série"
+                  name="serialNumberSearch"
+                  style={{ width: "100%" }}
+                  value={serialNumberSearch}
+                  onChange={this.onChange}
+                />
+              </div>
             </div>
-            <div className="cel-razaosocial-cabecalho-emprestimo">
-              <Input
-                placeholder="razão social"
-                name="razaoSocialSearch"
-                style={{ width: "90%" }}
-                value={razaoSocialSearch}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className="cel-numSerie-cabecalho-estoque">
-              <Input
-                placeholder="número de série"
-                name="serialNumberSearch"
-                style={{ width: "90%" }}
-                value={serialNumberSearch}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className="cel-acao-cabecalho-emprestimo" />
           </div>
         );
       case "reservados":
         return (
-          <div className="div-cabecalho-estoque">
-            <div className="cel-produto-cabecalho-emprestimo">
-              <Input
-                placeholder="nome do produto"
-                name="nomeProdutoSearch"
-                style={{ width: "90%" }}
-                value={nomeProdutoSearch}
-                onChange={this.onChange}
-              />
+          <div className="div-linha-avancado-Rtecnico">
+            <div className="div-linha1-avancado-Rtecnico">
+              <div className="cel-produto-cabecalho-emprestimo-search">
+                <Input
+                  placeholder="Nome do produto"
+                  name="nomeProdutoSearch"
+                  style={{ width: "100%" }}
+                  value={nomeProdutoSearch}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="cel-razaosocial-cabecalho-emprestimo-reservados-search">
+                <Input
+                  placeholder="Razão social"
+                  name="razaoSocialSearch"
+                  style={{ width: "100%" }}
+                  value={razaoSocialSearch}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="cel-numSerie-cabecalho-estoque-search">
+                <Input
+                  placeholder="Número de série"
+                  name="serialNumberSearch"
+                  style={{ width: "100%" }}
+                  value={serialNumberSearch}
+                  onChange={this.onChange}
+                />
+              </div>
             </div>
-            <div className="cel-razaosocial-cabecalho-emprestimo-reservados">
-              <Input
-                placeholder="razão social"
-                name="razaoSocialSearch"
-                style={{ width: "90%" }}
-                value={razaoSocialSearch}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className="cel-numSerie-cabecalho-estoque">
-              <Input
-                placeholder="número de série"
-                name="serialNumberSearch"
-                style={{ width: "90%" }}
-                value={serialNumberSearch}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className="cel-acao-cabecalho-emprestimo-reservados" />
           </div>
         );
       case "disponiveis":
         return (
-          <div className="div-cabecalho-estoque">
-            <div className="cel-produto-cabecalho-emprestimo">
-              <Input
-                placeholder="nome do produto"
-                name="nomeProdutoSearch"
-                style={{ width: "90%" }}
-                value={nomeProdutoSearch}
-                onChange={this.onChange}
-              />
+          <div className="div-linha-avancado-Rtecnico">
+            <div className="div-linha1-avancado-Rtecnico">
+              <div className="cel-produto-cabecalho-emprestimo-search">
+                <Input
+                  placeholder="Nome do produto"
+                  name="nomeProdutoSearch"
+                  style={{ width: "100%" }}
+                  value={nomeProdutoSearch}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="cel-fabricante-cabecalho-estoque-search">
+                <Input
+                  placeholder="Fabricante"
+                  name="fabricanteSearch"
+                  style={{ width: "100%" }}
+                  value={fabricanteSearch}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="cel-numSerie-cabecalho-estoque-search">
+                <Input
+                  placeholder="Número de série"
+                  name="serialNumberSearch"
+                  style={{ width: "100%" }}
+                  value={serialNumberSearch}
+                  onChange={this.onChange}
+                />
+              </div>
             </div>
-            <div className="cel-fabricante-cabecalho-estoque">
-              <Input
-                placeholder="fabricante"
-                name="fabricanteSearch"
-                style={{ width: "90%" }}
-                value={fabricanteSearch}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className="cel-numSerie-cabecalho-estoque">
-              <Input
-                placeholder="número de série"
-                name="serialNumberSearch"
-                style={{ width: "90%" }}
-                value={serialNumberSearch}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className="cel-acao-cabecalho-emprestimo" />
           </div>
         );
       default:
@@ -1143,10 +1148,7 @@ class EmprestimoContainer extends Component {
               onClick={async () => {
                 await this.setState({
                   search: !this.state.search,
-                  fabricanteSearch: "",
-                  razaoSocialSearch: "",
-                  nomeProdutoSearch: "",
-                  serialNumberSearch: ""
+                  avancado: !this.state.avancado
                 });
 
                 switch (this.state.select) {
@@ -1161,7 +1163,7 @@ class EmprestimoContainer extends Component {
                 }
               }}
             >
-              Avançado
+              {this.state.avancado ? "Avançado" : "Ocultar"}
             </Button>
           </div>
 

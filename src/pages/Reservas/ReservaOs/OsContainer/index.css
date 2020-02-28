@@ -226,8 +226,8 @@
   background-color: #ff6c6c3b !important;
 }
 
-.div-estoqueConserto-Os {
-  width: 100%;
+.div-estoqueConserto-Rinterno {
+  width: 40%;
   display: flex;
   align-items: center;
 }
