@@ -465,7 +465,7 @@ class SearchOsDash extends Component {
   onChangeSelect = (value, props) => {
     this.setState({
       tecnico: value,
-      technicoId: props.props.props.id
+      tecnicoId: props.props.props.id
     });
   };
 
@@ -606,7 +606,6 @@ class SearchOsDash extends Component {
         };
       }
 
-      console.log(itemAdd);
       this.setState({
         quantObj: {
           ...this.state.quantObj,

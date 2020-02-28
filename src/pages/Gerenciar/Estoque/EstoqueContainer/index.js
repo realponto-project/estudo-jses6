@@ -218,7 +218,6 @@ class Estoque extends Component {
           }}
         >
           {this.state.serialNumbers.map(item => {
-            console.log(item);
             return (
               <p style={item.reserved ? { color: "red" } : null}>
                 {item.serialNumber}

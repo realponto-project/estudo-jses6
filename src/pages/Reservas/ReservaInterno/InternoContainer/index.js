@@ -141,7 +141,8 @@ class Rinterno extends Component {
       filters: {
         product: {
           specific: {
-            name
+            name,
+            serial: false
           }
         },
         stockBase: {

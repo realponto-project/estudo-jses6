@@ -238,37 +238,8 @@ class ReservaTecnico extends Component {
     this.setState({
       loading: true
     });
-    parseInt(this.state.Os, 10);
-    const query = {
-      filters: {
-        technician: {
-          specific: {
-            name: this.state.tecnico
-          }
-        },
-        os: {
-          specific: {
-            os: this.state.Os,
-            razaoSocial: this.state.razaoSocial,
-            cnpj: this.state.cnpj,
-            date: this.state.valueDate
-          }
-        }
-      },
-      page: this.state.page,
-      total: this.state.total,
-      required: true,
-      paranoid: true
-    };
 
-    await getTodasOs(query).then(resposta =>
-      this.setState({
-        OsArray: resposta.data,
-        page: resposta.data.page,
-        count: resposta.data.count,
-        show: resposta.data.show
-      })
-    );
+    await this.getAllOsSemLoading();
 
     this.setState({
       loading: false
@@ -303,6 +274,14 @@ class ReservaTecnico extends Component {
         technician: {
           specific: {
             name: this.state.tecnico
+          }
+        },
+        os: {
+          specific: {
+            os: this.state.Os,
+            razaoSocial: this.state.razaoSocial,
+            cnpj: this.state.cnpj,
+            date: this.state.valueDate
           }
         }
       },
