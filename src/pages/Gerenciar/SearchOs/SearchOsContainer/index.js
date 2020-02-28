@@ -606,7 +606,6 @@ class SearchOsDash extends Component {
         };
       }
 
-      console.log(itemAdd);
       this.setState({
         quantObj: {
           ...this.state.quantObj,
