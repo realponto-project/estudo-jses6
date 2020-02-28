@@ -231,12 +231,8 @@ class Rexterno extends Component {
     message.success("A reserva foi efetuada");
   };
 
-  error = () => {
-    message.error("A reserva não foi efetuada");
-  };
-
-  errorProduto = () => {
-    message.error("O produto é obrigatório para essa ação ser realizada");
+  error = text => {
+    message.error(text);
   };
 
   onChangeData = date => {
@@ -403,10 +399,6 @@ class Rexterno extends Component {
     });
   };
 
-  errorSelecionado = value => {
-    message.error(value);
-  };
-
   openModais = e => {
     this.setState({
       modalAddStatus: true
@@ -414,70 +406,73 @@ class Rexterno extends Component {
   };
 
   addCarrinho = async () => {
-    if (this.state.nomeProduto !== "Não selecionado" || "") {
-      const array = this.state.carrinho.map(value => value.nomeProdutoCarrinho);
+    if (this.state.status === "Não selecionado")
+      return this.error("Status é obrigatório para essa ação ser realizada");
+    if (this.state.nomeProduto === "Não selecionado")
+      return this.error("O produto é obrigatório para essa ação ser realizada");
 
-      if (array.filter(value => value === this.state.nomeProduto).length > 0) {
-        this.errorSelecionado("Este item já foi selecionado");
-        this.setState({
-          nomeProduto: "Não selecionado",
-          serialNumber: "",
-          observacao: "",
-          status: "Não selecionado"
-        });
-        return;
-      }
+    const array = this.state.carrinho.map(value => value.nomeProdutoCarrinho);
 
-      if (
-        this.state.serial &&
-        !this.state.serialNumber &&
-        this.state.numeroSerieTest
-          .split(/\n/)
-          .filter(item => (item ? item : null)).length !== this.state.quant
-      ) {
-        this.errorSelecionado(
-          "Quantidade de numero de serie não condiz com a quantidade adicionada"
-        );
-        return;
-      }
-
-      let itemAdd = {
-        status: this.state.status,
-        nomeProdutoCarrinho: this.state.nomeProduto
-      };
-
-      if (this.state.status === "CONSERTO") {
-        itemAdd = {
-          ...itemAdd,
-          productId: this.state.productBaseId,
-          serialNumber: this.state.serialNumber,
-          description: this.state.observacao,
-          amount: this.state.quant
-        };
-      } else {
-        itemAdd = {
-          ...itemAdd,
-          productBaseId: this.state.productBaseId,
-          amount: this.state.quant.toString(),
-          stockBase: this.state.estoque,
-          serialNumberArray: this.state.numeroSerieTest
-            .split(/\n/)
-            .filter(item => (item ? item : null))
-        };
-      }
-
+    if (array.filter(value => value === this.state.nomeProduto).length > 0) {
+      this.error("Este item já foi selecionado");
       this.setState({
-        carrinho: [itemAdd, ...this.state.carrinho],
         nomeProduto: "Não selecionado",
-        quant: 1,
-        serial: false,
-        numeroSerieTest: "",
         serialNumber: "",
-        estoque: "REALPONTO",
-        status: "Não selecionado",
-        observacao: ""
+        observacao: "",
+        status: "Não selecionado"
       });
-    } else this.errorProduto();
+      return;
+    }
+
+    if (
+      this.state.serial &&
+      !this.state.serialNumber &&
+      this.state.numeroSerieTest
+        .split(/\n/)
+        .filter(item => (item ? item : null)).length !== this.state.quant
+    ) {
+      this.error(
+        "Quantidade de numero de serie não condiz com a quantidade adicionada"
+      );
+      return;
+    }
+
+    let itemAdd = {
+      status: this.state.status,
+      nomeProdutoCarrinho: this.state.nomeProduto
+    };
+
+    if (this.state.status === "CONSERTO") {
+      itemAdd = {
+        ...itemAdd,
+        productId: this.state.productBaseId,
+        serialNumber: this.state.serialNumber,
+        description: this.state.observacao,
+        amount: this.state.quant
+      };
+    } else {
+      itemAdd = {
+        ...itemAdd,
+        productBaseId: this.state.productBaseId,
+        amount: this.state.quant.toString(),
+        stockBase: this.state.estoque,
+        serialNumberArray: this.state.numeroSerieTest
+          .split(/\n/)
+          .filter(item => (item ? item : null))
+      };
+    }
+
+    this.setState({
+      carrinho: [itemAdd, ...this.state.carrinho],
+      nomeProduto: "Não selecionado",
+      quant: 1,
+      serial: false,
+      numeroSerieTest: "",
+      serialNumber: "",
+      estoque: "REALPONTO",
+      status: "Não selecionado",
+      observacao: ""
+    });
 
     await this.getAllItens();
   };
