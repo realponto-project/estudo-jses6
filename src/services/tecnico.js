@@ -284,6 +284,39 @@ function getRodizio(plate) {
   }
 }
 
+function header(doc, tecnico, data) {
+  doc.setLineWidth(1).line(3, 3, 3, 18);
+  doc.setFontSize(20);
+  if (doc.splitTextToSize(tecnico.name, 100).length > 1) {
+    doc.setFontSize(18);
+    if (doc.splitTextToSize(tecnico.name, 100).length > 1) {
+      doc.setFontSize(16);
+      if (doc.splitTextToSize(tecnico.name, 100).length > 1) {
+        doc.setFontSize(14);
+      }
+    }
+  }
+  doc.text(5, 13, moment(data).format("L")).text(50, 13, tecnico.name);
+
+  doc.setLineWidth(0.1).line(150, 12, 280, 12);
+  doc.setFontSize(12).text(150, 17, "Assinatura");
+
+  doc
+    .setFontSize(18)
+    .text(3, 28, `${tecnico.plate} Rodízio: ${getRodizio(tecnico.plate)}`);
+
+  doc
+    .setFontSize(14)
+    .text(100, 28, "Horário saída:")
+    .text(190, 28, "Horário retorno:");
+  doc
+    .setLineWidth(0.1)
+    .line(132, 28, 182, 28)
+    .line(230, 28, 280, 28);
+
+  title(doc);
+}
+
 export const createPDF = (technician, data) => {
   var doc = new jsPDF({
     orientation: "l",
@@ -295,39 +328,13 @@ export const createPDF = (technician, data) => {
   moment.locale("pt");
 
   technician.map((tecnico, i) => {
-    doc.setLineWidth(1).line(3, 3, 3, 18);
-    doc.setFontSize(20);
-    if (doc.splitTextToSize(tecnico.name, 100).length > 1) {
-      doc.setFontSize(18);
-      if (doc.splitTextToSize(tecnico.name, 100).length > 1) {
-        doc.setFontSize(16);
-        if (doc.splitTextToSize(tecnico.name, 100).length > 1) {
-          doc.setFontSize(14);
-        }
-      }
-    }
-    doc.text(5, 13, moment(data).format("L")).text(50, 13, tecnico.name);
+    header(doc, tecnico, data);
 
-    doc.setLineWidth(0.1).line(150, 12, 280, 12);
-    doc.setFontSize(12).text(150, 17, "Assinatura");
-
-    doc
-      .setFontSize(18)
-      .text(3, 28, `${tecnico.plate} Rodízio: ${getRodizio(tecnico.plate)}`);
-
-    doc
-      .setFontSize(14)
-      .text(100, 28, "Horário saída:")
-      .text(190, 28, "Horário retorno:");
-    doc
-      .setLineWidth(0.1)
-      .line(132, 28, 182, 28)
-      .line(230, 28, 280, 28);
+    doc.setFontSize(10).text(148.5, 205, `Página 1`, "center");
 
     let index = 0;
 
-    title(doc);
-
+    let page = 0;
     tecnico.rows &&
       tecnico.rows.map(item => {
         if (R.has("products", item)) {
@@ -346,63 +353,73 @@ export const createPDF = (technician, data) => {
               doc.splitTextToSize(textEquip, 100).length
             );
 
-            if (index + rows < 22) {
-              addWrappedText({
-                text: item.razaoSocial, // Put a really long string here
-                textWidth: 95,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 5, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index,
-                rows
-              });
-
-              addWrappedText({
-                text: product.status.toUpperCase(), // Put a really long string here
-                textWidth: 35,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 100, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index,
-                rows
-              });
-
-              addWrappedText({
-                text: textEquip, // Put a really long string here
-                textWidth: 100,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 135, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index,
-                rows
-              });
-
-              addWrappedText({
-                text: "", // Put a really long string here
-                textWidth: 50,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 235, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index,
-                rows
-              });
+            // if ((index + rows) % 22 < 21) {
+            if ((index + rows) % 23 === 22) {
+              doc.addPage();
+              header(doc, tecnico, data);
+              page = page + 1;
+              doc
+                .setFontSize(10)
+                .text(148.5, 205, `Página ${page + 1}`, "center");
             }
+
+            // if (index + rows < 22) {
+            addWrappedText({
+              text: item.razaoSocial, // Put a really long string here
+              textWidth: 95,
+              doc,
+              fontSize: "12",
+              fontType: "normal",
+              lineSpacing: 5, // Space between lines
+              xPosition: 5, // Text offset from left of document
+              initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+              pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+              index: index - 22 * page,
+              rows
+            });
+
+            addWrappedText({
+              text: product.status.toUpperCase(), // Put a really long string here
+              textWidth: 35,
+              doc,
+              fontSize: "12",
+              fontType: "normal",
+              lineSpacing: 5, // Space between lines
+              xPosition: 100, // Text offset from left of document
+              initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+              pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+              index: index - 22 * page,
+              rows
+            });
+
+            addWrappedText({
+              text: textEquip, // Put a really long string here
+              textWidth: 100,
+              doc,
+              fontSize: "12",
+              fontType: "normal",
+              lineSpacing: 5, // Space between lines
+              xPosition: 135, // Text offset from left of document
+              initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+              pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+              index: index - 22 * page,
+              rows
+            });
+
+            addWrappedText({
+              text: "", // Put a really long string here
+              textWidth: 50,
+              doc,
+              fontSize: "12",
+              fontType: "normal",
+              lineSpacing: 5, // Space between lines
+              xPosition: 235, // Text offset from left of document
+              initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+              pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+              index: index - 22 * page,
+              rows
+            });
+            // }
 
             index = index + rows;
             // eslint-disable-next-line array-callback-return

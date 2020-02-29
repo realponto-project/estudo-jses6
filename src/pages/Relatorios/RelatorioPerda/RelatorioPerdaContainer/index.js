@@ -18,10 +18,6 @@ class GerenciarEntrada extends Component {
     relatorioArray: {
       rows: []
     },
-    page: 1,
-    total: 10,
-    count: 0,
-    show: 0,
     loading: false
   };
 
@@ -121,35 +117,24 @@ class GerenciarEntrada extends Component {
           specific: {
             name: this.state.produto
           }
+        },
+        osParts: {
+          specific: {
+            createdAt: this.state.valueDate
+          }
         }
-      },
-      page: this.state.page,
-      total: this.state.total
+      }
     };
 
     await getRelatorioPerda(query).then(resposta =>
       this.setState({
-        relatorioArray: resposta.data,
-        page: resposta.data.page,
-        count: resposta.data.count,
-        show: resposta.data.show
+        relatorioArray: resposta.data
       })
     );
 
     this.setState({
       loading: false
     });
-  };
-
-  changePages = pages => {
-    this.setState(
-      {
-        page: pages
-      },
-      () => {
-        this.getRelatorio();
-      }
-    );
   };
 
   onChange = async e => {
@@ -199,89 +184,6 @@ class GerenciarEntrada extends Component {
       );
     }
   };
-
-  Pages = () => (
-    <div className="footer-Gentrada100-button">
-      {Math.ceil(this.state.count / this.state.total) >= 5 &&
-      Math.ceil(this.state.count / this.state.total) - this.state.page < 1 ? (
-        <Button
-          className="button"
-          type="primary"
-          onClick={() => this.changePages(this.state.page - 4)}
-        >
-          {this.state.page - 4}
-        </Button>
-      ) : null}
-      {Math.ceil(this.state.count / this.state.total) >= 4 &&
-      Math.ceil(this.state.count / this.state.total) - this.state.page < 2 &&
-      this.state.page > 3 ? (
-        <Button
-          className="button"
-          type="primary"
-          onClick={() => this.changePages(this.state.page - 3)}
-        >
-          {this.state.page - 3}
-        </Button>
-      ) : null}
-      {this.state.page >= 3 ? (
-        <Button
-          className="button"
-          type="primary"
-          onClick={() => this.changePages(this.state.page - 2)}
-        >
-          {this.state.page - 2}
-        </Button>
-      ) : null}
-      {this.state.page >= 2 ? (
-        <Button
-          className="button"
-          type="primary"
-          onClick={() => this.changePages(this.state.page - 1)}
-        >
-          {this.state.page - 1}
-        </Button>
-      ) : null}
-      <div className="div-teste">{this.state.page}</div>
-      {this.state.page < this.state.count / this.state.total ? (
-        <Button
-          className="button"
-          type="primary"
-          onClick={() => this.changePages(this.state.page + 1)}
-        >
-          {this.state.page + 1}
-        </Button>
-      ) : null}
-      {this.state.page + 1 < this.state.count / this.state.total ? (
-        <Button
-          className="button"
-          type="primary"
-          onClick={() => this.changePages(this.state.page + 2)}
-        >
-          {this.state.page + 2}
-        </Button>
-      ) : null}
-      {this.state.page + 2 < this.state.count / this.state.total &&
-      this.state.page < 3 ? (
-        <Button
-          className="button"
-          type="primary"
-          onClick={() => this.changePages(this.state.page + 3)}
-        >
-          {this.state.page + 3}
-        </Button>
-      ) : null}
-      {this.state.page + 3 < this.state.count / this.state.total &&
-      this.state.page < 2 ? (
-        <Button
-          className="button"
-          type="primary"
-          onClick={() => this.changePages(this.state.page + 4)}
-        >
-          {this.state.page + 4}
-        </Button>
-      ) : null}
-    </div>
-  );
 
   render() {
     return (
@@ -368,10 +270,6 @@ class GerenciarEntrada extends Component {
         ) : (
           this.test()
         )}
-
-        <div className="footer-ROs">
-          <this.Pages />
-        </div>
       </div>
     );
   }
