@@ -64,9 +64,9 @@ class Estoque extends Component {
 
     const query = {
       filters: {
-        manufacturer: {
+        mark: {
           specific: {
-            manufacturer: this.state.fabricante
+            mark: this.state.fabricante
           }
         },
         product: {

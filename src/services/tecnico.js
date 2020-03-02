@@ -508,7 +508,7 @@ function header(doc, tecnico, data) {
 //   doc.save(`${moment(data).format("L")}.pdf`);
 // };
 
-export const createPDF = (technician, data) => {
+export const createPDF = async (technician, data) => {
   var doc = new jsPDF({
     orientation: "l",
     unit: "mm",
@@ -538,11 +538,20 @@ export const createPDF = (technician, data) => {
                 : ""
             }`;
 
-            const rows = R.max(
+            console.log(doc.splitTextToSize(product.status, 35));
+
+            const rows = Math.max.apply(null, [
               doc.splitTextToSize(item.razaoSocial, 95).length,
-              doc.splitTextToSize(product.status.toUpperCase(), 35).length,
+              doc.splitTextToSize(product.status, 35).length,
+              doc.splitTextToSize(textEquip, 100).length
+            ]);
+
+            console.log(
+              doc.splitTextToSize(item.razaoSocial, 95).length,
+              doc.splitTextToSize(product.status, 35).length,
               doc.splitTextToSize(textEquip, 100).length
             );
+            console.log(rows);
 
             // if ((index + rows) % 22 < 21) {
             // if ((index + rows) % 17 === 16) {
@@ -554,137 +563,148 @@ export const createPDF = (technician, data) => {
             //     .text(148.5, 205, `Página ${page + 1}`, "center");
             // }
 
-            if (index + rows < 22) {
-              addWrappedText({
-                text: item.razaoSocial, // Put a really long string here
-                textWidth: 95,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 5, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index,
-                rows
-              });
+            if (index + rows > 22) {
+              index = 0;
 
-              addWrappedText({
-                text: product.status.toUpperCase(), // Put a really long string here
-                textWidth: 35,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 100, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index,
-                rows
-              });
-
-              addWrappedText({
-                text: textEquip, // Put a really long string here
-                textWidth: 100,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 135, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index,
-                rows
-              });
-
-              addWrappedText({
-                text: "", // Put a really long string here
-                textWidth: 50,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 235, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index,
-                rows
-              });
-            } else {
-              if (!page) {
-                doc.addPage();
-                // header(doc, tecnico, data);
-              }
-
-              page = true;
-              addWrappedText({
-                text: item.razaoSocial, // Put a really long string here
-                textWidth: 95,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 5, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index: index - 22,
-                rows
-              });
-
-              addWrappedText({
-                text: product.status.toUpperCase(), // Put a really long string here
-                textWidth: 35,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 100, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index: index - 22,
-                rows
-              });
-
-              addWrappedText({
-                text: textEquip, // Put a really long string here
-                textWidth: 100,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 135, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index: index - 22,
-                rows
-              });
-
-              addWrappedText({
-                text: "", // Put a really long string here
-                textWidth: 50,
-                doc,
-                fontSize: "12",
-                fontType: "normal",
-                lineSpacing: 5, // Space between lines
-                xPosition: 235, // Text offset from left of document
-                initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
-                pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
-                index: index - 22,
-                rows
-              });
+              doc.addPage();
+              header(doc, tecnico, data);
+              page = page + 1;
+              doc
+                .setFontSize(10)
+                .text(148.5, 205, `Página ${page + 1}`, "center");
             }
+
+            // if (index + rows < 22) {
+            addWrappedText({
+              text: item.razaoSocial, // Put a really long string here
+              textWidth: 95,
+              doc,
+              fontSize: "12",
+              fontType: "normal",
+              lineSpacing: 5, // Space between lines
+              xPosition: 5, // Text offset from left of document
+              initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+              pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+              index,
+              rows
+            });
+
+            addWrappedText({
+              text: product.status.toUpperCase(), // Put a really long string here
+              textWidth: 35,
+              doc,
+              fontSize: "12",
+              fontType: "normal",
+              lineSpacing: 5, // Space between lines
+              xPosition: 100, // Text offset from left of document
+              initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+              pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+              index,
+              rows
+            });
+
+            addWrappedText({
+              text: textEquip, // Put a really long string here
+              textWidth: 100,
+              doc,
+              fontSize: "12",
+              fontType: "normal",
+              lineSpacing: 5, // Space between lines
+              xPosition: 135, // Text offset from left of document
+              initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+              pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+              index,
+              rows
+            });
+
+            addWrappedText({
+              text: "", // Put a really long string here
+              textWidth: 50,
+              doc,
+              fontSize: "12",
+              fontType: "normal",
+              lineSpacing: 5, // Space between lines
+              xPosition: 235, // Text offset from left of document
+              initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+              pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+              index,
+              rows
+            });
+            // } else {
+            //   if (!page) {
+            //     doc.addPage();
+            //     // header(doc, tecnico, data);
+            //   }
+
+            //   page = true;
+            //   addWrappedText({
+            //     text: item.razaoSocial, // Put a really long string here
+            //     textWidth: 95,
+            //     doc,
+            //     fontSize: "12",
+            //     fontType: "normal",
+            //     lineSpacing: 5, // Space between lines
+            //     xPosition: 5, // Text offset from left of document
+            //     initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+            //     pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+            //     index: index - 22,
+            //     rows
+            //   });
+
+            //   addWrappedText({
+            //     text: product.status.toUpperCase(), // Put a really long string here
+            //     textWidth: 35,
+            //     doc,
+            //     fontSize: "12",
+            //     fontType: "normal",
+            //     lineSpacing: 5, // Space between lines
+            //     xPosition: 100, // Text offset from left of document
+            //     initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+            //     pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+            //     index: index - 22,
+            //     rows
+            //   });
+
+            //   addWrappedText({
+            //     text: textEquip, // Put a really long string here
+            //     textWidth: 100,
+            //     doc,
+            //     fontSize: "12",
+            //     fontType: "normal",
+            //     lineSpacing: 5, // Space between lines
+            //     xPosition: 135, // Text offset from left of document
+            //     initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+            //     pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+            //     index: index - 22,
+            //     rows
+            //   });
+
+            //   addWrappedText({
+            //     text: "", // Put a really long string here
+            //     textWidth: 50,
+            //     doc,
+            //     fontSize: "12",
+            //     fontType: "normal",
+            //     lineSpacing: 5, // Space between lines
+            //     xPosition: 235, // Text offset from left of document
+            //     initialYPosition: 47, // Initial offset from top of document; set based on prior objects in document
+            //     pageWrapInitialYPosition: 10, // Initial offset from top of document when page-wrapping
+            //     index: index - 22,
+            //     rows
+            //   });
+            // }
 
             index = index + rows;
             // eslint-disable-next-line array-callback-return
             return;
           });
         } else {
-          const rows = R.max(
+          const rows = Math.max.apply(null, [
             doc.splitTextToSize(item.razaoSocial, 95).length,
             doc.splitTextToSize("EMPRÉSTIMO", 35).length,
             doc.splitTextToSize(`1 - ${item.name} Nº ${item.serialNumber}`, 100)
               .length
-          );
+          ]);
 
           if (index + rows < 22) {
             addWrappedText({
