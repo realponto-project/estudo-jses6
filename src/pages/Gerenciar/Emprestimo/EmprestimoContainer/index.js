@@ -347,17 +347,19 @@ class EmprestimoContainer extends Component {
       [name]: value
     });
 
-    switch (this.state.select) {
-      case "emCliente":
-      case "reservados":
-        await this.setState({ page: 1 });
-        await this.getEprestimo();
-        break;
-      case "disponiveis":
-        await this.setState({ page: 1 });
-        await this.getAllEquips();
-        break;
-      default:
+    if (name.indexOf("Search") !== -1) {
+      switch (this.state.select) {
+        case "emCliente":
+        case "reservados":
+          await this.setState({ page: 1 });
+          await this.getEprestimo();
+          break;
+        case "disponiveis":
+          await this.setState({ page: 1 });
+          await this.getAllEquips();
+          break;
+        default:
+      }
     }
   };
 

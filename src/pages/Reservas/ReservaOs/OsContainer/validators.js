@@ -1,4 +1,5 @@
 import * as cnpjLib from "@fnando/cnpj";
+import * as cpfLib from "@fnando/cpf";
 
 export const masks = (nome, valor) => {
   if (nome === "cnpj") {
@@ -63,9 +64,9 @@ export const validators = (nome, valor, state) => {
   const { fieldFalha, message } = state;
 
   if (nome === "cnpj") {
-    if (!cnpjLib.isValid(valor)) {
-      if (valor.length === 18) message.cnpj = "Cnpj inválido.";
-      else message.cnpj = "Número incompleto.";
+    if (!cnpjLib.isValid(valor) && !cpfLib.isValid(valor)) {
+      if (valor.length === 14) message.cnpj = "Cpf inválido.";
+      else if (valor.length === 18) message.cnpj = "Cnpj inválido.";
       fieldFalha.cnpj = true;
     } else {
       fieldFalha.cnpj = false;

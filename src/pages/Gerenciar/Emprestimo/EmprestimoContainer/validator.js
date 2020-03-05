@@ -1,10 +1,11 @@
-import { isValid } from "@fnando/cnpj";
+import * as cnpjLib from "@fnando/cnpj";
+import * as cpfLib from "@fnando/cpf";
 
 export const validator = (name, value, state) => {
   const { fieldFalha } = state;
   switch (name) {
     case "cnpj":
-      if (!isValid(value)) {
+      if (!cnpjLib.isValid(value) && !cpfLib.isValid(value)) {
         fieldFalha[name] = true;
       }
       return {
@@ -36,7 +37,11 @@ export const masks = (name, valor) => {
         value = value.replace(/(\d{2})(\d{3,})?/, "$1.$2");
       } else if (value.length > 5 && value.length <= 8) {
         value = value.replace(/(\d{2})(\d{3})(\d{3,})?/, "$1.$2.$3");
-      } else if (value.length > 8 && value.length <= 12) {
+      } else if (value.length > 8 && value.length < 11) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4,})?/, "$1.$2.$3/$4");
+      } else if (value.length === 11) {
+        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+      } else if (value.length === 12) {
         value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4,})?/, "$1.$2.$3/$4");
       } else if (value.length > 12) {
         value = value.replace(
