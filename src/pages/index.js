@@ -38,6 +38,7 @@ import NotificacaoRoute from "./Gerenciar/Notificacoes";
 import EmprestimoRoute from "./Gerenciar/Emprestimo";
 import ReservaInternoRoute from "./Reservas/ReservaInterno";
 import RelatorioEmprestimoRoute from "./Relatorios/RelatorioEmprestimo";
+import RelatorioInternoRoute from "./Relatorios/RelatorioInterno";
 
 class PagesRoute extends Component {
   state = {
@@ -117,7 +118,10 @@ class PagesRoute extends Component {
           <Route path="/logged/reservaKitAdd" component={AddKitRoute} />
           <Route path="/logged/reservaML" component={ReservaMLRoute} />
           <Route path="/logged/relatorioOs" component={RelatorioOsRoute} />
-          <Route path="/logged/relatorioEmprestimo" component={RelatorioEmprestimoRoute} />
+          <Route
+            path="/logged/relatorioEmprestimo"
+            component={RelatorioEmprestimoRoute}
+          />
           <Route
             path="/logged/relatorioPerda"
             component={RelatorioPerdaRoute}
@@ -146,9 +150,10 @@ class PagesRoute extends Component {
             path="/logged/entradaDash"
             component={GerenciarEntradaDashRoute}
           />
+          <Route path="/logged/emprestimo" component={EmprestimoRoute} />
           <Route
-            path="/logged/emprestimo"
-            component={EmprestimoRoute}
+            path="/logged/relatorioInterno"
+            component={RelatorioInternoRoute}
           />
           <Route path="/logged/notificacao" component={NotificacaoRoute} />
         </Switch>
@@ -170,4 +175,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispacthToProps)(PagesRoute);
+export default connect(
+  mapStateToProps,
+  mapDispacthToProps
+)(PagesRoute);

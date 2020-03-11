@@ -348,6 +348,16 @@ class SideBar extends Component {
               }}
             />
           );
+        case "relatorioInterno_dash":
+          return (
+            <Redirect
+              push
+              to={{
+                pathname: "/logged/relatorioInterno/dash",
+                state: { from: this.props.location }
+              }}
+            />
+          );
         case "perfil_dash":
           return (
             <Redirect
@@ -613,6 +623,10 @@ class SideBar extends Component {
             <Menu.Item key="relatorioEmprestimo_dash">
               <Icon type="retweet" />
               Empréstimo
+            </Menu.Item>
+            <Menu.Item key="relatorioInterno_dash">
+              <Icon type="user" />
+              Interno
             </Menu.Item>
             <Menu.Item key="relatorioPerda_dash">
               <Icon type="alert" />
