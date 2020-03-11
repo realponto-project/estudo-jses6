@@ -1029,7 +1029,8 @@ class ReservaTecnico extends Component {
             }
           },
           required: true,
-          paranoid: true
+          paranoid: true,
+          total: null
         };
 
         const rows = await getTodasOs(query);
