@@ -3,7 +3,6 @@ import "./index.css";
 import { DatePicker, Select, Button, Input, Spin } from "antd";
 import { getTecnico } from "../../../../services/tecnico";
 import { getRelatorioPerda } from "../../../../services/realatorioPerda";
-import { getTodasOs } from "../../../../services/reservaOs";
 
 const { Option } = Select;
 
