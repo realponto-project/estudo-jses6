@@ -803,37 +803,30 @@ class SearchOsDash extends Component {
         <div className="div-linha-Os">
           <div className="div-nome-Os">
             <div className="div-textNome-Os">Nome do produto:</div>
-            {this.state.itemArray.length !== 0 ? (
-              <Select
-                showSearch
-                onSearch={
-                  this.state.status === "CONSERTO"
-                    ? name => this.getAllProducts(name)
-                    : name => this.getAllItens(name)
-                }
-                style={{ width: "100%" }}
-                placeholder="Selecione o produto"
-                optionFilterProp="children"
-                value={this.state.nomeProduto}
-                onChange={this.onChangeItem}
-                filterOption={(input, option) =>
-                  option.props.children
-                    .toLowerCase()
-                    .indexOf(input.toLowerCase()) >= 0
-                }
-              >
-                {this.state.itemArray.map(value => (
-                  <Option props={value} value={value.name}>
-                    {value.name}
-                  </Option>
-                ))}
-              </Select>
-            ) : (
-              <Select
-                style={{ width: "100%" }}
-                value="Nenhum produto cadastrado"
-              ></Select>
-            )}
+            <Select
+              showSearch
+              onSearch={
+                this.state.status === "CONSERTO"
+                  ? name => this.getAllProducts(name)
+                  : name => this.getAllItens(name)
+              }
+              style={{ width: "100%" }}
+              placeholder="Selecione o produto"
+              optionFilterProp="children"
+              value={this.state.nomeProduto}
+              onChange={this.onChangeItem}
+              filterOption={(input, option) =>
+                option.props.children
+                  .toLowerCase()
+                  .indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {this.state.itemArray.map(value => (
+                <Option props={value} value={value.name}>
+                  {value.name}
+                </Option>
+              ))}
+            </Select>
           </div>
 
           <div className="div-quant-Os">

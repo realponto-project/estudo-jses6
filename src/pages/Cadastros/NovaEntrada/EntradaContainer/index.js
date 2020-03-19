@@ -435,49 +435,32 @@ class NovaEntrada extends Component {
           </div>
         </div>
 
-        {this.state.serial ? (
-          <div className="div-button-entrada">
-            <div className="div-serial-entrada">
-              <div className="div-textSerial-entrada">Número de série:</div>
-              <TextArea
-                className="input-100"
-                placeholder="Digite o número de série"
-                autosize={{ minRows: 2, maxRows: 4 }}
-                rows={4}
-                name="numeroSerie"
-                value={this.state.numeroSerieTest}
-                onChange={this.filter}
-              />
-            </div>
-            {this.state.nomeProduto !== "Não selecionado" &&
-            this.state.fornecedor !== "Não selecionado" ? (
-              <Button
-                className="button"
-                type="primary"
-                onClick={this.messagesError}
-                loading={this.state.loading}
-              >
-                Salvar
-              </Button>
-            ) : null}
-            <this.modalConfirm />
+        <div className="div-button-entrada">
+          <div className="div-serial-entrada">
+            <div className="div-textSerial-entrada">Número de série:</div>
+            <TextArea
+              className="input-100"
+              placeholder="Digite o número de série"
+              autosize={{ minRows: 2, maxRows: 4 }}
+              rows={4}
+              name="numeroSerie"
+              value={this.state.numeroSerieTest}
+              onChange={this.filter}
+            />
           </div>
-        ) : (
-          <div className="div-button-entrada1">
-            {this.state.nomeProduto !== "Não selecionado" &&
-            this.state.fornecedor !== "Não selecionado" ? (
-              <Button
-                className="button"
-                type="primary"
-                onClick={this.messagesError}
-                loading={this.state.loading}
-              >
-                Salvar
-              </Button>
-            ) : null}
-            <this.modalConfirm />
-          </div>
-        )}
+          {this.state.nomeProduto !== "Não selecionado" &&
+          this.state.fornecedor !== "Não selecionado" ? (
+            <Button
+              className="button"
+              type="primary"
+              onClick={this.messagesError}
+              loading={this.state.loading}
+            >
+              Salvar
+            </Button>
+          ) : null}
+          <this.modalConfirm />
+        </div>
       </div>
     );
   }
