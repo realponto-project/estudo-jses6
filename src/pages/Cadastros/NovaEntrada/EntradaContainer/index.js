@@ -350,7 +350,11 @@ class NovaEntrada extends Component {
                     filters: {
                       product: {
                         specific: {
-                          name
+                          name,
+                          serial:
+                            this.state.estoque === "EMPRESTIMO"
+                              ? true
+                              : undefined
                         }
                       }
                     }
@@ -436,18 +440,20 @@ class NovaEntrada extends Component {
         </div>
 
         <div className="div-button-entrada">
-          <div className="div-serial-entrada">
-            <div className="div-textSerial-entrada">Número de série:</div>
-            <TextArea
-              className="input-100"
-              placeholder="Digite o número de série"
-              autosize={{ minRows: 2, maxRows: 4 }}
-              rows={4}
-              name="numeroSerie"
-              value={this.state.numeroSerieTest}
-              onChange={this.filter}
-            />
-          </div>
+          {this.state.serial && (
+            <div className="div-serial-entrada">
+              <div className="div-textSerial-entrada">Número de série:</div>
+              <TextArea
+                className="input-100"
+                placeholder="Digite o número de série"
+                autosize={{ minRows: 2, maxRows: 4 }}
+                rows={4}
+                name="numeroSerie"
+                value={this.state.numeroSerieTest}
+                onChange={this.filter}
+              />
+            </div>
+          )}
           {this.state.nomeProduto !== "Não selecionado" &&
           this.state.fornecedor !== "Não selecionado" ? (
             <Button
