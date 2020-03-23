@@ -1,20 +1,24 @@
 import React, { Component } from "react";
 import "./index.css";
-import { Spin, Button, Input, Select, Modal } from "antd";
+import { Spin, Button, Input, Select, Modal, InputNumber, Icon } from "antd";
 import { stock } from "../../../../services/estoque";
 
 import { getAllEquipsService } from "../../../../services/equip";
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 class Estoque extends Component {
   state = {
     numeroSerie: "",
     produto: "",
+    numeroSerieModal: "",
     fabricante: "",
+    quantModal: 1,
     estoqueBase: "TODOS",
     avancado: false,
     loading: false,
+    modalStatus: false,
     estoque: {
       rows: []
     },
@@ -35,6 +39,24 @@ class Estoque extends Component {
         this.getStock();
       }
     );
+  };
+
+  onChangeQuant = value => {
+    this.setState({
+      quantModal: value
+    });
+  };
+
+  showModalStatus = () => {
+    this.setState({
+      modalStatus: true
+    });
+  };
+
+  onChangeNumeroModal = async e => {
+    await this.setState({
+      numeroSerieModal: e.target.value
+    });
   };
 
   onChange = async e => {
@@ -191,6 +213,43 @@ class Estoque extends Component {
     </div>
   );
 
+  ModalStatus = () => (
+    <Modal
+      width={650}
+      title="Entrada no estoque"
+      visible={this.state.modalStatus}
+      okText="Confirmar"
+      cancelText="Cancelar"
+      onOk={() => this.setState({ modalStatus: false })}
+      onCancel={() => this.setState({ modalStatus: false })}
+    >
+      <div className="div-lines-estoque">
+        <div className="div-serial-entrada">
+          <div className="div-textSerial-entrada">Número de série:</div>
+          <TextArea
+            className="input-100"
+            placeholder="Digite o número de série"
+            autosize={{ minRows: 2, maxRows: 4 }}
+            rows={4}
+            onChange={this.onChangeNumeroModal}
+            name="numeroSerieModal"
+            value={this.state.numeroSerieModal}
+          />
+        </div>
+        <div className="div-quantModal-estoque">
+          <div className="div-text-entrada">Quant:</div>
+          <InputNumber
+            min={1}
+            defaultValue={this.state.quantModal}
+            style={{ width: "100%" }}
+            value={this.state.quantModal}
+            onChange={this.onChangeQuant}
+          />
+        </div>
+      </div>
+    </Modal>
+  );
+
   ModalSerialNumbers = () => (
     <Modal
       width={300}
@@ -292,7 +351,7 @@ class Estoque extends Component {
                 />
               </div>
 
-              <div className="div-fabricante-Rtecnico">
+              <div className="div-fabricante-estoque">
                 <div className="div-text-Rtecnico">Fabricante:</div>
                 <Input
                   className="input-100"
@@ -329,10 +388,12 @@ class Estoque extends Component {
         )}
         <div className="div-cabecalho-estoque">
           <div className="cel-produto-cabecalho-estoque">Produto</div>
-          <div className="cel-fabricante-cabecalho-estoque">Fabricante</div>
+          <div className="cel-fabricante20-cabecalho-estoque">Fabricante</div>
           <div className="cel-quant-cabecalho-estoque">Disp.</div>
           <div className="cel-quant-cabecalho-estoque">Min.</div>
           <div className="cel-estoque-cabecalho-estoque">Estoque</div>
+          <div className="cel-status-cabecalho-estoque">Status</div>
+          <div className="cel-botao-cabecalho-estoque">Ação</div>
         </div>
 
         {this.state.loading ? (
@@ -361,7 +422,7 @@ class Estoque extends Component {
                         {line.name}
                       </label>
                     </div>
-                    <div className="cel-fabricante-cabecalho-estoque">
+                    <div className="cel-fabricante20-cabecalho-estoque">
                       <label
                         className="div-table-label-cel-estoque"
                         style={
@@ -383,7 +444,6 @@ class Estoque extends Component {
                             ? { color: "red" }
                             : null
                         }
-                        // style={{ color: "red" }}
                       >
                         {line.available}
                       </label>
@@ -414,6 +474,31 @@ class Estoque extends Component {
                         {line.stockBase}
                       </label>
                     </div>
+                    <div className="cel-status-cabecalho-estoque">
+                      <label
+                        className="div-table-label-cel-estoque"
+                        style={
+                          parseInt(line.minimumStock, 10) >
+                          parseInt(line.available, 10)
+                            ? { color: "red" }
+                            : null
+                        }
+                      >
+                        {line.status}
+                      </label>
+                    </div>
+
+                    <div className="cel-botao-cabecalho-estoque">
+                      {line.status === "analise" ? (
+                        <Icon
+                          type="info-circle"
+                          theme="outlined"
+                          onClick={this.showModalStatus}
+                        />
+                      ) : (
+                        "-"
+                      )}
+                    </div>
                   </div>
                   <div className=" div-separate1-estoque" />
                 </div>
@@ -425,6 +510,7 @@ class Estoque extends Component {
           </div>
         )}
         <this.ModalSerialNumbers />
+        <this.ModalStatus />
       </div>
     );
   }
