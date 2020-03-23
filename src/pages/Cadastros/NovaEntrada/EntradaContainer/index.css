@@ -81,9 +81,21 @@
   align-items: center;
 }
 .div-serial-entrada {
-  width: 90%;
+  width: 75%;
   display: flex;
   align-items: center;
+}
+.div-analise-entrada {
+  width: 10%;
+  display: flex;
+  align-items: center;
+}
+.div-textAnalise-entrada {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 16px;
+  color: rgb(90, 90, 90);
+  margin-right: 5px;
 }
 .h4-entrada {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
