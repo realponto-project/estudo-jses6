@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import "./index.css";
-import { Input, Select, InputNumber, Button, Modal, message } from "antd";
+import {
+  Input,
+  Select,
+  InputNumber,
+  Button,
+  Modal,
+  message,
+  Switch
+} from "antd";
 
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -21,6 +29,7 @@ class NovaEntrada extends Component {
     numeroSerieTest: [],
     messageError: false,
     messageSucesso: false,
+    analise: false,
     estoque: "REALPONTO",
     nomeProduto: "Não selecionado",
     fornecedor: "Não selecionado",
@@ -97,6 +106,10 @@ class NovaEntrada extends Component {
     message.error("Este equipamento ja foi registrado");
   };
 
+  errorFaltaNumeroSerie = () => {
+    message.error("Este equipamento necessita de um número de série");
+  };
+
   errorNome = () => {
     message.error("O nome do produto é obrigatório");
   };
@@ -116,6 +129,11 @@ class NovaEntrada extends Component {
       this.errorNome();
     } else if (this.state.nomeProduto !== "" && this.state.fornecedor === "") {
       this.errorForn();
+    } else if (
+      this.state.serial === true &&
+      this.state.numeroSerieTest.length === 0
+    ) {
+      this.errorFaltaNumeroSerie();
     } else if (this.state.nomeProduto !== "" && this.state.fornecedor !== "") {
       this.Confirm();
     }
@@ -259,6 +277,10 @@ class NovaEntrada extends Component {
     this.setState({
       quant: value
     });
+  };
+
+  onChangeAnalise = () => {
+    this.setState({ analise: !this.state.analise });
   };
 
   onBlurValidator = e => {
@@ -440,6 +462,16 @@ class NovaEntrada extends Component {
         </div>
 
         <div className="div-button-entrada">
+          {this.state.estoque !== "EMPRESTIMO" ? (
+            <div className="div-analise-entrada">
+              <div className="div-textAnalise-entrada">Análise:</div>
+              <Switch
+                defaultChecked={this.state.analise}
+                onChange={this.onChangeAnalise}
+              />
+            </div>
+          ) : null}
+
           {this.state.serial && (
             <div className="div-serial-entrada">
               <div className="div-textSerial-entrada">Número de série:</div>
