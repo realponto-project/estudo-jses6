@@ -1,9 +1,19 @@
 import React, { Component } from "react";
 import "./index.css";
-import { Spin, Button, Input, Select, Modal, InputNumber, Icon } from "antd";
-import { stock } from "../../../../services/estoque";
+import {
+  Spin,
+  Button,
+  Input,
+  Select,
+  Modal,
+  InputNumber,
+  Icon,
+  message
+} from "antd";
+import { stock, UpdatteProductBase } from "../../../../services/estoque";
 
 import { getAllEquipsService } from "../../../../services/equip";
+import { getSerial } from "../../../../services/serialNumber";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -12,7 +22,7 @@ class Estoque extends Component {
   state = {
     numeroSerie: "",
     produto: "",
-    numeroSerieModal: "",
+    numeroSerieModal: [],
     fabricante: "",
     quantModal: 1,
     estoqueBase: "TODOS",
@@ -27,7 +37,8 @@ class Estoque extends Component {
     count: 0,
     show: 0,
     serialNumbers: [],
-    serialNumber: ""
+    serialNumber: "",
+    line: {}
   };
 
   changePages = pages => {
@@ -47,9 +58,10 @@ class Estoque extends Component {
     });
   };
 
-  showModalStatus = () => {
+  showModalStatus = line => {
     this.setState({
-      modalStatus: true
+      modalStatus: true,
+      line
     });
   };
 
@@ -57,6 +69,37 @@ class Estoque extends Component {
     await this.setState({
       numeroSerieModal: e.target.value
     });
+
+    const teste = this.state.numeroSerieModal.split(/\n/);
+
+    if (
+      /\n/.test(
+        this.state.numeroSerieModal[this.state.numeroSerieModal.length - 1]
+      )
+    ) {
+      let count = 0;
+
+      // eslint-disable-next-line array-callback-return
+      teste.map(valor => {
+        if (valor === teste[teste.length - 2]) count++;
+      });
+
+      const resp = await getSerial(teste[teste.length - 2]);
+
+      if (resp.data) count++;
+
+      if (count > 1) {
+        message.error("Número de série já registrado");
+
+        teste.splice(teste.length - 2, 1);
+
+        const testeArray = teste.toString();
+
+        this.setState({
+          numeroSerieModal: testeArray.replace(/,/gi, "\n")
+        });
+      }
+    }
   };
 
   onChange = async e => {
@@ -213,6 +256,38 @@ class Estoque extends Component {
     </div>
   );
 
+  handleOk = async () => {
+    const { line, quantModal: amount, numeroSerieModal } = this.state;
+
+    const serialNumbers =
+      numeroSerieModal.length > 0
+        ? numeroSerieModal.split(/\n/).filter(item => (item ? item : null))
+        : null;
+
+    const value = {
+      ...line,
+      amount,
+      serialNumbers
+    };
+
+    if (serialNumbers.length === amount) {
+      const { status } = await UpdatteProductBase(value);
+      if (status === 200) {
+        await this.getStock();
+        this.setState({
+          modalStatus: false,
+          amount: 1,
+          numeroSerieModal: [],
+          line: {}
+        });
+      }
+    } else {
+      message.error(
+        "Quantidade adicinada não condiz com a quantidade de numero de série"
+      );
+    }
+  };
+
   ModalStatus = () => (
     <Modal
       width={650}
@@ -220,7 +295,7 @@ class Estoque extends Component {
       visible={this.state.modalStatus}
       okText="Confirmar"
       cancelText="Cancelar"
-      onOk={() => this.setState({ modalStatus: false })}
+      onOk={this.handleOk}
       onCancel={() => this.setState({ modalStatus: false })}
     >
       <div className="div-lines-estoque">
@@ -240,6 +315,7 @@ class Estoque extends Component {
           <div className="div-text-entrada">Quant:</div>
           <InputNumber
             min={1}
+            max={parseInt(this.state.line.analysis, 10)}
             defaultValue={this.state.quantModal}
             style={{ width: "100%" }}
             value={this.state.quantModal}
@@ -484,16 +560,16 @@ class Estoque extends Component {
                             : null
                         }
                       >
-                        {line.status}
+                        {line.analysis}
                       </label>
                     </div>
 
                     <div className="cel-botao-cabecalho-estoque">
-                      {line.status === "analise" ? (
+                      {line.analysis !== "0" ? (
                         <Icon
                           type="info-circle"
                           theme="outlined"
-                          onClick={this.showModalStatus}
+                          onClick={() => this.showModalStatus(line)}
                         />
                       ) : (
                         "-"
