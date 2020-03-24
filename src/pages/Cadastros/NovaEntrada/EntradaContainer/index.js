@@ -472,7 +472,7 @@ class NovaEntrada extends Component {
             </div>
           ) : null}
 
-          {this.state.serial && (
+          {this.state.serial && !this.state.analise ? (
             <div className="div-serial-entrada">
               <div className="div-textSerial-entrada">Número de série:</div>
               <TextArea
@@ -485,7 +485,7 @@ class NovaEntrada extends Component {
                 onChange={this.filter}
               />
             </div>
-          )}
+          ) : null}
           {this.state.nomeProduto !== "Não selecionado" &&
           this.state.fornecedor !== "Não selecionado" ? (
             <Button
