@@ -131,7 +131,8 @@ class NovaEntrada extends Component {
       this.errorForn();
     } else if (
       this.state.serial === true &&
-      this.state.numeroSerieTest.length === 0
+      this.state.numeroSerieTest.length === 0 &&
+      !this.state.analise
     ) {
       this.errorFaltaNumeroSerie();
     } else if (this.state.nomeProduto !== "" && this.state.fornecedor !== "") {
