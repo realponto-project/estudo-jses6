@@ -131,7 +131,8 @@ class NovaEntrada extends Component {
       this.errorForn();
     } else if (
       this.state.serial === true &&
-      this.state.numeroSerieTest.length === 0
+      this.state.numeroSerieTest.length === 0 &&
+      !this.state.analise
     ) {
       this.errorFaltaNumeroSerie();
     } else if (this.state.nomeProduto !== "" && this.state.fornecedor !== "") {
@@ -162,12 +163,13 @@ class NovaEntrada extends Component {
 
   saveTargetNewEntrada = async () => {
     const values = {
-      amountAdded: this.state.quant.toString(),
+      analysis: this.state.analise ? this.state.quant.toString() : "0",
+      amountAdded: !this.state.analise ? this.state.quant.toString() : "0",
       stockBase: this.state.estoque,
       productId: this.state.productId,
       companyId: this.state.companyId,
       serialNumbers:
-        this.state.numeroSerieTest.length > 0
+        this.state.numeroSerieTest.length > 0 && !this.state.analise
           ? this.state.numeroSerieTest
               .split(/\n/)
               .filter(item => (item ? item : null))
@@ -279,8 +281,8 @@ class NovaEntrada extends Component {
     });
   };
 
-  onChangeAnalise = () => {
-    this.setState({ analise: !this.state.analise });
+  onChangeAnalise = e => {
+    this.setState({ analise: e });
   };
 
   onBlurValidator = e => {
@@ -472,7 +474,7 @@ class NovaEntrada extends Component {
             </div>
           ) : null}
 
-          {this.state.serial && (
+          {this.state.serial && !this.state.analise && (
             <div className="div-serial-entrada">
               <div className="div-textSerial-entrada">Número de série:</div>
               <TextArea
