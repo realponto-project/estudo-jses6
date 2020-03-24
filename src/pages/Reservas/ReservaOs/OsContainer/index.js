@@ -695,7 +695,7 @@ class Rexterno extends Component {
             <div className="div-text-Os">Quant:</div>
             <InputNumber
               min={1}
-              max={this.state.status === "CONSERTO" ? 1 : this.state.disp}
+              max={this.state.disp}
               defaultValue={this.state.quant}
               value={this.state.quant}
               onChange={this.onChangeQuant}
@@ -706,39 +706,18 @@ class Rexterno extends Component {
 
         <div className="div-linha-Os">
           <div className="div-numeroSerie-Os">
-            {this.state.status !== "CONSERTO" ? (
-              <div className="div-estoqueConserto-Os">
-                <div className="div-text-Os">Estoque:</div>
-                <Select
-                  value={this.state.estoque}
-                  style={{ width: "100%" }}
-                  onChange={this.onChangeEstoque}
-                >
-                  <Option value="REALPONTO">REALPONTO</Option>
-                  <Option value="NOVAREAL">NOVA REALPONTO</Option>
-                  <Option value="PONTOREAL">PONTOREAL</Option>
-                </Select>
-              </div>
-            ) : (
-              <>
-                <div className="div-serial-Os">Número de série:</div>
-                <Input
-                  allowClear={!this.state.fieldFalha.serialNumber}
-                  className={
-                    this.state.fieldFalha.serialNumber
-                      ? "div-inputError-tecnico"
-                      : "input-100"
-                  }
-                  placeholder="Digite o número"
-                  name="serialNumber"
-                  value={this.state.serialNumber}
-                  onChange={this.onChange}
-                  onBlur={this.onBlurValidator}
-                  onFocus={this.onFocus}
-                />
-              </>
-            )}
+            <div className="div-text-Os">Estoque:</div>
+            <Select
+              value={this.state.estoque}
+              style={{ width: "100%" }}
+              onChange={this.onChangeEstoque}
+            >
+              <Option value="REALPONTO">REALPONTO</Option>
+              <Option value="NOVAREAL">NOVA REALPONTO</Option>
+              <Option value="PONTOREAL">PONTOREAL</Option>
+            </Select>
           </div>
+
           <div className="div-status-Os">
             <div className="div-text-Os">Status:</div>
             <div style={{ display: "flex", width: "100%" }}>
@@ -767,7 +746,19 @@ class Rexterno extends Component {
 
         {this.state.status === "CONSERTO" ? (
           <div className="linha1-produtos">
-            <div className="div-descricao-produtos">
+            <div className="div-serialCon-Os">
+              <div className="div-textSerial-Os">Número de série:</div>
+              <TextArea
+                className="input-100"
+                placeholder="Digite o número de série"
+                autosize={{ minRows: 2, maxRows: 3 }}
+                rows={3}
+                name="numeroSerie"
+                value={this.state.numeroSerieTest}
+                onChange={this.filter}
+              />
+            </div>
+            <div className="div-observacaoCon-Os">
               <div className="div-text-produtos">Observação:</div>
               <TextArea
                 className="input-100"
@@ -782,7 +773,7 @@ class Rexterno extends Component {
           </div>
         ) : null}
 
-        {this.state.serial && this.state.status !== "CONSERTO" ? (
+        {this.state.serial ? (
           <div className="div-linha-Os">
             <div className="div-serial-AddKit">
               <div className="div-textSerial-AddKit">Número de série:</div>
