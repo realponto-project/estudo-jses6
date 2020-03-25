@@ -468,7 +468,7 @@ class Estoque extends Component {
           <div className="cel-quant-cabecalho-estoque">Disp.</div>
           <div className="cel-quant-cabecalho-estoque">Min.</div>
           <div className="cel-estoque-cabecalho-estoque">Estoque</div>
-          <div className="cel-status-cabecalho-estoque">Status</div>
+          <div className="cel-status-cabecalho-estoque">Análise</div>
           <div className="cel-botao-cabecalho-estoque">Ação</div>
         </div>
 
