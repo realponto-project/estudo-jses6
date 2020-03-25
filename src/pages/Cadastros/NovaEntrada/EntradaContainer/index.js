@@ -376,7 +376,8 @@ class NovaEntrada extends Component {
                         specific: {
                           name,
                           serial:
-                            this.state.estoque === "EMPRESTIMO"
+                            this.state.estoque === "EMPRESTIMO" ||
+                            this.state.analise
                               ? true
                               : undefined
                         }

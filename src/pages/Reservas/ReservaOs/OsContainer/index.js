@@ -141,26 +141,28 @@ class Rexterno extends Component {
 
       const resp = await getSerial(teste[teste.length - 2]);
 
-      if (resp.data) {
-        if (resp.data.productBase.product.name !== this.state.nomeProduto) {
-          mensagem = "Este equipamento não contém esse número de série";
-          count++;
-        }
-        if (resp.data.reserved) {
-          count++;
-          if (resp.data.deletedAt) {
-            if (resp.data.osParts) {
-              mensagem = `Este equipamento ja foi liberado para a OS: ${resp.data.osPart.o.os}`;
-            } else if (resp.data.freeMarketPart) {
-              mensagem = `Este equipamento foi liberado para mercado livre com código de restreamento: ${resp.data.freeMarketPart.freeMarket.trackingCode}`;
-            }
-          } else {
-            mensagem = `Este equipamento ja foi reservado para a OS: ${resp.data.osPart.o.os}`;
+      if (this.state.status !== "CONSERTO") {
+        if (resp.data) {
+          if (resp.data.productBase.product.name !== this.state.nomeProduto) {
+            mensagem = "Este equipamento não contém esse número de série";
+            count++;
           }
+          if (resp.data.reserved) {
+            count++;
+            if (resp.data.deletedAt) {
+              if (resp.data.osParts) {
+                mensagem = `Este equipamento ja foi liberado para a OS: ${resp.data.osPart.o.os}`;
+              } else if (resp.data.freeMarketPart) {
+                mensagem = `Este equipamento foi liberado para mercado livre com código de restreamento: ${resp.data.freeMarketPart.freeMarket.trackingCode}`;
+              }
+            } else {
+              mensagem = `Este equipamento ja foi reservado para a OS: ${resp.data.osPart.o.os}`;
+            }
+          }
+        } else {
+          mensagem = "Este equipamento não consta na base de dados";
+          count++;
         }
-      } else {
-        mensagem = "Este equipamento não consta na base de dados";
-        count++;
       }
 
       if (count > 1) {
@@ -443,12 +445,19 @@ class Rexterno extends Component {
     };
 
     if (this.state.status === "CONSERTO") {
+      const serialNumbers =
+        this.state.numeroSerieTest.length > 0
+          ? this.state.numeroSerieTest
+              .split(/\n/)
+              .filter(item => (item ? item : null))
+          : null;
+
       itemAdd = {
         ...itemAdd,
         productId: this.state.productBaseId,
-        serialNumber: this.state.serialNumber,
+        serialNumbers,
         description: this.state.observacao,
-        amount: this.state.quant
+        amount: serialNumbers.length
       };
     } else {
       itemAdd = {

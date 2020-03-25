@@ -466,7 +466,13 @@ class ReservaTecnico extends Component {
         osPartsId: this.state.produtoSelecionado.products.id,
         add: {
           output: this.state.teste
-        }
+        },
+        serialNumberArray:
+          this.state.numeroSerieTest.length > 0
+            ? this.state.numeroSerieTest
+                .split(/\n/)
+                .filter(item => (item ? item : null))
+            : null
       };
     }
 
@@ -953,6 +959,7 @@ class ReservaTecnico extends Component {
               ) : (
                 this.state.lineSelected.rows.map(line => (
                   <div className="div-branco-mais">
+                    {console.log(line)}
                     <div className="div-produtos-mais">
                       {line.products.map(valor => (
                         <div
