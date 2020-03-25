@@ -590,6 +590,9 @@ class SearchOsDash extends Component {
           ...itemAdd,
           productId: this.state.productBaseId,
           serialNumber: this.state.serialNumber,
+          serialNumbers: this.state.numeroSerieTest
+            .split(/\n/)
+            .filter(item => (item ? item : null)),
           description: this.state.observacao,
           amount: 1
         };
