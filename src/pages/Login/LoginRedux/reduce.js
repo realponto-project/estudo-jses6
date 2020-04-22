@@ -1,53 +1,50 @@
-import actions from '../../../store/actions'
+import actions from "../../../store/actions";
 
+const INICIAL_STATE_LOGIN = {
+  username: "",
+  password: ""
+};
 
-const INICIAL_STATE_LOGIN ={
-  username: '',
-  password: '',
-}
-
-const INICIAL_STATE_AUTH ={
+const INICIAL_STATE_AUTH = {
   token: null,
   userId: null,
-  username: 'userName',
-  email: 'email',
+  username: "userName",
+  email: "email",
   validTonken: false,
-  password: '',
-}
-
-
+  password: ""
+};
 
 export function login(state = INICIAL_STATE_LOGIN, action) {
-  switch(action.type){
+  switch (action.type) {
     case actions.LOGIN.CHANGE_VALUE:
-      return { ...state, [action.payload.name]: action.payload.value }
+      return { ...state, [action.payload.name]: action.payload.value };
     default:
-      return state
+      return state;
   }
 }
 
 export function auth(state = INICIAL_STATE_AUTH, action) {
-  switch(action.type){
+  switch (action.type) {
     case actions.LOGIN.AUTH:
       let auth = {
         ...state
-      }
-      if (action.payload.status === 200){
+      };
+      if (action.payload.status === 200) {
         if (action.payload.data.token) {
           auth = {
             ...auth,
-            ...action.payload.data,
-          }
+            ...action.payload.data
+          };
         }
       }
 
-      return auth
-    
+      return auth;
+
     case actions.LOGIN.LOGOUT:
-      return state = {}
+      localStorage.clear();
+      return (state = {});
 
     default:
-      return state
+      return state;
   }
 }
-
