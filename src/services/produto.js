@@ -2,22 +2,22 @@ import axios from "axios";
 import { BACKEND_URL } from "./var";
 import { store } from "../App";
 
-export const getProdutos = async query => {
+export const getProdutos = async (query) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
 
   await axios
     .get(`${BACKEND_URL}/api/product`, { headers: headers, params: { query } })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -27,12 +27,12 @@ export const getProdutos = async query => {
   return response;
 };
 
-export const getEquips = async query => {
+export const getEquips = async (query) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
@@ -40,12 +40,12 @@ export const getEquips = async query => {
   await axios
     .get(`${BACKEND_URL}/api/product/getEquipsByEntrance`, {
       headers: headers,
-      params: { query }
+      params: { query },
     })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -55,12 +55,12 @@ export const getEquips = async query => {
   return response;
 };
 
-export const getItens = async query => {
+export const getItens = async (query) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
@@ -68,12 +68,12 @@ export const getItens = async query => {
   await axios
     .get(`${BACKEND_URL}/api/product/getAllNames`, {
       headers: headers,
-      params: { query }
+      params: { query },
     })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -83,22 +83,22 @@ export const getItens = async query => {
   return response;
 };
 
-export const getMarca = async query => {
+export const getMarca = async (query) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
 
   await axios
     .get(`${BACKEND_URL}/api/mark`, { headers: headers, params: { query } })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -108,12 +108,12 @@ export const getMarca = async query => {
   return response;
 };
 
-export const getFabricante = async peca => {
+export const getFabricante = async (peca) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
@@ -121,12 +121,12 @@ export const getFabricante = async peca => {
   await axios
     .get(`${BACKEND_URL}/api/manufacturer`, {
       headers: headers,
-      params: { query: peca }
+      params: { query: peca },
     })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -141,7 +141,7 @@ export const getTipo = async () => {
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
@@ -149,12 +149,12 @@ export const getTipo = async () => {
   await axios
     .get(`${BACKEND_URL}/api/equipModel/getAllType`, {
       headers: headers,
-      params: {}
+      params: {},
     })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -164,22 +164,22 @@ export const getTipo = async () => {
   return response;
 };
 
-export const newMarca = async values => {
+export const newMarca = async (values) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
 
   await axios
     .post(`${BACKEND_URL}/api/mark`, values, { headers: headers })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -189,22 +189,22 @@ export const newMarca = async values => {
   return response;
 };
 
-export const newTipo = async values => {
+export const newTipo = async (values) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
 
   await axios
     .post(`${BACKEND_URL}/api/equipModel/addType`, values, { headers: headers })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -214,22 +214,22 @@ export const newTipo = async values => {
   return response;
 };
 
-export const newFabricante = async values => {
+export const newFabricante = async (values) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
 
   await axios
     .post(`${BACKEND_URL}/api/manufacturer`, values, { headers: headers })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -239,22 +239,22 @@ export const newFabricante = async values => {
   return response;
 };
 
-export const newProduto = async values => {
+export const newProduto = async (values) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
 
   await axios
     .post(`${BACKEND_URL}/api/product`, values, { headers: headers })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {
@@ -264,50 +264,22 @@ export const newProduto = async values => {
   return response;
 };
 
-export const updateProduto = async values => {
+export const updateProduto = async (values) => {
   const storeObject = store.getState();
 
   const headers = {
     token: storeObject.auth.token,
-    username: storeObject.auth.username
+    username: storeObject.auth.username,
   };
 
   let response = {};
 
   await axios
     .put(`${BACKEND_URL}/api/product`, values, { headers: headers })
-    .then(resp => {
+    .then((resp) => {
       response = resp;
     })
-    .catch(error => {
-      if (error.response) {
-        response = error.response;
-      } else {
-        console.log("Error", error.message);
-      }
-    });
-  return response;
-};
-
-export const getProdutoByEstoque = async query => {
-  const storeObject = store.getState();
-
-  const headers = {
-    token: storeObject.auth.token,
-    username: storeObject.auth.username
-  };
-
-  let response = {};
-
-  await axios
-    .get(`${BACKEND_URL}/api/product/getProductByStockBase`, {
-      headers: headers,
-      params: { query }
-    })
-    .then(resp => {
-      response = resp;
-    })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         response = error.response;
       } else {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./index.css";
 import { Select, InputNumber, Button, message, Input, Icon } from "antd";
-import { getProdutoByEstoque } from "../../../../services/produto";
+import { getItens } from "../../../../services/produto";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -23,12 +23,12 @@ class AddKit extends Component {
     item: "Não selecionado",
     quant: 1,
     estoque: "REALPONTO",
-    quantTec: 1
+    quantTec: 1,
   };
 
   redirectReservaOs = () => {
     this.setState({
-      redirect: true
+      redirect: true,
     });
   };
 
@@ -44,12 +44,12 @@ class AddKit extends Component {
 
   getAllTecnico = async () => {
     const query = {
-      external: true
+      external: true,
     };
 
-    await getTecnico(query).then(resposta =>
+    await getTecnico(query).then((resposta) =>
       this.setState({
-        quantTec: resposta.data.length
+        quantTec: resposta.data.length,
       })
     );
   };
@@ -57,19 +57,19 @@ class AddKit extends Component {
   getKitDefault = async () => {
     const query = {};
 
-    await getKitDefaultValue(query).then(resposta =>
+    await getKitDefaultValue(query).then((resposta) =>
       this.setState({
-        carrinho: resposta.data.rows
+        carrinho: resposta.data.rows,
       })
     );
   };
-  errorNumeroSerie = value => {
+  errorNumeroSerie = (value) => {
     message.error(value, 10);
   };
 
-  filter = async e => {
+  filter = async (e) => {
     await this.setState({
-      numeroSerieTest: e.target.value
+      numeroSerieTest: e.target.value,
     });
 
     const teste = this.state.numeroSerieTest.split(/\n/, 10);
@@ -82,7 +82,7 @@ class AddKit extends Component {
       let count = 0;
 
       // eslint-disable-next-line array-callback-return
-      teste.map(valor => {
+      teste.map((valor) => {
         if (valor === teste[teste.length - 2]) count++;
       });
 
@@ -116,7 +116,7 @@ class AddKit extends Component {
         const testeArray = teste.toString();
 
         this.setState({
-          numeroSerieTest: testeArray.replace(/,/gi, "\n")
+          numeroSerieTest: testeArray.replace(/,/gi, "\n"),
         });
       }
     }
@@ -130,46 +130,41 @@ class AddKit extends Component {
     await this.getKitDefault();
   };
 
-  getAllItens = async name => {
+  getAllItens = async (name) => {
     const query = {
       filters: {
         product: {
           specific: {
-            name
-          }
+            name,
+          },
         },
-        stockBase: {
-          specific: {
-            stockBase: this.state.estoque
-          }
-        }
       },
-      kit: true
+      kit: true,
     };
 
-    await getProdutoByEstoque(query).then(resposta =>
+    await getItens(query).then((resposta) =>
       this.setState({
-        itemArray: resposta.data
+        itemArray: resposta.data,
       })
     );
   };
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  onChangeEstoque = async valor => {
+  onChangeEstoque = async (valor) => {
     await this.setState({
-      estoque: valor
+      estoque: valor,
     });
 
     await this.getAllItens();
   };
 
-  onChangeQuant = value => {
+  onChangeQuant = (value) => {
     this.setState({
-      quant: value
+      quant: value,
     });
   };
 
@@ -185,19 +180,19 @@ class AddKit extends Component {
     this.setState({
       item: value,
       productBaseId: props.props.props.id,
-      disp: parseInt(props.props.props.available, 10)
+      disp: parseInt(props.props.props.available, 10),
     });
   };
 
   saveTargetNewKit = async () => {
     const value = {
-      kitParts: this.state.carrinho.map(valor => {
+      kitParts: this.state.carrinho.map((valor) => {
         const resp = {
           productBaseId: valor.productBaseId,
-          amount: valor.amount.toString()
+          amount: valor.amount.toString(),
         };
         return resp;
-      })
+      }),
     };
 
     const resposta = await NewKit(value);
@@ -206,12 +201,12 @@ class AddKit extends Component {
       this.setState({
         messageError: true,
         fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message
+        message: resposta.data.fields[0].message,
       });
       await this.error();
       this.setState({
         loading: false,
-        messageError: false
+        messageError: false,
       });
     }
     if (resposta.status === 200) {
@@ -220,13 +215,13 @@ class AddKit extends Component {
         item: "Não selecionado",
         quant: 1,
         estoque: "REALPONTO",
-        messageSuccess: true
+        messageSuccess: true,
       });
       await this.success();
       this.setState({
         loading: false,
         messageSuccess: false,
-        redirect: true
+        redirect: true,
       });
     }
   };
@@ -241,12 +236,12 @@ class AddKit extends Component {
 
   addCarrinho = async () => {
     if (this.state.item !== "Não selecionado") {
-      const array = this.state.carrinho.map(value => value.itemCarrinho);
+      const array = this.state.carrinho.map((value) => value.itemCarrinho);
 
-      if (array.filter(value => value === this.state.item).length > 0) {
+      if (array.filter((value) => value === this.state.item).length > 0) {
         this.errorSelecionado();
         this.setState({
-          item: ""
+          item: "",
         });
         return;
       }
@@ -256,23 +251,23 @@ class AddKit extends Component {
           {
             itemCarrinho: this.state.item,
             productBaseId: this.state.productBaseId,
-            amount: this.state.quant
+            amount: this.state.quant,
           },
-          ...this.state.carrinho
+          ...this.state.carrinho,
         ],
         item: "Não selecionado",
         quant: 1,
-        estoque: "REALPONTO"
+        estoque: "REALPONTO",
       });
     } else this.errorProduto();
   };
 
-  remove = value => {
+  remove = (value) => {
     const oldCarrinho = this.state.carrinho;
-    const newCarrinho = oldCarrinho.filter(valor => valor !== value);
+    const newCarrinho = oldCarrinho.filter((valor) => valor !== value);
 
     this.setState({
-      carrinho: newCarrinho
+      carrinho: newCarrinho,
     });
   };
 
@@ -302,14 +297,14 @@ class AddKit extends Component {
               optionFilterProp="children"
               value={this.state.item}
               onChange={this.onChangeItem}
-              onSearch={name => this.getAllItens(name)}
+              onSearch={(name) => this.getAllItens(name)}
               filterOption={(input, option) =>
                 option.props.children
                   .toLowerCase()
                   .indexOf(input.toLowerCase()) >= 0
               }
             >
-              {this.state.itemArray.map(value => (
+              {this.state.itemArray.map((value) => (
                 <Option value={value.name} props={value}>
                   {value.name}
                 </Option>
@@ -375,7 +370,7 @@ class AddKit extends Component {
               <label className="label-quant-Os">Quantidade</label>
             </div>
             <div className="div-linhaSepareteProdutos-Os"></div>
-            {this.state.carrinho.map(valor => (
+            {this.state.carrinho.map((valor) => (
               <div className="div-linha-Os">
                 <label className="label-produto-Os">{valor.itemCarrinho}</label>
                 <label className="label-quant-Os">{valor.amount} UN</label>
@@ -411,7 +406,7 @@ class AddKit extends Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
   };
 }
 
