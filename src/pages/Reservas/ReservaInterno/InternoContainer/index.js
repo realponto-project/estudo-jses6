@@ -32,14 +32,13 @@ class Rinterno extends Component {
     tecnicoId: "",
     quant: 1,
     carrinho: [],
-    estoque: "REALPONTO",
     fieldFalha: {
       Os: false,
       razaoSocial: false,
       cnpj: false,
       data: false,
       technician: false,
-      serialNumber: false,
+      serialNumber: false
     },
     message: {
       Os: "",
@@ -47,34 +46,34 @@ class Rinterno extends Component {
       cnpj: "",
       data: "",
       technician: "",
-      serialNumber: "",
-    },
+      serialNumber: ""
+    }
   };
 
-  getAllTecnico = async (name) => {
+  getAllTecnico = async name => {
     const query = {
       filters: {
         technician: {
           specific: {
-            name,
-          },
-        },
-      },
+            name
+          }
+        }
+      }
     };
-    await getTecnico(query).then((resposta) =>
+    await getTecnico(query).then(resposta =>
       this.setState({
-        tecnicoArray: resposta.data,
+        tecnicoArray: resposta.data
       })
     );
   };
 
-  errorNumeroSerie = (value) => {
+  errorNumeroSerie = value => {
     message.error(value, 10);
   };
 
-  filter = async (e) => {
+  filter = async e => {
     await this.setState({
-      numeroSerieTest: e.target.value,
+      numeroSerieTest: e.target.value
     });
 
     const teste = this.state.numeroSerieTest.split(/\n/, 10);
@@ -87,7 +86,7 @@ class Rinterno extends Component {
       let count = 0;
 
       // eslint-disable-next-line array-callback-return
-      teste.map((valor) => {
+      teste.map(valor => {
         if (valor === teste[teste.length - 2]) count++;
       });
 
@@ -125,7 +124,7 @@ class Rinterno extends Component {
         const testeArray = teste.toString();
 
         this.setState({
-          numeroSerieTest: testeArray.replace(/,/gi, "\n"),
+          numeroSerieTest: testeArray.replace(/,/gi, "\n")
         });
       }
     }
@@ -136,21 +135,21 @@ class Rinterno extends Component {
     await this.getAllTecnico();
   };
 
-  getAllItens = async (name) => {
+  getAllItens = async name => {
     const query = {
       filters: {
         product: {
           specific: {
             name,
-            serial: false,
-          },
-        },
-      },
+            serial: false
+          }
+        }
+      }
     };
 
-    await getItens(query).then((resposta) =>
+    await getItens(query).then(resposta =>
       this.setState({
-        itemArray: resposta.data,
+        itemArray: resposta.data
       })
     );
   };
@@ -160,7 +159,7 @@ class Rinterno extends Component {
       nomeProduto: value,
       productId: props.props.props.id,
       serial: props.props.props.serial,
-      disp: parseInt(props.props.props.available, 10),
+      disp: parseInt(props.props.props.available, 10)
     });
   };
 
@@ -176,9 +175,9 @@ class Rinterno extends Component {
     message.error("O produto é obrigatório para essa ação ser realizada");
   };
 
-  onChangeData = (date) => {
+  onChangeData = date => {
     this.setState({
-      data: date,
+      data: date
     });
   };
 
@@ -196,16 +195,16 @@ class Rinterno extends Component {
   //   });
   // };
 
-  onFocus = (e) => {
+  onFocus = e => {
     this.setState({
       fieldFalha: {
         ...this.state.fieldFalha,
-        [e.target.name]: false,
+        [e.target.name]: false
       },
       message: {
         ...this.state.message,
-        [e.target.name]: false,
-      },
+        [e.target.name]: false
+      }
     });
   };
 
@@ -213,25 +212,25 @@ class Rinterno extends Component {
     this.setState({
       fieldFalha: {
         ...this.state.fieldFalha,
-        technician: false,
+        technician: false
       },
       message: {
         ...this.state.message,
-        technician: false,
-      },
+        technician: false
+      }
     });
   };
 
   saveTargetNewReservaOs = async () => {
     this.setState({
-      loading: true,
+      loading: true
     });
 
     const values = {
       razaoSocial: this.state.razaoSocial,
       date: this.state.data,
       technicianId: this.state.technicianId,
-      technicianReserveParts: this.state.carrinho,
+      technicianReserveParts: this.state.carrinho
     };
 
     const resposta = await newReservaTecInt(values);
@@ -240,12 +239,12 @@ class Rinterno extends Component {
       this.setState({
         messageError: true,
         fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message,
+        message: resposta.data.fields[0].message
       });
       await this.error();
       this.setState({
         loading: false,
-        messageError: false,
+        messageError: false
       });
     }
     if (resposta.status === 200) {
@@ -257,77 +256,61 @@ class Rinterno extends Component {
         numeroSerieTest: "",
         nomeProduto: "Não selecionado",
         tecnico: "Não selecionado",
-        messageSuccess: true,
+        messageSuccess: true
       });
       await this.success();
       this.setState({
         loading: false,
-        messageSuccess: false,
+        messageSuccess: false
       });
     }
 
     await this.getAllItens();
   };
 
-  disabledDate = (current) => {
+  disabledDate = current => {
     return current && current < moment().subtract(1, "day");
   };
 
-  onChangeEstoque = async (valor) => {
-    await this.setState({
-      estoque: valor,
-      nomeProduto: "Não selecionado",
-      productId: "",
-      serial: "",
-      disp: 0,
-    });
-
-    await this.getAllItens();
-  };
-
-  onChangeTecnico = (value) => {
+  onChangeTecnico = value => {
     this.setState({
-      tecnico: value,
+      tecnico: value
     });
   };
 
   onChangeSelect = (value, props) => {
     this.setState({
       tecnico: value,
-      technicianId: props.props.props.id,
+      technicianId: props.props.props.id
     });
   };
 
-  onChangeQuant = (value) => {
+  onChangeQuant = value => {
     this.setState({
-      quant: value,
+      quant: value
     });
   };
 
-  onChange = (e) => {
+  onChange = e => {
     const { name: nome, value: valor } = e.target;
 
     this.setState({
-      [nome]: valor,
+      [nome]: valor
     });
   };
 
-  errorSelecionado = (value) => {
+  errorSelecionado = value => {
     message.error(value);
   };
 
   addCarrinho = () => {
     if (this.state.nomeProduto !== "Não selecionado" || "") {
-      const array = this.state.carrinho.map(
-        (value) => value.nomeProdutoCarrinho
-      );
+      const array = this.state.carrinho.map(value => value.nomeProdutoCarrinho);
 
-      if (
-        array.filter((value) => value === this.state.nomeProduto).length > 0
-      ) {
+      if (array.filter(value => value === this.state.nomeProduto).length > 0) {
         this.errorSelecionado("Este item já foi selecionado");
         this.setState({
-          nomeProduto: "",
+          nomeProduto: ""
         });
         return;
       }
@@ -336,7 +319,7 @@ class Rinterno extends Component {
         this.state.serial &&
         this.state.numeroSerieTest
           .split(/\n/)
-          .filter((item) => (item ? item : null)).length !== this.state.quant
+          .filter(item => (item ? item : null)).length !== this.state.quant
       ) {
         this.errorSelecionado(
           "Quantidade de numero de serie não condiz com a quantidade adicionada"
@@ -350,27 +333,27 @@ class Rinterno extends Component {
             nomeProdutoCarrinho: this.state.nomeProduto,
             productId: this.state.productId,
             amount: this.state.quant.toString(),
-            stockBase: this.state.estoque,
+            // stockBase: this.state.estoque,
             serialNumberArray: this.state.numeroSerieTest
               .split(/\n/)
-              .filter((item) => (item ? item : null)),
+              .filter(item => (item ? item : null))
           },
-          ...this.state.carrinho,
+          ...this.state.carrinho
         ],
         nomeProduto: "Não selecionado",
         quant: 1,
         serial: false,
-        numeroSerieTest: "",
+        numeroSerieTest: ""
       });
     } else this.errorProduto();
   };
 
-  remove = (value) => {
+  remove = value => {
     const oldCarrinho = this.state.carrinho;
-    const newCarrinho = oldCarrinho.filter((valor) => valor !== value);
+    const newCarrinho = oldCarrinho.filter(valor => valor !== value);
 
     this.setState({
-      carrinho: newCarrinho,
+      carrinho: newCarrinho
     });
   };
 
@@ -454,7 +437,7 @@ class Rinterno extends Component {
                 style={{ width: "100%" }}
                 onChange={this.onChangeSelect}
                 showSearch
-                onSearch={(name) => this.getAllTecnico(name)}
+                onSearch={name => this.getAllTecnico(name)}
                 placeholder="Nenhum tecnicos cadastrado"
                 optionFilterProp="children"
                 value={this.state.tecnico}
@@ -466,7 +449,7 @@ class Rinterno extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {this.state.tecnicoArray.map((valor) => (
+                {this.state.tecnicoArray.map(valor => (
                   <Option props={valor} value={valor.name}>
                     {valor.name}
                   </Option>
@@ -485,7 +468,7 @@ class Rinterno extends Component {
             <div className="div-textNome-Os">Nome do produto:</div>
             <Select
               showSearch
-              onSearch={(name) => this.getAllItens(name)}
+              onSearch={name => this.getAllItens(name)}
               style={{ width: "100%" }}
               placeholder="Selecione o produto"
               optionFilterProp="children"
@@ -497,7 +480,7 @@ class Rinterno extends Component {
                   .indexOf(input.toLowerCase()) >= 0
               }
             >
-              {this.state.itemArray.map((value) => (
+              {this.state.itemArray.map(value => (
                 <Option props={value} value={value.name}>
                   {value.name}
                 </Option>
@@ -518,19 +501,6 @@ class Rinterno extends Component {
         </div>
 
         <div className="div-linha-Os">
-          <div className="div-estoqueConserto-Rinterno">
-            <div className="div-text-Os">Estoque:</div>
-            <Select
-              value={this.state.estoque}
-              style={{ width: "100%" }}
-              onChange={this.onChangeEstoque}
-            >
-              <Option value="REALPONTO">REALPONTO</Option>
-              <Option value="NOVAREAL">NOVA REALPONTO</Option>
-              <Option value="PONTOREAL">PONTOREAL</Option>
-            </Select>
-          </div>
-
           {/* {this.state.serial ? (
             <div className="div-serial-Rinterno">
               <div className="div-textSerial-Rinterno">Número de série:</div>
@@ -563,7 +533,7 @@ class Rinterno extends Component {
               <label className="label-quant-Os">Quantidade</label>
             </div>
             <div className="div-linhaSepareteProdutos-Os"></div>
-            {this.state.carrinho.map((valor) => (
+            {this.state.carrinho.map(valor => (
               <div className="div-linha-Os">
                 <label className="label-produto-Os">
                   {valor.nomeProdutoCarrinho}
@@ -599,7 +569,7 @@ class Rinterno extends Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth,
+    auth: state.auth
   };
 }
 

@@ -1,21 +1,11 @@
 import React, { Component } from "react";
 import "./index.css";
-import {
-  Spin,
-  Button,
-  Input,
-  Select,
-  Modal,
-  InputNumber,
-  Icon,
-  message
-} from "antd";
+import { Spin, Button, Input, Modal, InputNumber, Icon, message } from "antd";
 import { stock, UpdatteProductBase } from "../../../../services/estoque";
 
 import { getAllEquipsService } from "../../../../services/equip";
 import { getSerial } from "../../../../services/serialNumber";
 
-const { Option } = Select;
 const { TextArea } = Input;
 
 class Estoque extends Component {
@@ -439,20 +429,6 @@ class Estoque extends Component {
                   allowClear
                 />
               </div>
-
-              <div className="div-estoque-Rtecnico">
-                <div className="div-text-Rtecnico">Estoque:</div>
-                <Select
-                  value={this.state.estoqueBase}
-                  style={{ width: "100%" }}
-                  onChange={this.onChangeSelect}
-                >
-                  <Option value="TODOS">TODOS</Option>
-                  <Option value="REALPONTO">REALPONTO</Option>
-                  <Option value="NOVAREAL">NOVA REALPONTO</Option>
-                  <Option value="PONTOREAL">PONTOREAL</Option>
-                </Select>
-              </div>
             </div>
           </div>
         ) : (
@@ -467,7 +443,6 @@ class Estoque extends Component {
           <div className="cel-fabricante20-cabecalho-estoque">Fabricante</div>
           <div className="cel-quant-cabecalho-estoque">Disp.</div>
           <div className="cel-quant-cabecalho-estoque">Min.</div>
-          <div className="cel-estoque-cabecalho-estoque">Estoque</div>
           <div className="cel-status-cabecalho-estoque">Análise</div>
           <div className="cel-botao-cabecalho-estoque">Ação</div>
         </div>
@@ -535,19 +510,6 @@ class Estoque extends Component {
                         }
                       >
                         {line.minimumStock}
-                      </label>
-                    </div>
-                    <div className="cel-estoque-cabecalho-estoque">
-                      <label
-                        className="div-table-label-cel-estoque"
-                        style={
-                          parseInt(line.minimumStock, 10) >
-                          parseInt(line.available, 10)
-                            ? { color: "red" }
-                            : null
-                        }
-                      >
-                        {line.stockBase}
                       </label>
                     </div>
                     <div className="cel-status-cabecalho-estoque">

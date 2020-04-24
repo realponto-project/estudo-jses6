@@ -7,7 +7,7 @@ import {
   Button,
   Modal,
   message,
-  Switch,
+  Switch
 } from "antd";
 
 import { Redirect } from "react-router-dom";
@@ -30,7 +30,6 @@ class NovaEntrada extends Component {
     messageError: false,
     messageSucesso: false,
     analise: false,
-    estoque: "REALPONTO",
     nomeProduto: "Não selecionado",
     fornecedor: "Não selecionado",
     quant: 1,
@@ -38,14 +37,14 @@ class NovaEntrada extends Component {
     arrayProdutos: [],
     fieldFalha: {
       nomeProduto: false,
-      fornecedor: false,
+      fornecedor: false
     },
     message: {
       nomeProduto: "",
-      fornecedor: "",
+      fornecedor: ""
     },
     productId: "",
-    companyId: "",
+    companyId: ""
   };
 
   componentDidMount = async () => {
@@ -54,27 +53,27 @@ class NovaEntrada extends Component {
     await this.getAllFornecedor();
   };
 
-  getAllFornecedor = async (razaoSocial) => {
+  getAllFornecedor = async razaoSocial => {
     const query = {
       filters: {
         company: {
           specific: {
-            razaoSocial,
-          },
-        },
-      },
+            razaoSocial
+          }
+        }
+      }
     };
-    await getFornecedor(query).then((resposta) =>
+    await getFornecedor(query).then(resposta =>
       this.setState({
-        fornecedorArray: resposta.data,
+        fornecedorArray: resposta.data
       })
     );
   };
 
-  getAllItens = async (query) => {
-    await getItens(query).then((resposta) =>
+  getAllItens = async query => {
+    await getItens(query).then(resposta =>
       this.setState({
-        itemArray: resposta.data,
+        itemArray: resposta.data
       })
     );
   };
@@ -84,13 +83,13 @@ class NovaEntrada extends Component {
       modalConfirm: false,
       nomeProduto: "",
       fornecedor: "",
-      quant: 1,
+      quant: 1
     });
   };
 
   handleCancel = () => {
     this.setState({
-      modalConfirm: false,
+      modalConfirm: false
     });
   };
 
@@ -98,7 +97,7 @@ class NovaEntrada extends Component {
     message.success("A entrada foi efetuada");
   };
 
-  error = (value) => {
+  error = value => {
     message.error(value);
   };
 
@@ -140,16 +139,16 @@ class NovaEntrada extends Component {
     }
   };
 
-  onChangeSelect = async (value) => {
+  onChangeSelect = async value => {
     if (value === "EMPRESTIMO") {
       const query = {
         filters: {
           product: {
             specific: {
-              serial: true,
-            },
-          },
-        },
+              serial: true
+            }
+          }
+        }
       };
       await this.getAllItens(query);
       this.setState({ nomeProduto: "Não selecionado" });
@@ -157,7 +156,7 @@ class NovaEntrada extends Component {
       await this.getAllItens();
     }
     this.setState({
-      estoque: value,
+      estoque: value
     });
   };
 
@@ -171,9 +170,9 @@ class NovaEntrada extends Component {
         this.state.numeroSerieTest.length > 0 && !this.state.analise
           ? this.state.numeroSerieTest
               .split(/\n/)
-              .filter((item) => (item ? item : null))
+              .filter(item => (item ? item : null))
           : null,
-      responsibleUser: this.props.auth.username,
+      responsibleUser: this.props.auth.username
     };
 
     const resposta = await newEntrada(values);
@@ -182,7 +181,7 @@ class NovaEntrada extends Component {
       this.setState({
         messageError: true,
         fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message,
+        message: resposta.data.fields[0].message
       });
 
       await this.error(
@@ -192,27 +191,26 @@ class NovaEntrada extends Component {
       );
       this.setState({
         messageError: false,
-        modalConfirm: false,
+        modalConfirm: false
       });
     }
     if (resposta.status === 200) {
       this.setState({
-        estoque: "REALPONTO",
         nomeProduto: "Não selecionado",
         fornecedor: "Não selecionado",
         quant: 1,
         numeroSerieTest: [],
         messageSuccess: true,
         serial: false,
-        modalConfirm: false,
+        modalConfirm: false
       });
       await this.success();
     }
   };
 
-  filter = async (e) => {
+  filter = async e => {
     await this.setState({
-      numeroSerieTest: e.target.value,
+      numeroSerieTest: e.target.value
     });
 
     const teste = this.state.numeroSerieTest.split(/\n/);
@@ -225,7 +223,7 @@ class NovaEntrada extends Component {
       let count = 0;
 
       // eslint-disable-next-line array-callback-return
-      teste.map((valor) => {
+      teste.map(valor => {
         if (valor === teste[teste.length - 2]) count++;
       });
 
@@ -241,15 +239,15 @@ class NovaEntrada extends Component {
         const testeArray = teste.toString();
 
         this.setState({
-          numeroSerieTest: testeArray.replace(/,/gi, "\n"),
+          numeroSerieTest: testeArray.replace(/,/gi, "\n")
         });
       }
     }
   };
 
-  onChange = (e) => {
+  onChange = e => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -257,34 +255,34 @@ class NovaEntrada extends Component {
     this.setState({
       nomeProduto: value,
       serial: product.props.product.serial,
-      productId: product.props.product.id,
+      productId: product.props.product.id
     });
   };
 
   onChangeForn = (value, company) => {
     this.setState({
       fornecedor: value,
-      companyId: company.props.company.id,
+      companyId: company.props.company.id
     });
   };
 
-  handleChange = (value) => {
+  handleChange = value => {
     this.setState({
-      nomeProduto: value,
+      nomeProduto: value
     });
   };
 
-  onChangeQuant = (value) => {
+  onChangeQuant = value => {
     this.setState({
-      quant: value,
+      quant: value
     });
   };
 
-  onChangeAnalise = (e) => {
+  onChangeAnalise = e => {
     this.setState({ analise: e });
   };
 
-  onBlurValidator = (e) => {
+  onBlurValidator = e => {
     const { nome, valor, fieldFalha, message } = validators(
       e.target.name,
       e.target.value,
@@ -294,13 +292,13 @@ class NovaEntrada extends Component {
     this.setState({
       [nome]: valor,
       fieldFalha,
-      message,
+      message
     });
   };
 
   Confirm = () => {
     this.setState({
-      modalConfirm: true,
+      modalConfirm: true
     });
   };
 
@@ -324,13 +322,6 @@ class NovaEntrada extends Component {
         <div className="div-fornecedorModal-entrada">
           <div className="div-text-entrada">Quant:</div>
           <label className="label-entrada">{this.state.quant} UN</label>
-        </div>
-      </div>
-
-      <div className="linhaModal-entrada">
-        <div className="div-fornecedorModal-entrada">
-          <div className="div-text-entrada">Estoque:</div>
-          <label className="label-entrada">{this.state.estoque}</label>
         </div>
       </div>
 
@@ -368,7 +359,7 @@ class NovaEntrada extends Component {
                 optionFilterProp="children"
                 value={this.state.nomeProduto}
                 onChange={this.onChangeItem}
-                onSearch={async (name) => {
+                onSearch={async name => {
                   const query = {
                     filters: {
                       product: {
@@ -378,10 +369,10 @@ class NovaEntrada extends Component {
                             this.state.estoque === "EMPRESTIMO" ||
                             this.state.analise
                               ? true
-                              : undefined,
-                        },
-                      },
-                    },
+                              : undefined
+                        }
+                      }
+                    }
                   };
                   await this.getAllItens(query);
                 }}
@@ -391,7 +382,7 @@ class NovaEntrada extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {this.state.itemArray.map((value) => (
+                {this.state.itemArray.map(value => (
                   <Option product={value} value={value.name}>
                     {value.name}
                   </Option>
@@ -426,7 +417,7 @@ class NovaEntrada extends Component {
             <div className="div-inputs">
               <Select
                 showSearch
-                onSearch={(razaoSocial) => this.getAllFornecedor(razaoSocial)}
+                onSearch={razaoSocial => this.getAllFornecedor(razaoSocial)}
                 style={{ width: "100%" }}
                 optionFilterProp="children"
                 value={this.state.fornecedor}
@@ -437,7 +428,7 @@ class NovaEntrada extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {this.state.fornecedorArray.map((value) => (
+                {this.state.fornecedorArray.map(value => (
                   <Option company={value} value={value.razaoSocial}>
                     {value.razaoSocial}
                   </Option>
@@ -508,7 +499,7 @@ class NovaEntrada extends Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth,
+    auth: state.auth
   };
 }
 
