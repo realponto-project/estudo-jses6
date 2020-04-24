@@ -25,7 +25,6 @@ class ReservaML extends Component {
     nomeProduto: "Não selecionado",
     quant: 1,
     carrinho: [],
-    estoque: "REALPONTO",
     codigo: "",
     razaoSocial: "",
     cpfOuCnpj: "",
@@ -34,21 +33,21 @@ class ReservaML extends Component {
     loading: false,
     fieldFalha: {
       cpfOuCnpj: false,
-      razaoSocial: false,
+      razaoSocial: false
     },
     message: {
       cpfOuCnpj: "",
-      razaoSocial: "",
-    },
+      razaoSocial: ""
+    }
   };
 
-  errorNumeroSerie = (value) => {
+  errorNumeroSerie = value => {
     message.error(value, 10);
   };
 
-  filter = async (e) => {
+  filter = async e => {
     await this.setState({
-      numeroSerieTest: e.target.value,
+      numeroSerieTest: e.target.value
     });
 
     const teste = this.state.numeroSerieTest.split(/\n/, 10);
@@ -61,7 +60,7 @@ class ReservaML extends Component {
       let count = 0;
 
       // eslint-disable-next-line array-callback-return
-      teste.map((valor) => {
+      teste.map(valor => {
         if (valor === teste[teste.length - 2]) count++;
       });
 
@@ -99,7 +98,7 @@ class ReservaML extends Component {
         const testeArray = teste.toString();
 
         this.setState({
-          numeroSerieTest: testeArray.replace(/,/gi, "\n"),
+          numeroSerieTest: testeArray.replace(/,/gi, "\n")
         });
       }
     }
@@ -110,7 +109,7 @@ class ReservaML extends Component {
       nomeProduto: value,
       productId: product.props.product.id,
       serial: product.props.product.serial,
-      disp: parseInt(product.props.product.available, 10),
+      disp: parseInt(product.props.product.available, 10)
     });
   };
 
@@ -118,20 +117,20 @@ class ReservaML extends Component {
     await this.getAllItens();
   };
 
-  getAllItens = async (name) => {
+  getAllItens = async name => {
     const query = {
       filters: {
         product: {
           specific: {
-            name,
-          },
-        },
-      },
+            name
+          }
+        }
+      }
     };
 
-    await getItens(query).then((resposta) =>
+    await getItens(query).then(resposta =>
       this.setState({
-        itemArray: resposta.data,
+        itemArray: resposta.data
       })
     );
   };
@@ -144,7 +143,7 @@ class ReservaML extends Component {
     message.error("A reserva não foi efetuada");
   };
 
-  getAddress = async (e) => {
+  getAddress = async e => {
     const cep = e.target.value;
     try {
       const { fieldFalha, message } = this.state;
@@ -161,14 +160,14 @@ class ReservaML extends Component {
 
         this.setState({
           fieldFalha,
-          message,
+          message
         });
       } else {
         this.setState({
           rua: address.data.logradouro,
           cidade: address.data.localidade,
           bairro: address.data.bairro,
-          estado: address.data.uf,
+          estado: address.data.uf
         });
       }
     } catch (error) {
@@ -179,12 +178,12 @@ class ReservaML extends Component {
 
       this.setState({
         fieldFalha,
-        message,
+        message
       });
     }
   };
 
-  onBlurValidator = (e) => {
+  onBlurValidator = e => {
     const { nome, valor, fieldFalha, message } = validators(
       e.target.name,
       e.target.value,
@@ -194,20 +193,20 @@ class ReservaML extends Component {
     this.setState({
       [nome]: valor,
       fieldFalha,
-      message,
+      message
     });
   };
 
-  onFocus = (e) => {
+  onFocus = e => {
     this.setState({
       fieldFalha: {
         ...this.state.fieldFalha,
-        [e.target.name]: false,
+        [e.target.name]: false
       },
       message: {
         ...this.state.message,
-        [e.target.name]: false,
-      },
+        [e.target.name]: false
+      }
     });
   };
 
@@ -217,12 +216,12 @@ class ReservaML extends Component {
 
   saveTargetNewReservaML = async () => {
     this.setState({
-      loading: true,
+      loading: true
     });
 
     if (this.state.carrinho.length === 0) {
       this.setState({
-        loading: false,
+        loading: false
       });
       this.errorCarrinho();
       return;
@@ -232,7 +231,7 @@ class ReservaML extends Component {
       trackingCode: this.state.codigo,
       name: this.state.razaoSocial,
       cnpjOrCpf: this.state.cpfOuCnpj,
-      freeMarketParts: this.state.carrinho,
+      freeMarketParts: this.state.carrinho
     };
 
     const resposta = await NewReservaML(values);
@@ -241,12 +240,12 @@ class ReservaML extends Component {
       this.setState({
         messageError: true,
         fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message,
+        message: resposta.data.fields[0].message
       });
       await this.error();
       this.setState({
         loading: false,
-        messageError: false,
+        messageError: false
       });
     }
     if (resposta.status === 200) {
@@ -255,23 +254,23 @@ class ReservaML extends Component {
         razaoSocial: "",
         carrinho: [],
         codigo: "",
-        messageSuccess: true,
+        messageSuccess: true
       });
       await this.success();
       this.setState({
         loading: false,
-        messageSuccess: false,
+        messageSuccess: false
       });
     }
   };
 
-  onChangeSelect = async (value) => {
+  onChangeSelect = async value => {
     await this.setState({
       estoque: value,
       nomeProduto: "Não Selecionado",
       productId: "",
       serial: "",
-      disp: 0,
+      disp: 0
     });
 
     await this.getAllItens();
@@ -283,28 +282,24 @@ class ReservaML extends Component {
     );
   };
 
-  onChangeQuant = (value) => {
+  onChangeQuant = value => {
     this.setState({
-      quant: value,
+      quant: value
     });
   };
 
-  errorSelecionado = (value) => {
+  errorSelecionado = value => {
     message.error(value);
   };
 
   addCarrinho = () => {
     if (this.state.nomeProduto !== "Não selecionado" || "") {
-      const array = this.state.carrinho.map(
-        (value) => value.nomeProdutoCarrinho
-      );
+      const array = this.state.carrinho.map(value => value.nomeProdutoCarrinho);
 
-      if (
-        array.filter((value) => value === this.state.nomeProduto).length > 0
-      ) {
+      if (array.filter(value => value === this.state.nomeProduto).length > 0) {
         this.errorSelecionado("Este item já foi selecionado");
         this.setState({
-          nomeProduto: "",
+          nomeProduto: ""
         });
         return;
       }
@@ -313,7 +308,7 @@ class ReservaML extends Component {
         this.state.serial &&
         this.state.numeroSerieTest
           .split(/\n/)
-          .filter((item) => (item ? item : null)).length !== this.state.quant
+          .filter(item => (item ? item : null)).length !== this.state.quant
       ) {
         this.errorSelecionado(
           "Quantidade de numero de serie não condiz com a quantidade adicionada"
@@ -327,36 +322,35 @@ class ReservaML extends Component {
             productId: this.state.productId,
             nomeProdutoCarrinho: this.state.nomeProduto,
             amount: this.state.quant,
-            stockBase: this.state.estoque,
+            // stockBase: this.state.estoque,
             serialNumberArray: this.state.numeroSerieTest
               .split(/\n/)
-              .filter((item) => (item ? item : null)),
+              .filter(item => (item ? item : null))
           },
-          ...this.state.carrinho,
+          ...this.state.carrinho
         ],
         nomeProduto: "Não selecionado",
         serial: false,
         numeroSerieTest: "",
-        quant: 1,
-        estoque: "REALPONTO",
+        quant: 1
       });
     } else this.errorProduto();
   };
 
-  remove = (value) => {
+  remove = value => {
     const oldCarrinho = this.state.carrinho;
-    const newCarrinho = oldCarrinho.filter((valor) => valor !== value);
+    const newCarrinho = oldCarrinho.filter(valor => valor !== value);
 
     this.setState({
-      carrinho: newCarrinho,
+      carrinho: newCarrinho
     });
   };
 
-  onChange = (e) => {
+  onChange = e => {
     const { nome, valor } = masks(e.target.name, e.target.value);
 
     this.setState({
-      [nome]: valor,
+      [nome]: valor
     });
   };
 
@@ -464,7 +458,7 @@ class ReservaML extends Component {
             <div className="div-textNomeProduto-ML">Nome do produto:</div>
             <Select
               showSearch
-              onSearch={(name) => this.getAllItens(name)}
+              onSearch={name => this.getAllItens(name)}
               style={{ width: "100%" }}
               placeholder="Selecione o produto"
               optionFilterProp="children"
@@ -476,7 +470,7 @@ class ReservaML extends Component {
                   .indexOf(input.toLowerCase()) >= 0
               }
             >
-              {this.state.itemArray.map((value) => (
+              {this.state.itemArray.map(value => (
                 <Option product={value} value={value.name}>
                   {value.name}
                 </Option>
@@ -497,19 +491,6 @@ class ReservaML extends Component {
         </div>
 
         <div className="div-linha-ML">
-          <div className="div-estoque-ML">
-            <div className="div-text-ML">Estoque:</div>
-            <Select
-              value={this.state.estoque}
-              style={{ width: "100%" }}
-              onChange={this.onChangeSelect}
-            >
-              <Option value="REALPONTO">REALPONTO</Option>
-              <Option value="NOVAREAL">NOVA REALPONTO</Option>
-              <Option value="PONTOREAL">PONTOREAL</Option>
-            </Select>
-          </div>
-
           {this.state.serial ? (
             <div className="div-serial-AddKit">
               <div className="div-textSerial-AddKit">Número de série:</div>
@@ -542,7 +523,7 @@ class ReservaML extends Component {
               <label className="label-quant-ML">Quantidade</label>
             </div>
             <div className="div-linhaSepareteProdutos-ML"></div>
-            {this.state.carrinho.map((valor) => (
+            {this.state.carrinho.map(valor => (
               <div className="div-linha-ML">
                 <label className="label-produto-ML">
                   {valor.nomeProdutoCarrinho}
@@ -578,7 +559,7 @@ class ReservaML extends Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth,
+    auth: state.auth
   };
 }
 

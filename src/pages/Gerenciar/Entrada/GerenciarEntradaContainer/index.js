@@ -105,7 +105,7 @@ class GerenciarEntrada extends Component {
   redirectEntrada = async entrada => {
     const value = {
       id: entrada.id,
-      stockBase: entrada.stockBase,
+      // stockBase: entrada.stockBase,
       amountAdded: entrada.amountAdded,
       razaoSocial: entrada.razaoSocial,
       name: entrada.name,
@@ -411,4 +411,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispacthToProps)(GerenciarEntrada);
+export default connect(
+  mapStateToProps,
+  mapDispacthToProps
+)(GerenciarEntrada);

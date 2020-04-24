@@ -20,7 +20,7 @@ class GerenciarEntrada extends Component {
     numeroSerieTest: [],
     messageError: false,
     messageSucesso: false,
-    estoque: this.props.entradaUpdateValue.stockBase,
+    // estoque: this.props.entradaUpdateValue.stockBase,
     nomeProduto: this.props.entradaUpdateValue.name,
     fornecedor: this.props.entradaUpdateValue.razaoSocial,
     quant: this.props.entradaUpdateValue.amountAdded,
@@ -175,7 +175,7 @@ class GerenciarEntrada extends Component {
       id: this.props.entradaUpdateValue.id,
       analysis: "0",
       amountAdded: this.state.quant.toString(),
-      stockBase: this.state.estoque,
+      // stockBase: this.state.estoque,
       productId: this.state.productId,
       companyId: this.state.companyId,
       serialNumbers:
@@ -209,7 +209,6 @@ class GerenciarEntrada extends Component {
     }
     if (resposta.status === 200) {
       this.setState({
-        estoque: "REALPONTO",
         nomeProduto: "Não selecionado",
         fornecedor: "Não selecionado",
         quant: 1,
@@ -304,13 +303,6 @@ class GerenciarEntrada extends Component {
 
       <div className="linhaModal-entrada">
         <div className="div-fornecedorModal-entrada">
-          <div className="div-text-entrada">Estoque:</div>
-          <label className="label-entrada">{this.state.estoque}</label>
-        </div>
-      </div>
-
-      <div className="linhaModal-entrada">
-        <div className="div-fornecedorModal-entrada">
           <div className="div-text-entrada">Fornecedor:</div>
           <label className="label-entrada">{this.state.fornecedor}</label>
         </div>
@@ -366,19 +358,6 @@ class GerenciarEntrada extends Component {
                 </p>
               ) : null}
             </div>
-          </div>
-
-          <div className="div-estoque-entrada">
-            <div className="div-text-entrada">Estoque:</div>
-            <Select
-              value={this.state.estoque}
-              style={{ width: "100%" }}
-              onChange={this.onChangeSelect}
-            >
-              <Option value="REALPONTO">REALPONTO</Option>
-              <Option value="NOVAREAL">NOVA REALPONTO</Option>
-              <Option value="PONTOREAL">PONTOREAL</Option>
-            </Select>
           </div>
         </div>
 
