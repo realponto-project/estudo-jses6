@@ -28,19 +28,19 @@ class GerenciarEntrada extends Component {
     arrayProdutos: [],
     fieldFalha: {
       nomeProduto: false,
-      fornecedor: false
+      fornecedor: false,
     },
     message: {
       nomeProduto: "",
-      fornecedor: ""
+      fornecedor: "",
     },
     productId: this.props.entradaUpdateValue.productId,
-    companyId: this.props.entradaUpdateValue.companyId
+    companyId: this.props.entradaUpdateValue.companyId,
   };
 
   redirectGerenciarCadastros = () => {
     this.setState({
-      redirect: true
+      redirect: true,
     });
   };
 
@@ -60,51 +60,51 @@ class GerenciarEntrada extends Component {
 
   getEquipsByEntrance = async () => {
     const query = {
-      createdAt: this.props.entradaUpdateValue.createdAt
+      createdAt: this.props.entradaUpdateValue.createdAt,
     };
 
-    await getEquips(query).then(resposta =>
+    await getEquips(query).then((resposta) =>
       this.setState({
         numeroSerieTest: resposta.data
-          .map(item => item.serialNumber)
+          .map((item) => item.serialNumber)
           .toString()
-          .replace(/,/gi, "\n")
+          .replace(/,/gi, "\n"),
       })
     );
   };
 
-  getAllFornecedor = async razaoSocial => {
+  getAllFornecedor = async (razaoSocial) => {
     const query = {
       filters: {
         company: {
           specific: {
-            razaoSocial
-          }
-        }
-      }
+            razaoSocial,
+          },
+        },
+      },
     };
-    await getFornecedor(query).then(resposta =>
+    await getFornecedor(query).then((resposta) =>
       this.setState({
-        fornecedorArray: resposta.data
+        fornecedorArray: resposta.data,
       })
     );
   };
 
-  getAllItens = async name => {
+  getAllItens = async (name) => {
     const query = {
       filters: {
         product: {
           specific: {
             serial: this.props.entradaUpdateValue.serial,
-            name
-          }
-        }
-      }
+            name,
+          },
+        },
+      },
     };
 
-    await getItens(query).then(resposta =>
+    await getItens(query).then((resposta) =>
       this.setState({
-        itemArray: resposta.data
+        itemArray: resposta.data,
       })
     );
   };
@@ -114,13 +114,13 @@ class GerenciarEntrada extends Component {
       modalConfirm: false,
       nomeProduto: "",
       fornecedor: "",
-      quant: 1
+      quant: 1,
     });
   };
 
   handleCancel = () => {
     this.setState({
-      modalConfirm: false
+      modalConfirm: false,
     });
   };
 
@@ -128,7 +128,7 @@ class GerenciarEntrada extends Component {
     message.success("A entrada foi efetuada");
   };
 
-  error = value => {
+  error = (value) => {
     message.error(value);
   };
 
@@ -160,19 +160,20 @@ class GerenciarEntrada extends Component {
     }
   };
 
-  onChangeSelect = value => {
+  onChangeSelect = (value) => {
     this.setState({
-      estoque: value
+      estoque: value,
     });
   };
 
   saveTargetAtualizacaoEntrada = async () => {
     this.setState({
-      loading: true
+      loading: true,
     });
 
     const values = {
       id: this.props.entradaUpdateValue.id,
+      analysis: "0",
       amountAdded: this.state.quant.toString(),
       stockBase: this.state.estoque,
       productId: this.state.productId,
@@ -181,9 +182,9 @@ class GerenciarEntrada extends Component {
         this.state.numeroSerieTest.length > 0
           ? this.state.numeroSerieTest
               .split(/\n/)
-              .filter(item => (item ? item : null))
+              .filter((item) => (item ? item : null))
           : null,
-      responsibleUser: "modrp"
+      responsibleUser: "modrp",
     };
 
     const resposta = await updateEntrada(values);
@@ -192,7 +193,7 @@ class GerenciarEntrada extends Component {
       this.setState({
         messageError: true,
         fieldFalha: resposta.data.fields[0].field,
-        message: resposta.data.fields[0].message
+        message: resposta.data.fields[0].message,
       });
 
       await this.error(
@@ -203,7 +204,7 @@ class GerenciarEntrada extends Component {
       this.setState({
         loading: false,
         messageError: false,
-        modalConfirm: false
+        modalConfirm: false,
       });
     }
     if (resposta.status === 200) {
@@ -214,20 +215,20 @@ class GerenciarEntrada extends Component {
         quant: 1,
         numeroSerieTest: [],
         messageSuccess: true,
-        serial: false
+        serial: false,
       });
       await this.success();
       this.setState({
         loading: false,
         messageSuccess: false,
-        modalConfirm: false
+        modalConfirm: false,
       });
     }
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -235,30 +236,30 @@ class GerenciarEntrada extends Component {
     this.setState({
       nomeProduto: value,
       serial: product.props.product.serial,
-      productId: product.props.product.id
+      productId: product.props.product.id,
     });
   };
 
   onChangeForn = (value, company) => {
     this.setState({
       fornecedor: value,
-      companyId: company.props.company.id
+      companyId: company.props.company.id,
     });
   };
 
-  handleChange = value => {
+  handleChange = (value) => {
     this.setState({
-      nomeProduto: value
+      nomeProduto: value,
     });
   };
 
-  onChangeQuant = value => {
+  onChangeQuant = (value) => {
     this.setState({
-      quant: value
+      quant: value,
     });
   };
 
-  onBlurValidator = e => {
+  onBlurValidator = (e) => {
     const { nome, valor, fieldFalha, message } = validators(
       e.target.name,
       e.target.value,
@@ -268,13 +269,13 @@ class GerenciarEntrada extends Component {
     this.setState({
       [nome]: valor,
       fieldFalha,
-      message
+      message,
     });
   };
 
   Confirm = () => {
     this.setState({
-      modalConfirm: true
+      modalConfirm: true,
     });
   };
 
@@ -341,7 +342,7 @@ class GerenciarEntrada extends Component {
             <div className="div-inputs">
               <Select
                 showSearch
-                onSearch={name => this.getAllItens(name)}
+                onSearch={(name) => this.getAllItens(name)}
                 style={{ width: "100%" }}
                 placeholder="Selecione o produto"
                 optionFilterProp="children"
@@ -353,7 +354,7 @@ class GerenciarEntrada extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {this.state.itemArray.map(value => (
+                {this.state.itemArray.map((value) => (
                   <Option product={value} value={value.name}>
                     {value.name}
                   </Option>
@@ -387,7 +388,7 @@ class GerenciarEntrada extends Component {
             <div className="div-inputs">
               <Select
                 showSearch
-                onSearch={razaoSocial => this.getAllFornecedor(razaoSocial)}
+                onSearch={(razaoSocial) => this.getAllFornecedor(razaoSocial)}
                 style={{ width: "100%" }}
                 optionFilterProp="children"
                 value={this.state.fornecedor}
@@ -398,7 +399,7 @@ class GerenciarEntrada extends Component {
                     .indexOf(input.toLowerCase()) >= 0
                 }
               >
-                {this.state.fornecedorArray.map(value => (
+                {this.state.fornecedorArray.map((value) => (
                   <Option company={value} value={value.razaoSocial}>
                     {value.razaoSocial}
                   </Option>
@@ -477,7 +478,7 @@ class GerenciarEntrada extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    entradaUpdateValue: state.entradaUpdateValue
+    entradaUpdateValue: state.entradaUpdateValue,
   };
 }
 
