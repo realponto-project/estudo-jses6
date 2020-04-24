@@ -148,7 +148,6 @@ class OsDash extends Component {
     };
 
     await getTodasOs(query).then((resposta) => {
-      console.log(resposta);
       this.setState({
         OsArray: resposta.data,
         page: resposta.data.page,
@@ -444,15 +443,20 @@ class OsDash extends Component {
               ) : (
                 this.state.lineSelected.rows.map((line) => (
                   <div className="div-branco-mais">
+                    {console.log(line)}
                     <div className="div-produtos-mais">
-                      {line.products.map((valor) => (
-                        <div className="div-peca-GOs">{valor.name}</div>
-                      ))}
+                      {line.products
+                        .filter((products) => products.deletedAt === null)
+                        .map((valor) => (
+                          <div className="div-peca-GOs">{valor.name}</div>
+                        ))}
                     </div>
                     <div className="div-quant-mais">
-                      {line.products.map((valor) => (
-                        <div className="div-peca-GOs">{valor.amount}</div>
-                      ))}
+                      {line.products
+                        .filter((products) => products.deletedAt === null)
+                        .map((valor) => (
+                          <div className="div-peca-GOs">{valor.amount}</div>
+                        ))}
                     </div>
                   </div>
                 ))
