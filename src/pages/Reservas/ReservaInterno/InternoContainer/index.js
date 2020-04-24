@@ -28,7 +28,7 @@ class Rinterno extends Component {
     data: "",
     tecnico: "Não selecionado",
     nomeProduto: "Não selecionado",
-    productBaseId: "",
+    productId: "",
     tecnicoId: "",
     quant: 1,
     carrinho: [],
@@ -158,7 +158,7 @@ class Rinterno extends Component {
   onChangeItem = async (value, props) => {
     await this.setState({
       nomeProduto: value,
-      productBaseId: props.props.props.id,
+      productId: props.props.props.id,
       serial: props.props.props.serial,
       disp: parseInt(props.props.props.available, 10),
     });
@@ -277,7 +277,7 @@ class Rinterno extends Component {
     await this.setState({
       estoque: valor,
       nomeProduto: "Não selecionado",
-      productBaseId: "",
+      productId: "",
       serial: "",
       disp: 0,
     });
@@ -348,7 +348,7 @@ class Rinterno extends Component {
         carrinho: [
           {
             nomeProdutoCarrinho: this.state.nomeProduto,
-            productBaseId: this.state.productBaseId,
+            productId: this.state.productId,
             amount: this.state.quant.toString(),
             stockBase: this.state.estoque,
             serialNumberArray: this.state.numeroSerieTest

@@ -47,7 +47,7 @@ class Rexterno extends Component {
     newStatus: "",
     tecnico: "Não selecionado",
     nomeProduto: "Não selecionado",
-    productBaseId: "",
+    productId: "",
     tecnicoId: "",
     quant: 1,
     carrinho: [],
@@ -143,7 +143,7 @@ class Rexterno extends Component {
 
       if (this.state.status !== "CONSERTO") {
         if (resp.data) {
-          if (resp.data.productBase.product.name !== this.state.nomeProduto) {
+          if (resp.data.product.name !== this.state.nomeProduto) {
             mensagem = "Este equipamento não contém esse número de série";
             count++;
           }
@@ -218,7 +218,7 @@ class Rexterno extends Component {
   onChangeItem = async (value, props) => {
     await this.setState({
       nomeProduto: value,
-      productBaseId: props.props.props.id,
+      productId: props.props.props.id,
       serial: props.props.props.serial,
       disp: parseInt(props.props.props.available, 10),
     });
@@ -337,7 +337,7 @@ class Rexterno extends Component {
     await this.setState({
       estoque: valor,
       nomeProduto: "Não selecionado",
-      productBaseId: "",
+      productId: "",
       serial: "",
       disp: 0,
     });
@@ -350,7 +350,7 @@ class Rexterno extends Component {
       await this.setState({
         serialNumber: "",
         numeroSerieTest: "",
-        productBaseId: "",
+        productId: "",
         nomeProduto: "Não selecionado",
       });
     }
@@ -449,7 +449,7 @@ class Rexterno extends Component {
 
       itemAdd = {
         ...itemAdd,
-        productId: this.state.productBaseId,
+        productId: this.state.productId,
         serialNumbers,
         description: this.state.observacao,
         amount: serialNumbers.length,
@@ -457,7 +457,7 @@ class Rexterno extends Component {
     } else {
       itemAdd = {
         ...itemAdd,
-        productBaseId: this.state.productBaseId,
+        productId: this.state.productId,
         amount: this.state.quant.toString(),
         stockBase: this.state.estoque,
         serialNumberArray: this.state.numeroSerieTest

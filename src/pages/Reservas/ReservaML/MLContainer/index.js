@@ -108,7 +108,7 @@ class ReservaML extends Component {
   onChangeItem = (value, product) => {
     this.setState({
       nomeProduto: value,
-      productBaseId: product.props.product.id,
+      productId: product.props.product.id,
       serial: product.props.product.serial,
       disp: parseInt(product.props.product.available, 10),
     });
@@ -269,7 +269,7 @@ class ReservaML extends Component {
     await this.setState({
       estoque: value,
       nomeProduto: "Não Selecionado",
-      productBaseId: "",
+      productId: "",
       serial: "",
       disp: 0,
     });
@@ -324,7 +324,7 @@ class ReservaML extends Component {
       this.setState({
         carrinho: [
           {
-            productBaseId: this.state.productBaseId,
+            productId: this.state.productId,
             nomeProdutoCarrinho: this.state.nomeProduto,
             amount: this.state.quant,
             stockBase: this.state.estoque,

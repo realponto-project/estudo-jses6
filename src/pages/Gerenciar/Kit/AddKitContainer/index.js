@@ -179,7 +179,7 @@ class AddKit extends Component {
   onChangeItem = (value, props) => {
     this.setState({
       item: value,
-      productBaseId: props.props.props.id,
+      productId: props.props.props.id,
       disp: parseInt(props.props.props.available, 10),
     });
   };
@@ -188,7 +188,7 @@ class AddKit extends Component {
     const value = {
       kitParts: this.state.carrinho.map((valor) => {
         const resp = {
-          productBaseId: valor.productBaseId,
+          productId: valor.productId,
           amount: valor.amount.toString(),
         };
         return resp;
@@ -250,7 +250,7 @@ class AddKit extends Component {
         carrinho: [
           {
             itemCarrinho: this.state.item,
-            productBaseId: this.state.productBaseId,
+            productId: this.state.productId,
             amount: this.state.quant,
           },
           ...this.state.carrinho,
